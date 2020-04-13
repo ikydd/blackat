@@ -9,6 +9,11 @@ const port = process.env.PORT || 5000;
 const app = new Koa();
 const router = new KoaRouter();
 
+router.get("/status", (ctx) => {
+    ctx.status = 200;
+    ctx.body = 'OK';
+})
+
 router.get("/api/cards", (ctx) => {
   ctx.set("Content-Type", "application/json");
   ctx.body = createReadStream(path.join(__dirname, "api/cards.json"));
@@ -22,12 +27,10 @@ app.use(
   })
 );
 
-const start = () => app.listen(port);
-
 if (!module.parent) {
-  start();
+    app.listen(port);
 }
 
 module.exports = {
-  start,
+  app
 };
