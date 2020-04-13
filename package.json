@@ -6,6 +6,10 @@
     "start": "npm run server",
     "test": "concurrently \"jest\" \"npm run test:client\"",
     "test:client": "cd client && npm test",
+    "test:server": "concurrently \"jest\" && \"npm run test:lint\"",
+    "test:lint": "npm run test:prettier && npm run test:eslint",
+    "test:eslint": "eslint **/*.js",
+    "test:prettier": "prettier --write **/*.js",
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
@@ -14,10 +18,24 @@
     "koa": "^2.11.0",
     "koa-router": "^8.0.8",
     "koa-sendfile": "^2.0.1",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
-    "nodemon": "^2.0.3"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "jest": "^25.3.0",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.4"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/client/"
+    ]
   }
 }
