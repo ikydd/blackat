@@ -1,24 +1,45 @@
 import React from 'react';
+import { create}  from 'react-test-renderer';
+import { mount } from 'enzyme'
+import CardList from './CardList';
 import Card from './Card';
-import { shallow } from 'enzyme'
+import * as api from '../helpers/api';
+
+jest.mock('../helpers/api');
 
 describe('CardList', () => {
-  const data = {
-    name: 'A card',
-    img: 'http://test.com/test.png'
-  }
+
+  let mockData = [
+    {
+      name: 'foo1',
+      imagesrc: 'http://test.com/test1.png'
+    },
+    {
+      name: 'foo2',
+      imagesrc: 'http://test.com/test2.png'
+    },
+    {
+      name: 'foo3',
+      imagesrc: 'http://test.com/test3.png'
+    }
+  ];
+
+  beforeEach(() => {
+    jest.spyOn(api, 'call').mockImplementation(() => Promise.resolve(mockData));
+  });
 
   it('renders without crashing', () => {
-    shallow(<Card data={data}/>);
+    mount(<CardList/>);
   });
 
-  it('has an img', () => {
-    const card = shallow(<Card data={data} />);
-    expect(card.find('img').prop('src')).toEqual(data.img);
+  it('uses api.call correctly', () => {
+    mount(<CardList/>);
+
+    expect(api.call).toHaveBeenCalledWith('/cards');
   });
-  
-  it('has a title', () => {
-    const card = shallow(<Card data={data} />);
-    expect(card.prop('title')).toEqual(data.name);
-  });
+
+  it('renders with multiple cards', () => {
+    const component = create(<CardList/>);
+    component.root.findAllByType(Card)
+  })
 });

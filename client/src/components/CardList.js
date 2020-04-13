@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
+import { call } from '../helpers/api';
 import './CardList.css';
 
 class CardList extends Component {
@@ -9,23 +10,15 @@ class CardList extends Component {
   }
 
   componentDidMount() {
-    this.getCards()
-      .then(res => this.setState({ cards: res }))
+    call('/cards')
+      .then(cards => this.setState({ cards }))
       .catch(err => console.log(err));
-  }
-
-  getCards = async() => {
-    const response = await fetch('/api/cards');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    
-    return body;
   }
 
   render() {
     return (
-      <div class="card-list">{this.state.cards.map((card, index) => (
-        <Card key={index} name={card.name} img={"https://arkhamdb.com/" + card.imagesrc}/>
+      <div className="card-list">{this.state.cards.map((card, index) => (
+        <Card key={index} data={card}/>
       ))}</div>
     );
   }

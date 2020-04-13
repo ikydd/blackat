@@ -4,6 +4,8 @@
   "scripts": {
     "build": "cd client && npm run build",
     "start": "npm run server",
+    "test": "concurrently \"jest\" \"npm run test:client\"",
+    "test:client": "cd client && npm test",
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
