@@ -6,10 +6,11 @@
     "start": "npm run server",
     "test": "concurrently \"jest\" \"npm run test:client\"",
     "test:client": "cd client && npm test",
-    "test:server": "concurrently \"jest\" && \"npm run test:lint\"",
+    "test:server": "concurrently \"npm run test:unit\" && \"npm run test:lint\"",
     "test:lint": "npm run test:prettier && npm run test:eslint",
     "test:eslint": "eslint **/*.js",
     "test:prettier": "prettier --write **/*.js",
+    "test:unit": "jest", 
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
