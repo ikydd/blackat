@@ -1,0 +1,14 @@
+[
+  {
+    "name": "foo1",
+    "imagesrc": "http://test.com/test1.png"
+  },
+  {
+    "name": "foo2",
+    "imagesrc": "http://test.com/test2.png"
+  },
+  {
+    "name": "foo3",
+    "imagesrc": "http://test.com/test3.png"
+  }
+]

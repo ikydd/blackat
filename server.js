@@ -16,7 +16,7 @@ router.get("/status", (ctx) => {
 
 router.get("/api/cards", (ctx) => {
   ctx.set("Content-Type", "application/json");
-  ctx.body = createReadStream(path.join(__dirname, "api/cards.json"));
+  ctx.body = createReadStream(path.join(__dirname, "data/cards.json"));
 });
 
 app.use(router.routes()).use(router.allowedMethods());

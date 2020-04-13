@@ -10,7 +10,7 @@
     "test:lint": "npm run test:prettier && npm run test:eslint",
     "test:eslint": "eslint **/*.js",
     "test:prettier": "prettier --write **/*.js",
-    "test:unit": "jest", 
+    "test:unit": "jest",
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
@@ -20,6 +20,7 @@
     "koa-router": "^8.0.8",
     "koa-sendfile": "^2.0.1",
     "koa-static": "^5.0.0",
+    "mock-fs": "^4.11.0",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
