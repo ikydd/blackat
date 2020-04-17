@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 describe('Card', () => {
   const data = {
     name: 'A card',
-    imagesrc: '/test.png'
+    code: '12345'
   }
 
   it('renders without crashing', () => {
@@ -14,7 +14,7 @@ describe('Card', () => {
 
   it('has an img', () => {
     const card = shallow(<Card data={data} />);
-    expect(card.find('img').prop('src')).toEqual(`https://arkhamdb.com${data.imagesrc}`);
+    expect(card.find('img').prop('src')).toEqual(`https://netrunnerdb.com/card_image/${data.code}.png`);
   });
 
   it('has a title', () => {

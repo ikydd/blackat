@@ -1,5 +1,5 @@
 {
-  "name": "card-explorer",
+  "name": "blackat-api",
   "version": "1.0.0",
   "scripts": {
     "start": "npm run server",
@@ -27,6 +27,7 @@
     "jest": "^25.3.0",
     "mock-fs": "^4.11.0",
     "nodemon": "^2.0.3",
+    "prettier": "^2.0.4",
     "supertest": "^4.0.2"
   },
   "jest": {
