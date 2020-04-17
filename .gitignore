@@ -6,7 +6,7 @@ node_modules
 
 # production
 /client/build
-/data
+/server/data
 
 # misc
 .DS_Store
