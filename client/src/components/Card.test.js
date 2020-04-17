@@ -5,16 +5,16 @@ import { shallow } from 'enzyme'
 describe('Card', () => {
   const data = {
     name: 'A card',
-    code: '12345'
+    imagesrc: 'http://foo.com/img/12345.png'
   }
 
   it('renders without crashing', () => {
     shallow(<Card data={data}/>);
   });
 
-  it('has an img', () => {
+  it('has an img using the src', () => {
     const card = shallow(<Card data={data} />);
-    expect(card.find('img').prop('src')).toEqual(`https://netrunnerdb.com/card_image/${data.code}.png`);
+    expect(card.find('img').prop('src')).toEqual(data.imagesrc);
   });
 
   it('has a title', () => {
