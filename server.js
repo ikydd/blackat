@@ -10,9 +10,9 @@ const app = new Koa();
 const router = new KoaRouter();
 
 router.get("/status", (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'OK';
-})
+  ctx.status = 200;
+  ctx.body = "OK";
+});
 
 router.get("/api/cards", (ctx) => {
   ctx.set("Content-Type", "application/json");
@@ -28,9 +28,9 @@ app.use(
 );
 
 if (!module.parent) {
-    app.listen(port);
+  app.listen(port);
 }
 
 module.exports = {
-  app
+  app,
 };

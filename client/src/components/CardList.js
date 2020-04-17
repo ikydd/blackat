@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import { call } from '../helpers/api';
+import { call } from '../helpers/Api';
 import './CardList.css';
 
 class CardList extends Component {
