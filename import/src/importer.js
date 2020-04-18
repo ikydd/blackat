@@ -14,12 +14,10 @@ class Importer {
         this.importDirectory = importDir;
     }
 
-    import(endpoint) {
-        return this.api.call(endpoint)
-            .then((data) => {
-                const importPath = path.join(this.importDirectory, 'cards.json');
-                return fs.writeFile(importPath, JSON.stringify(data));
-            })
+    async import(endpoint) {
+        const data = await this.api.call(endpoint);
+        const importPath = path.join(this.importDirectory, 'cards.json');
+        return new Promise((resolve) => fs.writeFile(importPath, JSON.stringify(data), resolve));
     }
 }
 

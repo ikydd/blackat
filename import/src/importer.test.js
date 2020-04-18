@@ -5,6 +5,11 @@ const fs = require('fs');
 jest.mock('fs');
 
 describe('Importer', () => {
+
+    beforeEach(() => {
+        fs.writeFile.mockImplementation((path, data, callback) => callback())
+    })
+
     describe('import', () => {
 
         it('errors if you do not pass in an API', () => {
@@ -38,7 +43,11 @@ describe('Importer', () => {
             const importer = new Importer(foo, importFolder);
             await importer.import('/bar');
 
-            expect(fs.writeFile).toHaveBeenCalledWith(`${importFolder}cards.json`, JSON.stringify(mockData));
+            expect(fs.writeFile).toHaveBeenCalledWith(`${importFolder}cards.json`, JSON.stringify(mockData), expect.any(Function));
         });
+
+        describe('with custom handler', () => {
+
+        })
     });
 })
