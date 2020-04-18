@@ -3,6 +3,9 @@ const axios = require('axios');
 class SourceApi {
 
     constructor(baseUrl) {
+        if (!baseUrl) {
+            throw new Error('An API base URL is required in the SourceAPI');
+        }
         this.baseUrl = baseUrl;
     }
 

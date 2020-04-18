@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 class Importer {
+
     constructor(api, importDir) {
         if (!api) {
             throw new Error('An API is required in the Importer');

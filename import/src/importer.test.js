@@ -17,14 +17,14 @@ describe('Importer', () => {
         });
 
         it('errors if you do not pass in a import directory', () => {
-            const foo = new SourceApi();
+            const foo = new SourceApi('http://foo.co.uk');
             expect(() => { new Importer(foo); }).toThrow('An import directory is required in the Importer');
         });
 
         it('calls the requested endpoint', async () => {
             const mockData = {};
 
-            const foo = new SourceApi();
+            const foo = new SourceApi('http://foo.co.uk');
             foo.call = jest.fn(() => Promise.resolve(mockData));
 
             const importer = new Importer(foo, './test/');
@@ -37,7 +37,7 @@ describe('Importer', () => {
             const mockData = { foo: 'bar' };
             const importFolder = 'test/';
 
-            const foo = new SourceApi();
+            const foo = new SourceApi('http://foo.co.uk');
             foo.call = jest.fn(() => Promise.resolve(mockData));
 
             const importer = new Importer(foo, importFolder);
