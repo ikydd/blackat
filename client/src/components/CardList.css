@@ -1,3 +1,11 @@
-.card-list .card-tile {
+.card-tile {
     display: inline-block;
+    margin: 6px;
+    overflow: visible;
+}
+
+.card-tile img {
+    position:relative;
+    width: 200px;
+    height: 279.3px;
 }
