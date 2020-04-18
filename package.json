@@ -6,10 +6,11 @@
     "start": "npm run server",
     "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
     "test:client": "cd client && npm run test",
-    "dev:client": "cd client && npm run watch",
     "test:server": "cd server && npm test",
+    "test:import": "cd import && npm test",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
+    "import": "cd import && npm start",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {},

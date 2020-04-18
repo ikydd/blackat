@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npm run server",
-    "test": "concurrently \"npm run test:unit\" \"npm run test:lint\"",
-    "test:lint": "npm run test:prettier && npm run test:eslint",
-    "test:eslint": "eslint **/*.js",
-    "test:prettier": "prettier --write **/*.js",
-    "test:unit": "jest",
+    "test": "concurrently \"npm run unit\" \"npm run lint\"",
+    "lint": "npm run prettier && npm run eslint",
+    "eslint": "eslint **/*.js",
+    "prettier": "prettier --write **/*.js",
+    "unit": "jest",
     "server": "nodemon server.js"
   },
   "dependencies": {
