@@ -45,9 +45,5 @@ describe('Importer', () => {
 
             expect(fs.writeFile).toHaveBeenCalledWith(`${importFolder}cards.json`, JSON.stringify(mockData), expect.any(Function));
         });
-
-        describe('with custom handler', () => {
-
-        })
     });
 })
