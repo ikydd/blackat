@@ -1,0 +1,18 @@
+#title {
+    color: #fff;
+    height: 60px;
+}
+
+#title h1  {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: bold;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+#title #subtitle {
+  position: relative;
+  top: -0.5em;
+  font-weight: normal;
+  font-size: 1.1rem;
+}
