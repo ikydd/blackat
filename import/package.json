@@ -4,13 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "watch": "jest --watch"
+    "watch": "jest --watch",
+    "test": "concurrently \"npm run unit\" \"npm run lint\"",
+    "lint": "npm run prettier && npm run eslint",
+    "eslint": "eslint **/*.js",
+    "prettier": "prettier --write **/*.js",
+    "unit": "jest"
   },
   "author": "Iain Kydd <iain.kydd@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-promise": "^4.2.1",
     "jest": "^25.3.0",
     "nock": "^12.0.3",
     "prettier": "^2.0.4"
