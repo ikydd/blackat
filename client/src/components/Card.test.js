@@ -21,4 +21,9 @@ describe('Card', () => {
     const card = shallow(<Card data={data} />);
     expect(card.prop('title')).toEqual(data.name);
   });
+
+  it('has the class card-tile', () => {
+    const card = shallow(<Card data={data} />);
+    expect(card.hasClass('card-tile')).toEqual('card-tile');
+  });
 });
