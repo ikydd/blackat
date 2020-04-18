@@ -15,10 +15,11 @@ class Importer {
         this.importDirectory = importDir;
     }
 
-    async import(endpoint) {
+    async import(endpoint, handler = data => data) {
         const data = await this.api.call(endpoint);
+        const transformedData = handler(data);
         const importPath = path.join(this.importDirectory, 'cards.json');
-        return new Promise((resolve) => fs.writeFile(importPath, JSON.stringify(data), resolve));
+        return new Promise((resolve) => fs.writeFile(importPath, JSON.stringify(transformedData), resolve));
     }
 }
 

@@ -10,6 +10,10 @@ describe('Importer', () => {
         fs.writeFile.mockImplementation((path, data, callback) => callback())
     })
 
+    afterEach(() => {
+        fs.writeFile.mockReset();
+    })
+
     describe('import', () => {
 
         it('errors if you do not pass in an API', () => {
@@ -43,7 +47,34 @@ describe('Importer', () => {
             const importer = new Importer(foo, importFolder);
             await importer.import('/bar');
 
-            expect(fs.writeFile).toHaveBeenCalledWith(`${importFolder}cards.json`, JSON.stringify(mockData), expect.any(Function));
+            expect(fs.writeFile)
+                .toHaveBeenCalledWith(
+                    `${importFolder}cards.json`,
+                    JSON.stringify(mockData),
+                    expect.any(Function)
+                );
         });
+
+        it('takes a custom process handler', async () => {
+            const mockData = { foo: 'bar' };
+            const testValue = 'another value';
+            const importFolder = 'test/';
+
+            const foo = new SourceApi('http://foo.co.uk');
+            foo.call = jest.fn(() => Promise.resolve(mockData));
+
+            const importer = new Importer(foo, importFolder);
+            await importer.import('/bar', (data) => {
+                data.foo = testValue;
+                return data;
+            });
+
+            expect(fs.writeFile)
+                .toHaveBeenCalledWith(
+                    `${importFolder}cards.json`,
+                    JSON.stringify({ foo: testValue }),
+                    expect.any(Function)
+                );
+        })
     });
 })
