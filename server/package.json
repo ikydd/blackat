@@ -29,10 +29,5 @@
     "nodemon": "^2.0.3",
     "prettier": "^2.0.4",
     "supertest": "^4.0.2"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/client/"
-    ]
   }
 }
