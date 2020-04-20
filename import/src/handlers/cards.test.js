@@ -1,4 +1,4 @@
-const handler = require('./cards').handler;
+const handler = require('./cards');
 
 const mockData = require('../../../fixtures/nrdb/cards');
 

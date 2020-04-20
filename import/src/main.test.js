@@ -26,7 +26,7 @@ describe("main", () => {
 
     expect(Importer).toHaveBeenCalledWith(
       expect.any(Object),
-      path.join(__dirname, "..", "..", "data")
+      path.join(__dirname, "..", "..", "server", "data")
     );
   });
 
