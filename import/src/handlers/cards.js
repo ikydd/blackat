@@ -1,8 +1,7 @@
-const handler = ({ imageUrlTemplate, data: cards }) => cards.map(({ title, code, imagesrc }) => {
-        const img = imagesrc || imageUrlTemplate.replace('{code}', code);
+const handler = ({ imageUrlTemplate, data: cards }) => cards.map(({ title, code, image_url }) => {
         return {
             title,
-            imagesrc: img
+            imagesrc: image_url || imageUrlTemplate.replace('{code}', code)
         }
     });
 

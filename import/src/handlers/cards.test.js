@@ -1,23 +1,6 @@
 const handler = require('./cards').handler;
 
-const mockData = {
-    "imageUrlTemplate": "https://netrunnerdb.com/card_image/{code}.png",
-    "data": [
-      {
-        title: "Medium",
-        code: "01010"
-      },
-      {
-        title: "Gordian Blade",
-        code: "01043"
-      },
-      {
-        title: "HQ Interface",
-        code: "01010",
-        imagesrc: "http://www.cardgamedb.com/forums/uploads/an/med_ADN49_26.png"
-      }
-    ]
-};
+const mockData = require('../../../fixtures/nrdb/cards');
 
 describe('cards handler', () => {
 
@@ -29,16 +12,16 @@ describe('cards handler', () => {
         expect(output[2].title).toEqual(mockData.data[2].title);
     });
 
-    it('adds an image URL to each card', () => {
+    it('adds an image URL to each card using the template', () => {
         const output = handler(mockData);
 
-        expect(output[0].imagesrc).toEqual(`https://netrunnerdb.com/card_image/${mockData.data[0].code}.png`);
-        expect(output[1].imagesrc).toEqual(`https://netrunnerdb.com/card_image/${mockData.data[1].code}.png`);
+        expect(output[0].imagesrc).toEqual(mockData.imageUrlTemplate.replace('{code}', mockData.data[0].code));
+        expect(output[1].imagesrc).toEqual(mockData.imageUrlTemplate.replace('{code}', mockData.data[1].code));
     });
 
-    it('adds leaves a custom image if already present', () => {
+    it('uses a specified image if present', () => {
         const output = handler(mockData);
 
-        expect(output[2].imagesrc).toEqual(mockData.data[2].imagesrc);
+        expect(output[2].imagesrc).toEqual(mockData.data[2].image_url);
     });
 })
