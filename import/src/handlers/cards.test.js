@@ -1,4 +1,4 @@
-const handler = require('./cards');
+const handler = require('./cards').handler;
 
 const mockData = {
     "imageUrlTemplate": "https://netrunnerdb.com/card_image/{code}.png",

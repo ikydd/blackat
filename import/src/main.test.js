@@ -1,6 +1,7 @@
-const path = require('path');
+const path = require("path");
 const SourceApi = require("./source-api");
 const Importer = require("./importer");
+const cardsHandler = require("./handlers/cards");
 const main = require("./main");
 
 jest.mock("./source-api");
@@ -25,13 +26,16 @@ describe("main", () => {
 
     expect(Importer).toHaveBeenCalledWith(
       expect.any(Object),
-      path.join(__dirname, '..', '..', 'data')
+      path.join(__dirname, "..", "..", "data")
     );
   });
 
   it("imports the cards", async () => {
     await main.start();
 
-    expect(Importer.mock.instances[0].import).toHaveBeenCalledWith('/cards', expect.any(Function));
+    expect(Importer.mock.instances[0].import).toHaveBeenCalledWith(
+      "/cards",
+      cardsHandler
+    );
   });
 });
