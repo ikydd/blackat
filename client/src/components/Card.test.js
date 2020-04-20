@@ -3,10 +3,7 @@ import Card from './Card';
 import { shallow } from 'enzyme'
 
 describe('Card', () => {
-  const data = {
-    title: 'A card',
-    imagesrc: 'http://foo.com/img/12345.png'
-  }
+  const data = require('../../../fixtures/cards')[0];
 
   it('renders without crashing', () => {
     shallow(<Card data={data}/>);
