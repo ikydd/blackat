@@ -4,7 +4,7 @@
   "scripts": {
     "build": "cd client && npm run build",
     "start": "npm run server",
-    "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
+    "test": "concurrently \"npm run test:server\" \"npm run test:client\" \"npm run test:import\"",
     "test:client": "cd client && npm run test",
     "test:server": "cd server && npm test",
     "test:import": "cd import && npm test",
