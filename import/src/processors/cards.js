@@ -1,4 +1,4 @@
-const handler = ({ imageUrlTemplate, data: cards }) => {
+const process = ({ imageUrlTemplate, data: cards }) => {
     return cards.map(({ title, code, image_url }) => {
         return {
             title,
@@ -7,4 +7,4 @@ const handler = ({ imageUrlTemplate, data: cards }) => {
     });
 }
 
-module.exports = handler
+module.exports = process

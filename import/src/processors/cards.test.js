@@ -1,11 +1,11 @@
-const handler = require('./cards');
+const process = require('./cards');
 
 const mockData = require('../../../fixtures/nrdb/cards');
 
-describe('cards handler', () => {
+describe('process cards', () => {
 
     it('returns the cards', () => {
-        const output = handler(mockData);
+        const output = process(mockData);
 
         expect(output[0].title).toEqual(mockData.data[0].title);
         expect(output[1].title).toEqual(mockData.data[1].title);
@@ -13,14 +13,14 @@ describe('cards handler', () => {
     });
 
     it('adds an image URL to each card using the template', () => {
-        const output = handler(mockData);
+        const output = process(mockData);
 
         expect(output[0].imagesrc).toEqual(mockData.imageUrlTemplate.replace('{code}', mockData.data[0].code));
         expect(output[1].imagesrc).toEqual(mockData.imageUrlTemplate.replace('{code}', mockData.data[1].code));
     });
 
     it('uses a specified image if present', () => {
-        const output = handler(mockData);
+        const output = process(mockData);
 
         expect(output[2].imagesrc).toEqual(mockData.data[2].image_url);
     });
