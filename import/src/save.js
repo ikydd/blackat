@@ -10,6 +10,6 @@ const save = async (data, filepath) => {
   return new Promise((resolve) =>
     fs.writeFile(filepath, JSON.stringify(data), resolve)
   );
-}
+};
 
 module.exports = save;

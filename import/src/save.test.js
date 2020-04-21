@@ -19,7 +19,7 @@ describe("save", () => {
   });
 
   it("errors if you do not pass in a file path", () => {
-    const mockData = {}
+    const mockData = {};
 
     expect(save(mockData)).rejects.toThrow(
       "A file path is required to save data"

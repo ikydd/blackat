@@ -1,9 +1,9 @@
 const nock = require("nock");
-const apiRequest = require("./api-request");
+const request = require("./request");
 
-describe("api-request", () => {
+describe("request", () => {
   it("errors if you do not pass it an API URL", async () => {
-    await expect(apiRequest()).rejects.toThrow(
+    await expect(request()).rejects.toThrow(
       "An API base URL is required in api-request"
     );
   });
@@ -12,7 +12,7 @@ describe("api-request", () => {
     const testResponse = "Test response";
     nock("http://foo.co.uk").get("/bar").reply(200, testResponse);
 
-    const response = await apiRequest("http://foo.co.uk/bar");
+    const response = await request("http://foo.co.uk/bar");
 
     expect(response).toEqual(testResponse);
   });
