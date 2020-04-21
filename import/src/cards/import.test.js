@@ -1,12 +1,17 @@
 const path = require("path");
 const request = require("../request");
 const save = require("../save");
+const apiUrl = require("../helpers/api-url");
+const localPath = require("../helpers/local-path");
 const process = require("./process");
 const cards = require("./import");
 
 jest.mock("../request");
 jest.mock("../save");
 jest.mock("./process");
+
+const mockUrl = 'https://foo.co.uk/bar';
+const mockPath = './test/foo/bar/file.json';
 
 const mockData = {
   foo: "bar",
@@ -21,17 +26,25 @@ describe("main", () => {
     request.mockClear();
     save.mockClear();
     process.mockClear();
+    apiUrl.mockClear();
+    localPath.mockClear();
 
+    apiUrl.mockImplementation(() => Promise.resolve(mockUrl));
     request.mockImplementation(() => Promise.resolve(mockData));
+    localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
   });
 
   it("calls NRDB cards endpoint", async () => {
     await cards();
 
-    expect(request).toHaveBeenCalledWith(
-      "https://netrunnerdb.com/api/2.0/public/cards"
-    );
+    expect(apiUrl).toHaveBeenCalledWith('/cards');
+  });
+
+  it("calls NRDB cards endpoint", async () => {
+    await cards();
+
+    expect(request).toHaveBeenCalledWith(mockUrl);
   });
 
   it("applies the card processor", async () => {
@@ -40,12 +53,18 @@ describe("main", () => {
     expect(process).toHaveBeenCalledWith(mockData);
   });
 
+  it("applies the card processor", async () => {
+    await cards();
+
+    expect(localPath).toHaveBeenCalledWith('cards.json');
+  });
+
   it("saves the processed data", async () => {
     await cards();
 
     expect(save).toHaveBeenCalledWith(
       mockProcessedData,
-      path.join(__dirname, "..", "..", "..", "server", "data", "cards.json")
+      mockPath
     );
   });
 });
