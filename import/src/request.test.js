@@ -4,7 +4,7 @@ const request = require("./request");
 describe("request", () => {
   it("errors if you do not pass it an API URL", async () => {
     await expect(request()).rejects.toThrow(
-      "An API base URL is required in api-request"
+      "A URL is required in request"
     );
   });
 

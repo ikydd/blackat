@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const request = async (url) => {
   if (!url) {
-    throw new Error("An API base URL is required in api-request");
+    throw new Error("A URL is required in request");
   }
 
   const response = await axios(url);
