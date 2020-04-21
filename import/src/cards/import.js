@@ -8,6 +8,7 @@ const filepath = path.join(
   __dirname,
   "..",
   "..",
+  "..",
   "server",
   "data",
   "cards.json"

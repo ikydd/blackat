@@ -45,7 +45,7 @@ describe("main", () => {
 
     expect(save).toHaveBeenCalledWith(
       mockProcessedData,
-      path.join(__dirname, "..", "..", "server", "data", "cards.json")
+      path.join(__dirname, "..", "..", "..", "server", "data", "cards.json")
     );
   });
 });
