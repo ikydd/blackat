@@ -26,7 +26,7 @@ describe("server", () => {
 
   describe("api", () => {
     const cards = fs.readFileSync(
-      path.join(__dirname, "..", "fixtures", "cards.json")
+      path.join(__dirname, "..", "fixtures", "api", "cards.json")
     );
 
     beforeEach(() => {

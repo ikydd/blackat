@@ -10,7 +10,7 @@ jest.mock('../helpers/api');
 jest.mock('./Card', () => 'Card');
 
 describe('CardList', () => {
-  const mockData = require('../../../fixtures/cards');
+  const mockData = require('../../../fixtures/api/cards');
 
   beforeEach(() => {
     jest.spyOn(api, 'call').mockImplementation(() => Promise.resolve(mockData));
