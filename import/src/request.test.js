@@ -3,9 +3,7 @@ const request = require("./request");
 
 describe("request", () => {
   it("errors if you do not pass it an API URL", async () => {
-    await expect(request()).rejects.toThrow(
-      "A URL is required in request"
-    );
+    await expect(request()).rejects.toThrow("A URL is required in request");
   });
 
   it("calls a url on the source api", async () => {

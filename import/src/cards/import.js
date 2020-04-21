@@ -1,22 +1,15 @@
-const path = require("path");
 const request = require("../request");
-const save = require("../save");
+const localPath = require('../helpers/local-path');
+const getApiUrl = require('../helpers/api-url');
 const process = require("./process");
-
-const nrdbApi = "https://netrunnerdb.com/api/2.0/public/cards";
-const filepath = path.join(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "server",
-  "data",
-  "cards.json"
-);
+const save = require("../save");
 
 const saveTo = (filepath) => (data) => save(data, filepath);
 
 const importCards = async () =>
-  request(nrdbApi).then(process).then(saveTo(filepath));
+    getApiUrl("/cards")
+        .then(request)
+        .then(process)
+        .then(saveTo(localPath("cards.json")));
 
 module.exports = importCards;

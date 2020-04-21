@@ -1,9 +1,9 @@
-const cards = require('./cards/import');
+const cards = require("./cards/import");
 
 const run = async () => {
-    await cards();
-}
+  await cards();
+};
 
 module.exports = {
-    run
-}
+  run,
+};
