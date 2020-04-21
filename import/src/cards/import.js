@@ -1,7 +1,7 @@
 const path = require("path");
-const request = require("./request");
-const save = require("./save");
-const process = require("./processors/cards");
+const request = require("../request");
+const save = require("../save");
+const process = require("./process");
 
 const nrdbApi = "https://netrunnerdb.com/api/2.0/public/cards";
 const filepath = path.join(

@@ -1,4 +1,4 @@
-const process = require('./cards');
+const process = require('./process');
 
 const mockData = require('../../../fixtures/nrdb/cards');
 

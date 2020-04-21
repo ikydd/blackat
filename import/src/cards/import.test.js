@@ -1,12 +1,12 @@
 const path = require("path");
-const request = require("./request");
-const save = require("./save");
-const processCards = require("./processors/cards");
-const cards = require("./cards");
+const request = require("../request");
+const save = require("../save");
+const process = require("./process");
+const cards = require("./import");
 
-jest.mock("./request");
-jest.mock("./save");
-jest.mock("./processors/cards");
+jest.mock("../request");
+jest.mock("../save");
+jest.mock("./process");
 
 const mockData = {
   foo: "bar",
@@ -20,10 +20,10 @@ describe("main", () => {
   beforeEach(() => {
     request.mockClear();
     save.mockClear();
-    processCards.mockClear();
+    process.mockClear();
 
     request.mockImplementation(() => Promise.resolve(mockData));
-    processCards.mockImplementation(() => mockProcessedData);
+    process.mockImplementation(() => mockProcessedData);
   });
 
   it("calls NRDB cards endpoint", async () => {
@@ -37,7 +37,7 @@ describe("main", () => {
   it("applies the card processor", async () => {
     await cards();
 
-    expect(processCards).toHaveBeenCalledWith(mockData);
+    expect(process).toHaveBeenCalledWith(mockData);
   });
 
   it("saves the processed data", async () => {
