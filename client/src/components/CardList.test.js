@@ -35,8 +35,8 @@ describe('CardList', () => {
   it('renders with the right number of cards', async () => {
     const component = create(<CardList/>);
 
-    await waitFor(() => component.root.findAllByType('Card').length > 0)
+    await waitFor(() => component.root.findAllByType(Card).length > 0)
 
-    expect(component.root.findAllByType('Card').length).toEqual(3);
+    expect(component.root.findAllByType(Card).length).toEqual(3);
   })
 });
