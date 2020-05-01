@@ -9,6 +9,8 @@ const cards = require("./import");
 jest.mock("../request");
 jest.mock("../save");
 jest.mock("./process");
+jest.mock("../helpers/api-url");
+jest.mock("../helpers/local-path");
 
 const mockUrl = 'https://foo.co.uk/bar';
 const mockPath = './test/foo/bar/file.json';
