@@ -9,7 +9,7 @@ const request = async (url) => {
     url,
     validateStatus: (status) => {
       return status === 200;
-    }
+    },
   });
   return response.data;
 };
