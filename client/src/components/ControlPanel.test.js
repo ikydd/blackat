@@ -1,6 +1,5 @@
 import React from 'react';
 import { create }  from 'react-test-renderer';
-import { waitFor } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import ControlPanel from './ControlPanel';
 import SideButton from './SideButton';
@@ -11,5 +10,20 @@ jest.mock('./SideButton', () => 'SideButton');
 describe('CardList', () => {
   it('renders without crashing', () => {
     shallow(<ControlPanel/>);
+  });
+
+  it('has two sides', async () => {
+    const component = create(<ControlPanel/>);
+    expect(component.root.findAllByType(SideButton).length).toEqual(2);
+  });
+
+  it('has Runner as the first side', async () => {
+    const component = create(<ControlPanel/>);
+    expect(component.root.findAllByType(SideButton)[0].props.title).toEqual('Runner');
+  });
+
+  it('has Corp as the second side', async () => {
+    const component = create(<ControlPanel/>);
+    expect(component.root.findAllByType(SideButton)[1].props.title).toEqual('Corp');
   });
 });

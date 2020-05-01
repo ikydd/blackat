@@ -10,14 +10,14 @@ describe('CardList', () => {
   });
 
   it('uses the name passed in', () => {
-    const name = 'Foo';
-    const component = shallow(<SideButton name={name} />);
-    expect(component.text()).toEqual(name);
+    const title = 'Foo';
+    const component = shallow(<SideButton title={title} />);
+    expect(component.text()).toEqual(title);
   })
 
   it('has the class side-button', () => {
-    const name = 'Foo';
-    const card = shallow(<SideButton name={name} />);
-    expect(card.hasClass('button-side')).toEqual(true);
+    const title = 'Foo';
+    const component = shallow(<SideButton title={title} />);
+    expect(component.hasClass('side-button')).toEqual(true);
   });
 });
