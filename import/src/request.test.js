@@ -17,7 +17,7 @@ describe("request", () => {
 
   it('throws an error if the response is not a 200', async () => {
     const testResponse = "Test response";
-    nock("http://foo.co.uk").get("/bar").reply(404, testResponse);
+    nock("http://foo.co.uk").get("/bar").reply(201, testResponse);
 
     await expect(request("http://foo.co.uk/bar")).rejects.toThrow();
   })

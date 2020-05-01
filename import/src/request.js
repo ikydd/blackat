@@ -5,7 +5,12 @@ const request = async (url) => {
     throw new Error("A URL is required in request");
   }
 
-  const response = await axios(url);
+  const response = await axios({
+    url,
+    validateStatus: (status) => {
+      return status === 200;
+    }
+  });
   return response.data;
 };
 
