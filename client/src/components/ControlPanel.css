@@ -11,6 +11,9 @@
     padding-right: 3em;
     width: 20em;
     min-height: 454px;
+}
+
+#sides {
     text-align:center;
     color: #fff;
 }

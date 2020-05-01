@@ -2,6 +2,7 @@
 body {
     background-image: url('/img/blackat-background-thin.png');
     background-repeat: no-repeat;
+    font-size: 1.4rem;
 }
 h1, h2, h3, h4, h5, select, input  {
     font-family: 'Rajdhani', sans-serif;

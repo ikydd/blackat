@@ -4,7 +4,7 @@ import './SideButton.css';
 class SideButton extends Component {
   render() {
     return (
-      <div className="side-button">{this.props.title}</div>
+      <h4 className="side-button">{this.props.title}</h4>
     );
   }
 }
