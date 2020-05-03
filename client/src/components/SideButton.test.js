@@ -26,5 +26,25 @@ describe('CardList', () => {
     const isSelected = true;
     const component = shallow(<SideButton title={title} selected={isSelected} />);
     expect(component.hasClass('selected')).toEqual(true);
+  });
+
+  it('calls a callback when clicked on and not selected', () => {
+    const title = 'Foo';
+    const code = 'foo';
+    const isSelected = false;
+    const cb = jest.fn();
+    const component = shallow(<SideButton title={title} code={code} selected={isSelected} onSelect={cb} />);
+    component.simulate('click');
+    expect(cb).toHaveBeenCalledWith(code);
+  })
+
+  it('does not call a callback when clicked on and already selected', () => {
+    const title = 'Foo';
+    const code = 'foo';
+    const isSelected = true;
+    const cb = jest.fn();
+    const component = shallow(<SideButton title={title} code={code} selected={isSelected} onSelect={cb} />);
+    component.simulate('click');
+    expect(cb).not.toHaveBeenCalled();
   })
 });
