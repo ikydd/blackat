@@ -4,7 +4,7 @@ import './SideButton.css';
 class SideButton extends Component {
   render() {
     return (
-      <h4 className="side-button">{this.props.title}</h4>
+      <h4 className={"side-button" + (this.props.selected ? " selected" : "")}>{this.props.title}</h4>
     );
   }
 }

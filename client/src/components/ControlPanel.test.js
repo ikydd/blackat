@@ -6,7 +6,7 @@ import Header from './Header';
 import SideButton from './SideButton';
 
 jest.mock('../helpers/api');
-jest.mock('./SideButton', () => 'SideButton');
+jest.mock('./SideButton');
 
 describe('CardList', () => {
   it('renders without crashing', () => {

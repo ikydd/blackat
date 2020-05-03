@@ -20,4 +20,11 @@ describe('CardList', () => {
     const component = shallow(<SideButton title={title} />);
     expect(component.hasClass('side-button')).toEqual(true);
   });
+
+  it('displays as selected depending on props', () => {
+    const title = 'Foo';
+    const isSelected = true;
+    const component = shallow(<SideButton title={title} selected={isSelected} />);
+    expect(component.hasClass('selected')).toEqual(true);
+  })
 });
