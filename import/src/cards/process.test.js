@@ -4,7 +4,13 @@ const mockData = require('../../../fixtures/nrdb/cards');
 
 describe('process cards', () => {
 
-    it('returns the cards', () => {
+    it('outputs the same number of cards', () => {
+        const output = process(mockData);
+
+        expect(output.length).toEqual(mockData.data.length);
+    });
+
+    it('outputs the titles', () => {
         const output = process(mockData);
 
         expect(output[0].title).toEqual(mockData.data[0].title);
@@ -23,5 +29,12 @@ describe('process cards', () => {
         const output = process(mockData);
 
         expect(output[2].imagesrc).toEqual(mockData.data[2].image_url);
+    });
+
+    it('outputs the side', () => {
+        const output = process(mockData);
+
+        expect(output[2].side).toEqual(mockData.data[2].side_code);
+        expect(output[3].side).toEqual(mockData.data[3].side_code);
     });
 })

@@ -58,6 +58,25 @@
       "title": "D4v1d",
       "type_code": "program",
       "uniqueness": false
+    },
+    {
+      "code": "01090",
+      "cost": 8,
+      "deck_limit": 3,
+      "faction_code": "nbn",
+      "faction_cost": 2,
+      "flavor": "\"Ever heard of a catch-22?\"\n\"Remind me to forget it.\"",
+      "illustrator": "Outland Entertainment LLC",
+      "keywords": "Code Gate",
+      "pack_code": "core",
+      "position": 90,
+      "quantity": 3,
+      "side_code": "corp",
+      "strength": 5,
+      "text": "When the Runner encounters Tollbooth, he or she must pay 3[credit], if able. If the Runner cannot pay 3[credit], end the run.\n[subroutine] End the run.",
+      "title": "Tollbooth",
+      "type_code": "ice",
+      "uniqueness": false
     }
   ],
   "total": 1842,
