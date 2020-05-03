@@ -36,6 +36,11 @@ describe('Side Selection', () => {
     expect(component.root.findByType(ControlPanel).props.onSideSelect).toEqual(expect.any(Function));
   });
 
+  it('sends the appropriate prop to ControlPanel when selected', () => {
+    const component = create(<App />);
+    expect(component.root.findByType(ControlPanel).props.onSideSelect).toEqual(expect.any(Function));
+  });
+
   it('sends the appropriate prop to CardList when selected', () => {
     const component = create(<App />);
     component.root.findByType(ControlPanel).props.onSideSelect("foo");

@@ -9,8 +9,8 @@ class ControlPanel extends Component {
       <div id="controls">
           <Header />
           <div id="sides">
-            <SideButton title='Runner' onSelect={this.props.onSideSelect} />
-            <SideButton title='Corp' onSelect={this.props.onSideSelect} />
+            <SideButton title='Runner' side="runner" selected={this.props.side === 'runner'} onSelect={this.props.onSideSelect} />
+            <SideButton title='Corp' side="corp" selected={this.props.side === 'corp'} onSelect={this.props.onSideSelect} />
           </div>
       </div>
     );

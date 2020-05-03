@@ -30,20 +30,20 @@ describe('CardList', () => {
 
   it('calls a callback when clicked on and not selected', () => {
     const title = 'Foo';
-    const code = 'foo';
+    const side = 'foo';
     const isSelected = false;
     const cb = jest.fn();
-    const component = shallow(<SideButton title={title} code={code} selected={isSelected} onSelect={cb} />);
+    const component = shallow(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
     component.simulate('click');
-    expect(cb).toHaveBeenCalledWith(code);
+    expect(cb).toHaveBeenCalledWith(side);
   })
 
   it('does not call a callback when clicked on and already selected', () => {
     const title = 'Foo';
-    const code = 'foo';
+    const side = 'foo';
     const isSelected = true;
     const cb = jest.fn();
-    const component = shallow(<SideButton title={title} code={code} selected={isSelected} onSelect={cb} />);
+    const component = shallow(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
     component.simulate('click');
     expect(cb).not.toHaveBeenCalled();
   })

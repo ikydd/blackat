@@ -4,7 +4,7 @@ import './SideButton.css';
 class SideButton extends Component {
   select = () => {
     if (!this.props.selected) {
-      this.props.onSelect(this.props.code);
+      this.props.onSelect(this.props.side);
     }
   }
 

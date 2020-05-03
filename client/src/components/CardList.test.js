@@ -32,11 +32,19 @@ describe('CardList', () => {
     expect(api.call).toHaveBeenCalledWith('/cards');
   });
 
-  it('renders with the right number of cards', async () => {
+  it('default to showing all cards', async () => {
     const component = create(<CardList/>);
 
     await waitFor(() => component.root.findAllByType(Card).length > 0)
 
-    expect(component.root.findAllByType(Card).length).toEqual(3);
-  })
+    expect(component.root.findAllByType(Card).length).toEqual(5);
+  });
+
+  it('only shows cards from the correct side', async () => {
+    const component = create(<CardList side="runner" />);
+
+    await waitFor(() => component.root.findAllByType(Card).length > 0)
+
+    expect(component.root.findAllByType(Card).length).toEqual(2);
+  });
 });

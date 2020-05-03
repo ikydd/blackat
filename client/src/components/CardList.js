@@ -15,9 +15,16 @@ class CardList extends Component {
       .catch(err => console.log(err));
   }
 
+  filterBySide = (card) => {
+    if (!this.props.side) {
+      return true;
+    }
+    return card.side === this.props.side;
+  }
+
   render() {
     return (
-      <div id="cards">{this.state.cards.map((card, index) => (
+      <div id="cards">{this.state.cards.filter(this.filterBySide).map((card, index) => (
         <Card key={index} data={card}/>
       ))}</div>
     );
