@@ -62,8 +62,8 @@ describe('download images', () => {
         expect(files).toEqual(['06030.png']);
     });
 
-    it('does not save the image if there already is ', async () => {
-        const testBody = 'test';
+    it('does not save the image if there already is a file in place', async () => {
+        const testBody = new Array(100000).fill('test').join("");
         nock.load(`${fixtures}/chum.json`);
         fs.writeFileSync(`${dir}/01075.png`, testBody, 'utf8');
 
@@ -71,6 +71,17 @@ describe('download images', () => {
         const data = fs.readFileSync(`${dir}/01075.png`, 'utf8');
 
         expect(data).toEqual(testBody);
+    });
+
+    it('does save the image if there already is a file but it is smaller than 100k', async () => {
+        const testBody = 'test';
+        nock.load(`${fixtures}/chum.json`);
+        fs.writeFileSync(`${dir}/01075.png`, testBody, 'utf8');
+
+        await download(dir, [chum]);
+        const data = fs.readFileSync(`${dir}/01075.png`, 'utf8');
+
+        expect(data).not.toEqual(testBody);
     });
 
     it('logs an error if there is a problem', async () => {
