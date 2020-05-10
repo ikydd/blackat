@@ -1,2 +1,2 @@
 const main = require('./src/main');
-main.run();
+return main.run();

@@ -4,7 +4,7 @@ const axios = require('axios');
 const cardPath = (card, path) => `${path}/${card.code}.png`;
 const nonPresentCards = (path) => (card) => {
     const file = cardPath(card, path);
-    return !fs.existsSync(file) || fs.statSync(file)['size'] < 100000;
+    return !fs.existsSync(file) || fs.statSync(file)['size'] < 200000;
 }
 
 const download = async (path, data) => {
