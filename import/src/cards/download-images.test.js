@@ -3,7 +3,7 @@ const download = require('./download-images');
 const fsExtra = require('fs-extra');
 const fs = require('fs');
 
-fdescribe('download images', () => {
+describe('download images', () => {
 
     const chum = {
         imagesrc: 'https://netrunnerdb.com/card_image/01075.png',
@@ -22,13 +22,16 @@ fdescribe('download images', () => {
 
     const dir = `${__dirname}/tmp`;
     const fixtures = `${__dirname}/fixtures`;
+    const originalLog = console.error;
 
     beforeEach(() => {
+
         if (fs.existsSync(dir)){
             fsExtra.emptyDirSync(dir);
         } else {
             fs.mkdirSync(dir);
         }
+        console.error = jest.fn();
     });
 
     afterEach(() => {
@@ -36,6 +39,8 @@ fdescribe('download images', () => {
             fsExtra.emptyDirSync(dir);
             fsExtra.removeSync(dir);
         }
+        console.error = originalLog;
+        nock.cleanAll()
     });
 
     it('saves the image of each card to a specified folder', async () => {
@@ -66,5 +71,15 @@ fdescribe('download images', () => {
         const data = fs.readFileSync(`${dir}/01075.png`, 'utf8');
 
         expect(data).toEqual(testBody);
+    });
+
+    it('logs an error if there is a problem', async () => {
+        nock('https://netrunnerdb.com')
+            .get('/card_image/01075.png')
+            .reply(500);
+
+        await download(dir, [chum]);
+
+        expect(console.error).toHaveBeenCalled();
     });
 })

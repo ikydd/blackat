@@ -6,6 +6,7 @@ node_modules
 
 # production
 /client/build
+/client/public/img/cards/*.png
 /server/data
 
 # misc
