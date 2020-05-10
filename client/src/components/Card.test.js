@@ -9,9 +9,9 @@ describe('Card', () => {
     shallow(<Card data={data}/>);
   });
 
-  it('has an img using the src', () => {
+  it('has an img using the card code', () => {
     const card = shallow(<Card data={data} />);
-    expect(card.find('img').prop('src')).toEqual(data.imagesrc);
+    expect(card.find('img').prop('src')).toEqual(`/img/cards/${card.code}.png`);
   });
 
   it('has a title', () => {
