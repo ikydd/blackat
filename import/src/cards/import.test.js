@@ -1,14 +1,17 @@
 const path = require("path");
+const fs = require('fs');
 const request = require("../request");
 const save = require("../save");
 const apiUrl = require("../helpers/api-url");
 const localPath = require("../helpers/local-path");
 const process = require("./process");
+const download = require("./download-images");
 const cards = require("./import");
 
 jest.mock("../request");
 jest.mock("../save");
 jest.mock("./process");
+jest.mock("./download-images");
 jest.mock("../helpers/api-url");
 jest.mock("../helpers/local-path");
 
@@ -30,11 +33,13 @@ describe("main", () => {
     process.mockClear();
     apiUrl.mockClear();
     localPath.mockClear();
+    download.mockClear();
 
     apiUrl.mockImplementation(() => Promise.resolve(mockUrl));
     request.mockImplementation(() => Promise.resolve(mockData));
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
+    save.mockImplementation(() => Promise.resolve());
   });
 
   it("calls NRDB cards endpoint", async () => {
@@ -68,5 +73,13 @@ describe("main", () => {
       mockProcessedData,
       mockPath
     );
+  });
+
+  it("downloads the images", async () => {
+    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
+
+    await cards();
+
+    expect(download).toHaveBeenCalledWith(path, mockProcessedData);
   });
 });

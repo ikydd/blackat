@@ -2,11 +2,11 @@ const fs = require('fs');
 const axios = require('axios');
 
 const cardPath = (card, path) => `${path}/${card.code}.png`;
-const nonPresentCards = card => !fs.existsSync(cardPath(card, path));
+const nonPresentCards = (path) => (card) => !fs.existsSync(cardPath(card, path));
 
 const download = async (path, data) => {
     return Promise.all(data
-        .filter(nonPresentCards)
+        .filter(nonPresentCards(path))
         .map((card => axios({
                 url: card.imagesrc,
                 method: 'GET',
