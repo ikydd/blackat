@@ -37,4 +37,13 @@ describe('process cards', () => {
         expect(output[2].side).toEqual(mockData.data[2].side_code);
         expect(output[3].side).toEqual(mockData.data[3].side_code);
     });
+
+    it('outputs the card code', () => {
+        const output = process(mockData);
+
+        expect(output[0].code).toEqual(mockData.data[0].code);
+        expect(output[1].code).toEqual(mockData.data[1].code);
+        expect(output[2].code).toEqual(mockData.data[2].code);
+        expect(output[3].code).toEqual(mockData.data[3].code);
+    });
 })
