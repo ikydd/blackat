@@ -1,6 +1,6 @@
 import React from 'react';
 import { create }  from 'react-test-renderer';
-import { waitFor } from '@testing-library/react';
+import { waitFor, render, fireEvent } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import FilterList from './FilterList';
 import * as api from '../helpers/api';
@@ -45,4 +45,35 @@ describe('FilterList', () => {
 
     expect(component.root.findAllByType('input').length).toEqual(2);
   });
+
+  it('accepts an list of selected filters', async () => {
+    const isSelected = ['shaper', 'anarch'];
+    const component = create(<FilterList selected={isSelected} />);
+
+    await waitFor(() => component.root.findAllByType('input').length > 0);
+
+    expect(component.root.findAllByType('input').filter((input) => input.props.checked)
+      .map((input) => input.props.value)).toEqual(['anarch', 'shaper']);
+  })
+
+  it('calls a callback when option is selected', async () => {
+    const cb = jest.fn();
+    const { findByLabelText } = render(<FilterList onChange={cb} />);
+
+    const input = await findByLabelText('Anarch');
+
+    fireEvent.click(input);
+    expect(cb).toHaveBeenCalledWith(['anarch']);
+  })
+
+  it('calls a callback when option is deselected', async () => {
+    const selected = ['anarch', 'shaper'];
+    const cb = jest.fn();
+    const { findByLabelText } = render(<FilterList selected={selected} onChange={cb} />);
+
+    const input = await findByLabelText('Anarch');
+
+    fireEvent.click(input);
+    expect(cb).toHaveBeenCalledWith(['shaper']);
+  })
 });

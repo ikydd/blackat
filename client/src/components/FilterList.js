@@ -5,7 +5,8 @@ import './FilterList.css';
 class Checklist extends Component {
 
   state = {
-    options: []
+      options: [],
+      selected: this.props.selected || []
   }
 
   componentDidMount() {
@@ -21,10 +22,28 @@ class Checklist extends Component {
     return option.side === this.props.side;
   }
 
+  isSelected = (faction) => {
+    return this.state.selected.includes(faction.code);
+  }
+
+  change = faction => () => {
+    let selected = this.state.selected;
+    if (this.state.selected.includes(faction.code)) {
+       selected = this.state.selected.filter(item => item !== faction.code)
+    } else {
+      selected = this.state.selected.concat(faction.code);
+    }
+
+    this.props.onChange(selected);
+  }
+
   render() {
     return (
       <div id="factions">{this.state.options.filter(this.filterBySide).map((faction) => (
-        <input type="checkbox" key={faction.code} value={faction.name}/>
+        <span key={faction.code} >
+          <input type="checkbox" id={'faction-filter-' + faction.code} name={faction.code} value={faction.code} checked={this.isSelected(faction)} onChange={this.change(faction)} />
+          <label htmlFor={'faction-filter-' + faction.code}>{faction.name}</label>
+        </span>
       ))}</div>
     );
   }
