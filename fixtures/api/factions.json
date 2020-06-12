@@ -2,26 +2,26 @@
   {
     "code": "anarch",
     "name": "Anarch",
-    "side_code": "runner"
+    "side": "runner"
   },
   {
     "code": "criminal",
     "name": "Criminal",
-    "side_code": "runner"
+    "side": "runner"
   },
   {
     "code": "shaper",
     "name": "Shaper",
-    "side_code": "runner"
+    "side": "runner"
   },
   {
     "code": "haas-bioroid",
     "name": "Haas-Bioroid",
-    "side_code": "corp"
+    "side": "corp"
   },
   {
     "code": "jinteki",
     "name": "Jinteki",
-    "side_code": "corp"
+    "side": "corp"
   }
 ]
