@@ -42,25 +42,25 @@ describe("main", () => {
     save.mockImplementation(() => Promise.resolve());
   });
 
-  it("calls NRDB cards endpoint", async () => {
+  it("gets NRDB cards endpoint", async () => {
     await cards();
 
     expect(apiUrl).toHaveBeenCalledWith('/cards');
   });
 
-  it("calls NRDB cards endpoint", async () => {
+  it("calls the NRDB endpoint", async () => {
     await cards();
 
     expect(request).toHaveBeenCalledWith(mockUrl);
   });
 
-  it("applies the card processor", async () => {
+  it("applies the processor", async () => {
     await cards();
 
     expect(process).toHaveBeenCalledWith(mockData);
   });
 
-  it("applies the card processor", async () => {
+  it("gets the local save path", async () => {
     await cards();
 
     expect(localPath).toHaveBeenCalledWith('cards.json');
