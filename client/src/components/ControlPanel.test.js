@@ -4,9 +4,11 @@ import { shallow } from 'enzyme';
 import ControlPanel from './ControlPanel';
 import Header from './Header';
 import SideButton from './SideButton';
+import FilterList from './FilterList';
 
 jest.mock('../helpers/api');
 jest.mock('./SideButton');
+jest.mock('./FilterList');
 
 describe('CardList', () => {
   it('renders without crashing', () => {
@@ -36,7 +38,7 @@ describe('CardList', () => {
       expect(component.root.findAllByType(SideButton)[1].props.side).toEqual('corp');
     });
 
-    it('passes a callback trhough to the SideButtons', () => {
+    it('passes a callback through to the SideButtons', () => {
       const cb = jest.fn();
       const component = create(<ControlPanel onSideSelect={cb}/>);
       expect(component.root.findAllByType(SideButton)[0].props.onSelect).toEqual(cb);
@@ -47,6 +49,24 @@ describe('CardList', () => {
       const component = create(<ControlPanel side="runner"/>);
       expect(component.root.findAllByType(SideButton)[0].props.selected).toEqual(true);
       expect(component.root.findAllByType(SideButton)[1].props.selected).toEqual(false);
+    });
+  });
+
+  describe('Filters', () => {
+    it('has a factions filter', () => {
+      const component = create(<ControlPanel side="runner"/>);
+      expect(component.root.findAllByType(FilterList).length).toEqual(1);
+    });
+
+    it('passes the side to the faction filter', () => {
+      const component = create(<ControlPanel side="runner"/>);
+      expect(component.root.findAllByType(FilterList)[0].props.side).toEqual('runner');
+    });
+
+    it('passes a callback to the faction filter', () => {
+      const cb = jest.fn();
+      const component = create(<ControlPanel side="runner" onFactionChange={cb}/>);
+      expect(component.root.findAllByType(FilterList)[0].props.onChange).toEqual(cb);
     });
   });
 });

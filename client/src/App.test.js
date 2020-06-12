@@ -31,19 +31,46 @@ describe('Side Selection', () => {
     expect(component.state('side')).toEqual("runner");
   });
 
-  it('pass a side selection callback to the ControlPanel', () => {
+  it('passes a side selection callback to the ControlPanel', () => {
     const component = create(<App />);
     expect(component.root.findByType(ControlPanel).props.onSideSelect).toEqual(expect.any(Function));
   });
 
   it('sends the appropriate prop to ControlPanel when selected', () => {
     const component = create(<App />);
-    expect(component.root.findByType(ControlPanel).props.onSideSelect).toEqual(expect.any(Function));
+    component.root.findByType(ControlPanel).props.onSideSelect("foo");
+    expect(component.root.findByType(ControlPanel).props.side).toEqual("foo");
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
     const component = create(<App />);
     component.root.findByType(ControlPanel).props.onSideSelect("foo");
     expect(component.root.findByType(CardList).props.side).toEqual("foo");
+  });
+});
+
+
+
+describe('Faction Selection', () => {
+  it('starts with no factions selected', () => {
+    const component = shallow(<App />);
+    expect(component.state('factions')).toEqual([]);
+  });
+
+  it('pass a faction selection callback to the ControlPanel', () => {
+    const component = create(<App />);
+    expect(component.root.findByType(ControlPanel).props.onFactionSelect).toEqual(expect.any(Function));
+  });
+
+  it('sends the appropriate prop to ControlPanel when selected', () => {
+    const component = create(<App />);
+    component.root.findByType(ControlPanel).props.onFactionSelect(["foo"]);
+    expect(component.root.findByType(ControlPanel).props.factions).toEqual(["foo"]);
+  });
+
+  it('sends the appropriate prop to CardList when selected', () => {
+    const component = create(<App />);
+    component.root.findByType(ControlPanel).props.onFactionSelect(["foo"]);
+    expect(component.root.findByType(CardList).props.factions).toEqual(["foo"]);
   });
 });
