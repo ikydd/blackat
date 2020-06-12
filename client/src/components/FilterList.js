@@ -39,7 +39,9 @@ class Checklist extends Component {
 
   render() {
     return (
-      <div id="factions">{this.state.options.filter(this.filterBySide).map((faction) => (
+      <div id="factions">
+        <header>Factions</header>
+        {this.state.options.filter(this.filterBySide).map((faction) => (
         <div key={faction.code} >
           <label htmlFor={'faction-filter-' + faction.code}><input type="checkbox" id={'faction-filter-' + faction.code} name={faction.code} value={faction.code} checked={this.isSelected(faction)} onChange={this.change(faction)} /> {faction.name}</label>
         </div>

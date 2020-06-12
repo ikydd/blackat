@@ -18,6 +18,11 @@ describe('FilterList', () => {
     shallow(<FilterList/>);
   });
 
+  it('has a title', () => {
+    const component = shallow(<FilterList/>);
+    expect(component.find('header').text()).toEqual('Factions');
+  });
+
   it('renders with no options to begin with', async () => {
     const component = create(<FilterList/>);
 
