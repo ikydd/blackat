@@ -20,6 +20,7 @@ describe('FilterList', () => {
 
   it('has a title', () => {
     const component = shallow(<FilterList/>);
+
     expect(component.find('header').text()).toEqual('Factions');
   });
 
