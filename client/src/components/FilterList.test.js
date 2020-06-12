@@ -21,7 +21,7 @@ describe('FilterList', () => {
   it('has a title', () => {
     const component = shallow(<FilterList/>);
 
-    expect(component.find('header').text()).toEqual('Factions');
+    expect(component.find('.filter-list-title').text()).toEqual('Factions');
   });
 
   it('renders with no options to begin with', async () => {

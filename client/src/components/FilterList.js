@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { call } from '../helpers/api';
+import Icon from './Icon.js';
 import './FilterList.css';
 
 class Checklist extends Component {
@@ -40,11 +41,14 @@ class Checklist extends Component {
 
   render() {
     return (
-      <div id="factions">
-        <header>Factions</header>
+      <div id="factions" className="filter-list">
+        <h4 className="filter-list-title">Factions</h4>
         {this.state.options.filter(this.filterBySide).map((faction) => (
         <div key={faction.code} >
-          <label htmlFor={'faction-filter-' + faction.code}><input type="checkbox" id={'faction-filter-' + faction.code} name={faction.code} value={faction.code} checked={this.isSelected(faction)} onChange={this.change(faction)} /> {faction.name}</label>
+          <label htmlFor={'faction-filter-' + faction.code}>
+            <input type="checkbox" id={'faction-filter-' + faction.code} name={faction.code} value={faction.code} checked={this.isSelected(faction)} onChange={this.change(faction)} />
+            &nbsp; <Icon code={faction.code} /> {faction.name}
+          </label>
         </div>
       ))}</div>
     );
