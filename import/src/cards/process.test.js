@@ -46,4 +46,13 @@ describe('process cards', () => {
         expect(output[2].code).toEqual(mockData.data[2].code);
         expect(output[3].code).toEqual(mockData.data[3].code);
     });
+
+    it('outputs the faction code', () => {
+        const output = process(mockData);
+
+        expect(output[0].faction).toEqual(mockData.data[0].faction_code);
+        expect(output[1].faction).toEqual(mockData.data[1].faction_code);
+        expect(output[2].faction).toEqual(mockData.data[2].faction_code);
+        expect(output[3].faction).toEqual(mockData.data[3].faction_code);
+    });
 })
