@@ -4,6 +4,9 @@ import { call } from '../helpers/api';
 import './CardList.css';
 
 class CardList extends Component {
+  static defaultProps = {
+    factions: []
+  }
 
   state = {
     cards: []
@@ -22,9 +25,20 @@ class CardList extends Component {
     return card.side === this.props.side;
   }
 
+  filterByFactions = (card) => {
+    if (!this.props.factions.length) {
+      return true;
+    }
+    return this.props.factions.includes(card.faction);
+  }
+
+  filter = cards => cards
+      .filter(this.filterBySide)
+      .filter(this.filterByFactions);
+
   render() {
     return (
-      <div id="cards">{this.state.cards.filter(this.filterBySide).map((card, index) => (
+      <div id="cards">{this.filter(this.state.cards).map((card, index) => (
         <Card key={index} data={card}/>
       ))}</div>
     );

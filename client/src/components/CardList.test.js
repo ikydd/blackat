@@ -47,4 +47,13 @@ describe('CardList', () => {
 
     expect(component.root.findAllByType(Card).length).toEqual(2);
   });
+
+  it('only shows cards from the correct factions', async () => {
+    const factions = ['shaper'];
+    const component = create(<CardList factions={factions} />);
+
+    await waitFor(() => component.root.findAllByType(Card).length > 0)
+
+    expect(component.root.findAllByType(Card).length).toEqual(1);
+  });
 });

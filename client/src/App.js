@@ -13,14 +13,14 @@ class App extends Component {
     this.setState({ side });
   }
 
-  factionSelect = (factions) => {
+  factionChange = (factions) => {
     this.setState({ factions });
   }
 
   render() {
     return (
       <div className="App">
-        <ControlPanel side={this.state.side} factions={this.state.factions} onSideSelect={this.sideSelect} onFactionSelect={this.factionSelect}/>
+        <ControlPanel side={this.state.side} factions={this.state.factions} onSideSelect={this.sideSelect} onFactionChange={this.factionChange}/>
         <CardList side={this.state.side} factions={this.state.factions}/>
       </div>
     );

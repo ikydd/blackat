@@ -62,7 +62,17 @@ describe('FilterList', () => {
       .map((input) => input.props.value)).toEqual(['anarch', 'shaper']);
   })
 
-  it('calls a callback when option is selected', async () => {
+  it('checks the box when an option is selected', async () => {
+    const cb = jest.fn();
+    const { findByLabelText } = render(<FilterList onChange={cb} />);
+
+    const input = await findByLabelText('Anarch');
+
+    fireEvent.click(input);
+    expect(input.checked).toBe(true);
+  })
+
+  it('calls a callback when an option is selected', async () => {
     const cb = jest.fn();
     const { findByLabelText } = render(<FilterList onChange={cb} />);
 
@@ -72,7 +82,7 @@ describe('FilterList', () => {
     expect(cb).toHaveBeenCalledWith(['anarch']);
   })
 
-  it('calls a callback when option is deselected', async () => {
+  it('calls a callback when an option is deselected', async () => {
     const selected = ['anarch', 'shaper'];
     const cb = jest.fn();
     const { findByLabelText } = render(<FilterList selected={selected} onChange={cb} />);

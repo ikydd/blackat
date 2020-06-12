@@ -59,18 +59,18 @@ describe('Faction Selection', () => {
 
   it('pass a faction selection callback to the ControlPanel', () => {
     const component = create(<App />);
-    expect(component.root.findByType(ControlPanel).props.onFactionSelect).toEqual(expect.any(Function));
+    expect(component.root.findByType(ControlPanel).props.onFactionChange).toEqual(expect.any(Function));
   });
 
   it('sends the appropriate prop to ControlPanel when selected', () => {
     const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onFactionSelect(["foo"]);
+    component.root.findByType(ControlPanel).props.onFactionChange(["foo"]);
     expect(component.root.findByType(ControlPanel).props.factions).toEqual(["foo"]);
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
     const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onFactionSelect(["foo"]);
+    component.root.findByType(ControlPanel).props.onFactionChange(["foo"]);
     expect(component.root.findByType(CardList).props.factions).toEqual(["foo"]);
   });
 });

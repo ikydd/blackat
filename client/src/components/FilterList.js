@@ -34,6 +34,7 @@ class Checklist extends Component {
       selected = this.state.selected.concat(faction.code);
     }
 
+    this.setState({ selected });
     this.props.onChange(selected);
   }
 
