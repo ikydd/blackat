@@ -24,20 +24,19 @@ describe('download images', () => {
     const fixtures = `${__dirname}/fixtures`;
     const originalLog = console.error;
 
-    beforeEach(() => {
-
+    beforeEach(async () => {
         if (fs.existsSync(dir)){
-            fsExtra.emptyDirSync(dir);
+            await fsExtra.emptyDir(dir);
         } else {
             fs.mkdirSync(dir);
         }
         console.error = jest.fn();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         if (fs.existsSync(dir)){
-            fsExtra.emptyDirSync(dir);
-            fsExtra.removeSync(dir);
+            await fsExtra.emptyDir(dir);
+            await fsExtra.remove(dir);
         }
         console.error = originalLog;
         nock.cleanAll()
