@@ -21,9 +21,9 @@ describe('CardList', () => {
   });
 
   it('renders with no cards to begin with', async () => {
-    const component = create(<CardList/>);
+    const component = shallow(<CardList/>);
 
-    expect(component.root.findAllByType(Card).length).toEqual(0);
+    expect(component.find(Card).length).toEqual(0);
   })
 
   it('uses api.call correctly', () => {
@@ -33,27 +33,27 @@ describe('CardList', () => {
   });
 
   it('default to showing all cards', async () => {
-    const component = create(<CardList/>);
+    const component = shallow(<CardList/>);
 
-    await waitFor(() => component.root.findAllByType(Card).length > 0)
+    await waitFor(() => component.find(Card).length > 0)
 
-    expect(component.root.findAllByType(Card).length).toEqual(5);
+    expect(component.find(Card).length).toEqual(5);
   });
 
   it('only shows cards from the correct side', async () => {
-    const component = create(<CardList side="runner" />);
+    const component = shallow(<CardList side="runner" />);
 
-    await waitFor(() => component.root.findAllByType(Card).length > 0)
+    await waitFor(() => component.find(Card).length > 0)
 
-    expect(component.root.findAllByType(Card).length).toEqual(2);
+    expect(component.find(Card).length).toEqual(2);
   });
 
   it('only shows cards from the correct factions', async () => {
     const factions = ['shaper'];
-    const component = create(<CardList factions={factions} />);
+    const component = shallow(<CardList factions={factions} />);
 
-    await waitFor(() => component.root.findAllByType(Card).length > 0)
+    await waitFor(() => component.find(Card).length > 0)
 
-    expect(component.root.findAllByType(Card).length).toEqual(1);
+    expect(component.find(Card).length).toEqual(1);
   });
 });

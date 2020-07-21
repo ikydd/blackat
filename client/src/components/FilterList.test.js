@@ -25,9 +25,9 @@ describe('FilterList', () => {
   });
 
   it('renders with no options to begin with', async () => {
-    const component = create(<FilterList/>);
+    const component = shallow(<FilterList/>);
 
-    expect(component.root.findAllByType('input').length).toEqual(0);
+    expect(component.find('input').length).toEqual(0);
   })
 
   it('uses api.call correctly', () => {
@@ -37,22 +37,22 @@ describe('FilterList', () => {
   });
 
   it('default to showing all options', async () => {
-    const component = create(<FilterList/>);
+    const component = shallow(<FilterList/>);
 
-    await waitFor(() => component.root.findAllByType('input').length > 0);
+    await waitFor(() => component.find('input').length > 0);
 
-    expect(component.root.findAllByType('input').length).toEqual(5);
+    expect(component.find('input').length).toEqual(5);
   });
 
   it('only shows options from the correct side', async () => {
-    const component = create(<FilterList side="corp" />);
+    const component = shallow(<FilterList side="corp" />);
 
-    await waitFor(() => component.root.findAllByType('input').length > 0);
+    await waitFor(() => component.find('input').length > 0);
 
-    expect(component.root.findAllByType('input').length).toEqual(2);
+    expect(component.find('input').length).toEqual(2);
   });
 
-  it('accepts an list of selected filters', async () => {
+  it('accepts a list of selected filters', async () => {
     const isSelected = ['shaper', 'anarch'];
     const component = create(<FilterList selected={isSelected} />);
 
@@ -60,16 +60,6 @@ describe('FilterList', () => {
 
     expect(component.root.findAllByType('input').filter((input) => input.props.checked)
       .map((input) => input.props.value)).toEqual(['anarch', 'shaper']);
-  })
-
-  it('checks the box when an option is selected', async () => {
-    const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList onChange={cb} />);
-
-    const input = await findByLabelText('Anarch');
-
-    fireEvent.click(input);
-    expect(input.checked).toBe(true);
   })
 
   it('calls a callback when an option is selected', async () => {

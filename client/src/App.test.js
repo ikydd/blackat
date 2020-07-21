@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { create }  from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import App from './App';
 import ControlPanel from './components/ControlPanel';
+import FilterList from './components/FilterList';
+import SideButton from './components/SideButton';
 import CardList from './components/CardList';
 
 jest.mock('./components/ControlPanel');
@@ -16,13 +17,13 @@ it('renders without crashing', () => {
 });
 
 it('contains the ControlPanel', () => {
-  const component = create(<App />);
-  expect(component.root.findAllByType(ControlPanel).length).toEqual(1);
+  const component = shallow(<App />);
+  expect(component.find(ControlPanel).length).toEqual(1);
 });
 
 it('contains the CardList', () => {
-  const component = create(<App />);
-  expect(component.root.findAllByType(CardList).length).toEqual(1);
+  const component = shallow(<App />);
+  expect(component.find(CardList).length).toEqual(1);
 });
 
 describe('Side Selection', () => {
@@ -31,25 +32,57 @@ describe('Side Selection', () => {
     expect(component.state('side')).toEqual("runner");
   });
 
-  it('passes a side selection callback to the ControlPanel', () => {
-    const component = create(<App />);
-    expect(component.root.findByType(ControlPanel).props.onSideSelect).toEqual(expect.any(Function));
+  it('contains two sides', () => {
+    const component = shallow(<App />);
+    expect(component.find(SideButton).length).toEqual(2);
   });
 
-  it('sends the appropriate prop to ControlPanel when selected', () => {
-    const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onSideSelect("foo");
-    expect(component.root.findByType(ControlPanel).props.side).toEqual("foo");
+  it('has Runner as the first side', () => {
+    const component = shallow(<App />);
+    expect(component.find(SideButton).at(0).prop('title')).toEqual('Runner');
+    expect(component.find(SideButton).at(0).prop('side')).toEqual('runner');
+  });
+
+  it('has Corp as the second side', () => {
+    const component = shallow(<App />);
+    expect(component.find(SideButton).at(1).prop('title')).toEqual('Corp');
+    expect(component.find(SideButton).at(1).prop('side')).toEqual('corp');
+  });
+
+  it('passes a callback through to the SideButtons', () => {
+    const component = shallow(<App />);
+    expect(component.find(SideButton).at(0).prop('onSelect')).toEqual(expect.any(Function));
+    expect(component.find(SideButton).at(1).prop('onSelect')).toEqual(expect.any(Function));
+  });
+
+  it('set props on the SideButtons as a result of state', () => {
+    const component = shallow(<App />);
+    component.setState({ side: "corp" });
+    expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
+    expect(component.find(SideButton).at(1).prop('selected')).toEqual(true);
+  });
+
+  it('selects the right SideButtons when they are selected', () => {
+    const component = shallow(<App />);
+    component.find(SideButton).at(0).prop('onSelect')("corp");
+    expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
+    expect(component.find(SideButton).at(1).prop('selected')).toEqual(true);
+  });
+
+  it('selects the right SideButtons when they are selected', () => {
+    const component = shallow(<App />);
+    component.setState({ side: "corp" });
+    component.find(SideButton).at(0).prop('onSelect')("runner");
+    expect(component.find(SideButton).at(0).prop('selected')).toEqual(true);
+    expect(component.find(SideButton).at(1).prop('selected')).toEqual(false);
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
-    const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onSideSelect("foo");
-    expect(component.root.findByType(CardList).props.side).toEqual("foo");
+    const component = shallow(<App />);
+    component.find(SideButton).at(0).prop('onSelect')("foo");
+    expect(component.find(CardList).prop('side')).toEqual("foo");
   });
 });
-
-
 
 describe('Faction Selection', () => {
   it('starts with no factions selected', () => {
@@ -57,20 +90,25 @@ describe('Faction Selection', () => {
     expect(component.state('factions')).toEqual([]);
   });
 
-  it('pass a faction selection callback to the ControlPanel', () => {
-    const component = create(<App />);
-    expect(component.root.findByType(ControlPanel).props.onFactionChange).toEqual(expect.any(Function));
+  it('contains a factions filter', () => {
+    const component = shallow(<App />);
+    expect(component.find(FilterList).length).toEqual(1);
   });
 
-  it('sends the appropriate prop to ControlPanel when selected', () => {
-    const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onFactionChange(["foo"]);
-    expect(component.root.findByType(ControlPanel).props.factions).toEqual(["foo"]);
+  it('pass a faction selection callback to the FilterList', () => {
+    const component = shallow(<App />);
+    expect(component.find(FilterList).prop('onChange')).toEqual(expect.any(Function));
+  });
+
+  it('sends the appropriate prop to FilterList when selected', () => {
+    const component = shallow(<App />);
+    component.find(FilterList).prop('onChange')(["foo"]);
+    expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
-    const component = create(<App />);
-    component.root.findByType(ControlPanel).props.onFactionChange(["foo"]);
-    expect(component.root.findByType(CardList).props.factions).toEqual(["foo"]);
+    const component = shallow(<App />);
+    component.find(FilterList).prop('onChange')(["foo"]);
+    expect(component.find(CardList).prop('factions')).toEqual(["foo"]);
   });
 });

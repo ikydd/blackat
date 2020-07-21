@@ -5,9 +5,12 @@ import './FilterList.css';
 
 class FilterList extends Component {
 
+  static defaultProps = {
+    selected: []
+  }
+
   state = {
-      options: [],
-      selected: this.props.selected || []
+      options: []
   }
 
   componentDidMount() {
@@ -24,18 +27,17 @@ class FilterList extends Component {
   }
 
   isSelected = (faction) => {
-    return this.state.selected.includes(faction.code);
+    return this.props.selected.includes(faction.code);
   }
 
   change = faction => () => {
-    let selected = this.state.selected;
-    if (this.state.selected.includes(faction.code)) {
-       selected = this.state.selected.filter(item => item !== faction.code)
+    let selected = this.props.selected;
+    if (this.props.selected.includes(faction.code)) {
+       selected = this.props.selected.filter(item => item !== faction.code)
     } else {
-      selected = this.state.selected.concat(faction.code);
+      selected = this.props.selected.concat(faction.code);
     }
 
-    this.setState({ selected });
     this.props.onChange(selected);
   }
 
