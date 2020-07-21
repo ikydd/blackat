@@ -4,7 +4,7 @@ import './Icon.css';
 
 class Icon extends Component {
     render () {
-        return (<span class={"icon icon-" + this.props.code}></span>)
+        return (<span className={"icon icon-" + this.props.code}></span>)
     }
 }
 
