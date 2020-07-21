@@ -54,12 +54,16 @@ describe('FilterList', () => {
 
   it('accepts a list of selected filters', async () => {
     const isSelected = ['shaper', 'anarch'];
-    const component = create(<FilterList selected={isSelected} />);
+    const component = shallow(<FilterList selected={isSelected} />);
 
-    await waitFor(() => component.root.findAllByType('input').length > 0);
+    await waitFor(() => component.find('input').length > 0);
 
-    expect(component.root.findAllByType('input').filter((input) => input.props.checked)
-      .map((input) => input.props.value)).toEqual(['anarch', 'shaper']);
+    const checked = component.find('input')
+      .map((input) => input)
+      .filter((input) => input.prop('checked'))
+      .map((input) => input.prop('value'));
+
+    expect(checked).toEqual(['anarch', 'shaper']);
   })
 
   it('calls a callback when an option is selected', async () => {
