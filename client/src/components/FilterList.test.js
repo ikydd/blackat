@@ -1,5 +1,4 @@
 import React from 'react';
-import { create }  from 'react-test-renderer';
 import { waitFor, render, fireEvent } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import FilterList from './FilterList';
