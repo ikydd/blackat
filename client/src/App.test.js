@@ -18,39 +18,46 @@ it('renders without crashing', () => {
 
 it('contains the ControlPanel', () => {
   const component = shallow(<App />);
+
   expect(component.find(ControlPanel).length).toEqual(1);
 });
 
 it('contains the CardList', () => {
   const component = shallow(<App />);
+
   expect(component.find(CardList).length).toEqual(1);
 });
 
 describe('Side Selection', () => {
   it('starts on the runner side', () => {
     const component = shallow(<App />);
+
     expect(component.state('side')).toEqual("runner");
   });
 
   it('contains two sides', () => {
     const component = shallow(<App />);
+
     expect(component.find(SideButton).length).toEqual(2);
   });
 
   it('has Runner as the first side', () => {
     const component = shallow(<App />);
+
     expect(component.find(SideButton).at(0).prop('title')).toEqual('Runner');
     expect(component.find(SideButton).at(0).prop('side')).toEqual('runner');
   });
 
   it('has Corp as the second side', () => {
     const component = shallow(<App />);
+
     expect(component.find(SideButton).at(1).prop('title')).toEqual('Corp');
     expect(component.find(SideButton).at(1).prop('side')).toEqual('corp');
   });
 
   it('passes a callback through to the SideButtons', () => {
     const component = shallow(<App />);
+
     expect(component.find(SideButton).at(0).prop('onSelect')).toEqual(expect.any(Function));
     expect(component.find(SideButton).at(1).prop('onSelect')).toEqual(expect.any(Function));
   });
@@ -58,6 +65,7 @@ describe('Side Selection', () => {
   it('set props on the SideButtons as a result of state', () => {
     const component = shallow(<App />);
     component.setState({ side: "corp" });
+
     expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
     expect(component.find(SideButton).at(1).prop('selected')).toEqual(true);
   });
@@ -65,6 +73,7 @@ describe('Side Selection', () => {
   it('selects the right SideButtons when they are selected', () => {
     const component = shallow(<App />);
     component.find(SideButton).at(0).prop('onSelect')("corp");
+
     expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
     expect(component.find(SideButton).at(1).prop('selected')).toEqual(true);
   });
@@ -73,6 +82,7 @@ describe('Side Selection', () => {
     const component = shallow(<App />);
     component.setState({ side: "corp" });
     component.find(SideButton).at(0).prop('onSelect')("runner");
+
     expect(component.find(SideButton).at(0).prop('selected')).toEqual(true);
     expect(component.find(SideButton).at(1).prop('selected')).toEqual(false);
   });
@@ -80,6 +90,7 @@ describe('Side Selection', () => {
   it('sends the appropriate prop to CardList when selected', () => {
     const component = shallow(<App />);
     component.find(SideButton).at(0).prop('onSelect')("foo");
+
     expect(component.find(CardList).prop('side')).toEqual("foo");
   });
 });
@@ -87,28 +98,33 @@ describe('Side Selection', () => {
 describe('Faction Selection', () => {
   it('starts with no factions selected', () => {
     const component = shallow(<App />);
+
     expect(component.state('factions')).toEqual([]);
   });
 
   it('contains a factions filter', () => {
     const component = shallow(<App />);
+
     expect(component.find(FilterList).length).toEqual(1);
   });
 
   it('pass a faction selection callback to the FilterList', () => {
     const component = shallow(<App />);
+
     expect(component.find(FilterList).prop('onChange')).toEqual(expect.any(Function));
   });
 
   it('sends the appropriate prop to FilterList when selected', () => {
     const component = shallow(<App />);
     component.find(FilterList).prop('onChange')(["foo"]);
+
     expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
     const component = shallow(<App />);
     component.find(FilterList).prop('onChange')(["foo"]);
+
     expect(component.find(CardList).prop('factions')).toEqual(["foo"]);
   });
 });
