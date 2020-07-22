@@ -8,33 +8,39 @@ import './App.css';
 class App extends Component {
   state = {
       side: "runner",
-      factions: {
-        runner: [],
-        corp: []
-      }
+      factions_runner: [],
+      factions_corp: []
   };
 
-  sideSelect = (side) => {
+  setSide = (side) => {
     this.setState({ side });
   }
 
-  factionChange = (factions) => {
-    this.setState({ factions: {
-      [this.state.side]: factions
-    }});
+  getSide = () => {
+    return this.state.side;
+  }
+
+  setFactions = (factions, side = null) => {
+    const currentSide = side || this.getSide();
+    this.setState({ [`factions_${currentSide}`]: factions });
+  }
+
+  getFactions = (side = null) => {
+    const currentSide = side || this.getSide();
+    return this.state[`factions_${currentSide}`];
   }
 
   render() {
     return (
       <div className="App">
-        <ControlPanel factions={this.state.factions}>
+        <ControlPanel>
           <div id="sides">
-            <SideButton title='Runner' side="runner" selected={this.state.side === 'runner'} onSelect={this.sideSelect} />
-            <SideButton title='Corp' side="corp" selected={this.state.side === 'corp'} onSelect={this.sideSelect} />
+            <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
+            <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <FilterList side={this.state.side} selected={this.state.factions[this.state.side]} onChange={this.factionChange} />
+          <FilterList side={this.getSide()} selected={this.getFactions()} onChange={this.setFactions} />
         </ControlPanel>
-        <CardList side={this.state.side} factions={this.state.factions[this.state.side]}/>
+        <CardList side={this.getSide()} factions={this.getFactions()}/>
       </div>
     );
   }

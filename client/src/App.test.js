@@ -30,9 +30,9 @@ it('contains the CardList', () => {
 
 describe('Side Selection', () => {
   it('starts on the runner side', () => {
-    const component = shallow(<App />);
+    const instance = shallow(<App />).instance();
 
-    expect(component.state('side')).toEqual("runner");
+    expect(instance.getSide()).toEqual("runner");
   });
 
   it('contains two sides', () => {
@@ -57,9 +57,10 @@ describe('Side Selection', () => {
 
   it('passes a callback through to the SideButtons', () => {
     const component = shallow(<App />);
+    const instance = component.instance();
 
-    expect(component.find(SideButton).at(0).prop('onSelect')).toEqual(expect.any(Function));
-    expect(component.find(SideButton).at(1).prop('onSelect')).toEqual(expect.any(Function));
+    expect(component.find(SideButton).at(0).prop('onSelect')).toEqual(instance.setSide);
+    expect(component.find(SideButton).at(1).prop('onSelect')).toEqual(instance.setSide);
   });
 
   it('set props on the SideButtons as a result of initial state', () => {
@@ -71,7 +72,7 @@ describe('Side Selection', () => {
 
   it('selects the right SideButtons when corp is selected', () => {
     const component = shallow(<App />);
-    component.setState({ side: "runner" });
+    component.instance().setSide("runner");
     component.find(SideButton).at(0).prop('onSelect')("corp");
 
     expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
@@ -80,7 +81,7 @@ describe('Side Selection', () => {
 
   it('selects the right SideButtons when runner is selected', () => {
     const component = shallow(<App />);
-    component.setState({ side: "corp" });
+    component.instance().setSide("corp");
     component.find(SideButton).at(0).prop('onSelect')("runner");
 
     expect(component.find(SideButton).at(0).prop('selected')).toEqual(true);
@@ -97,9 +98,10 @@ describe('Side Selection', () => {
 
 describe('Faction Selection', () => {
   it('starts with no factions selected', () => {
-    const component = shallow(<App />);
+    const instance = shallow(<App />).instance();
 
-    expect(component.state('factions')).toEqual({ runner: [], corp: [] });
+    expect(instance.getFactions('runner')).toEqual([]);
+    expect(instance.getFactions('corp')).toEqual([]);
   });
 
   it('contains a factions filter', () => {
@@ -110,30 +112,42 @@ describe('Faction Selection', () => {
 
   it('pass a faction selection callback to the FilterList', () => {
     const component = shallow(<App />);
+    const instance = component.instance();
 
-    expect(component.find(FilterList).prop('onChange')).toEqual(expect.any(Function));
+    expect(component.find(FilterList).prop('onChange')).toEqual(instance.setFactions);
   });
 
   it('sends the appropriate prop to FilterList when selected', () => {
     const component = shallow(<App />);
     component.find(FilterList).prop('onChange')(["foo"]);
 
+
     expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
   });
 
-  it('sends the appropriate prop to FilterList when selected', () => {
+  it('sends the appropriate prop to FilterList when changing sides', () => {
     const component = shallow(<App />);
-    component.setState({
-      factions: {
-        runner: ['foo'],
-        corp: ['bar']
-      }
-    });
-    component.setState({ side: 'runner' })
+    const instance = component.instance();
+    instance.setFactions(['foo'], 'runner');
+    instance.setFactions(['bar'], 'corp');
+    instance.setSide('runner');
 
     expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
 
-    component.setState({ side: 'corp' })
+    instance.setSide('corp');
+
+    expect(component.find(FilterList).prop('selected')).toEqual(["bar"]);
+
+  });
+
+  it('retains selected filter when changing sides and faction selection', () => {
+    const component = shallow(<App />);
+    const instance = component.instance();
+    instance.setFactions([], 'runner');
+    instance.setFactions(['bar'], 'corp');
+    instance.setSide('runner');
+    component.find(FilterList).prop('onChange')(["foo"]);
+    instance.setSide('corp');
 
     expect(component.find(FilterList).prop('selected')).toEqual(["bar"]);
 
