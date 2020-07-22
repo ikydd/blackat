@@ -8,7 +8,10 @@ import './App.css';
 class App extends Component {
   state = {
       side: "runner",
-      factions: []
+      factions: {
+        runner: [],
+        corp: []
+      }
   };
 
   sideSelect = (side) => {
@@ -16,7 +19,9 @@ class App extends Component {
   }
 
   factionChange = (factions) => {
-    this.setState({ factions });
+    this.setState({ factions: {
+      [this.state.side]: factions
+    }});
   }
 
   render() {
@@ -27,9 +32,9 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.state.side === 'runner'} onSelect={this.sideSelect} />
             <SideButton title='Corp' side="corp" selected={this.state.side === 'corp'} onSelect={this.sideSelect} />
           </div>
-          <FilterList side={this.state.side} selected={this.state.factions} onChange={this.factionChange} />
+          <FilterList side={this.state.side} selected={this.state.factions[this.state.side]} onChange={this.factionChange} />
         </ControlPanel>
-        <CardList side={this.state.side} factions={this.state.factions}/>
+        <CardList side={this.state.side} factions={this.state.factions[this.state.side]}/>
       </div>
     );
   }
