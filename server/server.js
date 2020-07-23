@@ -24,6 +24,11 @@ router.get("/api/factions", (ctx) => {
   ctx.body = createReadStream(path.join(__dirname, "data", "factions.json"));
 });
 
+router.get("/api/types", (ctx) => {
+  ctx.set("Content-Type", "application/json");
+  ctx.body = createReadStream(path.join(__dirname, "data", "types.json"));
+});
+
 app.use(router.routes()).use(router.allowedMethods());
 
 app.use(

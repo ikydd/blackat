@@ -33,11 +33,16 @@ describe("server", () => {
       path.join(__dirname, "..", "fixtures", "api", "factions.json")
     );
 
+    const types = fs.readFileSync(
+      path.join(__dirname, "..", "fixtures", "api", "types.json")
+    );
+
     beforeEach(() => {
       mock({
         data: {
           "cards.json": cards,
           "factions.json": factions,
+          "types.json": types,
         },
       });
     });
@@ -56,6 +61,13 @@ describe("server", () => {
         .get("/api/factions")
         .expect("Content-Type", /json/)
         .expect(200, JSON.parse(factions));
+    });
+
+    it("return types data", () => {
+      return request
+        .get("/api/types")
+        .expect("Content-Type", /json/)
+        .expect(200, JSON.parse(types));
     });
   });
 });
