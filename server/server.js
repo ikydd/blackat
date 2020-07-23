@@ -9,24 +9,27 @@ const port = process.env.PORT || 5000;
 const app = new Koa();
 const router = new KoaRouter();
 
+const getDataStream = (dataType) =>
+  createReadStream(path.join(__dirname, "data", `${dataType}.json`));
+
+const dataTypes = ["cards", "factions", "types"];
+const isValidDataRequest = (request) => dataTypes.includes(request);
+
 router.get("/status", (ctx) => {
   ctx.status = 200;
   ctx.body = "OK";
 });
 
-router.get("/api/cards", (ctx) => {
+router.get("/api/:data", (ctx) => {
+  const request = ctx.params.data;
+  if (!isValidDataRequest(request)) {
+    ctx.status = 404;
+    ctx.set("Content-Type", "text/html");
+    ctx.body = "Unrecognised data request";
+    return;
+  }
   ctx.set("Content-Type", "application/json");
-  ctx.body = createReadStream(path.join(__dirname, "data", "cards.json"));
-});
-
-router.get("/api/factions", (ctx) => {
-  ctx.set("Content-Type", "application/json");
-  ctx.body = createReadStream(path.join(__dirname, "data", "factions.json"));
-});
-
-router.get("/api/types", (ctx) => {
-  ctx.set("Content-Type", "application/json");
-  ctx.body = createReadStream(path.join(__dirname, "data", "types.json"));
+  ctx.body = getDataStream(request);
 });
 
 app.use(router.routes()).use(router.allowedMethods());

@@ -1,1 +1,52 @@
-[{"code":"agenda","name":"Agenda","side":"corp"},{"code":"asset","name":"Asset","side":"corp"},{"code":"event","name":"Event","side":"runner"},{"code":"hardware","name":"Hardware","side":"runner"},{"code":"ice","name":"ICE","side":"corp"},{"code":"identity","name":"Identity","side":null},{"code":"operation","name":"Operation","side":"corp"},{"code":"program","name":"Program","side":"runner"},{"code":"resource","name":"Resource","side":"runner"},{"code":"upgrade","name":"Upgrade","side":"corp"}]
+[
+    {
+        "code": "agenda",
+        "name": "Agenda",
+        "side": "corp"
+    },
+    {
+        "code": "asset",
+        "name": "Asset",
+        "side": "corp"
+    },
+    {
+        "code": "event",
+        "name": "Event",
+        "side": "runner"
+    },
+    {
+        "code": "hardware",
+        "name": "Hardware",
+        "side": "runner"
+    },
+    {
+        "code": "ice",
+        "name": "ICE",
+        "side": "corp"
+    },
+    {
+        "code": "identity",
+        "name": "Identity",
+        "side": null
+    },
+    {
+        "code": "operation",
+        "name": "Operation",
+        "side": "corp"
+    },
+    {
+        "code": "program",
+        "name": "Program",
+        "side": "runner"
+    },
+    {
+        "code": "resource",
+        "name": "Resource",
+        "side": "runner"
+    },
+    {
+        "code": "upgrade",
+        "name": "Upgrade",
+        "side": "corp"
+    }
+]

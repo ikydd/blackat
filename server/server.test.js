@@ -25,19 +25,18 @@ describe("server", () => {
   });
 
   describe("api", () => {
-    const cards = fs.readFileSync(
-      path.join(__dirname, "..", "fixtures", "api", "cards.json")
-    );
+    const readDataFile = (dataType) =>
+      fs.readFileSync(
+        path.join(__dirname, "..", "fixtures", "api", `${dataType}.json`)
+      );
 
-    const factions = fs.readFileSync(
-      path.join(__dirname, "..", "fixtures", "api", "factions.json")
-    );
-
-    const types = fs.readFileSync(
-      path.join(__dirname, "..", "fixtures", "api", "types.json")
-    );
+    const cards = readDataFile("cards");
+    const factions = readDataFile("factions");
+    const types = readDataFile("types");
 
     beforeEach(() => {
+      // Workaround for mock-fs + jest breaking console log
+      // console.log();
       mock({
         data: {
           "cards.json": cards,
@@ -68,6 +67,10 @@ describe("server", () => {
         .get("/api/types")
         .expect("Content-Type", /json/)
         .expect(200, JSON.parse(types));
+    });
+
+    it("return not found for invalid URI segment", () => {
+      return request.get("/api/foo").expect(404);
     });
   });
 });
