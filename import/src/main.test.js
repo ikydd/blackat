@@ -16,4 +16,9 @@ describe("main", () => {
 
     expect(factions).toHaveBeenCalled();
   });
+  it("calls types", async () => {
+    await main.run();
+
+    expect(factions).toHaveBeenCalled();
+  });
 });
