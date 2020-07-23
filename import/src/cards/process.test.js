@@ -55,4 +55,13 @@ describe('process cards', () => {
         expect(output[2].faction).toEqual(mockData.data[2].faction_code);
         expect(output[3].faction).toEqual(mockData.data[3].faction_code);
     });
+
+    it('outputs the type code', () => {
+        const output = process(mockData);
+
+        expect(output[0].type).toEqual(mockData.data[0].type_code);
+        expect(output[1].type).toEqual(mockData.data[1].type_code);
+        expect(output[2].type).toEqual(mockData.data[2].type_code);
+        expect(output[3].type).toEqual(mockData.data[3].type_code);
+    });
 })
