@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "code": "agenda",
+      "name": "Agenda",
+      "position": 1,
+      "is_subtype": false,
+      "side_code": "corp"
+    },
+    {
+      "code": "event",
+      "name": "Event",
+      "position": 11,
+      "is_subtype": false,
+      "side_code": "runner"
+    },
+    {
+      "code": "ice",
+      "name": "ICE",
+      "position": 8,
+      "is_subtype": false,
+      "side_code": "corp"
+    },
+    {
+      "code": "identity",
+      "name": "Identity",
+      "position": 0,
+      "is_subtype": false,
+      "side_code": null
+    },
+    {
+      "code": "program",
+      "name": "Program",
+      "position": 15,
+      "is_subtype": false,
+      "side_code": "runner"
+    },
+    {
+      "code": "icebreaker",
+      "name": "Icebreaker",
+      "position": 14,
+      "is_subtype": true,
+      "side_code": "runner"
+    }
+  ],
+  "total": 6,
+  "success": true,
+  "version_number": "2.0",
+  "last_updated": "2017-02-20T11:04:08+00:00"
+}
