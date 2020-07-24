@@ -55,4 +55,13 @@ describe('CardList', () => {
 
     expect(component.find(Card).length).toEqual(1);
   });
+
+  it('only shows cards from the correct types', async () => {
+    const types = ['program'];
+    const component = shallow(<CardList types={types} />);
+
+    await waitFor(() => component.find(Card).length > 0)
+
+    expect(component.find(Card).length).toEqual(2);
+  });
 });
