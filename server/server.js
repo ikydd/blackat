@@ -12,7 +12,7 @@ const router = new KoaRouter();
 const getDataStream = (dataType) =>
   createReadStream(path.join(__dirname, "data", `${dataType}.json`));
 
-const dataTypes = ["cards", "factions", "types"];
+const dataTypes = ["cards", "factions", "types", "packs"];
 const isValidDataRequest = (request) => dataTypes.includes(request);
 
 router.get("/status", (ctx) => {

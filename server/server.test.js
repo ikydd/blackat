@@ -33,6 +33,7 @@ describe("server", () => {
     const cards = readDataFile("cards");
     const factions = readDataFile("factions");
     const types = readDataFile("types");
+    const packs = readDataFile("packs");
 
     beforeEach(() => {
       // Workaround for mock-fs + jest breaking console log
@@ -42,6 +43,7 @@ describe("server", () => {
           "cards.json": cards,
           "factions.json": factions,
           "types.json": types,
+          "packs.json": packs,
         },
       });
     });
@@ -67,6 +69,13 @@ describe("server", () => {
         .get("/api/types")
         .expect("Content-Type", /json/)
         .expect(200, JSON.parse(types));
+    });
+
+    it("return types data", () => {
+      return request
+        .get("/api/packs")
+        .expect("Content-Type", /json/)
+        .expect(200, JSON.parse(packs));
     });
 
     it("return not found for invalid URI segment", () => {

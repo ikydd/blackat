@@ -1,0 +1,42 @@
+[
+    {
+      "code": "core",
+      "cycle_code": "core",
+      "name": "Core Set"
+    },
+    {
+      "code": "wla",
+      "cycle_code": "genesis",
+      "name": "What Lies Ahead"
+    },
+    {
+      "code": "ta",
+      "cycle_code": "genesis",
+      "name": "Trace Amount"
+    },
+    {
+      "code": "ce",
+      "cycle_code": "genesis",
+      "name": "Cyber Exodus"
+    },
+    {
+      "code": "asis",
+      "cycle_code": "genesis",
+      "name": "A Study in Static"
+    },
+    {
+      "code": "hs",
+      "cycle_code": "genesis",
+      "name": "Humanity's Shadow"
+    },
+    {
+      "code": "fp",
+      "cycle_code": "genesis",
+      "name": "Future Proof"
+    },
+    {
+      "code": "cac",
+      "cycle_code": "creation-and-control",
+      "name": "Creation and Control"
+    }
+  ]
