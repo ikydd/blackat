@@ -107,22 +107,28 @@ describe('Faction Selection', () => {
   it('contains a factions filter', () => {
     const component = shallow(<App />);
 
-    expect(component.find(FilterList).length).toEqual(1);
+    expect(component.find(FilterList).at(0).prop('title')).toEqual("Factions");
   });
 
-  it('pass a faction selection callback to the FilterList', () => {
+  it('uses the factions endpoint', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(FilterList).at(0).prop('endpoint')).toEqual("factions");
+  });
+
+  it('passes a faction selection callback to the FilterList', () => {
     const component = shallow(<App />);
     const instance = component.instance();
 
-    expect(component.find(FilterList).prop('onChange')).toEqual(instance.setFactions);
+    expect(component.find(FilterList).at(0).prop('onChange')).toEqual(instance.setFactions);
   });
 
   it('sends the appropriate prop to FilterList when selected', () => {
     const component = shallow(<App />);
-    component.find(FilterList).prop('onChange')(["foo"]);
+    component.find(FilterList).at(0).prop('onChange')(["foo"]);
 
 
-    expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
+    expect(component.find(FilterList).at(0).prop('selected')).toEqual(["foo"]);
   });
 
   it('sends the appropriate prop to FilterList when changing sides', () => {
@@ -132,11 +138,11 @@ describe('Faction Selection', () => {
     instance.setFactions(['bar'], 'corp');
     instance.setSide('runner');
 
-    expect(component.find(FilterList).prop('selected')).toEqual(["foo"]);
+    expect(component.find(FilterList).at(0).prop('selected')).toEqual(["foo"]);
 
     instance.setSide('corp');
 
-    expect(component.find(FilterList).prop('selected')).toEqual(["bar"]);
+    expect(component.find(FilterList).at(0).prop('selected')).toEqual(["bar"]);
 
   });
 
@@ -146,17 +152,88 @@ describe('Faction Selection', () => {
     instance.setFactions([], 'runner');
     instance.setFactions(['bar'], 'corp');
     instance.setSide('runner');
-    component.find(FilterList).prop('onChange')(["foo"]);
+    component.find(FilterList).at(0).prop('onChange')(["foo"]);
     instance.setSide('corp');
 
-    expect(component.find(FilterList).prop('selected')).toEqual(["bar"]);
+    expect(component.find(FilterList).at(0).prop('selected')).toEqual(["bar"]);
 
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
     const component = shallow(<App />);
-    component.find(FilterList).prop('onChange')(["foo"]);
+    component.find(FilterList).at(0).prop('onChange')(["foo"]);
 
     expect(component.find(CardList).prop('factions')).toEqual(["foo"]);
+  });
+});
+
+describe('Types Selection', () => {
+  it('starts with no types selected', () => {
+    const instance = shallow(<App />).instance();
+
+    expect(instance.getTypes('runner')).toEqual([]);
+    expect(instance.getTypes('corp')).toEqual([]);
+  });
+
+  it('contains a types filter', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(FilterList).at(1).prop('title')).toEqual("Types");
+  });
+
+  it('uses the types endpoint', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(FilterList).at(1).prop('endpoint')).toEqual("types");
+  });
+
+  it('passes a type selection callback to the FilterList', () => {
+    const component = shallow(<App />);
+    const instance = component.instance();
+
+    expect(component.find(FilterList).at(1).prop('onChange')).toEqual(instance.setTypes);
+  });
+
+  it('sends the appropriate prop to FilterList when selected', () => {
+    const component = shallow(<App />);
+    component.find(FilterList).at(1).prop('onChange')(["foo"]);
+
+
+    expect(component.find(FilterList).at(1).prop('selected')).toEqual(["foo"]);
+  });
+
+  it('sends the appropriate prop to FilterList when changing sides', () => {
+    const component = shallow(<App />);
+    const instance = component.instance();
+    instance.setTypes(['foo'], 'runner');
+    instance.setTypes(['bar'], 'corp');
+    instance.setSide('runner');
+
+    expect(component.find(FilterList).at(1).prop('selected')).toEqual(["foo"]);
+
+    instance.setSide('corp');
+
+    expect(component.find(FilterList).at(1).prop('selected')).toEqual(["bar"]);
+
+  });
+
+  it('retains selected filter when changing sides and type selection', () => {
+    const component = shallow(<App />);
+    const instance = component.instance();
+    instance.setTypes([], 'runner');
+    instance.setTypes(['bar'], 'corp');
+    instance.setSide('runner');
+    component.find(FilterList).at(1).prop('onChange')(["foo"]);
+    instance.setSide('corp');
+
+    expect(component.find(FilterList).at(1).prop('selected')).toEqual(["bar"]);
+
+  });
+
+  it('sends the appropriate prop to CardList when selected', () => {
+    const component = shallow(<App />);
+    component.find(FilterList).at(1).prop('onChange')(["foo"]);
+
+    expect(component.find(CardList).prop('types')).toEqual(["foo"]);
   });
 });

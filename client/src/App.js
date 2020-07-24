@@ -9,7 +9,9 @@ class App extends Component {
   state = {
       side: "runner",
       factions_runner: [],
-      factions_corp: []
+      factions_corp: [],
+      types_runner: [],
+      types_corp: []
   };
 
   setSide = (side) => {
@@ -30,6 +32,16 @@ class App extends Component {
     return this.state[`factions_${currentSide}`];
   }
 
+  setTypes = (types, side = null) => {
+    const currentSide = side || this.getSide();
+    this.setState({ [`types_${currentSide}`]: types });
+  }
+
+  getTypes = (side = null) => {
+    const currentSide = side || this.getSide();
+    return this.state[`types_${currentSide}`];
+  }
+
   render() {
     return (
       <div className="App">
@@ -38,9 +50,10 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <FilterList side={this.getSide()} selected={this.getFactions()} onChange={this.setFactions} />
+          <FilterList title="Factions" endpoint="factions" side={this.getSide()} selected={this.getFactions()} onChange={this.setFactions} />
+          <FilterList title="Types" endpoint="types" side={this.getSide()} selected={this.getTypes()} onChange={this.setTypes} />
         </ControlPanel>
-        <CardList side={this.getSide()} factions={this.getFactions()}/>
+        <CardList side={this.getSide()} factions={this.getFactions()} types={this.getTypes()}/>
       </div>
     );
   }
