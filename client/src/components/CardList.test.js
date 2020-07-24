@@ -64,4 +64,13 @@ describe('CardList', () => {
 
     expect(component.find(Card).length).toEqual(2);
   });
+
+  it('only shows cards from the correct packs', async () => {
+    const packs = ['core'];
+    const component = shallow(<CardList packs={packs} />);
+
+    await waitFor(() => component.find(Card).length > 0)
+
+    expect(component.find(Card).length).toEqual(1);
+  });
 });
