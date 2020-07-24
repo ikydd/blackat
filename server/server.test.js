@@ -30,52 +30,27 @@ describe("server", () => {
         path.join(__dirname, "..", "fixtures", "api", `${dataType}.json`)
       );
 
-    const cards = readDataFile("cards");
-    const factions = readDataFile("factions");
-    const types = readDataFile("types");
-    const packs = readDataFile("packs");
-
-    beforeEach(() => {
-      // Workaround for mock-fs + jest breaking console log
-      // console.log();
-      mock({
-        data: {
-          "cards.json": cards,
-          "factions.json": factions,
-          "types.json": types,
-          "packs.json": packs,
-        },
-      });
-    });
+    const endpoints = ["cards", "factions", "types", "packs"];
 
     afterEach(mock.restore);
 
-    it("return cards data", () => {
-      return request
-        .get("/api/cards")
-        .expect("Content-Type", /json/)
-        .expect(200, JSON.parse(cards));
-    });
+    endpoints.forEach((endpoint) => {
+      it(`return ${endpoint} data`, () => {
+        const data = readDataFile(endpoint);
 
-    it("return factions data", () => {
-      return request
-        .get("/api/factions")
-        .expect("Content-Type", /json/)
-        .expect(200, JSON.parse(factions));
-    });
+        // Workaround for mock-fs + jest breaking console log
+        // console.log();
+        mock({
+          data: {
+            [`${endpoint}.json`]: data,
+          },
+        });
 
-    it("return types data", () => {
-      return request
-        .get("/api/types")
-        .expect("Content-Type", /json/)
-        .expect(200, JSON.parse(types));
-    });
-
-    it("return types data", () => {
-      return request
-        .get("/api/packs")
-        .expect("Content-Type", /json/)
-        .expect(200, JSON.parse(packs));
+        return request
+          .get(`/api/${endpoint}`)
+          .expect("Content-Type", /json/)
+          .expect(200, JSON.parse(data));
+      });
     });
 
     it("return not found for invalid URI segment", () => {
