@@ -1,32 +1,37 @@
 [
   {
-      "title": "Chum",
-      "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
-      "side": "corp",
-      "faction": "jinteki"
+    "title": "Chum",
+    "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice"
   },
   {
-      "title": "Data Mine",
-      "imagesrc": "https://netrunnerdb.com/card_image/01076.png",
-      "side": "corp",
-      "faction": "jinteki"
+    "title": "Data Mine",
+    "imagesrc": "https://netrunnerdb.com/card_image/01076.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice"
   },
   {
     "title": "D4v1d",
     "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_33.png",
     "side": "runner",
-    "faction": "anarch"
+    "faction": "anarch",
+    "type": "program"
   },
   {
-      "title": "Neural Katana",
-      "imagesrc": "https://netrunnerdb.com/card_image/01077.png",
-      "side": "corp",
-      "faction": "jinteki"
+    "title": "Neural Katana",
+    "imagesrc": "https://netrunnerdb.com/card_image/01077.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice"
   },
   {
-      "title": "Gordian Blade",
-      "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
-      "side": "runner",
-      "faction": "shaper"
+    "title": "Gordian Blade",
+    "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "program"
   }
 ]
