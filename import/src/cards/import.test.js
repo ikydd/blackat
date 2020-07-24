@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require('fs');
 const request = require("../helpers/request");
-const save = require("../save");
+const save = require("../helpers/save");
 const apiUrl = require("../helpers/api-url");
 const localPath = require("../helpers/local-path");
 const process = require("./process");
@@ -9,7 +9,7 @@ const download = require("./download-images");
 const cards = require("./import");
 
 jest.mock("../helpers/request");
-jest.mock("../save");
+jest.mock("../helpers/save");
 jest.mock("./process");
 jest.mock("./download-images");
 jest.mock("../helpers/api-url");

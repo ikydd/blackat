@@ -4,7 +4,7 @@ const localPath = require('../helpers/local-path');
 const getApiUrl = require('../helpers/api-url');
 const process = require("./process");
 const download = require("./download-images");
-const save = require("../save");
+const save = require("../helpers/save");
 
 const saveTo = (filepath) => (data) => { return save(data, filepath).then(() => data); }
 const downloadImagesTo = (folder) => (data) => download(folder, data);
