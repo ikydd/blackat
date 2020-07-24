@@ -24,7 +24,7 @@ class FilterList extends Component {
   }
 
   filterBySide = (option) => {
-    if (!this.props.side) {
+    if (!this.props.side || !option.side) {
       return true;
     }
     return option.side === this.props.side;

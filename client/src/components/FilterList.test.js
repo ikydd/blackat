@@ -7,7 +7,7 @@ import * as api from '../helpers/api';
 jest.mock('../helpers/api');
 
 describe('FilterList', () => {
-  const mockData = require('../../../fixtures/api/factions');
+  const mockData = require('../../../fixtures/api/filter-items');
 
   beforeEach(() => {
     jest.spyOn(api, 'call').mockImplementation(() => Promise.resolve(mockData));
@@ -56,15 +56,23 @@ describe('FilterList', () => {
 
     await waitFor(() => component.find('input').length > 0);
 
-    expect(component.find('input').length).toEqual(5);
+    expect(component.find('input').length).toEqual(6);
   });
 
-  it('only shows options from the correct side', async () => {
+  it('only shows options from corp and those that have no specified side', async () => {
     const component = shallow(<FilterList endpoint="foo" side="corp" />);
 
     await waitFor(() => component.find('input').length > 0);
 
-    expect(component.find('input').length).toEqual(2);
+    expect(component.find('input').length).toEqual(3);
+  });
+
+  it('only shows options from runner and those that have no specified side', async () => {
+    const component = shallow(<FilterList endpoint="foo" side="runner" />);
+
+    await waitFor(() => component.find('input').length > 0);
+
+    expect(component.find('input').length).toEqual(4);
   });
 
   it('accepts a list of selected filters', async () => {
