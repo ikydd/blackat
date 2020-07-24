@@ -38,6 +38,21 @@ class App extends Component {
   filterHandler = (type) => (items) => this.setFilter(type, items);
 
   render() {
+    const filters = [
+      {
+        title: 'Factions',
+        keyword: 'factions'
+      },
+      {
+        title: 'Types',
+        keyword: 'types'
+      },
+      {
+        title: 'Packs',
+        keyword: 'packs'
+      }
+    ];
+
     return (
       <div className="App">
         <ControlPanel>
@@ -45,9 +60,9 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <FilterList title="Factions" endpoint="factions" side={this.getSide()} selected={this.getFilter('factions')} onChange={this.filterHandler('factions')} />
-          <FilterList title="Types" endpoint="types" side={this.getSide()} selected={this.getFilter('types')} onChange={this.filterHandler('types')} />
-          <FilterList title="Packs" endpoint="packs" side={this.getSide()} selected={this.getFilter('packs')} onChange={this.filterHandler('packs')} />
+          {filters.map(({ title, keyword }) => (
+            <FilterList key={keyword} title={title} endpoint={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
+          ))}
           <SmallPrint/>
         </ControlPanel>
         <CardList side={this.getSide()} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>

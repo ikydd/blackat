@@ -100,17 +100,14 @@ describe('Filters', () => {
   const filters = [
     {
       title: 'Factions',
-      endpoint: 'factions',
       keyword: 'factions'
     },
     {
       title: 'Types',
-      endpoint: 'types',
       keyword: 'types'
     },
     {
       title: 'Packs',
-      endpoint: 'packs',
       keyword: 'packs'
     }
   ];
@@ -132,7 +129,7 @@ describe('Filters', () => {
       it('uses the factions endpoint', () => {
         const component = shallow(<App />);
 
-        expect(component.find(FilterList).at(index).prop('endpoint')).toEqual(endpoint);
+        expect(component.find(FilterList).at(index).prop('endpoint')).toEqual(keyword);
       });
 
       it('passes a faction selection callback to the FilterList', () => {
