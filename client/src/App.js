@@ -12,7 +12,9 @@ class App extends Component {
       factions_runner: [],
       factions_corp: [],
       types_runner: [],
-      types_corp: []
+      types_corp: [],
+      packs_runner: [],
+      packs_corp: []
   };
 
   setSide = (side) => {
@@ -23,25 +25,17 @@ class App extends Component {
     return this.state.side;
   }
 
-  setFactions = (factions, side = null) => {
+  getFilter = (type, side = null) => {
     const currentSide = side || this.getSide();
-    this.setState({ [`factions_${currentSide}`]: factions });
+    return this.state[`${type}_${currentSide}`];
   }
 
-  getFactions = (side = null) => {
+  setFilter = (type, items, side = null) => {
     const currentSide = side || this.getSide();
-    return this.state[`factions_${currentSide}`];
+    this.setState({ [`${type}_${currentSide}`]: items });
   }
 
-  setTypes = (types, side = null) => {
-    const currentSide = side || this.getSide();
-    this.setState({ [`types_${currentSide}`]: types });
-  }
-
-  getTypes = (side = null) => {
-    const currentSide = side || this.getSide();
-    return this.state[`types_${currentSide}`];
-  }
+  filterHandler = (type) => (items) => this.setFilter(type, items);
 
   render() {
     return (
@@ -51,11 +45,12 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <FilterList title="Factions" endpoint="factions" side={this.getSide()} selected={this.getFactions()} onChange={this.setFactions} />
-          <FilterList title="Types" endpoint="types" side={this.getSide()} selected={this.getTypes()} onChange={this.setTypes} />
+          <FilterList title="Factions" endpoint="factions" side={this.getSide()} selected={this.getFilter('factions')} onChange={this.filterHandler('factions')} />
+          <FilterList title="Types" endpoint="types" side={this.getSide()} selected={this.getFilter('types')} onChange={this.filterHandler('types')} />
+          <FilterList title="Packs" endpoint="packs" side={this.getSide()} selected={this.getFilter('packs')} onChange={this.filterHandler('packs')} />
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} factions={this.getFactions()} types={this.getTypes()}/>
+        <CardList side={this.getSide()} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
       </div>
     );
   }
