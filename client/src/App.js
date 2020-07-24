@@ -3,6 +3,7 @@ import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
+import SmallPrint from './components/SmallPrint';
 import './App.css';
 
 class App extends Component {
@@ -52,6 +53,7 @@ class App extends Component {
           </div>
           <FilterList title="Factions" endpoint="factions" side={this.getSide()} selected={this.getFactions()} onChange={this.setFactions} />
           <FilterList title="Types" endpoint="types" side={this.getSide()} selected={this.getTypes()} onChange={this.setTypes} />
+          <SmallPrint/>
         </ControlPanel>
         <CardList side={this.getSide()} factions={this.getFactions()} types={this.getTypes()}/>
       </div>
