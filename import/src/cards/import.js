@@ -6,13 +6,14 @@ const process = require("./process");
 const download = require("./download-images");
 const save = require("../helpers/save");
 
+const processWith = (packs) => (cards) => process(cards, packs);
 const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
 const downloadImagesTo = (folder) => (data) => download(folder, data);
 const folder = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
 
-const importCards = async () =>
+const importCards = async (packs) =>
     request(apiUrlFor("/cards"))
-        .then(process)
+        .then(processWith(packs))
         .then(saveTo(localPath("cards.json")))
         .then(downloadImagesTo(folder));
 

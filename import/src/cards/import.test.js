@@ -7,6 +7,7 @@ const localPath = require("../helpers/local-path");
 const process = require("./process");
 const download = require("./download-images");
 const cards = require("./import");
+const mockPackData = require('../../../fixtures/api/packs');
 
 jest.mock("../helpers/request");
 jest.mock("../helpers/save");
@@ -43,31 +44,31 @@ describe("main", () => {
   });
 
   it("gets NRDB cards endpoint", async () => {
-    await cards();
+    await cards(mockPackData);
 
     expect(apiUrl).toHaveBeenCalledWith('/cards');
   });
 
   it("calls the NRDB endpoint", async () => {
-    await cards();
+    await cards(mockPackData);
 
     expect(request).toHaveBeenCalledWith(mockUrl);
   });
 
   it("applies the processor", async () => {
-    await cards();
+    await cards(mockPackData);
 
-    expect(process).toHaveBeenCalledWith(mockData);
+    expect(process).toHaveBeenCalledWith(mockData, mockPackData);
   });
 
   it("gets the local save path", async () => {
-    await cards();
+    await cards(mockPackData);
 
     expect(localPath).toHaveBeenCalledWith('cards.json');
   });
 
   it("saves the processed data", async () => {
-    await cards();
+    await cards(mockPackData);
 
     expect(save).toHaveBeenCalledWith(
       mockProcessedData,
@@ -78,7 +79,7 @@ describe("main", () => {
   it("downloads the images", async () => {
     const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
 
-    await cards();
+    await cards(mockPackData);
 
     expect(download).toHaveBeenCalledWith(path, mockProcessedData);
   });

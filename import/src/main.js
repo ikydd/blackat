@@ -4,10 +4,10 @@ const types = require("./types/import");
 const packs = require("./packs/import");
 
 const run = async () => {
-  await cards();
+  const packData = await packs();
+  await cards(packData);
   await factions();
   await types();
-  await packs();
 };
 
 module.exports = {

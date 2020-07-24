@@ -6,9 +6,9 @@ const save = require("../helpers/save");
 
 const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
 
-const importFactions = async () =>
+const importTypes = async () =>
     request(apiUrlFor("/types"))
         .then(process)
         .then(saveTo(localPath("types.json")));
 
-module.exports = importFactions;
+module.exports = importTypes;
