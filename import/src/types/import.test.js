@@ -1,11 +1,11 @@
-const request = require("../request");
+const request = require("../helpers/request");
 const save = require("../save");
 const apiUrl = require("../helpers/api-url");
 const localPath = require("../helpers/local-path");
 const process = require("./process");
 const factions = require("./import");
 
-jest.mock("../request");
+jest.mock("../helpers/request");
 jest.mock("../save");
 jest.mock("./process");
 jest.mock("../helpers/api-url");

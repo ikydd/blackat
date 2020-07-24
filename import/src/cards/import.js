@@ -1,5 +1,5 @@
 const fs = require('fs');
-const request = require("../request");
+const request = require("../helpers/request");
 const localPath = require('../helpers/local-path');
 const getApiUrl = require('../helpers/api-url');
 const process = require("./process");
