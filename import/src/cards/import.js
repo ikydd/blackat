@@ -6,7 +6,7 @@ const process = require("./process");
 const download = require("./download-images");
 const save = require("../helpers/save");
 
-const saveTo = (filepath) => (data) => { return save(data, filepath).then(() => data); }
+const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
 const downloadImagesTo = (folder) => (data) => download(folder, data);
 const folder = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
 
