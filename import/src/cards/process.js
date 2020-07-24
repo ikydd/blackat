@@ -1,4 +1,5 @@
-const process = ({ imageUrlTemplate, data: cards }) => cards
+const process = ({ imageUrlTemplate, data: cards }, packs) => cards
+    .filter(({ pack_code }) => packs.find(({ code }) => code === pack_code))
     .map(({ title, code, image_url, side_code, faction_code, type_code, pack_code }) => ({
         code,
         title,
