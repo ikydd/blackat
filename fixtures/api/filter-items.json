@@ -1,0 +1,32 @@
+[
+  {
+    "code": "anarch",
+    "name": "Anarch",
+    "side": "runner"
+  },
+  {
+    "code": "criminal",
+    "name": "Criminal",
+    "side": "runner"
+  },
+  {
+    "code": "shaper",
+    "name": "Shaper",
+    "side": "runner"
+  },
+  {
+    "code": "haas-bioroid",
+    "name": "Haas-Bioroid",
+    "side": "corp"
+  },
+  {
+    "code": "jinteki",
+    "name": "Jinteki",
+    "side": "corp"
+  },
+  {
+    "code": "foo",
+    "name": "Foo",
+    "side": null
+  }
+]
