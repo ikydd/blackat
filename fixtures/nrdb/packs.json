@@ -1,0 +1,161 @@
+{
+  "data": [
+    {
+      "code": "core",
+      "cycle_code": "core",
+      "date_release": "2012-09-06",
+      "name": "Core Set",
+      "position": 1,
+      "size": 113,
+      "ffg_id": null
+    },
+    {
+      "code": "wla",
+      "cycle_code": "genesis",
+      "date_release": "2012-12-14",
+      "name": "What Lies Ahead",
+      "position": 1,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "ta",
+      "cycle_code": "genesis",
+      "date_release": "2013-01-09",
+      "name": "Trace Amount",
+      "position": 2,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "ce",
+      "cycle_code": "genesis",
+      "date_release": "2013-02-14",
+      "name": "Cyber Exodus",
+      "position": 3,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "asis",
+      "cycle_code": "genesis",
+      "date_release": "2013-03-21",
+      "name": "A Study in Static",
+      "position": 4,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "hs",
+      "cycle_code": "genesis",
+      "date_release": "2013-05-02",
+      "name": "Humanity's Shadow",
+      "position": 5,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "fp",
+      "cycle_code": "genesis",
+      "date_release": "2013-05-30",
+      "name": "Future Proof",
+      "position": 6,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "cac",
+      "cycle_code": "creation-and-control",
+      "date_release": "2013-07-29",
+      "name": "Creation and Control",
+      "position": 1,
+      "size": 55,
+      "ffg_id": null
+    },
+    {
+      "code": "om",
+      "cycle_code": "spin",
+      "date_release": "2013-09-27",
+      "name": "Opening Moves",
+      "position": 1,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "st",
+      "cycle_code": "spin",
+      "date_release": "2013-11-07",
+      "name": "Second Thoughts",
+      "position": 2,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "mt",
+      "cycle_code": "spin",
+      "date_release": "2013-12-13",
+      "name": "Mala Tempora",
+      "position": 3,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "tc",
+      "cycle_code": "spin",
+      "date_release": "2014-01-17",
+      "name": "True Colors",
+      "position": 4,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "dt",
+      "cycle_code": "spin",
+      "date_release": "2014-03-28",
+      "name": "Double Time",
+      "position": 6,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "fal",
+      "cycle_code": "spin",
+      "date_release": "2014-02-21",
+      "name": "Fear and Loathing",
+      "position": 5,
+      "size": 20,
+      "ffg_id": null
+    },
+    {
+      "code": "draft",
+      "cycle_code": "draft",
+      "date_release": null,
+      "name": "Draft",
+      "position": 1,
+      "size": null,
+      "ffg_id": null
+    },
+    {
+      "code": "hap",
+      "cycle_code": "honor-and-profit",
+      "date_release": "2014-05-02",
+      "name": "Honor and Profit",
+      "position": 1,
+      "size": 55,
+      "ffg_id": null
+    },
+    {
+      "code": "mo",
+      "cycle_code": "magnum-opus",
+      "date_release": "2018-09-07",
+      "name": "Magnum Opus",
+      "position": 1,
+      "size": 8,
+      "ffg_id": null
+    }
+  ],
+  "total": 64,
+  "success": true,
+  "version_number": "2.0",
+  "last_updated": "2019-09-25T15:19:20+00:00"
+}

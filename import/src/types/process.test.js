@@ -10,13 +10,6 @@ describe('process factions', () => {
         expect(output.length).toEqual(5);
     });
 
-    it('does not output subtypes', () => {
-        const output = process(mockData);
-        const subtypes = output.find((type) => type.code === 'icebreaker');
-
-        expect(subtypes).toBeFalsy();
-    });
-
     it('outputs the names', () => {
         const output = process(mockData);
 
@@ -46,5 +39,12 @@ describe('process factions', () => {
         expect(output[1].code).toEqual(mockData.data[1].code);
         expect(output[2].code).toEqual(mockData.data[2].code);
         expect(output[3].code).toEqual(mockData.data[3].code);
+    });
+
+    it('does not output subtypes', () => {
+        const output = process(mockData);
+        const subtypes = output.find((type) => type.code === 'icebreaker');
+
+        expect(subtypes).toBeFalsy();
     });
 })
