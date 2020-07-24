@@ -26,7 +26,7 @@ describe("save", () => {
     );
   });
 
-  it("calls the requested endpoint", async () => {
+  it("saves to the requested path", async () => {
     const mockData = { foo: "bar" };
 
     await save(mockData, "./test/bar.json");
