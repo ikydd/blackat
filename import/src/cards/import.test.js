@@ -35,7 +35,7 @@ describe("main", () => {
     localPath.mockClear();
     download.mockClear();
 
-    apiUrl.mockImplementation(() => Promise.resolve(mockUrl));
+    apiUrl.mockImplementation(() => mockUrl);
     request.mockImplementation(() => Promise.resolve(mockData));
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);

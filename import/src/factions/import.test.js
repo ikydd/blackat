@@ -30,7 +30,7 @@ describe("main", () => {
     apiUrl.mockClear();
     localPath.mockClear();
 
-    apiUrl.mockImplementation(() => Promise.resolve(mockUrl));
+    apiUrl.mockImplementation(() => mockUrl);
     request.mockImplementation(() => Promise.resolve(mockData));
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
