@@ -14,29 +14,45 @@ describe('FilterList', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<FilterList/>);
+    shallow(<FilterList endpoint="foo"/>);
   });
 
-  it('has a title', () => {
-    const component = shallow(<FilterList/>);
+  it('has defaults to an obvious error title', () => {
+    const component = shallow(<FilterList endpoint="foo"/>);
 
-    expect(component.find('.filter-list-title').text()).toEqual('Factions');
+    expect(component.find('.filter-list-title').text()).toEqual('Missing');
+  });
+
+  it('has accepts and uses a title', () => {
+    const component = shallow(<FilterList endpoint="foo" title="Foo" />);
+
+    expect(component.find('.filter-list-title').text()).toEqual('Foo');
+  });
+
+  it('has an id related to the title', () => {
+    const component = shallow(<FilterList endpoint="foo" title="Foo" />);
+
+    expect(component.prop('id')).toEqual('foo-filter');
   });
 
   it('renders with no options to begin with', async () => {
-    const component = shallow(<FilterList/>);
+    const component = shallow(<FilterList endpoint="foo" />);
 
     expect(component.find('input').length).toEqual(0);
   })
 
-  it('uses api.call correctly', () => {
-    shallow(<FilterList/>);
+  it('throws and error if no endpoint prop is provided', () => {
+    expect(() => shallow(<FilterList/>)).toThrow();
+  });
 
-    expect(api.call).toHaveBeenCalledWith('/factions');
+  it('uses api.call correctly with the provided prop', () => {
+    shallow(<FilterList endpoint="foo"/>);
+
+    expect(api.call).toHaveBeenCalledWith('/foo');
   });
 
   it('default to showing all options', async () => {
-    const component = shallow(<FilterList/>);
+    const component = shallow(<FilterList endpoint="foo" />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -44,7 +60,7 @@ describe('FilterList', () => {
   });
 
   it('only shows options from the correct side', async () => {
-    const component = shallow(<FilterList side="corp" />);
+    const component = shallow(<FilterList endpoint="foo" side="corp" />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -53,7 +69,7 @@ describe('FilterList', () => {
 
   it('accepts a list of selected filters', async () => {
     const isSelected = ['shaper', 'anarch'];
-    const component = shallow(<FilterList selected={isSelected} />);
+    const component = shallow(<FilterList endpoint="foo" selected={isSelected} />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -67,7 +83,7 @@ describe('FilterList', () => {
 
   it('calls a callback when an option is selected', async () => {
     const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList onChange={cb} />);
+    const { findByLabelText } = render(<FilterList endpoint="foo" onChange={cb} />);
 
     const input = await findByLabelText('Anarch');
 
@@ -78,7 +94,7 @@ describe('FilterList', () => {
   it('calls a callback when an option is deselected', async () => {
     const selected = ['anarch', 'shaper'];
     const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList selected={selected} onChange={cb} />);
+    const { findByLabelText } = render(<FilterList endpoint="foo" selected={selected} onChange={cb} />);
 
     const input = await findByLabelText('Anarch');
 
