@@ -66,7 +66,7 @@ describe('CardList', () => {
   });
 
   it('only shows cards from the correct packs', async () => {
-    const packs = ['core'];
+    const packs = ['tsb'];
     const component = shallow(<CardList packs={packs} />);
 
     await waitFor(() => component.find(Card).length > 0)

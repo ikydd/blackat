@@ -4,34 +4,39 @@
     "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
     "side": "corp",
     "faction": "jinteki",
-    "type": "ice"
+    "type": "ice",
+    "pack": "core"
   },
   {
     "title": "Data Mine",
     "imagesrc": "https://netrunnerdb.com/card_image/01076.png",
     "side": "corp",
     "faction": "jinteki",
-    "type": "ice"
+    "type": "ice",
+    "pack": "core"
   },
   {
     "title": "D4v1d",
     "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_33.png",
     "side": "runner",
     "faction": "anarch",
-    "type": "program"
+    "type": "program",
+    "pack": "tsb"
   },
   {
     "title": "Neural Katana",
     "imagesrc": "https://netrunnerdb.com/card_image/01077.png",
     "side": "corp",
     "faction": "jinteki",
-    "type": "ice"
+    "type": "ice",
+    "pack": "core"
   },
   {
     "title": "Gordian Blade",
     "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
     "side": "runner",
     "faction": "shaper",
-    "type": "program"
+    "type": "program",
+    "pack": "core"
   }
 ]

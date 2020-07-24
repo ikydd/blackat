@@ -6,7 +6,8 @@ import './CardList.css';
 class CardList extends Component {
   static defaultProps = {
     factions: [],
-    types: []
+    types: [],
+    packs: []
   }
 
   state = {
@@ -40,10 +41,18 @@ class CardList extends Component {
     return this.props.types.includes(card.type);
   }
 
+  filterByPacks = (card) => {
+    if (!this.props.packs.length) {
+      return true;
+    }
+    return this.props.packs.includes(card.pack);
+  }
+
   filter = cards => cards
       .filter(this.filterBySide)
       .filter(this.filterByFactions)
-      .filter(this.filterByTypes);
+      .filter(this.filterByTypes)
+      .filter(this.filterByPacks)
 
   render() {
     return (
