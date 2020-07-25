@@ -2,7 +2,7 @@ const cards = require("./cards/import");
 const factions = require("./factions/import");
 const types = require("./types/import");
 const packs = require("./packs/import");
-const mockPackData = require('../../fixtures/api/packs');
+const mockPackData = require("../../fixtures/api/packs");
 
 const main = require("./main");
 
@@ -13,7 +13,7 @@ jest.mock("./packs/import");
 
 describe("main", () => {
   beforeEach(() => {
-    packs.mockImplementation(() => mockPackData)
+    packs.mockImplementation(() => mockPackData);
   });
 
   it("calls cards", async () => {
