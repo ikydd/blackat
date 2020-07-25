@@ -2,15 +2,18 @@
   "name": "blackat-api",
   "version": "1.0.0",
   "scripts": {
-    "start": "npm run server",
+    "start": "npm run server:prod",
+    "dev": "npm run server:dev",
     "test": "concurrently \"npm run unit\" \"npm run lint\"",
     "lint": "npm run prettier && npm run eslint",
     "eslint": "eslint **/*.js",
     "prettier": "prettier --write **/*.js",
     "unit": "jest",
-    "server": "nodemon server.js"
+    "server:dev": "nodemon server.js",
+    "server:prod": "forever start server.js"
   },
   "dependencies": {
+    "forever": "^3.0.0",
     "koa": "^2.13.0",
     "koa-router": "^8.0.8",
     "koa-sendfile": "^2.0.1",
