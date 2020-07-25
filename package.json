@@ -1,5 +1,5 @@
 {
-  "name": "blcakat",
+  "name": "blackat",
   "version": "1.0.0",
   "scripts": {
     "build": "cd client && npm run build",
