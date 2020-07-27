@@ -135,13 +135,13 @@ describe('Filters', () => {
         expect(component.find(FilterList).at(index).prop('title')).toEqual(title);
       });
 
-      it('uses the factions endpoint', () => {
+      it(`uses the ${keyword} endpoint`, () => {
         const component = shallow(<App />);
 
         expect(component.find(FilterList).at(index).prop('endpoint')).toEqual(keyword);
       });
 
-      it('passes a faction selection callback to the FilterList', () => {
+      it(`passes a ${keyword} selection callback to the FilterList`, () => {
         const component = shallow(<App />);
 
         expect(component.find(FilterList).at(index).prop('onChange')).toEqual(expect.any(Function));
