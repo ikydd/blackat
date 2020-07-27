@@ -19,4 +19,4 @@ class TextSearch extends Component {
 }
 
 
-module.exports = TextSearch;
+export default TextSearch;

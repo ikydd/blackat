@@ -103,6 +103,25 @@ describe('TextSearch', () => {
 
     expect(component.find(TextSearch).length).toEqual(1);
   });
+
+  it('passes a callback to the TextSearch', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(TextSearch).prop('onChange')).toEqual(expect.any(Function));
+  });
+
+  it('passes a placeholder to the TextSearch', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(TextSearch).prop('placeholder')).toEqual("search title");
+  });
+
+  it('sends the appropriate prop to CardList on change', () => {
+    const component = shallow(<App />);
+    component.find(TextSearch).prop('onChange')(["foo"]);
+
+    expect(component.find(CardList).prop('titleSearch')).toEqual(["foo"]);
+  });
 });
 
 describe('Filters', () => {

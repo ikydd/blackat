@@ -10,6 +10,7 @@ import './App.css';
 class App extends Component {
   state = {
       side: "runner",
+      titleSearch: "",
       factions_runner: [],
       factions_corp: [],
       types_runner: [],
@@ -34,6 +35,15 @@ class App extends Component {
   setFilter = (type, items, side = null) => {
     const currentSide = side || this.getSide();
     this.setState({ [`${type}_${currentSide}`]: items });
+  }
+
+
+  getTitleSearch =() => {
+    return this.state.titleSearch;
+  }
+
+  setTitleSearch = (searchTerm) => {
+    this.setState({ titleSearch: searchTerm });
   }
 
   filterHandler = (type) => (items) => this.setFilter(type, items);
@@ -61,13 +71,13 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <TextSearch />
+          <TextSearch placeholder="search title" onChange={this.setTitleSearch} />
           {filters.map(({ title, keyword }) => (
             <FilterList key={keyword} title={title} endpoint={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
+        <CardList side={this.getSide()} titleSearch={this.getTitleSearch()} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
       </div>
     );
   }
