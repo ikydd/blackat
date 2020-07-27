@@ -5,6 +5,7 @@ import './CardList.css';
 
 class CardList extends Component {
   static defaultProps = {
+    titleSearch: "",
     factions: [],
     types: [],
     packs: []
@@ -48,8 +49,16 @@ class CardList extends Component {
     return this.props.packs.includes(card.pack);
   }
 
+  filterByTitleSearch = (card) => {
+    if (!this.props.titleSearch) {
+      return true;
+    }
+    return card.title.search(this.props.titleSearch) !== -1;
+  }
+
   filter = cards => cards
       .filter(this.filterBySide)
+      .filter(this.filterByTitleSearch)
       .filter(this.filterByFactions)
       .filter(this.filterByTypes)
       .filter(this.filterByPacks)

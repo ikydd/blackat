@@ -73,4 +73,14 @@ describe('CardList', () => {
 
     expect(component.find(Card).length).toEqual(1);
   });
+
+  it('only shows relevant cards given a title search', async () => {
+    const search = 'Blade';
+    const component = shallow(<CardList titleSearch={search} />);
+
+    await waitFor(() => component.find(Card).length > 0)
+
+    expect(component.find(Card).length).toEqual(1);
+    expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+  });
 });
