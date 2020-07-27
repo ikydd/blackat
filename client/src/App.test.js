@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import App from './App';
 import ControlPanel from './components/ControlPanel';
 import FilterList from './components/FilterList';
+import TextSearch from './components/TextSearch';
 import SideButton from './components/SideButton';
 import CardList from './components/CardList';
 
@@ -93,6 +94,14 @@ describe('Side Selection', () => {
     component.find(SideButton).at(0).prop('onSelect')("foo");
 
     expect(component.find(CardList).prop('side')).toEqual("foo");
+  });
+});
+
+describe('TextSearch', () => {
+  it('contains an instance of TextSearch', () => {
+    const component = shallow(<App />);
+
+    expect(component.find(TextSearch).length).toEqual(1);
   });
 });
 

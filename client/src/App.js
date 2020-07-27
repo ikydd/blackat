@@ -3,6 +3,7 @@ import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
+import TextSearch from './components/TextSearch';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
@@ -60,6 +61,7 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
+          <TextSearch />
           {filters.map(({ title, keyword }) => (
             <FilterList key={keyword} title={title} endpoint={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
