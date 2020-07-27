@@ -4,6 +4,7 @@
   "scripts": {
     "start": "npm run server:prod",
     "dev": "npm run server:dev",
+    "watch": "jest --watch",
     "test": "concurrently \"npm run unit\" \"npm run lint\"",
     "lint": "npm run prettier && npm run eslint",
     "eslint": "eslint **/*.js",
@@ -13,10 +14,9 @@
     "server:prod": "forever start server.js"
   },
   "dependencies": {
+    "@koa/router": "^9.3.1",
     "forever": "^3.0.0",
     "koa": "^2.13.0",
-    "koa-router": "^8.0.8",
-    "koa-sendfile": "^2.0.1",
     "koa-static": "^5.0.0"
   },
   "devDependencies": {

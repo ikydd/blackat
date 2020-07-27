@@ -1,6 +1,6 @@
 const { createReadStream } = require("fs");
 const Koa = require("koa");
-const KoaRouter = require("koa-router");
+const KoaRouter = require("@koa/router");
 const serve = require("koa-static");
 const path = require("path");
 
