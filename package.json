@@ -2,9 +2,9 @@
   "name": "blackat",
   "version": "1.0.0",
   "scripts": {
-    "setup": "npm install && concurrently \"npm run install:client\" \"npm run install:import\"",
-    "install:client": "cd client && npm install",
-    "install:import": "cd import && npm install",
+    "setup": "npm ci && concurrently \"npm run install:client\" \"npm run install:import\"",
+    "install:client": "cd client && npm ci",
+    "install:import": "cd import && npm ci",
     "build": "npm run build:data && npm run build:client",
     "build:client": "cd client && npm run build",
     "build:data": "cd import && npm start",
