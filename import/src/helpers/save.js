@@ -1,4 +1,5 @@
-const fs = require("fs");
+const fs = require("fs-extra");
+const path = require('path');
 
 const save = async (data, filepath) => {
   if (!data) {
@@ -7,9 +8,8 @@ const save = async (data, filepath) => {
   if (!filepath) {
     throw new Error("A file path is required to save data");
   }
-  return new Promise((resolve) =>
-    fs.writeFile(filepath, JSON.stringify(data), resolve)
-  );
+  await fs.ensureDir(path.dirname(filepath))
+  return fs.writeFile(filepath, JSON.stringify(data));
 };
 
 module.exports = save;

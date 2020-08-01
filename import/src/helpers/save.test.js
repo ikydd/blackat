@@ -1,19 +1,21 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const save = require("./save");
 
-jest.mock("fs");
-
 describe("save", () => {
-  beforeEach(() => {
-    fs.writeFile.mockImplementation((path, data, callback) => callback());
-  });
+  const dir = `${__dirname}/tmp`;
 
-  afterEach(() => {
-    fs.writeFile.mockReset();
-  });
+  const setup = async () => {
+    if (fs.existsSync(dir)){
+        await fs.emptyDir(dir);
+        await fs.remove(dir);
+    }
+  }
+
+  beforeEach(setup);
+  afterEach(setup);
 
   it("errors if you do not pass in data", () => {
-    expect(save(null, "./test/bar.json")).rejects.toThrow(
+    expect(save(null, `${dir}/bar.json`)).rejects.toThrow(
       "Some data is required to save"
     );
   });
@@ -29,12 +31,10 @@ describe("save", () => {
   it("saves to the requested path", async () => {
     const mockData = { foo: "bar" };
 
-    await save(mockData, "./test/bar.json");
+    await save(mockData, `${dir}/bar.json`);
 
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      "./test/bar.json",
-      JSON.stringify(mockData),
-      expect.any(Function)
-    );
+    const file = await fs.readFile(`${dir}/bar.json`, 'utf-8');
+
+    expect(file).toBe(JSON.stringify(mockData));
   });
 });
