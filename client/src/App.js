@@ -89,7 +89,7 @@ class App extends Component {
           <TextSearch placeholder="search title" onChange={this.searchHandler('title')} />
           <TextSearch placeholder="search text" onChange={this.searchHandler('text')} />
           {filters.map(({ title, keyword }) => (
-            <FilterList key={keyword} title={title} endpoint={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
+            <FilterList key={keyword} title={title} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
           <SmallPrint/>
         </ControlPanel>

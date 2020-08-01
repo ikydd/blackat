@@ -150,7 +150,7 @@ describe('Filters', () => {
       keyword: 'packs'
     }
   ];
-  filters.forEach(({ title, endpoint, keyword }, index) => {
+  filters.forEach(({ title, keyword }, index) => {
     describe(`${title} filter`, () => {
       it('starts with no filters selected', () => {
         const instance = shallow(<App />).instance();
@@ -165,10 +165,10 @@ describe('Filters', () => {
         expect(component.find(FilterList).at(index).prop('title')).toEqual(title);
       });
 
-      it(`uses the ${keyword} endpoint`, () => {
+      it(`uses the ${keyword} dataType`, () => {
         const component = shallow(<App />);
 
-        expect(component.find(FilterList).at(index).prop('endpoint')).toEqual(keyword);
+        expect(component.find(FilterList).at(index).prop('dataType')).toEqual(keyword);
       });
 
       it(`passes a ${keyword} selection callback to the FilterList`, () => {
