@@ -5,7 +5,9 @@ import './CardList.css';
 
 class CardList extends Component {
   static defaultProps = {
+    side: "",
     titleSearch: "",
+    textSearch: "",
     factions: [],
     types: [],
     packs: []
