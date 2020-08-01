@@ -10,8 +10,10 @@ import './App.css';
 class App extends Component {
   state = {
       side: "runner",
-      titleSearch: "",
-      textSearch: "",
+      search: {
+        title: "",
+        text: ""
+      },
       factions: {
         runner: [],
         corp: []
@@ -47,22 +49,18 @@ class App extends Component {
     this.setState({ [type]: currentValues });
   }
 
-  getTitleSearch =() => {
-    return this.state.titleSearch;
+  getSearch = (type) => {
+    return this.state.search[type];
   }
 
-  setTitleSearch = (searchTerm) => {
-    this.setState({ titleSearch: searchTerm });
+  setSearch = (type, term) => {
+    const currentValues = Object.assign(this.state.search, {
+        [type]: term
+    });
+    this.setState({ search: currentValues });
   }
 
-  getTextSearch =() => {
-    return this.state.textSearch;
-  }
-
-  setTextSearch = (searchTerm) => {
-    this.setState({ textSearch: searchTerm });
-  }
-
+  searchHandler = (type) => (term) => this.setSearch(type, term);
   filterHandler = (type) => (items) => this.setFilter(type, items);
 
   render() {
@@ -88,14 +86,14 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <TextSearch placeholder="search title" onChange={this.setTitleSearch} />
-          <TextSearch placeholder="search text" onChange={this.setTextSearch} />
+          <TextSearch placeholder="search title" onChange={this.searchHandler('title')} />
+          <TextSearch placeholder="search text" onChange={this.searchHandler('text')} />
           {filters.map(({ title, keyword }) => (
             <FilterList key={keyword} title={title} endpoint={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} titleSearch={this.getTitleSearch()} textSearch={this.getTextSearch()} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
+        <CardList side={this.getSide()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
       </div>
     );
   }
