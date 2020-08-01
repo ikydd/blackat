@@ -1,31 +1,34 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import SideButton from './SideButton';
 
 jest.mock('../helpers/api');
 
 describe('CardList', () => {
   it('renders without crashing', () => {
-    shallow(<SideButton/>);
+    render(<SideButton/>);
   });
 
   it('uses the name passed in', () => {
     const title = 'Foo';
-    const component = shallow(<SideButton title={title} />);
-    expect(component.text()).toEqual(title);
+    const { container } = render(<SideButton title={title} />);
+
+    expect(container.firstChild).toHaveTextContent(title);
   })
 
   it('has the class side-button', () => {
     const title = 'Foo';
-    const component = shallow(<SideButton title={title} />);
-    expect(component.hasClass('side-button')).toEqual(true);
+    const { container } = render(<SideButton title={title} />);
+
+    expect(container.firstChild).toHaveClass('side-button');
   });
 
   it('displays as selected depending on props', () => {
     const title = 'Foo';
     const isSelected = true;
-    const component = shallow(<SideButton title={title} selected={isSelected} />);
-    expect(component.hasClass('selected')).toEqual(true);
+    const { container } = render(<SideButton title={title}  selected={isSelected}/>);
+
+    expect(container.firstChild).toHaveClass('selected');
   });
 
   it('calls a callback when clicked on and not selected', () => {
@@ -33,8 +36,9 @@ describe('CardList', () => {
     const side = 'foo';
     const isSelected = false;
     const cb = jest.fn();
-    const component = shallow(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
-    component.simulate('click');
+    const { container } = render(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
+    fireEvent.click(container.firstChild);
+
     expect(cb).toHaveBeenCalledWith(side);
   })
 
@@ -43,8 +47,9 @@ describe('CardList', () => {
     const side = 'foo';
     const isSelected = true;
     const cb = jest.fn();
-    const component = shallow(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
-    component.simulate('click');
+    const { container } = render(<SideButton title={title} side={side} selected={isSelected} onSelect={cb} />);
+    fireEvent.click(container.firstChild);
+
     expect(cb).not.toHaveBeenCalled();
   })
 });
