@@ -74,25 +74,52 @@ describe('CardList', () => {
     expect(component.find(Card).length).toEqual(1);
   });
 
-  it('only shows relevant cards given a title search', async () => {
-    const search = 'Blade';
-    const component = shallow(<CardList titleSearch={search} />);
+  describe('Title Search', () => {
+    it('only shows relevant cards given a search', async () => {
+      const search = 'Blade';
+      const component = shallow(<CardList titleSearch={search} />);
 
-    await waitFor(() => component.find(Card).length > 0)
+      await waitFor(() => component.find(Card).length > 0)
 
-    expect(component.find(Card).length).toEqual(1);
-    expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+      expect(component.find(Card).length).toEqual(1);
+      expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+    });
+
+    it('is not case-sensitive', async () => {
+      const search = 'blADE';
+      const component = shallow(<CardList titleSearch={search} />);
+
+      await waitFor(() => component.find(Card).length > 0)
+
+      expect(component.find(Card).length).toEqual(1);
+      expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+    });
   });
 
-  it('only shows relevant cards given a text search', async () => {
-    const search = 'net damage';
-    const component = shallow(<CardList textSearch={search} />);
+  describe('Text Search', () => {
+    it('only shows relevant cards given a text search', async () => {
+      const search = 'net damage';
+      const component = shallow(<CardList textSearch={search} />);
 
-    await waitFor(() => component.find(Card).length > 0)
+      await waitFor(() => component.find(Card).length > 0)
 
-    expect(component.find(Card).length).toEqual(3);
-    expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
-    expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
-    expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
-  });
+      expect(component.find(Card).length).toEqual(3);
+      expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
+      expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
+      expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
+    });
+
+    it('is not case-sensitive', async () => {
+      const search = 'NEt daMAge';
+      const component = shallow(<CardList textSearch={search} />);
+
+      await waitFor(() => component.find(Card).length > 0)
+
+      expect(component.find(Card).length).toEqual(3);
+      expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
+      expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
+      expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
+    });
+  })
+
 });
