@@ -10,8 +10,8 @@ describe('Card', () => {
   });
 
   it('has an img using the card code', async () => {
-    const { findByRole } = render(<Card data={data} />);
-    const img = await findByRole('img');
+    const { getByRole } = render(<Card data={data} />);
+    const img = getByRole('img');
 
     expect(img).toHaveAttribute('src', `/img/cards/${data.code}.png`);
   });

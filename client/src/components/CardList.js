@@ -77,8 +77,8 @@ class CardList extends Component {
 
   render() {
     return (
-      <div id="cards">{this.filter(this.state.cards).map((card, index) => (
-        <Card key={index} data={card}/>
+      <div id="cards">{this.filter(this.state.cards).map((data, index) => (
+        <Card key={index} data={data} />
       ))}</div>
     );
   }

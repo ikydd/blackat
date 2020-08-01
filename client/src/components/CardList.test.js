@@ -1,12 +1,9 @@
 import React from 'react';
-import { waitFor } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import CardList from './CardList';
-import Card from './Card';
 import * as api from '../helpers/api';
 
 jest.mock('../helpers/api');
-jest.mock('./Card', () => 'Card');
 
 describe('CardList', () => {
   const mockData = require('../../../fixtures/api/cards');
@@ -16,109 +13,96 @@ describe('CardList', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<CardList/>);
+    render(<CardList/>);
   });
 
   it('renders with no cards to begin with', async () => {
-    const component = shallow(<CardList/>);
+    const { queryByRole } = render(<CardList/>);
 
-    expect(component.find(Card).length).toEqual(0);
+    expect(queryByRole('img')).toBeFalsy();
   })
 
   it('uses api.getData correctly', () => {
-    shallow(<CardList/>);
+    render(<CardList/>);
 
     expect(api.getData).toHaveBeenCalledWith('cards');
   });
 
   it('default to showing all cards', async () => {
-    const component = shallow(<CardList/>);
+    const { findAllByRole } = render(<CardList/>);
+    const cards = await findAllByRole('img');
 
-    await waitFor(() => component.find(Card).length > 0)
-
-    expect(component.find(Card).length).toEqual(5);
+    expect(cards).toHaveLength(5);
   });
 
   it('only shows cards from the correct side', async () => {
-    const component = shallow(<CardList side="runner" />);
+    const { findAllByRole } = render(<CardList side="runner" />);
+    const cards = await findAllByRole('img');
 
-    await waitFor(() => component.find(Card).length > 0)
-
-    expect(component.find(Card).length).toEqual(2);
+    expect(cards).toHaveLength(2);
   });
 
   it('only shows cards from the correct factions', async () => {
     const factions = ['shaper'];
-    const component = shallow(<CardList factions={factions} />);
+    const { findAllByRole } = render(<CardList factions={factions} />);
+    const cards = await findAllByRole('img');
 
-    await waitFor(() => component.find(Card).length > 0)
-
-    expect(component.find(Card).length).toEqual(1);
+    expect(cards).toHaveLength(1);
   });
 
   it('only shows cards from the correct types', async () => {
     const types = ['program'];
-    const component = shallow(<CardList types={types} />);
+    const { findAllByRole } = render(<CardList types={types} />);
+    const cards = await findAllByRole('img');
 
-    await waitFor(() => component.find(Card).length > 0)
-
-    expect(component.find(Card).length).toEqual(2);
+    expect(cards).toHaveLength(2);
   });
 
   it('only shows cards from the correct packs', async () => {
     const packs = ['wla'];
-    const component = shallow(<CardList packs={packs} />);
+    const { findAllByRole } = render(<CardList packs={packs} />);
+    const cards = await findAllByRole('img');
 
-    await waitFor(() => component.find(Card).length > 0)
-
-    expect(component.find(Card).length).toEqual(1);
+    expect(cards).toHaveLength(1);
   });
 
   describe('Title Search', () => {
     it('only shows relevant cards given a search', async () => {
       const search = 'Blade';
-      const component = shallow(<CardList titleSearch={search} />);
+      const { findByRole } = render(<CardList titleSearch={search} />);
+      const card = await findByRole('img');
 
-      await waitFor(() => component.find(Card).length > 0)
-
-      expect(component.find(Card).length).toEqual(1);
-      expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+      expect(card).toHaveAttribute('alt', "Gordian Blade");
     });
 
     it('is not case-sensitive', async () => {
       const search = 'blADE';
-      const component = shallow(<CardList titleSearch={search} />);
+      const { findByRole } = render(<CardList titleSearch={search} />);
+      const card = await findByRole('img');
 
-      await waitFor(() => component.find(Card).length > 0)
-
-      expect(component.find(Card).length).toEqual(1);
-      expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
+      expect(card).toHaveAttribute('alt', "Gordian Blade");
     });
   });
 
   describe('Text Search', () => {
     it('only shows relevant cards given a text search', async () => {
       const search = 'net damage';
-      const component = shallow(<CardList textSearch={search} />);
+      const { findAllByRole } = render(<CardList textSearch={search} />);
+      const cards = await findAllByRole('img');
+      const titles = cards.map((card) => card.getAttribute('alt'));
 
-      await waitFor(() => component.find(Card).length > 0)
-
-      expect(component.find(Card).length).toEqual(3);
-      expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
-      expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
-      expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
+      expect(titles).toHaveLength(3);
+      expect(titles).toEqual(['Chum', 'Data Mine', 'Neural Katana']);
     });
 
     it('is not case-sensitive', async () => {
       const search = 'NEt daMAge';
-      const component = shallow(<CardList textSearch={search} />);
+      const { findAllByRole } = render(<CardList textSearch={search} />);
+      const cards = await findAllByRole('img');
+      const titles = cards.map((card) => card.getAttribute('alt'));
 
-      await waitFor(() => component.find(Card).length > 0)
-
-      expect(component.find(Card).length).toEqual(3);
-      expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
-      expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
-      expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
+      expect(titles).toHaveLength(3);
+      expect(titles).toEqual(['Chum', 'Data Mine', 'Neural Katana']);
     });
   })
 
