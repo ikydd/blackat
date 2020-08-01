@@ -26,6 +26,14 @@ describe('process cards', () => {
         expect(output[2].title).toEqual(mockCardsData.data[2].title);
     });
 
+    it('outputs the text', () => {
+        const output = process(mockCardsData, mockPackData);
+
+        expect(output[0].text).toEqual(mockCardsData.data[0].text);
+        expect(output[1].text).toEqual(mockCardsData.data[1].text);
+        expect(output[2].text).toEqual(mockCardsData.data[2].text);
+    });
+
     it('adds an image URL to each card using the template', () => {
         const output = process(mockCardsData, mockPackData);
 
