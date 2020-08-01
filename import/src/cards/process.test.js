@@ -8,7 +8,7 @@ describe('process cards', () => {
     it('outputs the correct number of cards', () => {
         const output = process(mockCardsData, mockPackData);
 
-        expect(output.length).toEqual(4);
+        expect(output.length).toEqual(5);
     });
 
     it('does not output cards for not included packs', () => {
@@ -32,6 +32,14 @@ describe('process cards', () => {
         expect(output[0].text).toEqual(mockCardsData.data[0].text);
         expect(output[1].text).toEqual(mockCardsData.data[1].text);
         expect(output[2].text).toEqual(mockCardsData.data[2].text);
+    });
+
+    it('adds a text property even if the text is empty', () => {
+        const output = process(mockCardsData, mockPackData);
+        const sunny = output.find((card) => card.title.includes('Sunny Lebeau'));
+
+        expect(sunny).toHaveProperty('text');
+        expect(sunny.text).toBe('');
     });
 
     it('adds an image URL to each card using the template', () => {

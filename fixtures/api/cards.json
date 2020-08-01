@@ -1,47 +1,47 @@
 [
-  {
-    "title": "Chum",
-    "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
-    "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
-    "side": "corp",
-    "faction": "jinteki",
-    "type": "ice",
-    "pack": "core"
-  },
-  {
-    "title": "Data Mine",
-    "text": "[subroutine] Do 1 net damage. Trash Data Mine.",
-    "imagesrc": "https://netrunnerdb.com/card_image/01076.png",
-    "side": "corp",
-    "faction": "jinteki",
-    "type": "ice",
-    "pack": "core"
-  },
-  {
-    "title": "D4v1d",
-    "text": "Place 3 power counters on D4v1d when it is installed.\n<strong>Hosted power counter:</strong> Break ice subroutine on a piece of ice that has a strength of 5 or greater.",
-    "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_33.png",
-    "side": "runner",
-    "faction": "anarch",
-    "type": "program",
-    "pack": "wla"
-  },
-  {
-    "title": "Neural Katana",
-    "text": "[subroutine] Do 3 net damage.",
-    "imagesrc": "https://netrunnerdb.com/card_image/01077.png",
-    "side": "corp",
-    "faction": "jinteki",
-    "type": "ice",
-    "pack": "core"
-  },
-  {
-    "title": "Gordian Blade",
-    "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
-    "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
-    "side": "runner",
-    "faction": "shaper",
-    "type": "program",
-    "pack": "core"
-  }
+    {
+        "title": "Chum",
+        "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
+        "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
+        "side": "corp",
+        "faction": "jinteki",
+        "type": "ice",
+        "pack": "core"
+    },
+    {
+        "title": "Data Mine",
+        "text": "[subroutine] Do 1 net damage. Trash Data Mine.",
+        "imagesrc": "https://netrunnerdb.com/card_image/01076.png",
+        "side": "corp",
+        "faction": "jinteki",
+        "type": "ice",
+        "pack": "core"
+    },
+    {
+        "title": "D4v1d",
+        "text": "Place 3 power counters on D4v1d when it is installed.\n<strong>Hosted power counter:</strong> Break ice subroutine on a piece of ice that has a strength of 5 or greater.",
+        "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_33.png",
+        "side": "runner",
+        "faction": "anarch",
+        "type": "program",
+        "pack": "wla"
+    },
+    {
+        "title": "Neural Katana",
+        "text": "[subroutine] Do 3 net damage.",
+        "imagesrc": "https://netrunnerdb.com/card_image/01077.png",
+        "side": "corp",
+        "faction": "jinteki",
+        "type": "ice",
+        "pack": "core"
+    },
+    {
+        "title": "Gordian Blade",
+        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+        "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core"
+    }
 ]

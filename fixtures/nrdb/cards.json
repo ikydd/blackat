@@ -96,6 +96,26 @@
       "title": "Border Control",
       "type_code": "ice",
       "uniqueness": false
+    },
+    {
+      "base_link": 2,
+      "code": "09045",
+      "deck_limit": 1,
+      "faction_code": "sunny-lebeau",
+      "faction_cost": 0,
+      "flavor": "\"Mommy will be home soon, sweetie. She has to kick some ass first.\"",
+      "illustrator": "Matt Zeilinger",
+      "image_url": "http://www.cardgamedb.com/forums/uploads/an/med_ADN29_45.png",
+      "influence_limit": 25,
+      "keywords": "Natural",
+      "minimum_deck_size": 50,
+      "pack_code": "cac",
+      "position": 45,
+      "quantity": 3,
+      "side_code": "runner",
+      "title": "Sunny Lebeau: Security Specialist",
+      "type_code": "identity",
+      "uniqueness": false
     }
   ],
   "total": 1842,

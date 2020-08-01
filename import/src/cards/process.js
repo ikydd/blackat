@@ -3,7 +3,7 @@ const process = ({ imageUrlTemplate, data: cards }, packs) => cards
     .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code }) => ({
         code,
         title,
-        text,
+        text: text || '',
         imagesrc: image_url || imageUrlTemplate.replace('{code}', code),
         side: side_code,
         faction: faction_code,
