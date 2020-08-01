@@ -1,4 +1,4 @@
-const fs = require('fs');
+const path = require('path');
 const request = require("../helpers/request");
 const localPath = require('../helpers/local-path');
 const apiUrlFor = require('../helpers/api-url');
@@ -9,7 +9,7 @@ const save = require("../helpers/save");
 const processWith = (packs) => (cards) => process(cards, packs);
 const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
 const downloadImagesTo = (folder) => (data) => download(folder, data);
-const folder = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
+const folder = path.join(__dirname, '..', '..', '..', 'client', 'public', 'img', 'cards');
 
 const importCards = async (packs) =>
     request(apiUrlFor("/cards"))
