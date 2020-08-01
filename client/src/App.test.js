@@ -97,31 +97,42 @@ describe('Side Selection', () => {
   });
 });
 
-describe('TextSearch', () => {
-  it('contains an instance of TextSearch', () => {
-    const component = shallow(<App />);
+describe('Searches',  () => {
+  const searches = [
+    {
+      keyword: 'title'
+    },
+    {
+      keyword: 'text'
+    }
+  ];
 
-    expect(component.find(TextSearch).length).toEqual(1);
-  });
+  searches.forEach(({ keyword }, index) => {
+    it(`contains an instance of ${keyword} correct search`, () => {
+      const component = shallow(<App />);
 
-  it('passes a callback to the TextSearch', () => {
-    const component = shallow(<App />);
+      expect(component.find(TextSearch).at(index)).toBeTruthy();
+    });
 
-    expect(component.find(TextSearch).prop('onChange')).toEqual(expect.any(Function));
-  });
+    it(`passes a callback to the ${keyword} TextSearch`, () => {
+      const component = shallow(<App />);
 
-  it('passes a placeholder to the TextSearch', () => {
-    const component = shallow(<App />);
+      expect(component.find(TextSearch).at(index).prop('onChange')).toEqual(expect.any(Function));
+    });
 
-    expect(component.find(TextSearch).prop('placeholder')).toEqual("search title");
-  });
+    it(`passes a placeholder to the ${keyword} TextSearch`, () => {
+      const component = shallow(<App />);
 
-  it('sends the appropriate prop to CardList on change', () => {
-    const component = shallow(<App />);
-    component.find(TextSearch).prop('onChange')(["foo"]);
+      expect(component.find(TextSearch).at(index).prop('placeholder')).toEqual(`search ${keyword}`);
+    });
 
-    expect(component.find(CardList).prop('titleSearch')).toEqual(["foo"]);
-  });
+    it('sends the appropriate prop to CardList on change', () => {
+      const component = shallow(<App />);
+      component.find(TextSearch).at(index).prop('onChange')(["foo"]);
+
+      expect(component.find(CardList).prop(`${keyword}Search`)).toEqual(["foo"]);
+    });
+  })
 });
 
 describe('Filters', () => {
