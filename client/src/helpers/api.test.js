@@ -19,7 +19,13 @@ describe('ApiCall', () => {
     it('calls the correct URL on the api', async () => {
         await call('/foo');
 
-        expect(global.fetch).toHaveBeenCalledWith('/data/foo.json');
+        expect(global.fetch).toHaveBeenCalledWith('/data/foo.json', expect.any(Object));
+    });
+
+    it('request the data gzipped', async () => {
+        await call('/foo');
+
+        expect(global.fetch).toHaveBeenCalledWith(expect.any(String), expect.objectContaining( { headers: { 'Accept-Encoding': 'gzip' } }));
     });
 
     it('returns the payload', async () => {
