@@ -13,7 +13,9 @@ class TextSearch extends Component {
 
     render() {
         return (
-            <input placeholder={this.props.placeholder} onChange={this.handleChange} />
+            <div className="form-group">
+                <input className="form-control" placeholder={this.props.placeholder} onChange={this.handleChange} />
+            </div>
         );
     }
 }
