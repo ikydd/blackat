@@ -56,9 +56,17 @@ class CardList extends Component {
     return card.title.search(this.props.titleSearch) !== -1;
   }
 
+  filterByTextSearch = (card) => {
+    if (!this.props.textSearch) {
+      return true;
+    }
+    return card.text.search(this.props.textSearch) !== -1;
+  }
+
   filter = cards => cards
       .filter(this.filterBySide)
       .filter(this.filterByTitleSearch)
+      .filter(this.filterByTextSearch)
       .filter(this.filterByFactions)
       .filter(this.filterByTypes)
       .filter(this.filterByPacks)

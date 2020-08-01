@@ -83,4 +83,16 @@ describe('CardList', () => {
     expect(component.find(Card).length).toEqual(1);
     expect(component.find(Card).prop('data').title).toEqual("Gordian Blade");
   });
+
+  it('only shows relevant cards given a text search', async () => {
+    const search = 'net damage';
+    const component = shallow(<CardList textSearch={search} />);
+
+    await waitFor(() => component.find(Card).length > 0)
+
+    expect(component.find(Card).length).toEqual(3);
+    expect(component.find(Card).at(0).prop('data').text).toContain("net damage");
+    expect(component.find(Card).at(1).prop('data').text).toContain("net damage");
+    expect(component.find(Card).at(2).prop('data').text).toContain("net damage");
+  });
 });
