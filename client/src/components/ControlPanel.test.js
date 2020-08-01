@@ -1,26 +1,23 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import ControlPanel from './ControlPanel';
-import Header from './Header';
 
 jest.mock('../helpers/api');
-jest.mock('./SideButton');
-jest.mock('./FilterList');
 
 describe('CardList', () => {
   it('renders without crashing', () => {
-    shallow(<ControlPanel/>);
+    render(<ControlPanel/>);
   });
 
   it('has a header', () => {
-    const component = shallow(<ControlPanel/>);
+    const { getByRole } = render(<ControlPanel/>);
 
-    expect(component.find(Header).length).toEqual(1);
+    expect(getByRole('heading')).toBeTruthy();
   });
 
   it('renders child elements', () => {
-    const component = shallow(<ControlPanel><span /></ControlPanel>);
+    const { getByTitle } = render(<ControlPanel><span title="test"/></ControlPanel>);
 
-    expect(component.find('span').length).toEqual(1);
+    expect(getByTitle('test')).toBeTruthy();
   });
 });
