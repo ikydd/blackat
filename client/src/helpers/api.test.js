@@ -19,7 +19,7 @@ describe('ApiCall', () => {
     it('calls the correct URL on the api', async () => {
         await call('/foo');
 
-        expect(global.fetch).toHaveBeenCalledWith('/api/foo');
+        expect(global.fetch).toHaveBeenCalledWith('/data/foo.json');
     });
 
     it('returns the payload', async () => {
