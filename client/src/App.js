@@ -11,6 +11,7 @@ class App extends Component {
   state = {
       side: "runner",
       titleSearch: "",
+      textSearch: "",
       factions_runner: [],
       factions_corp: [],
       types_runner: [],
