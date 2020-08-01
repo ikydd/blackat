@@ -1,26 +1,30 @@
 import React from 'react';
 import Card from './Card';
-import { shallow } from 'enzyme'
+import { render } from '@testing-library/react';
 
 describe('Card', () => {
   const data = require('../../../fixtures/api/cards')[0];
 
   it('renders without crashing', () => {
-    shallow(<Card data={data}/>);
+    render(<Card data={data}/>);
   });
 
-  it('has an img using the card code', () => {
-    const card = shallow(<Card data={data} />);
-    expect(card.find('img').prop('src')).toEqual(`/img/cards/${card.code}.png`);
+  it('has an img using the card code', async () => {
+    const { findByRole } = render(<Card data={data} />);
+    const img = await findByRole('img');
+
+    expect(img).toHaveAttribute('src', `/img/cards/${data.code}.png`);
   });
 
   it('has a title', () => {
-    const card = shallow(<Card data={data} />);
-    expect(card.prop('title')).toEqual(data.title);
+    const { container } = render(<Card data={data} />);
+
+    expect(container.firstChild).toHaveAttribute('title', data.title);
   });
 
   it('has the class card-tile', () => {
-    const card = shallow(<Card data={data} />);
-    expect(card.hasClass('card-tile')).toEqual(true);
+    const { container } = render(<Card data={data} />);
+
+    expect(container.firstChild).toHaveClass('card-tile');
   });
 });

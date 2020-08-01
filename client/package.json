@@ -11,7 +11,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen",
-    "watch": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "watch": "react-scripts test --env=jest-environment-jsdom-sixteen --verbose=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -24,6 +24,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
