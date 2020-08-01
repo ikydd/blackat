@@ -12,7 +12,7 @@ describe('CardList', () => {
   const mockData = require('../../../fixtures/api/cards');
 
   beforeEach(() => {
-    jest.spyOn(api, 'call').mockImplementation(() => Promise.resolve(mockData));
+    jest.spyOn(api, 'getData').mockImplementation(() => Promise.resolve(mockData));
   });
 
   it('renders without crashing', () => {
@@ -25,10 +25,10 @@ describe('CardList', () => {
     expect(component.find(Card).length).toEqual(0);
   })
 
-  it('uses api.call correctly', () => {
+  it('uses api.getData correctly', () => {
     shallow(<CardList/>);
 
-    expect(api.call).toHaveBeenCalledWith('/cards');
+    expect(api.getData).toHaveBeenCalledWith('cards');
   });
 
   it('default to showing all cards', async () => {

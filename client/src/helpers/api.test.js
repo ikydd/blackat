@@ -1,4 +1,4 @@
-const { call } = require('./Api')
+const { getData } = require('./Api')
 
 describe('ApiCall', () => {
     let mockSuccessResponse = {};
@@ -17,13 +17,13 @@ describe('ApiCall', () => {
     })
 
     it('calls the correct URL on the api', async () => {
-        await call('/foo');
+        await getData('foo');
 
         expect(global.fetch).toHaveBeenCalledWith('/data/foo.json', expect.any(Object));
     });
 
     it('request the data gzipped', async () => {
-        await call('/foo');
+        await getData('foo');
 
         expect(global.fetch).toHaveBeenCalledWith(expect.any(String), expect.objectContaining( { headers: { 'Accept-Encoding': 'gzip' } }));
     });
@@ -32,7 +32,7 @@ describe('ApiCall', () => {
         mockSuccessResponse = {
             foo: 'bar'
         }
-        const data = await call('/foo')
+        const data = await getData('foo')
 
         expect(data).toEqual(mockSuccessResponse);
     });

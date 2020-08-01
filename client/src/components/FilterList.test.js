@@ -10,49 +10,49 @@ describe('FilterList', () => {
   const mockData = require('../../../fixtures/api/filter-items');
 
   beforeEach(() => {
-    jest.spyOn(api, 'call').mockImplementation(() => Promise.resolve(mockData));
+    jest.spyOn(api, 'getData').mockImplementation(() => Promise.resolve(mockData));
   });
 
   it('renders without crashing', () => {
-    shallow(<FilterList endpoint="foo"/>);
+    shallow(<FilterList dataType="foo"/>);
   });
 
   it('has defaults to an obvious error title', () => {
-    const component = shallow(<FilterList endpoint="foo"/>);
+    const component = shallow(<FilterList dataType="foo"/>);
 
     expect(component.find('.filter-list-title').text()).toEqual('Missing');
   });
 
   it('has accepts and uses a title', () => {
-    const component = shallow(<FilterList endpoint="foo" title="Foo" />);
+    const component = shallow(<FilterList dataType="foo" title="Foo" />);
 
     expect(component.find('.filter-list-title').text()).toEqual('Foo');
   });
 
   it('has an id related to the title', () => {
-    const component = shallow(<FilterList endpoint="foo" title="Foo" />);
+    const component = shallow(<FilterList dataType="foo" title="Foo" />);
 
     expect(component.prop('id')).toEqual('foo-filter');
   });
 
   it('renders with no options to begin with', async () => {
-    const component = shallow(<FilterList endpoint="foo" />);
+    const component = shallow(<FilterList dataType="foo" />);
 
     expect(component.find('input').length).toEqual(0);
   })
 
-  it('throws and error if no endpoint prop is provided', () => {
+  it('throws and error if no dataType prop is provided', () => {
     expect(() => shallow(<FilterList/>)).toThrow();
   });
 
-  it('uses api.call correctly with the provided prop', () => {
-    shallow(<FilterList endpoint="foo"/>);
+  it('uses api.getData correctly with the provided prop', () => {
+    shallow(<FilterList dataType="foo"/>);
 
-    expect(api.call).toHaveBeenCalledWith('/foo');
+    expect(api.getData).toHaveBeenCalledWith('foo');
   });
 
   it('default to showing all options', async () => {
-    const component = shallow(<FilterList endpoint="foo" />);
+    const component = shallow(<FilterList dataType="foo" />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -60,7 +60,7 @@ describe('FilterList', () => {
   });
 
   it('only shows options from corp and those that have no specified side', async () => {
-    const component = shallow(<FilterList endpoint="foo" side="corp" />);
+    const component = shallow(<FilterList dataType="foo" side="corp" />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -68,7 +68,7 @@ describe('FilterList', () => {
   });
 
   it('only shows options from runner and those that have no specified side', async () => {
-    const component = shallow(<FilterList endpoint="foo" side="runner" />);
+    const component = shallow(<FilterList dataType="foo" side="runner" />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -77,7 +77,7 @@ describe('FilterList', () => {
 
   it('accepts a list of selected filters', async () => {
     const isSelected = ['shaper', 'anarch'];
-    const component = shallow(<FilterList endpoint="foo" selected={isSelected} />);
+    const component = shallow(<FilterList dataType="foo" selected={isSelected} />);
 
     await waitFor(() => component.find('input').length > 0);
 
@@ -91,7 +91,7 @@ describe('FilterList', () => {
 
   it('calls a callback when an option is selected', async () => {
     const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList endpoint="foo" onChange={cb} />);
+    const { findByLabelText } = render(<FilterList dataType="foo" onChange={cb} />);
 
     const input = await findByLabelText('Anarch');
 
@@ -102,7 +102,7 @@ describe('FilterList', () => {
   it('calls a callback when an option is deselected', async () => {
     const selected = ['anarch', 'shaper'];
     const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList endpoint="foo" selected={selected} onChange={cb} />);
+    const { findByLabelText } = render(<FilterList dataType="foo" selected={selected} onChange={cb} />);
 
     const input = await findByLabelText('Anarch');
 

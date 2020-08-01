@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import { call } from '../helpers/api';
+import { getData } from '../helpers/api';
 import './CardList.css';
 
 class CardList extends Component {
@@ -18,7 +18,7 @@ class CardList extends Component {
   }
 
   componentDidMount() {
-    call('/cards')
+    getData('cards')
       .then(cards => this.setState({ cards }))
       .catch(err => console.log(err));
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { call } from '../helpers/api';
+import { getData } from '../helpers/api';
 import Icon from './Icon.js';
 import './FilterList.css';
 
@@ -15,10 +15,10 @@ class FilterList extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.endpoint) {
-      throw new Error('Endpoint prop was missing for a filter and is required');
+    if (!this.props.dataType) {
+      throw new Error('dataType prop was missing for a filter and is required');
     }
-    call(`/${this.props.endpoint}`)
+    getData(this.props.dataType)
       .then(options => this.setState({ options }))
       .catch(err => console.log(err));
   }
