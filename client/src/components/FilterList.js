@@ -47,7 +47,7 @@ class FilterList extends Component {
   render() {
     const keyword = this.props.title.toLowerCase();
     return (
-      <div id={`${keyword}-filter`} className="filter-list">
+      <div className="filter-list">
         <h4 className="filter-list-title">{this.props.title}</h4>
         {this.state.options.filter(this.filterBySide).map((item) => (
         <div key={item.code} className="checkbox">

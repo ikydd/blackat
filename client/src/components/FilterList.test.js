@@ -1,6 +1,5 @@
 import React from 'react';
-import { waitFor, render, fireEvent } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import FilterList from './FilterList';
 import * as api from '../helpers/api';
 
@@ -14,77 +13,71 @@ describe('FilterList', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<FilterList dataType="foo"/>);
+    render(<FilterList dataType="foo"/>);
   });
 
   it('has defaults to an obvious error title', () => {
-    const component = shallow(<FilterList dataType="foo"/>);
+    const { getByRole } = render(<FilterList dataType="foo"/>);
 
-    expect(component.find('.filter-list-title').text()).toEqual('Missing');
+    expect(getByRole('heading')).toHaveTextContent('Missing');
   });
 
   it('has accepts and uses a title', () => {
-    const component = shallow(<FilterList dataType="foo" title="Foo" />);
+    const { getByRole } = render(<FilterList dataType="foo" title="Foo" />);
 
-    expect(component.find('.filter-list-title').text()).toEqual('Foo');
+    expect(getByRole('heading')).toHaveTextContent('Foo');
   });
 
-  it('has an id related to the title', () => {
-    const component = shallow(<FilterList dataType="foo" title="Foo" />);
+  it('renders with no options to begin with', () => {
+    const { queryAllByRole } = render(<FilterList dataType="foo" />);
+    const checkboxes = queryAllByRole('checkbox');
 
-    expect(component.prop('id')).toEqual('foo-filter');
-  });
-
-  it('renders with no options to begin with', async () => {
-    const component = shallow(<FilterList dataType="foo" />);
-
-    expect(component.find('input').length).toEqual(0);
+    expect(checkboxes).toHaveLength(0);
   })
 
-  it('throws and error if no dataType prop is provided', () => {
-    expect(() => shallow(<FilterList/>)).toThrow();
+  it('throws and error if no dataType prop is provided x', () => {
+    const err = console.error;
+    console.error = jest.fn();
+
+    expect(() => render(<FilterList/>)).toThrow();
+    console.error = err;
   });
 
   it('uses api.getData correctly with the provided prop', () => {
-    shallow(<FilterList dataType="foo"/>);
+    render(<FilterList dataType="foo"/>);
 
     expect(api.getData).toHaveBeenCalledWith('foo');
   });
 
   it('default to showing all options', async () => {
-    const component = shallow(<FilterList dataType="foo" />);
+    const { findAllByRole } = render(<FilterList dataType="foo" />);
+    const checkboxes = await findAllByRole('checkbox');
 
-    await waitFor(() => component.find('input').length > 0);
-
-    expect(component.find('input').length).toEqual(6);
+    expect(checkboxes).toHaveLength(6);
   });
 
   it('only shows options from corp and those that have no specified side', async () => {
-    const component = shallow(<FilterList dataType="foo" side="corp" />);
+    const { findAllByRole } = render(<FilterList dataType="foo" side="corp" />);
+    const checkboxes = await findAllByRole('checkbox');
 
-    await waitFor(() => component.find('input').length > 0);
-
-    expect(component.find('input').length).toEqual(3);
+    expect(checkboxes).toHaveLength(3);
   });
 
   it('only shows options from runner and those that have no specified side', async () => {
-    const component = shallow(<FilterList dataType="foo" side="runner" />);
+    const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
+    const checkboxes = await findAllByRole('checkbox');
 
-    await waitFor(() => component.find('input').length > 0);
-
-    expect(component.find('input').length).toEqual(4);
+    expect(checkboxes).toHaveLength(4);
   });
 
   it('accepts a list of selected filters', async () => {
     const isSelected = ['shaper', 'anarch'];
-    const component = shallow(<FilterList dataType="foo" selected={isSelected} />);
+    const { findAllByRole } = render(<FilterList dataType="foo" selected={isSelected} />);
+    const checkboxes = await findAllByRole('checkbox');
 
-    await waitFor(() => component.find('input').length > 0);
-
-    const checked = component.find('input')
-      .map((input) => input)
-      .filter((input) => input.prop('checked'))
-      .map((input) => input.prop('value'));
+    const checked = checkboxes
+      .filter(({ checked }) => checked)
+      .map((input) => input.getAttribute('value'));
 
     expect(checked).toEqual(['anarch', 'shaper']);
   })
