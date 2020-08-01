@@ -1,36 +1,36 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { shallow } from 'enzyme';
 import TextSearch from './TextSearch';
 
 describe('TextSearch', () => {
     it('renders without crashing', () => {
-        shallow(<TextSearch />);
+        render(<TextSearch />);
     });
 
     it('contains a text input field', () => {
-        const component = shallow(<TextSearch />);
+        const { getByRole } = render(<TextSearch />);
 
-        expect(component.find('input').length).toEqual(1);
+        expect(getByRole('textbox')).toBeTruthy();
     });
 
     it('sets placeholder a placeholder from a prop', () => {
-        const component = shallow(<TextSearch placeholder="foo" />);
+        const { getByRole } = render(<TextSearch placeholder="foo" />);
 
-        expect(component.find('input').prop('placeholder')).toEqual("foo");
+        expect(getByRole('textbox')).toHaveAttribute('placeholder', "foo");
     });
 
     it('has a default placeholder of "search"', () => {
-        const component = shallow(<TextSearch />);
+        const { getByRole } = render(<TextSearch />);
 
-        expect(component.find('input').prop('placeholder')).toEqual("search");
+        expect(getByRole('textbox')).toHaveAttribute('placeholder', "search");
     });
 
     it('calls a callback on input', async () => {
       const cb = jest.fn();
-      const { container } = render(<TextSearch onChange={cb} />);
+      const { getByRole } = render(<TextSearch onChange={cb} />);
+      const input = getByRole('textbox');
 
-      fireEvent.change(container.querySelector('input'), { target: { value: 'abc' } });
+      fireEvent.change(input, { target: { value: 'abc' } });
       expect(cb).toHaveBeenCalledWith('abc');
     })
 });
