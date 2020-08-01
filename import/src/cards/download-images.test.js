@@ -23,19 +23,20 @@ describe('download images', () => {
     const fixtures = `${__dirname}/fixtures`;
     const originalLog = console.error;
 
+    const setup = async () => {
+      if (fs.existsSync(dir)){
+          await fs.emptyDir(dir);
+          await fs.remove(dir);
+      }
+    }
+
     beforeEach(async () => {
-        if (fs.existsSync(dir)){
-            await fs.emptyDir(dir);
-            await fs.remove(dir);
-        }
+        await setup();
         console.error = jest.fn();
     });
 
     afterEach(async () => {
-        if (fs.existsSync(dir)){
-            await fs.emptyDir(dir);
-            await fs.remove(dir);
-        }
+        await setup();
         console.error = originalLog;
         nock.cleanAll()
     });
