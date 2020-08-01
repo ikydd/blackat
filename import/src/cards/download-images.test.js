@@ -1,7 +1,6 @@
 const nock = require('nock');
 const download = require('./download-images');
-const fsExtra = require('fs-extra');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 describe('download images', () => {
 
@@ -26,17 +25,16 @@ describe('download images', () => {
 
     beforeEach(async () => {
         if (fs.existsSync(dir)){
-            await fsExtra.emptyDir(dir);
-        } else {
-            fs.mkdirSync(dir);
+            await fs.emptyDir(dir);
+            await fs.remove(dir);
         }
         console.error = jest.fn();
     });
 
     afterEach(async () => {
         if (fs.existsSync(dir)){
-            await fsExtra.emptyDir(dir);
-            await fsExtra.remove(dir);
+            await fs.emptyDir(dir);
+            await fs.remove(dir);
         }
         console.error = originalLog;
         nock.cleanAll()
@@ -48,7 +46,7 @@ describe('download images', () => {
 
         await download(dir, [chum, dirtyLaundry]);
 
-        const files = fs.readdirSync(dir);
+        const files = await fs.readdir(dir);
         expect(files).toEqual(['01075.png', '25060.png']);
     });
 
@@ -57,17 +55,18 @@ describe('download images', () => {
 
         await download(dir, [edenFragment]);
 
-        const files = fs.readdirSync(dir);
+        const files = await fs.readdir(dir);
         expect(files).toEqual(['06030.png']);
     });
 
     it('does not save the image if there already is a file in place', async () => {
         const testBody = new Array(100000).fill('test').join("");
         nock.load(`${fixtures}/chum.json`);
-        fs.writeFileSync(`${dir}/01075.png`, testBody, 'utf8');
+        await fs.ensureDir(dir);
+        await fs.writeFile(`${dir}/01075.png`, testBody, 'utf8');
 
         await download(dir, [chum]);
-        const data = fs.readFileSync(`${dir}/01075.png`, 'utf8');
+        const data = await fs.readFile(`${dir}/01075.png`, 'utf8');
 
         expect(data).toEqual(testBody);
     });
@@ -75,10 +74,11 @@ describe('download images', () => {
     it('does save the image if there already is a file but it is smaller than 200k', async () => {
         const testBody = 'test';
         nock.load(`${fixtures}/chum.json`);
-        fs.writeFileSync(`${dir}/01075.png`, testBody, 'utf8');
+        await fs.ensureDir(dir);
+        await fs.writeFile(`${dir}/01075.png`, testBody, 'utf8');
 
         await download(dir, [chum]);
-        const data = fs.readFileSync(`${dir}/01075.png`, 'utf8');
+        const data = await fs.readFile(`${dir}/01075.png`, 'utf8');
 
         expect(data).not.toEqual(testBody);
     });
