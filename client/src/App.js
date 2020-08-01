@@ -12,12 +12,18 @@ class App extends Component {
       side: "runner",
       titleSearch: "",
       textSearch: "",
-      factions_runner: [],
-      factions_corp: [],
-      types_runner: [],
-      types_corp: [],
-      packs_runner: [],
-      packs_corp: []
+      factions: {
+        runner: [],
+        corp: []
+      },
+      types: {
+        runner: [],
+        corp: []
+      },
+      packs: {
+        runner: [],
+        corp: []
+      }
   };
 
   setSide = (side) => {
@@ -30,12 +36,15 @@ class App extends Component {
 
   getFilter = (type, side = null) => {
     const currentSide = side || this.getSide();
-    return this.state[`${type}_${currentSide}`];
+    return this.state[type][currentSide];
   }
 
   setFilter = (type, items, side = null) => {
     const currentSide = side || this.getSide();
-    this.setState({ [`${type}_${currentSide}`]: items });
+    const currentValues = Object.assign(this.state[type], {
+        [currentSide]: items
+    });
+    this.setState({ [type]: currentValues });
   }
 
   getTitleSearch =() => {
