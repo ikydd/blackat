@@ -9,7 +9,7 @@ import './App.css';
 
 class App extends Component {
   state = {
-      side: "runner",
+      side: this.props.side || "runner",
       search: {
         title: "",
         text: ""
