@@ -78,6 +78,10 @@ class CardList extends Component {
         : 0)
   }
 
+  getFactionForSort = ({ faction }) => {
+    return faction.search('neutral') !== -1 ? 'zzzzzz' : faction;
+  }
+
   sort = (type, a, b, result = 0) => {
     if (result !== 0) {
       return result;
@@ -86,7 +90,7 @@ class CardList extends Component {
       case 'type':
         return this.compare(typeOrder.indexOf(a.type), typeOrder.indexOf(b.type));
       case 'faction':
-        return this.compare(a.faction, b.faction);
+        return this.compare(this.getFactionForSort(a), this.getFactionForSort(b));
       case 'alpha':
       default:
         return this.compare(a.title, b.title);

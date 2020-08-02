@@ -115,7 +115,17 @@ describe('CardList', () => {
         const cards = images.map(({ alt }) => alt);
 
         expect(cards).toEqual(["Mandatory Upgrades", "Chum"]);
-      })
+      });
+
+      it('sorts neutral last', async () => {
+        mockData = require('../../../fixtures/api/sort-faction-neutral');
+        const { findAllByRole } = render(<CardList sort="faction" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(["Gordian Blade", "Sure Gamble"]);
+      });
+
       it('sorts by type after faction', async () => {
         mockData = require('../../../fixtures/api/sort-faction-type');
         const { findAllByRole } = render(<CardList sort="faction" />);
@@ -123,7 +133,8 @@ describe('CardList', () => {
         const cards = images.map(({ alt }) => alt);
 
         expect(cards).toEqual(["Gordian Blade", "R&D Interface", ]);
-      })
+      });
+
       it('sorts by alpha after type', async () => {
         mockData = require('../../../fixtures/api/sort-faction-type-alpha');
         const { findAllByRole } = render(<CardList sort="faction" />);
