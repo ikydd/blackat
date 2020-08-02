@@ -18,6 +18,14 @@ describe('process factions', () => {
         expect(output).toEqual(["Adam", "Anarch", "Apex", "Criminal", "Haas-Bioroid"]);
     });
 
+    it('orders the neutral factions last', () => {
+        const output = process(mockData)
+            .map(({ name }) => name)
+            .slice(-2);
+
+        expect(output).toEqual(["Neutral", "Neutral"]);
+    });
+
     it('outputs the names', () => {
         const output = process(mockData);
 

@@ -1,9 +1,13 @@
+
+const neutralLast = (faction) => faction.name.search('Neutral') !== -1 ? 'zzzzzzz' : faction.name;
+const byName = (a, b) =>  neutralLast(a) > neutralLast(b) ? 1 : -1;
+
 const process = ({ data: factions }) => factions
     .map(({ name, code, side_code }) => ({
         code,
         name,
         side: side_code
     }))
-    .sort((a, b) => a.name > b.name ? 1 : -1)
+    .sort(byName)
 
 module.exports = process
