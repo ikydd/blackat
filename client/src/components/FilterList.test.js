@@ -22,7 +22,7 @@ describe('FilterList', () => {
     expect(getByRole('heading')).toHaveTextContent('Missing');
   });
 
-  it('has accepts and uses a title', () => {
+  it('accepts and uses a title', () => {
     const { getByRole } = render(<FilterList dataType="foo" title="Foo" />);
 
     expect(getByRole('heading')).toHaveTextContent('Foo');
