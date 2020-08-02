@@ -9,7 +9,7 @@ class TextSearch extends Component {
     handleChange = ev => {
         ev.preventDefault();
         this.props.onChange(ev.currentTarget.value);
-      }
+    }
 
     render() {
         return (

@@ -4,12 +4,14 @@ import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
 import TextSearch from './components/TextSearch';
+import SortSelect from './components/SortSelect';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
 class App extends Component {
   state = {
       side: this.props.side || "runner",
+      sort: "faction",
       search: {
         title: "",
         text: ""
@@ -60,6 +62,14 @@ class App extends Component {
     this.setState({ search: currentValues });
   }
 
+  getSort = () => {
+    return this.state.sort;
+  }
+
+  setSort = (sort) => {
+    this.setState({ sort })
+  }
+
   searchHandler = (type) => (term) => this.setSearch(type, term);
   filterHandler = (type) => (items) => this.setFilter(type, items);
 
@@ -88,6 +98,7 @@ class App extends Component {
           </div>
           <TextSearch placeholder="search title" onChange={this.searchHandler('title')} />
           <TextSearch placeholder="search text" onChange={this.searchHandler('text')} />
+          <SortSelect onChange={this.setSort} />
           {filters.map(({ title, keyword }) => (
             <FilterList key={keyword} title={title} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}

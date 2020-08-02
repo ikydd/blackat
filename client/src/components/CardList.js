@@ -3,6 +3,9 @@ import Card from './Card';
 import { getData } from '../helpers/api';
 import './CardList.css';
 
+const typeOrder = ['identity', 'program', 'hardware', 'resource',
+  'event', 'agenda', 'ice', 'asset', 'upgrade', 'operation'];
+
 class CardList extends Component {
   static defaultProps = {
     side: "",
@@ -67,6 +70,39 @@ class CardList extends Component {
     return card.text.search(regex) !== -1;
   }
 
+  compare = (a, b) => {
+    return a > b
+      ? 1
+      : (a < b
+        ? -1
+        : 0)
+  }
+
+  sort = (type, a, b, result = 0) => {
+    if (result !== 0) {
+      return result;
+    }
+    switch (type) {
+      case 'type':
+        return this.compare(typeOrder.indexOf(a.type), typeOrder.indexOf(b.type));
+      case 'faction':
+        return this.compare(a.faction, b.faction);
+      case 'alpha':
+      default:
+        return this.compare(a.title, b.title);
+    }
+  }
+
+  sequencedSort = (type) => (a, b) => {
+    switch (type) {
+      case 'faction':
+      default:
+        let result = this.sort('faction', a, b);
+        result = this.sort('type', a, b, result);
+        return this.sort('alpha', a, b, result);
+    }
+  }
+
   filter = cards => cards
       .filter(this.filterBySide)
       .filter(this.filterByTitleSearch)
@@ -74,6 +110,7 @@ class CardList extends Component {
       .filter(this.filterByFactions)
       .filter(this.filterByTypes)
       .filter(this.filterByPacks)
+      .sort(this.sequencedSort(this.props.sort))
 
   render() {
     return (

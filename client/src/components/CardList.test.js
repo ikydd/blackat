@@ -6,7 +6,7 @@ import * as api from '../helpers/api';
 jest.mock('../helpers/api');
 
 describe('CardList', () => {
-  const mockData = require('../../../fixtures/api/cards');
+  let mockData = require('../../../fixtures/api/cards');
 
   beforeEach(() => {
     jest.spyOn(api, 'getData').mockImplementation(() => Promise.resolve(mockData));
@@ -106,4 +106,32 @@ describe('CardList', () => {
     });
   })
 
+  describe('Sort', () => {
+    describe('Faction', () => {
+      it('sorts by faction', async () => {
+        mockData = require('../../../fixtures/api/sort-faction');
+        const { findAllByRole } = render(<CardList sort="faction" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(["Mandatory Upgrades", "Chum"]);
+      })
+      it('sorts by type after faction', async () => {
+        mockData = require('../../../fixtures/api/sort-faction-type');
+        const { findAllByRole } = render(<CardList sort="faction" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(["Gordian Blade", "R&D Interface", ]);
+      })
+      it('sorts by alpha after type', async () => {
+        mockData = require('../../../fixtures/api/sort-faction-type-alpha');
+        const { findAllByRole } = render(<CardList sort="faction" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(["Chum", "Data Mine"]);
+      });
+    });
+  })
 });
