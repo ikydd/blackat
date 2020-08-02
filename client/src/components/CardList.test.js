@@ -32,14 +32,14 @@ describe('CardList', () => {
     const { findAllByRole } = render(<CardList/>);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(5);
+    expect(cards).toHaveLength(7);
   });
 
   it('only shows cards from the correct side', async () => {
     const { findAllByRole } = render(<CardList side="runner" />);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(2);
+    expect(cards).toHaveLength(3);
   });
 
   it('only shows cards from the correct factions', async () => {
@@ -47,7 +47,7 @@ describe('CardList', () => {
     const { findAllByRole } = render(<CardList factions={factions} />);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(1);
+    expect(cards).toHaveLength(2);
   });
 
   it('only shows cards from the correct types', async () => {
@@ -63,7 +63,7 @@ describe('CardList', () => {
     const { findAllByRole } = render(<CardList packs={packs} />);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(1);
+    expect(cards).toHaveLength(2);
   });
 
   describe('Title Search', () => {
