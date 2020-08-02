@@ -102,4 +102,37 @@ describe('FilterList', () => {
     fireEvent.click(input);
     expect(cb).toHaveBeenCalledWith(['shaper']);
   })
+
+  it('shows options by default', async () => {
+    const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
+    const checkboxes = await findAllByRole('checkbox');
+
+    expect(checkboxes).toHaveLength(4);
+  });
+
+  it('can be configured to hide filters via a prop', async () => {
+    const { queryAllByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+    const checkboxes = await queryAllByRole('checkbox');
+
+    expect(checkboxes).toHaveLength(0);
+  });
+
+  it('toggles options when heading is clicked', async () => {
+    const { findAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+    fireEvent.click(getByRole('heading'));
+
+    const checkboxes = await findAllByRole('checkbox');
+
+    expect(checkboxes).toHaveLength(4);
+  });
+
+  it('toggles options again when heading is clicked a second time', async () => {
+    const { queryAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+    fireEvent.click(getByRole('heading'));
+    fireEvent.click(getByRole('heading'));
+
+    const checkboxes = await queryAllByRole('checkbox');
+
+    expect(checkboxes).toHaveLength(0);
+  });
 });

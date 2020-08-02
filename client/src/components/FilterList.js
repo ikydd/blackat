@@ -11,6 +11,7 @@ class FilterList extends Component {
   }
 
   state = {
+      hidden: this.props.hidden || false,
       options: []
   }
 
@@ -44,11 +45,17 @@ class FilterList extends Component {
     this.props.onChange(selected);
   }
 
+  toggleHidden = () => {
+    const newState = !this.state.hidden;
+    this.setState({ hidden: newState });
+  }
+
   render() {
     const keyword = this.props.title.toLowerCase();
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
-        <h4 className="filter-list-title">{this.props.title}</h4>
+        <h4 className="filter-list-title" onClick={this.toggleHidden}>{this.props.title}</h4>
+        <div hidden={(this.state.hidden ? 'hidden' : false)}>
         {this.state.options.filter(this.filterBySide).map((item) => (
         <div key={item.code} className="checkbox">
           <label htmlFor={`${keyword}-filter-${item.code}`}>
@@ -56,7 +63,8 @@ class FilterList extends Component {
             &nbsp; <Icon code={item.code}/> {item.name}
           </label>
         </div>
-      ))}</div>
+      ))}
+      </div></div>
     );
   }
 }
