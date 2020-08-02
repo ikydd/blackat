@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import TextSearch from './TextSearch';
 
 describe('TextSearch', () => {
@@ -24,13 +24,4 @@ describe('TextSearch', () => {
 
         expect(getByRole('textbox')).toHaveAttribute('placeholder', "search");
     });
-
-    it('calls a callback on input', async () => {
-      const cb = jest.fn();
-      const { getByRole } = render(<TextSearch onChange={cb} />);
-      const input = getByRole('textbox');
-
-      fireEvent.change(input, { target: { value: 'abc' } });
-      expect(cb).toHaveBeenCalledWith('abc');
-    })
 });

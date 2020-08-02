@@ -48,5 +48,23 @@
         "faction": "shaper",
         "type": "program",
         "pack": "core"
+    },
+    {
+      "code": "25050",
+      "faction": "shaper",
+      "pack": "fp",
+      "side": "runner",
+      "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+      "title": "R&D Interface",
+      "type": "hardware"
+    },
+    {
+      "code": "02011",
+      "faction": "haas-bioroid",
+      "pack": "wla",
+      "side": "corp",
+      "text": "You have 1 additional [click] to spend each turn.",
+      "title": "Mandatory Upgrades",
+      "type": "agenda"
     }
 ]
