@@ -13,6 +13,21 @@ describe('SortSelect', () => {
         expect(getByRole('combobox')).toBeTruthy();
     });
 
+    it('has two options', () => {
+        const { getAllByRole } = render(<SortSelect />);
+
+        expect(getAllByRole('option')).toEqual([
+            expect.objectContaining({
+                textContent: 'Sort by Faction',
+                value: 'faction'
+            }),
+            expect.objectContaining({
+                textContent: 'Sort by Name',
+                value: 'name'
+            })
+        ]);
+    });
+
     it('calls a callback on change', async () => {
         const cb = jest.fn();
         const { getByRole } = render(<SortSelect onChange={cb} />);

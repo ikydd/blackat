@@ -144,5 +144,17 @@ describe('CardList', () => {
         expect(cards).toEqual(["Chum", "Data Mine"]);
       });
     });
+
+
+    describe('Name', () => {
+      it('sorts by name', async () => {
+        mockData = require('../../../fixtures/api/sort-name');
+        const { findAllByRole } = render(<CardList sort="name" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(["Chum", "Mandatory Upgrades"]);
+      });
+    });
   })
 });

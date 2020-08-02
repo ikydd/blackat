@@ -104,7 +104,7 @@ class App extends Component {
           ))}
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
+        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
       </div>
     );
   }

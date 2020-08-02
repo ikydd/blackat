@@ -91,7 +91,7 @@ class CardList extends Component {
         return this.compare(typeOrder.indexOf(a.type), typeOrder.indexOf(b.type));
       case 'faction':
         return this.compare(this.getFactionForSort(a), this.getFactionForSort(b));
-      case 'alpha':
+      case 'name':
       default:
         return this.compare(a.title, b.title);
     }
@@ -99,11 +99,13 @@ class CardList extends Component {
 
   sequencedSort = (type) => (a, b) => {
     switch (type) {
+      case 'name':
+          return this.sort('name', a, b);
       case 'faction':
       default:
         let result = this.sort('faction', a, b);
         result = this.sort('type', a, b, result);
-        return this.sort('alpha', a, b, result);
+        return this.sort('name', a, b, result);
     }
   }
 
