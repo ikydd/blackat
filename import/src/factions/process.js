@@ -3,6 +3,7 @@ const process = ({ data: factions }) => factions
         code,
         name,
         side: side_code
-    }));
+    }))
+    .sort((a, b) => a.name > b.name ? 1 : -1)
 
 module.exports = process
