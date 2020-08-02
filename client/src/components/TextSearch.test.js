@@ -30,7 +30,7 @@ describe('TextSearch', () => {
         const { getByRole } = render(<TextSearch onChange={cb} />);
         const input = getByRole('textbox');
 
-        fireEvent.change(input, { target: { value: 'abc' } });
+        fireEvent.input(input, { target: { value: 'abc' } });
         expect(cb).toHaveBeenCalledWith('abc');
     })
 });

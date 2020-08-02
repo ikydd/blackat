@@ -8,13 +8,13 @@ class TextSearch extends Component {
 
     handleChange = ev => {
         ev.preventDefault();
-        this.props.onChange(ev.currentTarget.value);
+        this.props.onChange(ev.target.value);
     }
 
     render() {
         return (
             <div className="form-group">
-                <input className="form-control" placeholder={this.props.placeholder} onChange={this.handleChange} />
+                <input className="form-control" placeholder={this.props.placeholder} onInput={this.handleChange} />
             </div>
         );
     }

@@ -17,7 +17,7 @@ describe('Sort', () => {
 
   it('sorts by faction', async () => {
     const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.select(getByRole('combobox'), { target: { value: 'faction' }});
+    fireEvent.change(getByRole('combobox'), { target: { value: 'faction' }});
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
