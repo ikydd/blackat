@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
+import { render, within, fireEvent } from '@testing-library/react';
+import { create } from 'react-test-renderer';
 import App from './App';
 import ControlPanel from './components/ControlPanel';
 import FilterList from './components/FilterList';
@@ -8,85 +9,85 @@ import TextSearch from './components/TextSearch';
 import SideButton from './components/SideButton';
 import CardList from './components/CardList';
 
-jest.mock('./components/ControlPanel');
-jest.mock('./components/CardList');
+jest.mock('./helpers/api', () => ({
+  getData: async (type) => {
+    switch (type) {
+      case 'cards':
+          return require('../../fixtures/api/cards');
+      case 'factions':
+          return require('../../fixtures/api/factions');
+      case 'types':
+          return require('../../fixtures/api/types');
+      case 'packs':
+          return require('../../fixtures/api/packs');
+      default:
+          throw new Error('unknown data request');
+    }
+  }
+}));
+
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  render(<App />);
 });
 
 it('contains the ControlPanel', () => {
-  const component = shallow(<App />);
+  const renderer = create(<App />);
 
-  expect(component.find(ControlPanel).length).toEqual(1);
+  expect(renderer.root.findAllByType(ControlPanel).length).toEqual(1);
 });
 
 it('contains the CardList', () => {
-  const component = shallow(<App />);
+  const renderer = create(<App />);
 
-  expect(component.find(CardList).length).toEqual(1);
+  expect(renderer.root.findAllByType(CardList).length).toEqual(1);
 });
 
 describe('Side Selection', () => {
-  it('starts on the runner side', () => {
-    const instance = shallow(<App />).instance();
+  it('contains two sides', () => {
+    const renderer = create(<App />);
 
-    expect(instance.getSide()).toEqual("runner");
+    expect(renderer.root.findAllByType(SideButton).length).toEqual(2);
   });
 
-  it('contains two sides', () => {
-    const component = shallow(<App />);
+  it('starts on the runner side', () => {
+    const { getByText } = render(<App />);
 
-    expect(component.find(SideButton).length).toEqual(2);
+    expect(getByText("Runner")).toHaveClass('selected');
+    expect(getByText("Corp")).not.toHaveClass('selected');
   });
 
   it('has Runner as the first side', () => {
-    const component = shallow(<App />);
+    const { getByTestId } = render(<App />);
+    const headings = within(getByTestId('sides')).getAllByRole("button");
 
-    expect(component.find(SideButton).at(0).prop('title')).toEqual('Runner');
-    expect(component.find(SideButton).at(0).prop('side')).toEqual('runner');
+    expect(headings[0]).toHaveTextContent('Runner');
   });
 
   it('has Corp as the second side', () => {
-    const component = shallow(<App />);
+    const { getByTestId } = render(<App />);
+    const headings = within(getByTestId('sides')).getAllByRole("button");
 
-    expect(component.find(SideButton).at(1).prop('title')).toEqual('Corp');
-    expect(component.find(SideButton).at(1).prop('side')).toEqual('corp');
-  });
-
-  it('passes a callback through to the SideButtons', () => {
-    const component = shallow(<App />);
-    const instance = component.instance();
-
-    expect(component.find(SideButton).at(0).prop('onSelect')).toEqual(instance.setSide);
-    expect(component.find(SideButton).at(1).prop('onSelect')).toEqual(instance.setSide);
-  });
-
-  it('set props on the SideButtons as a result of initial state', () => {
-    const component = shallow(<App />);
-
-    expect(component.find(SideButton).at(0).prop('selected')).toEqual(true);
-    expect(component.find(SideButton).at(1).prop('selected')).toEqual(false);
+    expect(headings[1]).toHaveTextContent('Corp');
   });
 
   it('selects the right SideButtons when corp is selected', () => {
-    const component = shallow(<App />);
-    component.instance().setSide("runner");
-    component.find(SideButton).at(0).prop('onSelect')("corp");
+    const { getByText } = render(<App />);
 
-    expect(component.find(SideButton).at(0).prop('selected')).toEqual(false);
-    expect(component.find(SideButton).at(1).prop('selected')).toEqual(true);
+    fireEvent.click(getByText("Corp"));
+
+    expect(getByText("Runner")).not.toHaveClass("selected");
+    expect(getByText("Corp")).toHaveClass("selected");
   });
 
   it('selects the right SideButtons when runner is selected', () => {
-    const component = shallow(<App />);
-    component.instance().setSide("corp");
-    component.find(SideButton).at(0).prop('onSelect')("runner");
+    const { getByText } = render(<App />);
 
-    expect(component.find(SideButton).at(0).prop('selected')).toEqual(true);
-    expect(component.find(SideButton).at(1).prop('selected')).toEqual(false);
+    fireEvent.click(getByText("Corp"));
+    fireEvent.click(getByText("Runner"));
+
+    expect(getByText("Runner")).toHaveClass("selected");
+    expect(getByText("Corp")).not.toHaveClass("selected");
   });
 
   it('sends the appropriate prop to CardList when selected', () => {
@@ -109,21 +110,15 @@ describe('Searches',  () => {
 
   searches.forEach(({ keyword }, index) => {
     it(`contains an instance of ${keyword} correct search`, () => {
-      const component = shallow(<App />);
+      const renderer = create(<App />);
 
-      expect(component.find(TextSearch).at(index)).toBeTruthy();
-    });
-
-    it(`passes a callback to the ${keyword} TextSearch`, () => {
-      const component = shallow(<App />);
-
-      expect(component.find(TextSearch).at(index).prop('onChange')).toEqual(expect.any(Function));
+      expect(renderer.root.findAllByType(TextSearch)[index]).toBeTruthy();
     });
 
     it(`passes a placeholder to the ${keyword} TextSearch`, () => {
-      const component = shallow(<App />);
+      const { getByPlaceholderText } = render(<App />);
 
-      expect(component.find(TextSearch).at(index).prop('placeholder')).toEqual(`search ${keyword}`);
+      expect(getByPlaceholderText(`search ${keyword}`)).toBeTruthy();
     });
 
     it('sends the appropriate prop to CardList on change', () => {

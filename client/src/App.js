@@ -82,7 +82,7 @@ class App extends Component {
     return (
       <div className="App">
         <ControlPanel>
-          <div id="sides">
+          <div id="sides" data-testid="sides">
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>

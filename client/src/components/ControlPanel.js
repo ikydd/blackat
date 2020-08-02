@@ -5,9 +5,11 @@ import './ControlPanel.css';
 class ControlPanel extends Component {
   render() {
     return (
-      <div id="controls">
+      <div id="control-panel">
           <Header />
-          {this.props.children}
+          <div id="filters">
+            {this.props.children}
+          </div>
       </div>
     );
   }

@@ -10,7 +10,7 @@ class SideButton extends Component {
 
   render() {
     return (
-      <h4 className={"side-button" + (this.props.selected ? " selected" : "")} onClick={this.select}>{this.props.title}</h4>
+      <h4 role="button" className={"side-button" + (this.props.selected ? " selected" : "")} onClick={this.select}>{this.props.title}</h4>
     );
   }
 }
