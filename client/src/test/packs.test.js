@@ -1,20 +1,21 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
+import packs from '../../../fixtures/api/packs';
 
 jest.mock('../helpers/api');
 
 describe('Packs filters', () => {
-    it('loads some checkboxes for runner', async () => {
+    it('shows all checkboxes', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(8);
+        expect(checkboxes).toHaveLength(packs.length);
     });
 
-    it('starts with empty checkboxes for runner', async () => {
+    it('starts with empty checkboxes', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         const checkboxes = await within(filterBlock)
@@ -25,26 +26,14 @@ describe('Packs filters', () => {
         })
     });
 
-    it('loads some checkboxes for corp', async () => {
+    it('shows the same checkboxes when corp is selected', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(8);
-    });
-
-    it('starts with empty checkboxes for corp', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('packs-filters');
-        fireEvent.click(getByText('Corp'));
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
-
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        })
+        expect(checkboxes).toHaveLength(packs.length);
     });
 
     it('has the correct title', async () => {
@@ -64,10 +53,14 @@ describe('Packs filters', () => {
 
         fireEvent.click(unchecked[0]);
 
-        const checked = await within(filterBlock)
+        const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
+        const checked = checkboxes.shift();
 
-        expect(checked[0]).toBeChecked();
+        expect(checked).toBeChecked();
+        checkboxes.forEach((box) => {
+            expect(box).not.toBeChecked();
+        });
     });
 
     it('filters cards correctly', async () => {

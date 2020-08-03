@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
+import factions from '../../../fixtures/api/factions';
 
 jest.mock('../helpers/api');
 
@@ -11,7 +12,9 @@ describe('Faction filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(3);
+        const runnerFactions = factions.filter(({ side }) => side === 'runner').length;
+
+        expect(checkboxes).toHaveLength(runnerFactions);
     });
 
     it('starts with empty checkboxes for runner', async () => {
@@ -32,7 +35,9 @@ describe('Faction filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(2);
+        const corpFactions = factions.filter(({ side }) => side === 'corp').length;
+
+        expect(checkboxes).toHaveLength(corpFactions);
     });
 
     it('starts with empty checkboxes for corp', async () => {
@@ -64,10 +69,14 @@ describe('Faction filters', () => {
 
         fireEvent.click(unchecked[0]);
 
-        const checked = await within(filterBlock)
+        const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
+        const checked = checkboxes.shift();
 
-        expect(checked[0]).toBeChecked();
+        expect(checked).toBeChecked();
+        checkboxes.forEach((box) => {
+            expect(box).not.toBeChecked();
+        });
     });
 
     it('filters cards correctly', async () => {

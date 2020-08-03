@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
+import types from '../../../fixtures/api/types';
 
 jest.mock('../helpers/api');
 
@@ -11,7 +12,9 @@ describe('Types filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(5);
+        const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
+
+        expect(checkboxes).toHaveLength(runnerTypes);
     });
 
     it('starts with empty checkboxes for runner', async () => {
@@ -32,7 +35,9 @@ describe('Types filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(6);
+        const corpTypes = types.filter(({ side }) => side === 'corp' || side === null).length;
+
+        expect(checkboxes).toHaveLength(corpTypes);
     });
 
     it('starts with empty checkboxes for corp', async () => {
@@ -64,10 +69,14 @@ describe('Types filters', () => {
 
         fireEvent.click(unchecked[0]);
 
-        const checked = await within(filterBlock)
+        const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
+        const checked = checkboxes.shift();
 
-        expect(checked[0]).toBeChecked();
+        expect(checked).toBeChecked();
+        checkboxes.forEach((box) => {
+            expect(box).not.toBeChecked();
+        });
     });
 
     it('filters cards correctly', async () => {
