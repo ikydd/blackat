@@ -35,7 +35,7 @@ describe('FilterList', () => {
     expect(checkboxes).toHaveLength(0);
   })
 
-  it('throws and error if no dataType prop is provided x', () => {
+  it('throws an error if no dataType prop is provided', () => {
     const err = console.error;
     console.error = jest.fn();
 
