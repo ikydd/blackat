@@ -5,15 +5,6 @@ import App from '../App';
 jest.mock('../helpers/api');
 
 describe('Types filters', () => {
-    it('renders with no options to begin with', () => {
-        const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        const checkboxes = within(filterBlock)
-            .queryAllByRole('checkbox');
-
-        expect(checkboxes).toHaveLength(0);
-    });
-
     it('loads some checkboxes for runner', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('types-filters');
