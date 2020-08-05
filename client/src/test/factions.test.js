@@ -6,9 +6,28 @@ import factions from '../../../fixtures/api/factions';
 jest.mock('../helpers/api');
 
 describe('Faction filters', () => {
-    it('loads some checkboxes for runner', async () => {
+    it('has the correct title', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        const heading = await within(filterBlock)
+            .findByRole('heading');
+
+        expect(heading).toHaveTextContent('Factions');
+    });
+
+    it('starts with no checkboxes', async () => {
+        const { getByTestId } = render(<App />);
+        const filterBlock = getByTestId('factions-filters');
+        const checkboxes = await within(filterBlock)
+            .queryAllByRole('checkbox');
+
+        expect(checkboxes).toHaveLength(0);
+    });
+
+    it('has some checkboxes for runner when clicked', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -18,8 +37,9 @@ describe('Faction filters', () => {
     });
 
     it('starts with empty checkboxes for runner', async () => {
-        const { getByTestId } = render(<App />);
+        const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -31,6 +51,7 @@ describe('Faction filters', () => {
     it('loads some checkboxes for corp', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
@@ -43,6 +64,7 @@ describe('Faction filters', () => {
     it('starts with empty checkboxes for corp', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
@@ -52,18 +74,10 @@ describe('Faction filters', () => {
         })
     });
 
-    it('has the correct title', async () => {
-        const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('factions-filters');
-        const heading = await within(filterBlock)
-            .findByRole('heading');
-
-        expect(heading).toHaveTextContent('Factions');
-    });
-
     it('selects checkboxes correctly', async () => {
-        const { getByTestId } = render(<App />);
+        const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         const unchecked = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -80,8 +94,9 @@ describe('Faction filters', () => {
     });
 
     it('filters cards correctly', async () => {
-        const { getByTestId, findAllByRole, findByRole } = render(<App />);
+        const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
         const unchecked = await within(filterBlock)
             .findByLabelText('Anarch');
         const all = await findAllByRole('img');
@@ -97,6 +112,7 @@ describe('Faction filters', () => {
     it('retains filters from each side', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
 
         let anarch = await within(filterBlock)
             .findByLabelText('Anarch');

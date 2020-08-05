@@ -6,9 +6,28 @@ import packs from '../../../fixtures/api/packs';
 jest.mock('../helpers/api');
 
 describe('Packs filters', () => {
-    it('shows all checkboxes', async () => {
+    it('has the correct title', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        const heading = await within(filterBlock)
+            .findByRole('heading');
+
+        expect(heading).toHaveTextContent('Packs');
+    });
+
+    it('starts with no checkboxes', async () => {
+        const { getByTestId } = render(<App />);
+        const filterBlock = getByTestId('packs-filters');
+        const checkboxes = await within(filterBlock)
+            .queryAllByRole('checkbox');
+
+        expect(checkboxes).toHaveLength(0);
+    });
+
+    it('shows all checkboxes', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -16,8 +35,9 @@ describe('Packs filters', () => {
     });
 
     it('starts with empty checkboxes', async () => {
-        const { getByTestId } = render(<App />);
+        const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -29,6 +49,7 @@ describe('Packs filters', () => {
     it('shows the same checkboxes when corp is selected', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
@@ -36,18 +57,10 @@ describe('Packs filters', () => {
         expect(checkboxes).toHaveLength(packs.length);
     });
 
-    it('has the correct title', async () => {
-        const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('packs-filters');
-        const heading = await within(filterBlock)
-            .findByRole('heading');
-
-        expect(heading).toHaveTextContent('Packs');
-    });
-
     it('selects checkboxes correctly', async () => {
-        const { getByTestId } = render(<App />);
+        const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
         const unchecked = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -64,8 +77,9 @@ describe('Packs filters', () => {
     });
 
     it('filters cards correctly', async () => {
-        const { getByTestId, findAllByRole, findByRole } = render(<App />);
+        const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
         const unchecked = await within(filterBlock)
             .findByLabelText('What Lies Ahead');
         const all = await findAllByRole('img');
@@ -81,6 +95,7 @@ describe('Packs filters', () => {
     it('retains filters from each side', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
 
         let runner = await within(filterBlock)
             .findByLabelText('What Lies Ahead');
