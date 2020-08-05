@@ -112,4 +112,26 @@ describe('Packs filters', () => {
 
         expect(runner).toBeChecked();
     });
+
+    it('retains filters when collapsed', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
+        const unchecked = await within(filterBlock)
+            .findAllByRole('checkbox');
+
+        fireEvent.click(unchecked[0]);
+
+        fireEvent.click(getByText('Packs'));
+        fireEvent.click(getByText('Packs'));
+
+        const checkboxes = await within(filterBlock)
+            .findAllByRole('checkbox');
+        const checked = checkboxes.shift();
+
+        expect(checked).toBeChecked();
+        checkboxes.forEach((box) => {
+            expect(box).not.toBeChecked();
+        });
+    });
 });

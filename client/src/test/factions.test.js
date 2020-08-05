@@ -129,4 +129,26 @@ describe('Faction filters', () => {
 
         expect(anarch).toBeChecked();
     });
+
+    it('retains filters when collapsed', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
+        const unchecked = await within(filterBlock)
+            .findAllByRole('checkbox');
+
+        fireEvent.click(unchecked[0]);
+
+        fireEvent.click(getByText('Factions'));
+        fireEvent.click(getByText('Factions'));
+
+        const checkboxes = await within(filterBlock)
+            .findAllByRole('checkbox');
+        const checked = checkboxes.shift();
+
+        expect(checked).toBeChecked();
+        checkboxes.forEach((box) => {
+            expect(box).not.toBeChecked();
+        });
+    });
 });
