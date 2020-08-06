@@ -1,6 +1,6 @@
 const process = ({ imageUrlTemplate, data: cards }, packs) => cards
     .filter(({ pack_code }) => packs.find(({ code }) => code === pack_code))
-    .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code }) => ({
+    .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code, keywords }) => ({
         code,
         title,
         text: text || '',
@@ -8,7 +8,8 @@ const process = ({ imageUrlTemplate, data: cards }, packs) => cards
         side: side_code,
         faction: faction_code,
         type: type_code,
-        pack: pack_code
+        pack: pack_code,
+        keywords
     }));
 
 module.exports = process

@@ -97,4 +97,13 @@ describe('process cards', () => {
         expect(output[2].pack).toEqual(mockCardsData.data[2].pack_code);
         expect(output[3].pack).toEqual(mockCardsData.data[3].pack_code);
     });
+
+    it('outputs the keywords', () => {
+        const output = process(mockCardsData, mockPackData);
+
+        expect(output[0].keywords).toEqual(mockCardsData.data[0].keywords);
+        expect(output[1].keywords).toEqual(mockCardsData.data[1].keywords);
+        expect(output[2].keywords).toEqual(mockCardsData.data[2].keywords);
+        expect(output[3].keywords).toEqual(mockCardsData.data[3].keywords);
+    });
 })
