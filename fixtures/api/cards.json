@@ -7,7 +7,8 @@
         "side": "corp",
         "faction": "jinteki",
         "type": "ice",
-        "pack": "core"
+        "pack": "core",
+        "keywords": "Code Gate"
     },
     {
         "title": "Data Mine",
@@ -17,7 +18,8 @@
         "side": "corp",
         "faction": "jinteki",
         "type": "ice",
-        "pack": "core"
+        "pack": "core",
+        "keywords": "Trap - AP"
     },
     {
         "title": "Neural Katana",
@@ -27,16 +29,17 @@
         "side": "corp",
         "faction": "jinteki",
         "type": "ice",
-        "pack": "core"
+        "pack": "core",
+        "keywords": "Sentry - AP"
     },
     {
-      "code": "25050",
-      "faction": "shaper",
-      "pack": "fp",
-      "side": "runner",
-      "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
-      "title": "R&D Interface",
-      "type": "hardware"
+        "code": "25050",
+        "faction": "shaper",
+        "pack": "fp",
+        "side": "runner",
+        "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+        "title": "R&D Interface",
+        "type": "hardware"
     },
     {
         "title": "Gordian Blade",
@@ -46,16 +49,18 @@
         "side": "runner",
         "faction": "shaper",
         "type": "program",
-        "pack": "core"
+        "pack": "core",
+        "keywords": "Icebreaker - Decoder"
     },
     {
-      "code": "02011",
-      "faction": "haas-bioroid",
-      "pack": "wla",
-      "side": "corp",
-      "text": "You have 1 additional [click] to spend each turn.",
-      "title": "Mandatory Upgrades",
-      "type": "agenda"
+        "code": "02011",
+        "faction": "haas-bioroid",
+        "pack": "wla",
+        "side": "corp",
+        "text": "You have 1 additional [click] to spend each turn.",
+        "title": "Mandatory Upgrades",
+        "type": "agenda",
+        "keywords": "Initiative"
     },
     {
         "title": "D4v1d",
