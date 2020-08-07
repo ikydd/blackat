@@ -27,55 +27,81 @@ class CardList extends Component {
       .catch(err => console.log(err));
   }
 
+  resetDisplay = (card) => {
+    card.show = true;
+    return card;
+  }
+
   filterBySide = (card) => {
     if (!this.props.side) {
-      return true;
+      return card;
     }
-    return card.side === this.props.side;
+    if (card.side !== this.props.side) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterByFactions = (card) => {
     if (!this.props.factions.length) {
-      return true;
+      return card;
     }
-    return this.props.factions.includes(card.faction);
+    if (!this.props.factions.includes(card.faction)) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterByTypes = (card) => {
     if (!this.props.types.length) {
-      return true;
+      return card;
     }
-    return this.props.types.includes(card.type);
+    if (!this.props.types.includes(card.type)) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterBySubtypes = (card) => {
     if (!this.props.subtypes.length) {
-      return true;
+      return card;
     }
-    return this.props.subtypes.filter((subtype) => card.keywords && card.keywords.search(subtype) !== -1).length;
+    if (!this.props.subtypes.filter((subtype) => card.keywords && card.keywords.search(subtype) !== -1).length) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterByPacks = (card) => {
     if (!this.props.packs.length) {
-      return true;
+      return card;
     }
-    return this.props.packs.includes(card.pack);
+    if (!this.props.packs.includes(card.pack)) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterByTitleSearch = (card) => {
     if (!this.props.titleSearch) {
-      return true;
+      return card;
     }
     const regex = new RegExp(this.props.titleSearch, 'i');
-    return card.title.search(regex) !== -1;
+    if (card.title.search(regex) < 0) {
+      card.show = false;
+    }
+    return card;
   }
 
   filterByTextSearch = (card) => {
     if (!this.props.textSearch) {
-      return true;
+      return card;
     }
     const regex = new RegExp(this.props.textSearch, 'i');
-    return card.text.search(regex) !== -1;
+    if (card.text.search(regex) < 0) {
+      card.show = false;
+    }
+    return card;
   }
 
   compare = (a, b) => {
@@ -118,14 +144,15 @@ class CardList extends Component {
   }
 
   filter = cards => cards
-      .filter(this.filterBySide)
-      .filter(this.filterByTitleSearch)
-      .filter(this.filterByTextSearch)
-      .filter(this.filterByFactions)
-      .filter(this.filterByTypes)
-      .filter(this.filterBySubtypes)
-      .filter(this.filterByPacks)
-      .sort(this.sequencedSort(this.props.sort))
+      .map(this.resetDisplay)
+      .map(this.filterBySide)
+      .map(this.filterByTitleSearch)
+      .map(this.filterByTextSearch)
+      .map(this.filterByFactions)
+      .map(this.filterByTypes)
+      .map(this.filterBySubtypes)
+      .map(this.filterByPacks)
+      .sort(this.sequencedSort(this.props.sort));
 
   render() {
     return (

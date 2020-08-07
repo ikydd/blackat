@@ -27,4 +27,11 @@ describe('Card', () => {
 
     expect(container.firstChild).toHaveClass('card-tile');
   });
+
+  it('is hidden when data.show is false', () => {
+    const card = Object.assign({ show: false }, data);
+    const { container } = render(<Card data={card} />);
+
+    expect(container.firstChild).toHaveClass('card-tile');
+  });
 });
