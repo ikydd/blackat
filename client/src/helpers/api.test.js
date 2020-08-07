@@ -1,4 +1,4 @@
-const { getData } = require('./Api')
+const { getData } = require('./api')
 
 describe('ApiCall', () => {
     let mockSuccessResponse = {};

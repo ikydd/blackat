@@ -163,6 +163,14 @@ describe('CardList', () => {
 
         expect(cards).toEqual(["Chum", "Mandatory Upgrades"]);
       });
+
+      it('has no separators', async () => {
+        mockData = require('../../../fixtures/api/sort-name');
+        const { queryAllByRole } = render(<CardList sort="name" />);
+        const hrs = queryAllByRole('separator');
+
+        expect(hrs).toHaveLength(0)
+      });
     });
   })
 });
