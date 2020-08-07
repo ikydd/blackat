@@ -28,111 +28,130 @@ describe('FilterList', () => {
     expect(getByRole('heading')).toHaveTextContent('Foo');
   });
 
-  it('renders with no options to begin with', () => {
-    const { queryAllByRole } = render(<FilterList dataType="foo" />);
-    const checkboxes = queryAllByRole('checkbox');
+  describe('Data hydration', () => {
+    it('renders with no options to begin with', () => {
+      const { queryAllByRole } = render(<FilterList dataType="foo" />);
+      const checkboxes = queryAllByRole('checkbox');
 
-    expect(checkboxes).toHaveLength(0);
-  })
+      expect(checkboxes).toHaveLength(0);
+    })
 
-  it('throws an error if no dataType prop is provided', () => {
-    const err = console.error;
-    console.error = jest.fn();
+    it('throws an error if no dataType prop is provided', () => {
+      const err = console.error;
+      console.error = jest.fn();
 
-    expect(() => render(<FilterList/>)).toThrow();
-    console.error = err;
+      expect(() => render(<FilterList/>)).toThrow();
+      console.error = err;
+    });
+
+    it('uses api.getData correctly with the provided prop', () => {
+      render(<FilterList dataType="foo"/>);
+
+      expect(api.getData).toHaveBeenCalledWith('foo');
+    });
   });
 
-  it('uses api.getData correctly with the provided prop', () => {
-    render(<FilterList dataType="foo"/>);
+  describe('options', () => {
+    it('default to showing all options', async () => {
+      const { findAllByRole } = render(<FilterList dataType="foo" />);
+      const checkboxes = await findAllByRole('checkbox');
 
-    expect(api.getData).toHaveBeenCalledWith('foo');
+      expect(checkboxes).toHaveLength(6);
+    });
+
+    it('only shows options from corp and those that have no specified side', async () => {
+      const { findAllByRole } = render(<FilterList dataType="foo" side="corp" />);
+      const checkboxes = await findAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(3);
+    });
+
+    it('only shows options from runner and those that have no specified side', async () => {
+      const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
+      const checkboxes = await findAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(4);
+    });
+
+    it('accepts a list of selected filters', async () => {
+      const isSelected = ['shaper', 'anarch'];
+      const { findAllByRole } = render(<FilterList dataType="foo" selected={isSelected} />);
+      const checkboxes = await findAllByRole('checkbox');
+
+      const checked = checkboxes
+        .filter(({ checked }) => checked)
+        .map((input) => input.getAttribute('value'));
+
+      expect(checked).toEqual(['anarch', 'shaper']);
+    })
   });
 
-  it('default to showing all options', async () => {
-    const { findAllByRole } = render(<FilterList dataType="foo" />);
-    const checkboxes = await findAllByRole('checkbox');
+  describe('callback handling', () => {
+    it('calls a callback when an option is selected', async () => {
+      const cb = jest.fn();
+      const { findByLabelText } = render(<FilterList dataType="foo" onChange={cb} />);
 
-    expect(checkboxes).toHaveLength(6);
+      const input = await findByLabelText('Anarch');
+
+      fireEvent.click(input);
+      expect(cb).toHaveBeenCalledWith(['anarch']);
+    })
+
+    it('calls a callback when an option is deselected', async () => {
+      const selected = ['anarch', 'shaper'];
+      const cb = jest.fn();
+      const { findByLabelText } = render(<FilterList dataType="foo" selected={selected} onChange={cb} />);
+
+      const input = await findByLabelText('Anarch');
+
+      fireEvent.click(input);
+      expect(cb).toHaveBeenCalledWith(['shaper']);
+    })
   });
 
-  it('only shows options from corp and those that have no specified side', async () => {
-    const { findAllByRole } = render(<FilterList dataType="foo" side="corp" />);
-    const checkboxes = await findAllByRole('checkbox');
+  describe('visibility toggle', () => {
+    it('shows options by default', async () => {
+      const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
+      const checkboxes = await findAllByRole('checkbox');
 
-    expect(checkboxes).toHaveLength(3);
+      expect(checkboxes).toHaveLength(4);
+    });
+
+    it('can be configured to hide filters via a prop', async () => {
+      const { queryAllByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+      const checkboxes = await queryAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(0);
+    });
+
+    it('toggles options when heading is clicked', async () => {
+      const { findAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+      fireEvent.click(getByRole('heading'));
+
+      const checkboxes = await findAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(4);
+    });
+
+    it('toggles options again when heading is clicked a second time', async () => {
+      const { queryAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
+      fireEvent.click(getByRole('heading'));
+      fireEvent.click(getByRole('heading'));
+
+      const checkboxes = await queryAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(0);
+    });
   });
 
-  it('only shows options from runner and those that have no specified side', async () => {
-    const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
-    const checkboxes = await findAllByRole('checkbox');
+  describe('clear all button', () => {
+    it('removes all selected filters', async () => {
+      const isSelected = ['shaper', 'anarch'];
+      const cb = jest.fn();
+      const { getByRole } = render(<FilterList dataType="foo" selected={isSelected} onChange={cb} />);
+      fireEvent.click(getByRole('button'))
 
-    expect(checkboxes).toHaveLength(4);
-  });
-
-  it('accepts a list of selected filters', async () => {
-    const isSelected = ['shaper', 'anarch'];
-    const { findAllByRole } = render(<FilterList dataType="foo" selected={isSelected} />);
-    const checkboxes = await findAllByRole('checkbox');
-
-    const checked = checkboxes
-      .filter(({ checked }) => checked)
-      .map((input) => input.getAttribute('value'));
-
-    expect(checked).toEqual(['anarch', 'shaper']);
-  })
-
-  it('calls a callback when an option is selected', async () => {
-    const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList dataType="foo" onChange={cb} />);
-
-    const input = await findByLabelText('Anarch');
-
-    fireEvent.click(input);
-    expect(cb).toHaveBeenCalledWith(['anarch']);
-  })
-
-  it('calls a callback when an option is deselected', async () => {
-    const selected = ['anarch', 'shaper'];
-    const cb = jest.fn();
-    const { findByLabelText } = render(<FilterList dataType="foo" selected={selected} onChange={cb} />);
-
-    const input = await findByLabelText('Anarch');
-
-    fireEvent.click(input);
-    expect(cb).toHaveBeenCalledWith(['shaper']);
-  })
-
-  it('shows options by default', async () => {
-    const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);
-    const checkboxes = await findAllByRole('checkbox');
-
-    expect(checkboxes).toHaveLength(4);
-  });
-
-  it('can be configured to hide filters via a prop', async () => {
-    const { queryAllByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
-    const checkboxes = await queryAllByRole('checkbox');
-
-    expect(checkboxes).toHaveLength(0);
-  });
-
-  it('toggles options when heading is clicked', async () => {
-    const { findAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
-    fireEvent.click(getByRole('heading'));
-
-    const checkboxes = await findAllByRole('checkbox');
-
-    expect(checkboxes).toHaveLength(4);
-  });
-
-  it('toggles options again when heading is clicked a second time', async () => {
-    const { queryAllByRole, getByRole } = render(<FilterList dataType="foo" side="runner" hidden={true} />);
-    fireEvent.click(getByRole('heading'));
-    fireEvent.click(getByRole('heading'));
-
-    const checkboxes = await queryAllByRole('checkbox');
-
-    expect(checkboxes).toHaveLength(0);
+      expect(cb).toHaveBeenCalledWith([]);
+    })
   });
 });
