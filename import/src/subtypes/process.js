@@ -8,20 +8,24 @@ const alreadyPresent = (list) => ({ name, side }) => {
     return subtype.side !== side && subtype.side !== null;
 }
 
-const addSubtype = (list) => ({ name, side }) => {
+const addSubtype = (list) => ({ name, side, code }) => {
     const subtype = list.get(name);
     const item = {
         name,
-        side: subtype ? null : side
+        side: subtype ? null : side,
+        code
     }
 
     list.set(name, item);
     return subtype;
 }
 
+const getCode = (name) => name.toLowerCase().replace(' ', '-');
+
 const buildSubtype = (side) => (name) => ({
     side,
-    name
+    name,
+    code: getCode(name)
 });
 
 const toAccumulator = (list) => list;

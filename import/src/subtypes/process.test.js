@@ -7,7 +7,18 @@ describe('process factions', () => {
     it('outputs the correct number of subtypes', () => {
         const output = process(mockData);
 
-        expect(output.length).toEqual(3);
+        expect(output.length).toEqual(4);
+    });
+
+    it('gives each subtype a code', () => {
+        const output = process(mockData);
+
+        expect(output.map(({ code }) => code)).toEqual([
+            "ap",
+            "code-gate",
+            "sentry",
+            "trap"
+        ]);
     });
 
     it('orders the subtypes alphabetically', () => {
@@ -15,6 +26,7 @@ describe('process factions', () => {
 
         expect(output.map(({ name }) => name)).toEqual([
             "AP",
+            "Code Gate",
             "Sentry",
             "Trap"
         ]);
