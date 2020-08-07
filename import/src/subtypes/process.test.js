@@ -1,13 +1,13 @@
 const process = require('./process');
 
-const mockData = require('../../../fixtures/api/cards');
 
 describe('process factions', () => {
+    let mockData = require('../../../fixtures/api/subtypes-cards');
 
     it('outputs the correct number of subtypes', () => {
         const output = process(mockData);
 
-        expect(output.length).toEqual(7);
+        expect(output.length).toEqual(3);
     });
 
     it('orders the subtypes alphabetically', () => {
@@ -15,26 +15,27 @@ describe('process factions', () => {
 
         expect(output.map(({ name }) => name)).toEqual([
             "AP",
-            "Code Gate",
-            "Decoder",
-            "Icebreaker",
-            "Initiative",
             "Sentry",
             "Trap"
         ]);
     });
 
     it('outputs the side code', () => {
+        let mockData = require('../../../fixtures/api/subtypes-cards-sides');
         const output = process(mockData);
 
         expect(output.map(({ side }) => side)).toEqual([
             "corp",
-            "corp",
             "runner",
             "runner",
-            "corp",
-            "corp",
             "corp"
         ]);
+    });
+
+    it('outputs null when a subtype is for both sides', () => {
+        let mockData = require('../../../fixtures/api/subtypes-cards-dualside');
+        const output = process(mockData);
+
+        expect(output[0].side).toBeNull();
     });
 })
