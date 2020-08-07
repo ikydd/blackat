@@ -14,10 +14,10 @@ describe('process factions', () => {
         const output = process(mockData);
 
         expect(output.map(({ code }) => code)).toEqual([
-            "ap",
-            "code-gate",
-            "sentry",
-            "trap"
+            "AP",
+            "Code Gate",
+            "Sentry",
+            "Trap"
         ]);
     });
 

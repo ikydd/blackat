@@ -1,23 +1,23 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
-import types from '../../../fixtures/api/types';
+import subtypes from '../../../fixtures/api/subtypes';
 
 jest.mock('../helpers/api');
 
-describe('Types filters', () => {
+describe('Subtypes filters', () => {
     it('has the correct title', async () => {
         const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
+        const filterBlock = getByTestId('subtypes-filters');
         const heading = await within(filterBlock)
             .findByRole('heading');
 
-        expect(heading).toHaveTextContent(/Types/);
+        expect(heading).toHaveTextContent('Subtypes');
     });
 
     it('starts with no checkboxes', async () => {
         const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
+        const filterBlock = getByTestId('subtypes-filters');
         const checkboxes = await within(filterBlock)
             .queryAllByRole('checkbox');
 
@@ -26,20 +26,20 @@ describe('Types filters', () => {
 
     it('loads some checkboxes for runner', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
+        const runnerSubtypes = subtypes.filter(({ side }) => side === 'runner' || side === null).length;
 
-        expect(checkboxes).toHaveLength(runnerTypes);
+        expect(checkboxes).toHaveLength(runnerSubtypes);
     });
 
     it('starts with empty checkboxes for runner', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -50,21 +50,21 @@ describe('Types filters', () => {
 
     it('loads some checkboxes for corp', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        const corpTypes = types.filter(({ side }) => side === 'corp' || side === null).length;
+        const corpSubtypes = subtypes.filter(({ side }) => side === 'corp' || side === null).length;
 
-        expect(checkboxes).toHaveLength(corpTypes);
+        expect(checkboxes).toHaveLength(corpSubtypes);
     });
 
     it('starts with empty checkboxes for corp', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         fireEvent.click(getByText('Corp'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
@@ -76,8 +76,8 @@ describe('Types filters', () => {
 
     it('selects checkboxes correctly', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         const unchecked = await within(filterBlock)
             .findAllByRole('checkbox');
 
@@ -95,10 +95,10 @@ describe('Types filters', () => {
 
     it('filters cards correctly', async () => {
         const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         const unchecked = await within(filterBlock)
-            .findByLabelText('Hardware');
+            .findByLabelText('Icebreaker');
         const all = await findAllByRole('img');
 
         expect(all).toHaveLength(3);
@@ -106,41 +106,41 @@ describe('Types filters', () => {
         fireEvent.click(unchecked);
         const filtered = await findByRole('img');
 
-        expect(filtered).toHaveAttribute('alt', 'R&D Interface');
+        expect(filtered).toHaveAttribute('alt', 'Gordian Blade');
     });
 
     it('retains filters from each side', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
 
-        let hardware = await within(filterBlock)
-            .findByLabelText('Hardware');
-        fireEvent.click(hardware);
+        let icebreaker = await within(filterBlock)
+            .findByLabelText('Icebreaker');
+        fireEvent.click(icebreaker);
         fireEvent.click(getByText('Corp'));
 
-        let agenda = await within(filterBlock)
-            .findByLabelText('Agenda');
-        fireEvent.click(agenda);
+        let codeGate = await within(filterBlock)
+            .findByLabelText('Code Gate');
+        fireEvent.click(codeGate);
         fireEvent.click(getByText('Runner'));
 
-        hardware = await within(filterBlock)
-            .findByLabelText('Hardware');
+        icebreaker = await within(filterBlock)
+            .findByLabelText('Icebreaker');
 
-        expect(hardware).toBeChecked();
+        expect(icebreaker).toBeChecked();
     });
 
     it('retains filters when collapsed', async () => {
         const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
         const unchecked = await within(filterBlock)
             .findAllByRole('checkbox');
 
         fireEvent.click(unchecked[0]);
 
-        fireEvent.click(getByText(/Types/));
-        fireEvent.click(getByText(/Types/));
+        fireEvent.click(getByText('Subtypes'));
+        fireEvent.click(getByText('Subtypes'));
 
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');

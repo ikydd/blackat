@@ -24,6 +24,10 @@ class App extends Component {
         runner: [],
         corp: []
       },
+      subtypes: {
+        runner: [],
+        corp: []
+      },
       packs: {
         runner: [],
         corp: []
@@ -84,6 +88,10 @@ class App extends Component {
         keyword: 'types'
       },
       {
+        title: 'Subtypes',
+        keyword: 'subtypes'
+      },
+      {
         title: 'Packs',
         keyword: 'packs'
       }
@@ -104,7 +112,7 @@ class App extends Component {
           ))}
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} packs={this.getFilter('packs')}/>
+        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} subtypes={this.getFilter('subtypes')} packs={this.getFilter('packs')}/>
       </div>
     );
   }

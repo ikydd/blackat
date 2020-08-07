@@ -58,6 +58,14 @@ describe('CardList', () => {
     expect(cards).toHaveLength(2);
   });
 
+  it('only shows cards from the correct subtypes', async () => {
+    const subtypes = ['Icebreaker'];
+    const { findByRole } = render(<CardList subtypes={subtypes} />);
+    const card = await findByRole('img');
+
+    expect(card).toHaveAttribute('alt', 'Gordian Blade');
+  });
+
   it('only shows cards from the correct packs', async () => {
     const packs = ['wla'];
     const { findAllByRole } = render(<CardList packs={packs} />);

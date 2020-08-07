@@ -20,12 +20,10 @@ const addSubtype = (list) => ({ name, side, code }) => {
     return subtype;
 }
 
-const getCode = (name) => name.toLowerCase().replace(' ', '-');
-
 const buildSubtype = (side) => (name) => ({
     side,
     name,
-    code: getCode(name)
+    code: name
 });
 
 const toAccumulator = (list) => list;

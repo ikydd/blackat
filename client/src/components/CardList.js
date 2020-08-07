@@ -13,6 +13,7 @@ class CardList extends Component {
     textSearch: "",
     factions: [],
     types: [],
+    subtypes: [],
     packs: []
   }
 
@@ -45,6 +46,13 @@ class CardList extends Component {
       return true;
     }
     return this.props.types.includes(card.type);
+  }
+
+  filterBySubtypes = (card) => {
+    if (!this.props.subtypes.length) {
+      return true;
+    }
+    return this.props.subtypes.filter((subtype) => card.keywords && card.keywords.search(subtype) !== -1).length;
   }
 
   filterByPacks = (card) => {
@@ -115,6 +123,7 @@ class CardList extends Component {
       .filter(this.filterByTextSearch)
       .filter(this.filterByFactions)
       .filter(this.filterByTypes)
+      .filter(this.filterBySubtypes)
       .filter(this.filterByPacks)
       .sort(this.sequencedSort(this.props.sort))
 
