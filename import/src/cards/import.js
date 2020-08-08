@@ -15,6 +15,6 @@ const importCards = async (packs) =>
     request(apiUrlFor("/cards"))
         .then(processWith(packs))
         .then(saveTo(localPath("cards.json")))
-        // .then(downloadImagesTo(folder));
+        .then(downloadImagesTo(folder));
 
 module.exports = importCards;
