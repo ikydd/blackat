@@ -30,8 +30,8 @@ describe('SortSelect', () => {
                 value: 'type'
             }),
             expect.objectContaining({
-                textContent: 'Sort by Name',
-                value: 'name'
+                textContent: 'Sort by Title',
+                value: 'title'
             })
         ]));
     });

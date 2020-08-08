@@ -1,9 +1,9 @@
 
-const group = (sort, info) => (sections, card) => {
+const group = ({ factions }) => (sort) => (sections, card) => {
     if (sort === 'faction') {
         if (!sections[card.faction]) {
             sections[card.faction] = {
-                info: info.factions.find(({ code }) => code === card.faction),
+                info: factions.find(({ code }) => code === card.faction),
                 cards: []
             };
         }

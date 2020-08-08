@@ -1,0 +1,24 @@
+[
+    {
+        "title": "Chum",
+        "code": "01075",
+        "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
+        "imagesrc": "https://netrunnerdb.com/card_image/01075.png",
+        "side": "corp",
+        "faction": "jinteki",
+        "type": "ice",
+        "pack": "core",
+        "keywords": "Code Gate"
+    },
+    {
+        "code": "01062",
+        "title": "Ichi 1.0",
+        "text": "The Runner can spend [click] to break any subroutine on Ichi 1.0.\n[subroutine] Trash 1 program.\n[subroutine] Trash 1 program.\n[subroutine] <trace>Trace 1</trace> If successful, give the Runner 1 tag and do 1 brain damage.",
+        "imagesrc": "https://netrunnerdb.com/card_image/large/01062.jpg",
+        "side": "corp",
+        "faction": "haas-bioroid",
+        "type": "ice",
+        "pack": "core",
+        "keywords": "Sentry - Bioroid - Tracer - Destroyer"
+    }
+]

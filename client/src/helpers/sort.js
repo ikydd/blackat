@@ -1,15 +1,4 @@
-const typeOrder = [
-    'identity',
-    'program',
-    'hardware',
-    'resource',
-    'event',
-    'agenda',
-    'ice',
-    'asset',
-    'upgrade',
-    'operation'
-];
+const data = {}
 
 const compare = (a, b) =>
   a > b
@@ -18,31 +7,42 @@ const compare = (a, b) =>
       ? -1
       : 0);
 
-const getFactionForSort = ({ faction }) => faction.search('neutral') !== -1 ? 'zzzzzz' : faction;
-
-const sort = (type, a, b, result = 0) => {
+const sort = (option, a, b, result = 0) => {
   if (result !== 0) {
     return result;
   }
-  switch (type) {
+  switch (option) {
     case 'type':
-      return compare(typeOrder.indexOf(a.type), typeOrder.indexOf(b.type));
+      return compare(data.types.indexOf(a.type), data.types.indexOf(b.type));
+    case 'pack':
+      return compare(data.packs.indexOf(a.pack), data.packs.indexOf(b.pack));
     case 'faction':
-      return compare(getFactionForSort(a), getFactionForSort(b));
-    case 'name':
+      return compare(data.factions.indexOf(a.faction), data.factions.indexOf(b.faction));
+    case 'title':
     default:
       return compare(a.title, b.title);
   }
 }
 
-export default (type) => (a, b) => {
-    switch (type) {
-      case 'name':
-          return sort('name', a, b);
+export default ({ types, packs, factions }) => {
+  data.types = types.map(({ code }) => code);
+  data.packs = packs.map(({ code }) => code);
+  data.factions = factions.map(({ code }) => code);
+  return (option) => (a, b) => {
+    switch (option) {
+      case 'title':
+          return sort('title', a, b);
+      case 'type':
+        let type = sort('type', a, b);
+        type = sort('faction', a, b, type);
+        return sort('title', a, b, type);
+      case 'pack':
+        return sort('pack', a, b);
       case 'faction':
       default:
-        let result = sort('faction', a, b);
-        result = sort('type', a, b, result);
-        return sort('name', a, b, result);
+        let faction = sort('faction', a, b);
+        faction = sort('type', a, b, faction);
+        return sort('title', a, b, faction);
     }
   }
+}

@@ -3,7 +3,7 @@ import CardSection from './CardSection';
 import { getData } from '../helpers/api';
 import filter from '../helpers/filters';
 import group from '../helpers/group';
-import cardSort from '../helpers/sort';
+import sort from '../helpers/sort';
 import './CardList.css';
 
 class CardList extends Component {
@@ -19,12 +19,21 @@ class CardList extends Component {
 
   state = {
     cards: [],
-    factions: []
+    sort: () => {},
+    group: () => () => {}
   }
 
+  toCodes = ({ code }) => code;
+
+  handleData = ([cards, factions, types, packs]) => this.setState({
+    cards,
+    sort: sort({ types, packs, factions }),
+    group: group({ factions })
+  })
+
   componentDidMount() {
-    Promise.all([getData('cards'), getData('factions')])
-      .then(([cards, factions]) => this.setState({ cards, factions }))
+    Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
+      .then(this.handleData)
       .catch(err => console.log(err));
   }
 
@@ -43,16 +52,12 @@ class CardList extends Component {
       .filter(filter.byPacks(this.props.packs))
       .filter(filter.bySubtypes(this.props.subtypes));
 
-  group = cards => cards;
-
   render() {
-    const info = {
-      factions: this.state.factions
-    }
+    const { sort, group } = this.state;
     return (
       <div id="cards">{Object.values(this.filter(this.state.cards)
-          .sort(cardSort(this.props.sort))
-          .reduce(group(this.props.sort, info), {}))
+          .sort(sort(this.props.sort))
+          .reduce(group(this.props.sort), {}))
           .map((section, index) => (<CardSection key={index} section={section}></CardSection>))}
       </div>
     );

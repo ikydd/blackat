@@ -39,7 +39,7 @@ describe('Sort', () => {
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
 
-    expect(cards).toEqual(['R&D Interface', 'The Helpful AI']);
+    expect(cards).toEqual(['R&D Interface', 'All-nighter']);
   })
 
   it('sorts by pack', async () => {
@@ -53,9 +53,9 @@ describe('Sort', () => {
     expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
   })
 
-  it('sorts by name', async () => {
+  it('sorts by title', async () => {
     const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'name' }});
+    fireEvent.change(getByRole('combobox'), { target: { value: 'title' }});
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');

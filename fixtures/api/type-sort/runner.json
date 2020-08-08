@@ -1,14 +1,13 @@
 [
     {
-        "code": "02008",
-        "title": "The Helpful AI",
-        "text": "+1[link]\n[trash]: Choose an <strong>icebreaker</strong>. That <strong>icebreaker</strong> has +2 strength until the end of the turn.",
-        "imagesrc": "https://netrunnerdb.com/card_image/large/02008.jpg",
+        "code": "02067",
+        "title": "All-nighter",
+        "text": "[click], [trash]: Gain [click][click].",
+        "imagesrc": "https://netrunnerdb.com/card_image/large/02067.jpg",
         "side": "runner",
         "faction": "shaper",
         "type": "resource",
-        "pack": "wla",
-        "keywords": "Connection - Link - Virtual"
+        "pack": "asis"
     },
     {
         "code": "25050",

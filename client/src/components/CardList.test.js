@@ -160,7 +160,25 @@ describe('CardList', () => {
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(['R&D Interface', 'The Helpful AI']);
+        expect(cards).toEqual(['R&D Interface', "All-nighter"]);
+      });
+
+      it('sorts by faction after type', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/type-faction'));
+        const { findAllByRole } = render(<CardList sort="type" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(['Ichi 1.0', 'Chum']);
+      });
+
+      it('sorts by name after faction', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/type-faction-name'));
+        const { findAllByRole } = render(<CardList sort="type" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(['Battering Ram', 'Gordian Blade']);
       });
     });
 
@@ -176,10 +194,10 @@ describe('CardList', () => {
       });
     });
 
-    describe('Name', () => {
-      it('sorts by name', async () => {
+    describe('Title', () => {
+      it('sorts by title', async () => {
         api.setData('cards', require('../../../fixtures/api/cards-name'));
-        const { findAllByRole } = render(<CardList sort="name" />);
+        const { findAllByRole } = render(<CardList sort="title" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
@@ -188,7 +206,7 @@ describe('CardList', () => {
 
       it('has no separators', async () => {
         api.setData('cards', require('../../../fixtures/api/cards-name'));
-        const { findAllByRole, queryAllByRole } = render(<CardList sort="name" />);
+        const { findAllByRole, queryAllByRole } = render(<CardList sort="title" />);
         await findAllByRole('img');
         const hrs = queryAllByRole('separator');
 
