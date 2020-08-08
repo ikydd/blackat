@@ -56,16 +56,18 @@ class FilterList extends Component {
 
   render() {
     const keyword = this.props.title.toLowerCase();
+    const { title } = this.props;
+    const { hidden, options } = this.state;
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
-        <h4 className="filter-list-title" onClick={this.toggleHidden}>{this.props.title}</h4>
-        <div hidden={(this.state.hidden ? 'hidden' : false)}>
+        <h4 className="filter-list-title" onClick={this.toggleHidden}>{title}</h4>
+        <div hidden={(hidden ? 'hidden' : false)}>
           <h5 role="button" onClick={this.clearAll} >Clear All</h5>
-          {this.state.options.filter(this.filterBySide).map((item) => (
+          {options.filter(this.filterBySide).map((item) => (
           <div key={item.code} className="checkbox">
             <label htmlFor={`${keyword}-filter-${item.code}`}>
               <input type="checkbox" id={`${keyword}-filter-${item.code}`} name={item.code} value={item.code} checked={this.isSelected(item)} onChange={this.change(item)} />
-              &nbsp; <Icon code={item.code}/> {item.name}
+              &nbsp; <Icon code={item.code} /> {item.name}
             </label>
           </div>
         ))}

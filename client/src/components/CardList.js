@@ -41,8 +41,7 @@ class CardList extends Component {
       .filter(filter.byFactions(this.props.factions))
       .filter(filter.byTypes(this.props.types))
       .filter(filter.byPacks(this.props.packs))
-      .filter(filter.bySubtypes(this.props.subtypes))
-      .sort(cardSort(this.props.sort));
+      .filter(filter.bySubtypes(this.props.subtypes));
 
   group = cards => cards;
 
@@ -52,6 +51,7 @@ class CardList extends Component {
     }
     return (
       <div id="cards">{Object.values(this.filter(this.state.cards)
+          .sort(cardSort(this.props.sort))
           .reduce(group(this.props.sort, info), {}))
           .map((section, index) => (<CardSection key={index} section={section}></CardSection>))}
       </div>
