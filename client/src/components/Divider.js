@@ -4,8 +4,9 @@ import './Divider.css';
 
 class Divider extends Component {
     render() {
+        const { name, code } = this.props;
         return (
-            <h3 role="separator" className="card-divider">{this.props.name} <Icon code={this.props.code}/></h3>
+            <h3 role="separator" className="card-divider">{name} <Icon code={code}/></h3>
         )
     }
 }
