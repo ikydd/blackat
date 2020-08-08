@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from './Icon';
+import Divider from './Divider';
 import Card from './Card';
 import './CardSection.css';
 
@@ -8,7 +8,7 @@ class CardSection extends Component {
         const { info, cards } = this.props.section;
         return (
             <div id={info ? info.code + '-section' : 'default-section'}>
-                {info ? (<h3 role="separator" className="card-divider">{info.name} <Icon code={info.code}/></h3>) : ''}
+                {info ? (<Divider name={info.name} code={info.code}></Divider>) : ''}
                 {cards.map((card, index) => (<Card key={index} data={card} />))}
                 &nbsp;
             </div>
