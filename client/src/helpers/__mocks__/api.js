@@ -12,6 +12,16 @@ const data = {
     packs
 }
 
-export async function getData (type) {
-    return data[type];
+let user = {}
+
+const getData = async (type) => user[type] || data[type];
+
+export { getData };
+
+export function setData (type, data) {
+    user[type] = data;
+}
+
+export function reset () {
+    user = {}
 }

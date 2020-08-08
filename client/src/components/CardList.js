@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Card from './Card';
+import CardSection from './CardSection';
 import { getData } from '../helpers/api';
-import filters from '../helpers/filters';
+import filter from '../helpers/filters';
+import group from '../helpers/group';
 import cardSort from '../helpers/sort';
 import './CardList.css';
 
@@ -17,12 +18,13 @@ class CardList extends Component {
   }
 
   state = {
-    cards: []
+    cards: [],
+    factions: []
   }
 
   componentDidMount() {
-    getData('cards')
-      .then(cards => this.setState({ cards }))
+    Promise.all([getData('cards'), getData('factions')])
+      .then(([cards, factions]) => this.setState({ cards, factions }))
       .catch(err => console.log(err));
   }
 
@@ -31,28 +33,27 @@ class CardList extends Component {
     return card;
   }
 
-
-
   filter = cards => cards
       .map(this.resetDisplay)
-      .map(filters.bySide(this.props.side))
-      .map(filters.byTitle(this.props.titleSearch))
-      .map(filters.byText(this.props.textSearch))
-      .map(filters.byFactions(this.props.factions))
-      .map(filters.byTypes(this.props.types))
-      .map(filters.byPacks(this.props.packs))
-      .map(filters.bySubtypes(this.props.subtypes))
+      .map(filter.bySide(this.props.side))
+      .map(filter.byTitle(this.props.titleSearch))
+      .map(filter.byText(this.props.textSearch))
+      .map(filter.byFactions(this.props.factions))
+      .map(filter.byTypes(this.props.types))
+      .map(filter.byPacks(this.props.packs))
+      .map(filter.bySubtypes(this.props.subtypes))
       .sort(cardSort(this.props.sort));
 
   group = cards => cards;
 
   render() {
+    const info = {
+      factions: this.state.factions
+    }
     return (
-      <div id="cards">{this.filter(this.state.cards)
-          // .reduce((groups, data) => , [])
-          .map((data, index) => (
-            <Card key={index} data={data} />
-          ))}
+      <div id="cards">{Object.values(this.filter(this.state.cards)
+          .reduce(group(this.props.sort, info), {}))
+          .map((section, index) => (<CardSection key={index} section={section}></CardSection>))}
       </div>
     );
   }

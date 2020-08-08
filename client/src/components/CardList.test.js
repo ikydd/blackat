@@ -6,12 +6,9 @@ import * as api from '../helpers/api';
 jest.mock('../helpers/api');
 
 describe('CardList', () => {
-  let mockData = require('../../../fixtures/api/cards');
-
-  beforeEach(() => {
-    jest.spyOn(api, 'getData').mockImplementation(() => Promise.resolve(mockData));
-  });
-
+  afterEach(() => {
+    api.reset();
+  })
   it('renders without crashing', () => {
     render(<CardList/>);
   });
@@ -21,12 +18,6 @@ describe('CardList', () => {
 
     expect(queryByRole('img')).toBeFalsy();
   })
-
-  it('uses api.getData correctly', () => {
-    render(<CardList/>);
-
-    expect(api.getData).toHaveBeenCalledWith('cards');
-  });
 
   it('default to showing all cards', async () => {
     const { findAllByRole } = render(<CardList/>);
@@ -117,7 +108,7 @@ describe('CardList', () => {
   describe('Sort', () => {
     describe('Faction', () => {
       it('sorts by faction', async () => {
-        mockData = require('../../../fixtures/api/sort-faction');
+        api.setData('cards', require('../../../fixtures/api/cards-faction'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -126,7 +117,7 @@ describe('CardList', () => {
       });
 
       it('sorts neutral last', async () => {
-        mockData = require('../../../fixtures/api/sort-faction-neutral');
+        api.setData('cards', require('../../../fixtures/api/cards-faction-neutral'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -135,7 +126,7 @@ describe('CardList', () => {
       });
 
       it('sorts by type after faction', async () => {
-        mockData = require('../../../fixtures/api/sort-faction-type');
+        api.setData('cards', require('../../../fixtures/api/cards-faction-type'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -143,20 +134,29 @@ describe('CardList', () => {
         expect(cards).toEqual(["Gordian Blade", "R&D Interface", ]);
       });
 
-      it('sorts by alpha after type', async () => {
-        mockData = require('../../../fixtures/api/sort-faction-type-alpha');
+      it('sorts by name after type', async () => {
+        api.setData('cards', require('../../../fixtures/api/cards-faction-type-name'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
         expect(cards).toEqual(["Chum", "Data Mine"]);
       });
+
+      it('has named separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/cards-faction'));
+        const { findAllByRole } = render(<CardList sort="faction" />);
+        const hrs = await findAllByRole('separator');
+        const titles = hrs.map(({ textContent }) => textContent.trim());
+
+        expect(titles).toEqual(["Haas-Bioroid", "Jinteki"]);
+      });
     });
 
 
     describe('Name', () => {
       it('sorts by name', async () => {
-        mockData = require('../../../fixtures/api/sort-name');
+        api.setData('cards', require('../../../fixtures/api/cards-name'));
         const { findAllByRole } = render(<CardList sort="name" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -165,11 +165,12 @@ describe('CardList', () => {
       });
 
       it('has no separators', async () => {
-        mockData = require('../../../fixtures/api/sort-name');
-        const { queryAllByRole } = render(<CardList sort="name" />);
+        api.setData('cards', require('../../../fixtures/api/cards-name'));
+        const { findAllByRole, queryAllByRole } = render(<CardList sort="name" />);
+        await findAllByRole('img');
         const hrs = queryAllByRole('separator');
 
-        expect(hrs).toHaveLength(0)
+        expect(hrs).toHaveLength(0);
       });
     });
   })

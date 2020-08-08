@@ -6,10 +6,13 @@ import * as api from '../helpers/api';
 jest.mock('../helpers/api');
 
 describe('FilterList', () => {
-  const mockData = require('../../../fixtures/api/filter-items');
 
   beforeEach(() => {
-    jest.spyOn(api, 'getData').mockImplementation(() => Promise.resolve(mockData));
+    api.setData('foo', require('../../../fixtures/api/foo'));
+  });
+
+  afterEach(() => {
+    api.reset();
   });
 
   it('renders without crashing', () => {
@@ -42,12 +45,6 @@ describe('FilterList', () => {
 
       expect(() => render(<FilterList/>)).toThrow();
       console.error = err;
-    });
-
-    it('uses api.getData correctly with the provided prop', () => {
-      render(<FilterList dataType="foo"/>);
-
-      expect(api.getData).toHaveBeenCalledWith('foo');
     });
   });
 

@@ -1,1 +1,462 @@
-[{"name":"AI","side":"runner","code":"AI"},{"name":"AP","side":"corp","code":"AP"},{"name":"Advertisement","side":"corp","code":"Advertisement"},{"name":"Alliance","side":"corp","code":"Alliance"},{"name":"Ambush","side":"corp","code":"Ambush"},{"name":"Barrier","side":"corp","code":"Barrier"},{"name":"Beanstalk","side":"corp","code":"Beanstalk"},{"name":"Bioroid","side":null,"code":"Bioroid"},{"name":"Black Ops","side":"corp","code":"Black Ops"},{"name":"Bomb","side":"runner","code":"Bomb"},{"name":"Cast","side":"corp","code":"Cast"},{"name":"Caïssa","side":"runner","code":"Caïssa"},{"name":"Character","side":"corp","code":"Character"},{"name":"Chip","side":"runner","code":"Chip"},{"name":"Clan","side":"runner","code":"Clan"},{"name":"Clone","side":null,"code":"Clone"},{"name":"Cloud","side":"runner","code":"Cloud"},{"name":"Code Gate","side":"corp","code":"Code Gate"},{"name":"Condition","side":null,"code":"Condition"},{"name":"Connection","side":null,"code":"Connection"},{"name":"Console","side":"runner","code":"Console"},{"name":"Consumer-grade","side":"runner","code":"Consumer-grade"},{"name":"Corp","side":"corp","code":"Corp"},{"name":"Corporation","side":"corp","code":"Corporation"},{"name":"Current","side":null,"code":"Current"},{"name":"Cybernetic","side":"runner","code":"Cybernetic"},{"name":"Cyborg","side":"runner","code":"Cyborg"},{"name":"Daemon","side":"runner","code":"Daemon"},{"name":"Decoder","side":"runner","code":"Decoder"},{"name":"Deflector","side":"corp","code":"Deflector"},{"name":"Destroyer","side":"corp","code":"Destroyer"},{"name":"Deva","side":"runner","code":"Deva"},{"name":"Digital","side":"runner","code":"Digital"},{"name":"Directive","side":"runner","code":"Directive"},{"name":"Division","side":"corp","code":"Division"},{"name":"Double","side":null,"code":"Double"},{"name":"Executive","side":"corp","code":"Executive"},{"name":"Expansion","side":"corp","code":"Expansion"},{"name":"Facility","side":"corp","code":"Facility"},{"name":"Fracter","side":"runner","code":"Fracter"},{"name":"G-mod","side":"runner","code":"G-mod"},{"name":"Gear","side":"runner","code":"Gear"},{"name":"Genetics","side":"runner","code":"Genetics"},{"name":"Government","side":null,"code":"Government"},{"name":"Grail","side":"corp","code":"Grail"},{"name":"Gray Ops","side":"corp","code":"Gray Ops"},{"name":"Hostile","side":"corp","code":"Hostile"},{"name":"Icebreaker","side":"runner","code":"Icebreaker"},{"name":"Illicit","side":"corp","code":"Illicit"},{"name":"Initiative","side":"corp","code":"Initiative"},{"name":"Job","side":"runner","code":"Job"},{"name":"Killer","side":"runner","code":"Killer"},{"name":"Link","side":"runner","code":"Link"},{"name":"Location","side":"runner","code":"Location"},{"name":"Megacorp","side":"corp","code":"Megacorp"},{"name":"Mod","side":"runner","code":"Mod"},{"name":"Morph","side":"corp","code":"Morph"},{"name":"Mythic","side":"corp","code":"Mythic"},{"name":"NEXT","side":"corp","code":"NEXT"},{"name":"Natural","side":"runner","code":"Natural"},{"name":"Observer","side":"corp","code":"Observer"},{"name":"Off-site","side":"corp","code":"Off-site"},{"name":"Political","side":"corp","code":"Political"},{"name":"Priority","side":"runner","code":"Priority"},{"name":"Psi","side":"corp","code":"Psi"},{"name":"Public","side":"corp","code":"Public"},{"name":"Region","side":"corp","code":"Region"},{"name":"Remote","side":"runner","code":"Remote"},{"name":"Reprisal","side":"corp","code":"Reprisal"},{"name":"Research","side":"corp","code":"Research"},{"name":"Ritzy","side":null,"code":"Ritzy"},{"name":"Run","side":"runner","code":"Run"},{"name":"Sabotage","side":"runner","code":"Sabotage"},{"name":"Security","side":"corp","code":"Security"},{"name":"Security Protocol","side":"corp","code":"Security Protocol"},{"name":"Seedy","side":null,"code":"Seedy"},{"name":"Sensie","side":"corp","code":"Sensie"},{"name":"Sentry","side":"corp","code":"Sentry"},{"name":"Source","side":null,"code":"Source"},{"name":"Stealth","side":"runner","code":"Stealth"},{"name":"Subsidiary","side":"corp","code":"Subsidiary"},{"name":"Sysop","side":"corp","code":"Sysop"},{"name":"Terminal","side":"corp","code":"Terminal"},{"name":"Tracer","side":"corp","code":"Tracer"},{"name":"Transaction","side":"corp","code":"Transaction"},{"name":"Trap","side":"corp","code":"Trap"},{"name":"Triple","side":"corp","code":"Triple"},{"name":"Unorthodox","side":"corp","code":"Unorthodox"},{"name":"Vehicle","side":"runner","code":"Vehicle"},{"name":"Virtual","side":"runner","code":"Virtual"},{"name":"Virus","side":"runner","code":"Virus"},{"name":"Weapon","side":"runner","code":"Weapon"}]
+[
+    {
+        "name": "AI",
+        "side": "runner",
+        "code": "AI"
+    },
+    {
+        "name": "AP",
+        "side": "corp",
+        "code": "AP"
+    },
+    {
+        "name": "Advertisement",
+        "side": "corp",
+        "code": "Advertisement"
+    },
+    {
+        "name": "Alliance",
+        "side": "corp",
+        "code": "Alliance"
+    },
+    {
+        "name": "Ambush",
+        "side": "corp",
+        "code": "Ambush"
+    },
+    {
+        "name": "Barrier",
+        "side": "corp",
+        "code": "Barrier"
+    },
+    {
+        "name": "Beanstalk",
+        "side": "corp",
+        "code": "Beanstalk"
+    },
+    {
+        "name": "Bioroid",
+        "side": null,
+        "code": "Bioroid"
+    },
+    {
+        "name": "Black Ops",
+        "side": "corp",
+        "code": "Black Ops"
+    },
+    {
+        "name": "Bomb",
+        "side": "runner",
+        "code": "Bomb"
+    },
+    {
+        "name": "Cast",
+        "side": "corp",
+        "code": "Cast"
+    },
+    {
+        "name": "Caïssa",
+        "side": "runner",
+        "code": "Caïssa"
+    },
+    {
+        "name": "Character",
+        "side": "corp",
+        "code": "Character"
+    },
+    {
+        "name": "Chip",
+        "side": "runner",
+        "code": "Chip"
+    },
+    {
+        "name": "Clan",
+        "side": "runner",
+        "code": "Clan"
+    },
+    {
+        "name": "Clone",
+        "side": null,
+        "code": "Clone"
+    },
+    {
+        "name": "Cloud",
+        "side": "runner",
+        "code": "Cloud"
+    },
+    {
+        "name": "Code Gate",
+        "side": "corp",
+        "code": "Code Gate"
+    },
+    {
+        "name": "Condition",
+        "side": null,
+        "code": "Condition"
+    },
+    {
+        "name": "Connection",
+        "side": null,
+        "code": "Connection"
+    },
+    {
+        "name": "Console",
+        "side": "runner",
+        "code": "Console"
+    },
+    {
+        "name": "Consumer-grade",
+        "side": "runner",
+        "code": "Consumer-grade"
+    },
+    {
+        "name": "Corp",
+        "side": "corp",
+        "code": "Corp"
+    },
+    {
+        "name": "Corporation",
+        "side": "corp",
+        "code": "Corporation"
+    },
+    {
+        "name": "Current",
+        "side": null,
+        "code": "Current"
+    },
+    {
+        "name": "Cybernetic",
+        "side": "runner",
+        "code": "Cybernetic"
+    },
+    {
+        "name": "Cyborg",
+        "side": "runner",
+        "code": "Cyborg"
+    },
+    {
+        "name": "Daemon",
+        "side": "runner",
+        "code": "Daemon"
+    },
+    {
+        "name": "Decoder",
+        "side": "runner",
+        "code": "Decoder"
+    },
+    {
+        "name": "Deflector",
+        "side": "corp",
+        "code": "Deflector"
+    },
+    {
+        "name": "Destroyer",
+        "side": "corp",
+        "code": "Destroyer"
+    },
+    {
+        "name": "Deva",
+        "side": "runner",
+        "code": "Deva"
+    },
+    {
+        "name": "Digital",
+        "side": "runner",
+        "code": "Digital"
+    },
+    {
+        "name": "Directive",
+        "side": "runner",
+        "code": "Directive"
+    },
+    {
+        "name": "Division",
+        "side": "corp",
+        "code": "Division"
+    },
+    {
+        "name": "Double",
+        "side": null,
+        "code": "Double"
+    },
+    {
+        "name": "Executive",
+        "side": "corp",
+        "code": "Executive"
+    },
+    {
+        "name": "Expansion",
+        "side": "corp",
+        "code": "Expansion"
+    },
+    {
+        "name": "Facility",
+        "side": "corp",
+        "code": "Facility"
+    },
+    {
+        "name": "Fracter",
+        "side": "runner",
+        "code": "Fracter"
+    },
+    {
+        "name": "G-mod",
+        "side": "runner",
+        "code": "G-mod"
+    },
+    {
+        "name": "Gear",
+        "side": "runner",
+        "code": "Gear"
+    },
+    {
+        "name": "Genetics",
+        "side": "runner",
+        "code": "Genetics"
+    },
+    {
+        "name": "Government",
+        "side": null,
+        "code": "Government"
+    },
+    {
+        "name": "Grail",
+        "side": "corp",
+        "code": "Grail"
+    },
+    {
+        "name": "Gray Ops",
+        "side": "corp",
+        "code": "Gray Ops"
+    },
+    {
+        "name": "Hostile",
+        "side": "corp",
+        "code": "Hostile"
+    },
+    {
+        "name": "Icebreaker",
+        "side": "runner",
+        "code": "Icebreaker"
+    },
+    {
+        "name": "Illicit",
+        "side": "corp",
+        "code": "Illicit"
+    },
+    {
+        "name": "Initiative",
+        "side": "corp",
+        "code": "Initiative"
+    },
+    {
+        "name": "Job",
+        "side": "runner",
+        "code": "Job"
+    },
+    {
+        "name": "Killer",
+        "side": "runner",
+        "code": "Killer"
+    },
+    {
+        "name": "Link",
+        "side": "runner",
+        "code": "Link"
+    },
+    {
+        "name": "Location",
+        "side": "runner",
+        "code": "Location"
+    },
+    {
+        "name": "Megacorp",
+        "side": "corp",
+        "code": "Megacorp"
+    },
+    {
+        "name": "Mod",
+        "side": "runner",
+        "code": "Mod"
+    },
+    {
+        "name": "Morph",
+        "side": "corp",
+        "code": "Morph"
+    },
+    {
+        "name": "Mythic",
+        "side": "corp",
+        "code": "Mythic"
+    },
+    {
+        "name": "NEXT",
+        "side": "corp",
+        "code": "NEXT"
+    },
+    {
+        "name": "Natural",
+        "side": "runner",
+        "code": "Natural"
+    },
+    {
+        "name": "Observer",
+        "side": "corp",
+        "code": "Observer"
+    },
+    {
+        "name": "Off-site",
+        "side": "corp",
+        "code": "Off-site"
+    },
+    {
+        "name": "Political",
+        "side": "corp",
+        "code": "Political"
+    },
+    {
+        "name": "Priority",
+        "side": "runner",
+        "code": "Priority"
+    },
+    {
+        "name": "Psi",
+        "side": "corp",
+        "code": "Psi"
+    },
+    {
+        "name": "Public",
+        "side": "corp",
+        "code": "Public"
+    },
+    {
+        "name": "Region",
+        "side": "corp",
+        "code": "Region"
+    },
+    {
+        "name": "Remote",
+        "side": "runner",
+        "code": "Remote"
+    },
+    {
+        "name": "Reprisal",
+        "side": "corp",
+        "code": "Reprisal"
+    },
+    {
+        "name": "Research",
+        "side": "corp",
+        "code": "Research"
+    },
+    {
+        "name": "Ritzy",
+        "side": null,
+        "code": "Ritzy"
+    },
+    {
+        "name": "Run",
+        "side": "runner",
+        "code": "Run"
+    },
+    {
+        "name": "Sabotage",
+        "side": "runner",
+        "code": "Sabotage"
+    },
+    {
+        "name": "Security",
+        "side": "corp",
+        "code": "Security"
+    },
+    {
+        "name": "Security Protocol",
+        "side": "corp",
+        "code": "Security Protocol"
+    },
+    {
+        "name": "Seedy",
+        "side": null,
+        "code": "Seedy"
+    },
+    {
+        "name": "Sensie",
+        "side": "corp",
+        "code": "Sensie"
+    },
+    {
+        "name": "Sentry",
+        "side": "corp",
+        "code": "Sentry"
+    },
+    {
+        "name": "Source",
+        "side": null,
+        "code": "Source"
+    },
+    {
+        "name": "Stealth",
+        "side": "runner",
+        "code": "Stealth"
+    },
+    {
+        "name": "Subsidiary",
+        "side": "corp",
+        "code": "Subsidiary"
+    },
+    {
+        "name": "Sysop",
+        "side": "corp",
+        "code": "Sysop"
+    },
+    {
+        "name": "Terminal",
+        "side": "corp",
+        "code": "Terminal"
+    },
+    {
+        "name": "Tracer",
+        "side": "corp",
+        "code": "Tracer"
+    },
+    {
+        "name": "Transaction",
+        "side": "corp",
+        "code": "Transaction"
+    },
+    {
+        "name": "Trap",
+        "side": "corp",
+        "code": "Trap"
+    },
+    {
+        "name": "Triple",
+        "side": "corp",
+        "code": "Triple"
+    },
+    {
+        "name": "Unorthodox",
+        "side": "corp",
+        "code": "Unorthodox"
+    },
+    {
+        "name": "Vehicle",
+        "side": "runner",
+        "code": "Vehicle"
+    },
+    {
+        "name": "Virtual",
+        "side": "runner",
+        "code": "Virtual"
+    },
+    {
+        "name": "Virus",
+        "side": "runner",
+        "code": "Virus"
+    },
+    {
+        "name": "Weapon",
+        "side": "runner",
+        "code": "Weapon"
+    }
+]
