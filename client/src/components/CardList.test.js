@@ -108,7 +108,7 @@ describe('CardList', () => {
   describe('Sort', () => {
     describe('Faction', () => {
       it('sorts by faction', async () => {
-        api.setData('cards', require('../../../fixtures/api/sort/faction-corp'));
+        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-corp'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -117,7 +117,7 @@ describe('CardList', () => {
       });
 
       it('sorts neutral last', async () => {
-        api.setData('cards', require('../../../fixtures/api/sort/faction-neutral'));
+        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-neutral'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -126,7 +126,7 @@ describe('CardList', () => {
       });
 
       it('sorts by type after faction', async () => {
-        api.setData('cards', require('../../../fixtures/api/sort/faction-type'));
+        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-type'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -135,7 +135,7 @@ describe('CardList', () => {
       });
 
       it('sorts by name after type', async () => {
-        api.setData('cards', require('../../../fixtures/api/sort/faction-type-name'));
+        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-type-name'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -144,7 +144,7 @@ describe('CardList', () => {
       });
 
       it('has named separators', async () => {
-        api.setData('cards', require('../../../fixtures/api/sort/faction-corp'));
+        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-corp'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
@@ -153,6 +153,28 @@ describe('CardList', () => {
       });
     });
 
+    describe('Type', () => {
+      it('sorts by type', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
+        const { findAllByRole } = render(<CardList sort="type" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(['R&D Interface', 'The Helpful AI']);
+      });
+    });
+
+
+    describe('Pack', () => {
+      it('sorts by pack', async () => {
+        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
+        const { findAllByRole } = render(<CardList sort="pack" />);
+        const images = await findAllByRole('img');
+        const cards = images.map(({ alt }) => alt);
+
+        expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
+      });
+    });
 
     describe('Name', () => {
       it('sorts by name', async () => {

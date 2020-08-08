@@ -14,6 +14,8 @@ class SortSelect extends Component {
             <div className="form-group">
                 <select className="form-control" onChange={this.handleChange}>
                     <option value="faction">Sort by Faction</option>
+                    <option value="type">Sort by Type</option>
+                    <option value="pack">Sort by Pack</option>
                     <option value="name">Sort by Name</option>
                 </select>
             </div>

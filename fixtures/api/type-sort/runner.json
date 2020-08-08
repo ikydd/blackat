@@ -1,0 +1,22 @@
+[
+    {
+        "code": "02008",
+        "title": "The Helpful AI",
+        "text": "+1[link]\n[trash]: Choose an <strong>icebreaker</strong>. That <strong>icebreaker</strong> has +2 strength until the end of the turn.",
+        "imagesrc": "https://netrunnerdb.com/card_image/large/02008.jpg",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "resource",
+        "pack": "wla",
+        "keywords": "Connection - Link - Virtual"
+    },
+    {
+        "code": "25050",
+        "faction": "shaper",
+        "pack": "fp",
+        "side": "runner",
+        "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+        "title": "R&D Interface",
+        "type": "hardware"
+    }
+]
