@@ -35,13 +35,13 @@ class CardList extends Component {
 
   filter = cards => cards
       .map(this.resetDisplay)
-      .map(filter.bySide(this.props.side))
-      .map(filter.byTitle(this.props.titleSearch))
-      .map(filter.byText(this.props.textSearch))
-      .map(filter.byFactions(this.props.factions))
-      .map(filter.byTypes(this.props.types))
-      .map(filter.byPacks(this.props.packs))
-      .map(filter.bySubtypes(this.props.subtypes))
+      .filter(filter.bySide(this.props.side))
+      .filter(filter.byTitle(this.props.titleSearch))
+      .filter(filter.byText(this.props.textSearch))
+      .filter(filter.byFactions(this.props.factions))
+      .filter(filter.byTypes(this.props.types))
+      .filter(filter.byPacks(this.props.packs))
+      .filter(filter.bySubtypes(this.props.subtypes))
       .sort(cardSort(this.props.sort));
 
   group = cards => cards;

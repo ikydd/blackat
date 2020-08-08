@@ -2,74 +2,53 @@
 
 const bySide = (side) => (card) => {
   if (!side) {
-    return card;
+    return true;
   }
-  if (card.side !== side) {
-    card.show = false;
-  }
-  return card;
+  return card.side === side;
 }
 
 const byFactions = (factions) => (card) => {
   if (!factions.length) {
-    return card;
+    return true;
   }
-  if (!factions.includes(card.faction)) {
-    card.show = false;
-  }
-  return card;
+  return factions.includes(card.faction);
 }
 
  const byTypes = (types) => (card) => {
   if (!types.length) {
-    return card;
+    return true;
   }
-  if (!types.includes(card.type)) {
-    card.show = false;
-  }
-  return card;
+  return types.includes(card.type);
 }
 
 const bySubtypes = (subtypes) => (card) => {
   if (!subtypes.length) {
-    return card;
+    return true;
   }
-  if (!subtypes.filter((subtype) => card.keywords && card.keywords.search(subtype) !== -1).length) {
-    card.show = false;
-  }
-  return card;
+  return subtypes.find((subtype) => card.keywords && card.keywords.search(subtype) !== -1);
 }
 
 const byPacks = (packs) => (card) => {
   if (!packs.length) {
-    return card;
+    return true;
   }
-  if (!packs.includes(card.pack)) {
-    card.show = false;
-  }
-  return card;
+  return packs.includes(card.pack);
 }
 
 const byTitle = (title) => (card) => {
   if (!title) {
-    return card;
+    return true;
   }
   const regex = new RegExp(title, 'i');
-  if (card.title.search(regex) < 0) {
-    card.show = false;
-  }
-  return card;
+  return card.title.search(regex) > 0;
 }
 
 const byText = (text) => (card) => {
   if (!text) {
-    return card;
+    return true;
   }
   const regex = new RegExp(text, 'i');
-  if (card.text.search(regex) < 0) {
-    card.show = false;
-  }
-  return card;
+  return card.text.search(regex) > 0;
 }
 
 export default {
