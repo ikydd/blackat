@@ -16,7 +16,7 @@ describe('SortSelect', () => {
     it('has two options', () => {
         const { getAllByRole } = render(<SortSelect />);
 
-        expect(getAllByRole('option')).toEqual([
+        expect(getAllByRole('option')).toEqual(expect.arrayContaining([
             expect.objectContaining({
                 textContent: 'Sort by Faction',
                 value: 'faction'
@@ -25,7 +25,7 @@ describe('SortSelect', () => {
                 textContent: 'Sort by Name',
                 value: 'name'
             })
-        ]);
+        ]));
     });
 
     it('calls a callback on change', async () => {
