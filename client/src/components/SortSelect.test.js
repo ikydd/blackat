@@ -13,13 +13,21 @@ describe('SortSelect', () => {
         expect(getByRole('combobox')).toBeTruthy();
     });
 
-    it('has two options', () => {
+    it('has the following options', () => {
         const { getAllByRole } = render(<SortSelect />);
 
         expect(getAllByRole('option')).toEqual(expect.arrayContaining([
             expect.objectContaining({
                 textContent: 'Sort by Faction',
                 value: 'faction'
+            }),
+            expect.objectContaining({
+                textContent: 'Sort by Pack',
+                value: 'pack'
+            }),
+            expect.objectContaining({
+                textContent: 'Sort by Type',
+                value: 'type'
             }),
             expect.objectContaining({
                 textContent: 'Sort by Name',
