@@ -1,4 +1,5 @@
 .card-divider {
+    clear: left;
     text-align: right;
     padding-bottom: 0.3em;
     padding-right: 5em;
