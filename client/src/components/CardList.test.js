@@ -19,50 +19,52 @@ describe('CardList', () => {
     expect(queryByRole('img')).toBeFalsy();
   })
 
-  it('default to showing all cards', async () => {
+  it('defaults to showing all cards', async () => {
     const { findAllByRole } = render(<CardList/>);
     const cards = await findAllByRole('img');
 
     expect(cards).toHaveLength(7);
   });
 
-  it('only shows cards from the correct side', async () => {
-    const { findAllByRole } = render(<CardList side="runner" />);
-    const cards = await findAllByRole('img');
+  describe('Filter', () => {
+    it('only shows cards from the correct side', async () => {
+      const { findAllByRole } = render(<CardList side="runner" />);
+      const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(3);
-  });
+      expect(cards).toHaveLength(3);
+    });
 
-  it('only shows cards from the correct factions', async () => {
-    const factions = ['shaper'];
-    const { findAllByRole } = render(<CardList factions={factions} />);
-    const cards = await findAllByRole('img');
+    it('only shows cards from the correct factions', async () => {
+      const factions = ['shaper'];
+      const { findAllByRole } = render(<CardList factions={factions} />);
+      const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(2);
-  });
+      expect(cards).toHaveLength(2);
+    });
 
-  it('only shows cards from the correct types', async () => {
-    const types = ['program'];
-    const { findAllByRole } = render(<CardList types={types} />);
-    const cards = await findAllByRole('img');
+    it('only shows cards from the correct types', async () => {
+      const types = ['program'];
+      const { findAllByRole } = render(<CardList types={types} />);
+      const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(2);
-  });
+      expect(cards).toHaveLength(2);
+    });
 
-  it('only shows cards from the correct subtypes', async () => {
-    const subtypes = ['Icebreaker'];
-    const { findByRole } = render(<CardList subtypes={subtypes} />);
-    const card = await findByRole('img');
+    it('only shows cards from the correct subtypes', async () => {
+      const subtypes = ['Icebreaker'];
+      const { findByRole } = render(<CardList subtypes={subtypes} />);
+      const card = await findByRole('img');
 
-    expect(card).toHaveAttribute('alt', 'Gordian Blade');
-  });
+      expect(card).toHaveAttribute('alt', 'Gordian Blade');
+    });
 
-  it('only shows cards from the correct packs', async () => {
-    const packs = ['wla'];
-    const { findAllByRole } = render(<CardList packs={packs} />);
-    const cards = await findAllByRole('img');
+    it('only shows cards from the correct packs', async () => {
+      const packs = ['wla'];
+      const { findAllByRole } = render(<CardList packs={packs} />);
+      const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(2);
+      expect(cards).toHaveLength(2);
+    });
   });
 
   describe('Title Search', () => {
@@ -232,4 +234,24 @@ describe('CardList', () => {
       });
     });
   })
+
+  describe('Card Updates', () => {
+    it('only shows the most recent version when versions are consecutive', async () => {
+      api.setData('cards', require('../../../fixtures/api/versions'));
+      const { findAllByRole } = render(<CardList sort="title" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Gordian Blade", "Magnum Opus"]);
+    });
+
+    it('shows all versions when not consecutive', async () => {
+      api.setData('cards', require('../../../fixtures/api/versions'));
+      const { findAllByRole } = render(<CardList sort="pack" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Gordian Blade", "Magnum Opus", "Gordian Blade"]);
+    });
+  });
 });
