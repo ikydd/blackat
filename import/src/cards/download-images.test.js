@@ -93,4 +93,13 @@ describe('download images', () => {
 
         expect(console.error).toHaveBeenCalled();
     });
+
+    it('returns the card data after downloading', async () => {
+        nock.load(`${fixtures}/chum.json`);
+        nock.load(`${fixtures}/dirty-laundry.json`);
+
+        const cards = await download(dir, [chum, dirtyLaundry]);
+
+        expect(cards).toEqual([chum, dirtyLaundry]);
+    });
 })

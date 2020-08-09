@@ -41,6 +41,7 @@ describe("main", () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
+    download.mockImplementation(() => Promise.resolve(mockProcessedData));
   });
 
   it("gets NRDB cards endpoint", async () => {
@@ -82,5 +83,11 @@ describe("main", () => {
     await cards(mockPackData);
 
     expect(download).toHaveBeenCalledWith(path, mockProcessedData);
+  });
+
+  it("returns the list of cards", async () => {
+    const output = await cards(mockPackData);
+
+    expect(output).toEqual(mockProcessedData);
   });
 });

@@ -23,7 +23,8 @@ const download = async (imgFolder, data) => {
         .then(() => Promise.all(data
             .filter(existingCards(imgFolder))
             .map(downloadCardTo(imgFolder))
-        ));
+        ))
+        .then(() => data);
 }
 
 module.exports = download;
