@@ -34,6 +34,36 @@ class App extends Component {
       }
   };
 
+  filters = [
+    {
+      title: 'Factions',
+      keyword: 'factions'
+    },
+    {
+      title: 'Types',
+      keyword: 'types'
+    },
+    {
+      title: 'Subtypes',
+      keyword: 'subtypes'
+    },
+    {
+      title: 'Packs',
+      keyword: 'packs'
+    }
+  ];
+
+  componentDidMount () {
+    const previousSession = this.props.storage && localStorage.getItem('settings');
+    if (previousSession) {
+      this.setState(JSON.parse(previousSession));
+    }
+  }
+
+  componentDidUpdate () {
+    localStorage.setItem('settings', JSON.stringify(this.state));
+  }
+
   setSide = (side) => {
     this.setState({ side });
   }
@@ -78,25 +108,6 @@ class App extends Component {
   filterHandler = (type) => (items) => this.setFilter(type, items);
 
   render() {
-    const filters = [
-      {
-        title: 'Factions',
-        keyword: 'factions'
-      },
-      {
-        title: 'Types',
-        keyword: 'types'
-      },
-      {
-        title: 'Subtypes',
-        keyword: 'subtypes'
-      },
-      {
-        title: 'Packs',
-        keyword: 'packs'
-      }
-    ];
-
     return (
       <div className="App">
         <ControlPanel>
@@ -107,7 +118,7 @@ class App extends Component {
           <TextSearch placeholder="search title" onChange={this.searchHandler('title')} />
           <TextSearch placeholder="search text" onChange={this.searchHandler('text')} />
           <SortSelect onChange={this.setSort} />
-          {filters.map(({ title, keyword  }) => (
+          {this.filters.map(({ title, keyword  }) => (
             <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
           <SmallPrint/>
