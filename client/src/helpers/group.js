@@ -1,42 +1,40 @@
 
+const data = {}
+
+const ensureSection = (sections, list = [], prop = 'default') => {
+    if (!sections[prop]) {
+        sections[prop] = {
+            info: list.find(({ code }) => code === prop),
+            cards: []
+        }
+    }
+}
+
+const standardGroup = (sections, card, sort) => {
+    const prop = card[sort];
+    const list = data[sort];
+    ensureSection(sections, list, prop);
+    sections[prop].cards.push(card);
+    return sections;
+}
+
+const defaultGroup = (sections, card) => {
+    ensureSection(sections);
+    sections['default'].cards.push(card);
+    return sections;
+}
+
 const group = ({ factions, packs, types }) => (sort) => (sections, card) => {
+    data.type = types;
+    data.pack = packs;
+    data.faction = factions;
     switch (sort) {
         case 'faction':
-            if (!sections[card.faction]) {
-                sections[card.faction] = {
-                    info: factions.find(({ code }) => code === card.faction),
-                    cards: []
-                };
-            }
-            sections[card.faction].cards.push(card);
-            return sections;
         case 'pack':
-            if (!sections[card.pack]) {
-                sections[card.pack] = {
-                    info: packs.find(({ code }) => code === card.pack),
-                    cards: []
-                };
-            }
-            sections[card.pack].cards.push(card);
-            return sections;
         case 'type':
-            if (!sections[card.type]) {
-                sections[card.type] = {
-                    info: types.find(({ code }) => code === card.type),
-                    cards: []
-                };
-            }
-            sections[card.type].cards.push(card);
-            return sections;
+            return standardGroup(sections, card, sort);
         default:
-            if (!sections['default']) {
-                sections['default'] = {
-                    info: null,
-                    cards: []
-                };
-            }
-            sections['default'].cards.push(card);
-            return sections;
+            return defaultGroup(sections, card);
     }
 }
 

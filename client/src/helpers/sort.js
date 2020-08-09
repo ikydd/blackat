@@ -3,9 +3,9 @@ const data = {}
 const compare = (a, b) =>
   a > b
     ? 1
-    : (a < b
+    : a < b
       ? -1
-      : 0);
+      : 0;
 
 const rankOf = (prop, item) => data[prop].indexOf(item[prop]);
 
