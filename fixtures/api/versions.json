@@ -1,0 +1,34 @@
+[
+    {
+        "code": "01043",
+        "title": "Gordian Blade",
+        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+        "imagesrc": "https://netrunnerdb.com/card_image/large/01043.jpg",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core",
+        "keywords": "Icebreaker - Decoder"
+    },
+    {
+        "code": "01044",
+        "title": "Magnum Opus",
+        "text": "[click]: Gain 2[credit].",
+        "imagesrc": "https://netrunnerdb.com/card_image/large/01044.jpg",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core"
+    },
+    {
+        "code": "20049",
+        "title": "Gordian Blade",
+        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+        "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN49_49.png",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core2",
+        "keywords": "Icebreaker - Decoder"
+    }
+]
