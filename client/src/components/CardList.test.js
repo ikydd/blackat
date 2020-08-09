@@ -180,6 +180,15 @@ describe('CardList', () => {
 
         expect(cards).toEqual(['Battering Ram', 'Gordian Blade']);
       });
+
+      it('has named separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
+        const { findAllByRole } = render(<CardList sort="type" />);
+        const hrs = await findAllByRole('separator');
+        const titles = hrs.map(({ textContent }) => textContent.trim());
+
+        expect(titles).toEqual(["Hardware", "Resource"]);
+      });
     });
 
 
@@ -191,6 +200,15 @@ describe('CardList', () => {
         const cards = images.map(({ alt }) => alt);
 
         expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
+      });
+
+      it('has named separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
+        const { findAllByRole } = render(<CardList sort="pack" />);
+        const hrs = await findAllByRole('separator');
+        const titles = hrs.map(({ textContent }) => textContent.trim());
+
+        expect(titles).toEqual(["Core Set", "Future Proof"]);
       });
     });
 

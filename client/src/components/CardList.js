@@ -27,8 +27,8 @@ class CardList extends Component {
 
   handleData = ([cards, factions, types, packs]) => this.setState({
     cards,
-    sort: sort({ types, packs, factions }),
-    group: group({ factions })
+    sort: sort({ factions, types, packs }),
+    group: group({ factions, types, packs })
   })
 
   componentDidMount() {
