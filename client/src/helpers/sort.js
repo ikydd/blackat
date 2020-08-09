@@ -7,27 +7,28 @@ const compare = (a, b) =>
       ? -1
       : 0);
 
+const rankOf = (prop, item) => data[prop].indexOf(item[prop]);
+
+const standardCompare = (prop, a, b) => compare(rankOf(prop, a), rankOf(prop, b));
+
 const sort = (option, a, b, result = 0) => {
   if (result !== 0) {
     return result;
   }
   switch (option) {
-    case 'type':
-      return compare(data.types.indexOf(a.type), data.types.indexOf(b.type));
-    case 'pack':
-      return compare(data.packs.indexOf(a.pack), data.packs.indexOf(b.pack));
-    case 'faction':
-      return compare(data.factions.indexOf(a.faction), data.factions.indexOf(b.faction));
     case 'title':
-    default:
       return compare(a.title, b.title);
+    default:
+      return standardCompare(option, a, b);
   }
 }
 
+const toCodes = ({ code }) => code;
+
 export default ({ types, packs, factions }) => {
-  data.types = types.map(({ code }) => code);
-  data.packs = packs.map(({ code }) => code);
-  data.factions = factions.map(({ code }) => code);
+  data.type = types.map(toCodes);
+  data.pack = packs.map(toCodes);
+  data.faction = factions.map(toCodes);
   return (option) => (a, b) => {
     switch (option) {
       case 'title':
