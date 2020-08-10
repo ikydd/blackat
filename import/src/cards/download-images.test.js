@@ -19,14 +19,16 @@ describe('download images', () => {
         code: '06030'
     }
 
-    const dir = `${__dirname}/tmp`;
+    const testDir = `${__dirname}/public`;
+    const dir = `${__dirname}/public/tmp`;
+    const webDir = `/tmp`;
     const fixtures = `${__dirname}/fixtures`;
     const originalLog = console.error;
 
     const setup = async () => {
-      if (fs.existsSync(dir)){
-          await fs.emptyDir(dir);
-          await fs.remove(dir);
+      if (fs.existsSync(testDir)){
+          await fs.emptyDir(testDir);
+          await fs.remove(testDir);
       }
     }
 
@@ -98,8 +100,23 @@ describe('download images', () => {
         nock.load(`${fixtures}/chum.json`);
         nock.load(`${fixtures}/dirty-laundry.json`);
 
+        const expectations = [chum, dirtyLaundry]
+            .map(({ code }) => expect.objectContaining({ code }));
+
         const cards = await download(dir, [chum, dirtyLaundry]);
 
-        expect(cards).toEqual([chum, dirtyLaundry]);
+        expect(cards).toEqual(expectations);
+    });
+
+    it('fixes the imagesrc', async () => {
+        nock.load(`${fixtures}/chum.json`);
+        nock.load(`${fixtures}/dirty-laundry.json`);
+
+        const expectations = ['01075.png', '25060.png']
+            .map((file) => expect.objectContaining({ imagesrc: `${webDir}/${file}`}));
+
+        const cards = await download(dir, [chum, dirtyLaundry]);
+
+        expect(cards).toEqual(expectations);
     });
 })

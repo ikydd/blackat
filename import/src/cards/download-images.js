@@ -10,13 +10,25 @@ const existingCards = (path) => (card) => {
 
 const createFolder = fs.ensureDir;
 
+const saveImageTo = (target, card) => response =>
+    (new Promise((resolve, reject) => response
+        .data.pipe(fs.createWriteStream(cardPath(card, target)))
+            .on('close', () => resolve())
+            .on('error', error =>  reject(error))
+    ));
+
 const downloadCardTo = (target) => (card) => axios({
         url: card.imagesrc,
         method: 'GET',
         responseType: "stream" })
-    .then(response =>
-        response.data.pipe(fs.createWriteStream(cardPath(card, target))))
+    .then(saveImageTo(target, card))
     .catch(console.error)
+
+const setLocalImage = (serverFolder) => {
+    const segments = serverFolder.split('/');
+    const webFolder = '/' + segments.slice(segments.indexOf('public') + 1).join('/') + '/';
+    return (card) => Object.assign({}, card, { imagesrc: `${webFolder}${card.code}.png` });
+}
 
 const download = async (imgFolder, data) => {
     return createFolder(imgFolder)
@@ -24,7 +36,7 @@ const download = async (imgFolder, data) => {
             .filter(existingCards(imgFolder))
             .map(downloadCardTo(imgFolder))
         ))
-        .then(() => data);
+        .then(() => data.map(setLocalImage(imgFolder)));
 }
 
 module.exports = download;
