@@ -151,4 +151,22 @@ describe('FilterList', () => {
       expect(cb).toHaveBeenCalledWith([]);
     })
   });
+
+  describe('active notifier', () => {
+    it('has no visual mark when no filters are selected', async () => {
+      const { queryByRole, findAllByRole } = render(<FilterList dataType="foo" />);
+      await findAllByRole('checkbox');
+
+      const alert = queryByRole('alert');
+
+      expect(alert).toBeFalsy();
+    });
+    it('has a visual mark when one or more filters are selected', async () => {
+      const isSelected = ['shaper', 'anarch'];
+      const { findByRole } = render(<FilterList dataType="foo" selected={isSelected} />);
+      const alert = await findByRole('alert');
+
+      expect(alert).toBeTruthy();
+    });
+  })
 });

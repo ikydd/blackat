@@ -56,11 +56,11 @@ class FilterList extends Component {
 
   render() {
     const keyword = this.props.title.toLowerCase();
-    const { title } = this.props;
+    const { title, selected } = this.props;
     const { hidden, options } = this.state;
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
-        <h4 className="filter-list-title" onClick={this.toggleHidden}>{title}</h4>
+        <h4 className="filter-list-title" onClick={this.toggleHidden}>{title} {selected.length ? <span role="alert">&bull;</span> : ""}</h4>
         <div hidden={(hidden ? 'hidden' : false)}>
           <h5 role="button" onClick={this.clearAll} >Clear All</h5>
           {options.filter(this.filterBySide).map((item) => (
