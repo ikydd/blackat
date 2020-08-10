@@ -254,4 +254,33 @@ describe('CardList', () => {
       expect(cards).toEqual(["Gordian Blade", "Magnum Opus", "Gordian Blade"]);
     });
   });
+
+
+  describe('Loading Spinner', () => {
+    it('starts with a loading icon', () => {
+        const { getByRole } = render(<CardList />);
+        const spinner = getByRole('alert');
+
+        expect(spinner).toBeTruthy();
+    });
+
+    it('hides the spinner once the cards are loaded', async () => {
+        const { queryByRole, findAllByRole } = render(<CardList />);
+        await findAllByRole('img');
+        const spinner = queryByRole('alert');
+
+        expect(spinner).toBeFalsy();
+    });
+
+    it('does not show the spinner when no cards are found', async () => {
+        const search = 'xxx';
+        const { queryByRole, findAllByRole, rerender } = render(<CardList />);
+        await findAllByRole('img');
+
+        rerender(<CardList textSearch={search}/>)
+        const spinner = queryByRole('alert');
+
+        expect(spinner).toBeFalsy();
+    });
+  });
 });
