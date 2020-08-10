@@ -44,7 +44,7 @@ class CardList extends Component {
     let empty = true;
     return (
     <div id="cards">
-      {loaded ? "" : <Loader></Loader>}
+      {loaded ? "" : <Loader/>}
       {Object.values(filter(cards, this.props)
           .sort(sort(this.props.sort))
           .reduce(group(this.props.sort), {}))
@@ -52,7 +52,7 @@ class CardList extends Component {
             empty = section.show ? false : empty;
             return (<CardSection key={index} section={section}></CardSection>)
           })}
-      {loaded && empty ? <Empty></Empty> : ""}
+      {loaded && empty ? <Empty/> : ""}
       </div>
     );
   }
