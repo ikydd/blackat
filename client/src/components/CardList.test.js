@@ -255,11 +255,10 @@ describe('CardList', () => {
     });
   });
 
-
   describe('Loading Spinner', () => {
     it('starts with a loading icon', () => {
         const { getByRole } = render(<CardList />);
-        const spinner = getByRole('alert');
+        const spinner = getByRole('progressbar');
 
         expect(spinner).toBeTruthy();
     });
@@ -267,7 +266,7 @@ describe('CardList', () => {
     it('hides the spinner once the cards are loaded', async () => {
         const { queryByRole, findAllByRole } = render(<CardList />);
         await findAllByRole('img');
-        const spinner = queryByRole('alert');
+        const spinner = queryByRole('progressbar');
 
         expect(spinner).toBeFalsy();
     });
@@ -278,9 +277,19 @@ describe('CardList', () => {
         await findAllByRole('img');
 
         rerender(<CardList textSearch={search}/>)
-        const spinner = queryByRole('alert');
+        const spinner = queryByRole('progressbar');
 
         expect(spinner).toBeFalsy();
+    });
+  });
+
+  describe('Empty message', () => {
+    it('shows a message when no cards are found', () => {
+      const search = 'xxx';
+      const { getByRole } = render(<CardList textSearch={search} />);
+      const message = getByRole('alert');
+
+      expect(message).toBeTruthy();
     });
   });
 });
