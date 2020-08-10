@@ -74,7 +74,7 @@ describe('download images', () => {
         expect(data).toEqual(testBody);
     });
 
-    it('does save the image if there already is a file but it is smaller than 200k', async () => {
+    it('does save the image if there already is a file but it is smaller than 30k', async () => {
         const testBody = 'test';
         nock.load(`${fixtures}/chum.json`);
         await fs.ensureDir(dir);

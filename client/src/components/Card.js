@@ -11,10 +11,10 @@ class Card extends Component {
   }
 
   render() {
-    const { data: { title, code } } = this.props;
+    const { data: { title, imagesrc } } = this.props;
     return (
       <div className={"card-tile" + this.show()} title={title} hidden={this.hide()} >
-          <img src={'/img/cards/' + code + '.png'} alt={title}/>
+          <img src={imagesrc} alt={title}/>
       </div>
     );
   }

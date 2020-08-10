@@ -5,7 +5,7 @@ const path = require('path');
 const cardPath = (card, target) => path.join(target, `${card.code}.png`);
 const existingCards = (path) => (card) => {
     const file = cardPath(card, path);
-    return !fs.existsSync(file) || fs.statSync(file)['size'] < 200000;
+    return !fs.existsSync(file) || fs.statSync(file)['size'] < 30000;
 }
 
 const createFolder = fs.ensureDir;

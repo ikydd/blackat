@@ -27,6 +27,10 @@ const mockProcessedData = {
   bar: "foo",
 };
 
+const mockFurtherProcessedData = {
+  bar: "far",
+};
+
 describe("main", () => {
   beforeEach(() => {
     request.mockClear();
@@ -41,7 +45,7 @@ describe("main", () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
-    download.mockImplementation(() => Promise.resolve(mockProcessedData));
+    download.mockImplementation(() => Promise.resolve(mockFurtherProcessedData));
   });
 
   it("gets NRDB cards endpoint", async () => {
@@ -62,6 +66,14 @@ describe("main", () => {
     expect(process).toHaveBeenCalledWith(mockData, mockPackData);
   });
 
+  it("downloads the images", async () => {
+    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
+
+    await cards(mockPackData);
+
+    expect(download).toHaveBeenCalledWith(path, mockProcessedData);
+  });
+
   it("gets the local save path", async () => {
     await cards(mockPackData);
 
@@ -72,22 +84,14 @@ describe("main", () => {
     await cards(mockPackData);
 
     expect(save).toHaveBeenCalledWith(
-      mockProcessedData,
+      mockFurtherProcessedData,
       mockPath
     );
-  });
-
-  it("downloads the images", async () => {
-    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
-
-    await cards(mockPackData);
-
-    expect(download).toHaveBeenCalledWith(path, mockProcessedData);
   });
 
   it("returns the list of cards", async () => {
     const output = await cards(mockPackData);
 
-    expect(output).toEqual(mockProcessedData);
+    expect(output).toEqual(mockFurtherProcessedData);
   });
 });
