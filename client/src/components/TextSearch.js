@@ -3,7 +3,8 @@ import './TextSearch.css';
 
 class TextSearch extends Component {
     static defaultProps = {
-        placeholder: "search"
+        placeholder: "search",
+        value: ""
     }
 
     handleChange = ev => {
@@ -12,9 +13,10 @@ class TextSearch extends Component {
     }
 
     render() {
+        const { value, placeholder } = this.props;
         return (
             <div className="form-group">
-                <input className="form-control" placeholder={this.props.placeholder} onInput={this.handleChange} />
+                <input className="form-control" defaultValue={value} placeholder={placeholder} onInput={this.handleChange} />
             </div>
         );
     }

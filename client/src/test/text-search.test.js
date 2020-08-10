@@ -21,4 +21,13 @@ describe('Text Search', () => {
 
       expect(card).toHaveAttribute('alt', "Gordian Blade");
   });
+
+  it('sets the default value given a text search', async () => {
+      const search = 'remainder';
+      const { getByPlaceholderText } = render(<App />);
+      const input = getByPlaceholderText(`search text`);
+      fireEvent.input(input, { target: { value: search } });
+
+      expect(input).toHaveAttribute('value', "remainder");
+  });
 });

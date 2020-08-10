@@ -115,8 +115,8 @@ class App extends Component {
             <SideButton title='Runner' side="runner" selected={this.getSide() === 'runner'} onSelect={this.setSide} />
             <SideButton title='Corp' side="corp" selected={this.getSide() === 'corp'} onSelect={this.setSide} />
           </div>
-          <TextSearch placeholder="search title" onChange={this.searchHandler('title')} />
-          <TextSearch placeholder="search text" onChange={this.searchHandler('text')} />
+          <TextSearch placeholder="search title" value={this.getSearch('title')} onChange={this.searchHandler('title')} />
+          <TextSearch placeholder="search text" value={this.getSearch('text')} onChange={this.searchHandler('text')} />
           <SortSelect onChange={this.setSort} />
           {this.filters.map(({ title, keyword  }) => (
             <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />

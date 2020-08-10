@@ -21,5 +21,14 @@ describe('Title Search', () => {
 
     expect(card).toHaveAttribute('alt', "Gordian Blade");
   });
+
+  it('sets the default value given a title search', async () => {
+      const search = 'Blade';
+      const { getByPlaceholderText } = render(<App />);
+      const input = getByPlaceholderText(`search title`);
+      fireEvent.input(input, { target: { value: search } });
+
+      expect(input).toHaveAttribute('value', "Blade");
+  });
 });
 

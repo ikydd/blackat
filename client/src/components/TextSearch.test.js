@@ -25,6 +25,13 @@ describe('TextSearch', () => {
         expect(getByRole('textbox')).toHaveAttribute('placeholder', "search");
     });
 
+    it('populates the input with a given value', () => {
+        const value = "test";
+        const { getByRole } = render(<TextSearch value={value} />);
+
+        expect(getByRole('textbox')).toHaveAttribute('value', value);
+    });
+
     it('calls a callback on input', async () => {
         const cb = jest.fn();
         const { getByRole } = render(<TextSearch onChange={cb} />);
