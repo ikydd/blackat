@@ -47,9 +47,28 @@ describe('saving state', () => {
     localStorage.setItem('settings', JSON.stringify({
       side: 'corp'
     }));
-    const { findAllByRole } = render(<App  storage={true} />);
+    const { findAllByRole } = render(<App storage={true} />);
     const cards = await findAllByRole('img');
 
     expect(cards).toHaveLength(4);
+  });
+
+  it('clears state when you click the reset button', async () => {
+    localStorage.setItem('settings', JSON.stringify({
+      side: 'corp',
+      factions: {
+        corp: ['agenda', 'ice']
+      }
+    }));
+    const { getByText } = render(<App storage={true} />);
+    fireEvent.click(getByText('Reset Filters'));
+
+    expect(JSON.parse(localStorage.getItem('settings'))).toEqual(expect.objectContaining({
+      side: 'runner',
+      factions: {
+        corp: [],
+        runner: []
+      }
+    }));
   });
 });

@@ -5,11 +5,13 @@ import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
 import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
+import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
 class App extends Component {
-  state = {
+  getInitialState = () => {
+    return Object.assign({}, {
       side: this.props.side || "runner",
       sort: "faction",
       search: {
@@ -32,7 +34,10 @@ class App extends Component {
         runner: [],
         corp: []
       }
+    });
   };
+
+  state = this.getInitialState();
 
   filters = [
     {
@@ -62,6 +67,10 @@ class App extends Component {
 
   componentDidUpdate () {
     localStorage.setItem('settings', JSON.stringify(this.state));
+  }
+
+  reset = () => {
+    this.setState(this.getInitialState());
   }
 
   setSide = (side) => {
@@ -121,6 +130,7 @@ class App extends Component {
           {this.filters.map(({ title, keyword  }) => (
             <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
+          <Reset onClick={this.reset}/>
           <SmallPrint/>
         </ControlPanel>
         <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} subtypes={this.getFilter('subtypes')} packs={this.getFilter('packs')}/>
