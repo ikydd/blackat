@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CardSection from './CardSection';
 import Loader from './Loader';
+import Empty from './Empty';
 import { getData } from '../helpers/api';
 import filter from '../helpers/filter';
 import group from '../helpers/group';
@@ -39,14 +40,19 @@ class CardList extends Component {
   }
 
   render() {
-    const { sort, group, cards } = this.state;
+    const { sort, group, cards, loaded } = this.state;
+    let empty = true;
     return (
     <div id="cards">
-      {this.state.loaded ? "" : <Loader></Loader>}
+      {loaded ? "" : <Loader></Loader>}
       {Object.values(filter(cards, this.props)
           .sort(sort(this.props.sort))
           .reduce(group(this.props.sort), {}))
-          .map((section, index) => (<CardSection key={index} section={section}></CardSection>))}
+          .map((section, index) => {
+            empty = section.show ? false : empty;
+            return (<CardSection key={index} section={section}></CardSection>)
+          })}
+      {loaded && empty ? <Empty></Empty> : ""}
       </div>
     );
   }

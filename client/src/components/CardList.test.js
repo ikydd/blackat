@@ -284,9 +284,19 @@ describe('CardList', () => {
   });
 
   describe('Empty message', () => {
-    it('shows a message when no cards are found', () => {
+    it('starts with no empty message', () => {
+        const { queryByRole } = render(<CardList />);
+        const message = queryByRole('alert');
+
+        expect(message).toBeFalsy();
+    });
+
+    it('shows a message when no cards are found', async () => {
       const search = 'xxx';
-      const { getByRole } = render(<CardList textSearch={search} />);
+      const { findAllByRole, rerender, getByRole } = render(<CardList />);
+      await findAllByRole('img');
+
+      rerender(<CardList textSearch={search}/>)
       const message = getByRole('alert');
 
       expect(message).toBeTruthy();
