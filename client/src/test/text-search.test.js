@@ -5,20 +5,20 @@ import App from '../App';
 jest.mock('../helpers/api');
 
 describe('Text Search', () => {
-    it(`has a text search as the second textbox`, () => {
-      const { getAllByRole } = render(<App />);
-      const textboxes = getAllByRole('textbox');
+  it(`has a text search as the second textbox`, () => {
+    const { getAllByRole } = render(<App />);
+    const textboxes = getAllByRole('textbox');
 
-      expect(textboxes[1]).toHaveAttribute('placeholder', 'search text');
-    });
+    expect(textboxes[1]).toHaveAttribute('placeholder', 'search text');
+  });
 
-it('only shows relevant cards given a text search', async () => {
-    const search = 'remainder';
-    const { getByPlaceholderText, findByRole } = render(<App />);
-    const input = getByPlaceholderText(`search text`);
-    fireEvent.input(input, { target: { value: search } });
-    const card = await findByRole('img');
+  it('only shows relevant cards given a text search', async () => {
+      const search = 'remainder';
+      const { getByPlaceholderText, findByRole } = render(<App />);
+      const input = getByPlaceholderText(`search text`);
+      fireEvent.input(input, { target: { value: search } });
+      const card = await findByRole('img');
 
-    expect(card).toHaveAttribute('alt', "Gordian Blade");
-});
+      expect(card).toHaveAttribute('alt', "Gordian Blade");
+  });
 });
