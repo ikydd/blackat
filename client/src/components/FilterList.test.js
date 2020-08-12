@@ -83,29 +83,6 @@ describe('FilterList', () => {
     })
   });
 
-  describe('callback handling', () => {
-    it('calls a callback when an option is selected', async () => {
-      const cb = jest.fn();
-      const { findByLabelText } = render(<FilterList dataType="foo" onChange={cb} />);
-
-      const input = await findByLabelText('Anarch');
-
-      fireEvent.click(input);
-      expect(cb).toHaveBeenCalledWith(['anarch']);
-    })
-
-    it('calls a callback when an option is deselected', async () => {
-      const selected = ['anarch', 'shaper'];
-      const cb = jest.fn();
-      const { findByLabelText } = render(<FilterList dataType="foo" selected={selected} onChange={cb} />);
-
-      const input = await findByLabelText('Anarch');
-
-      fireEvent.click(input);
-      expect(cb).toHaveBeenCalledWith(['shaper']);
-    })
-  });
-
   describe('visibility toggle', () => {
     it('shows options by default', async () => {
       const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);

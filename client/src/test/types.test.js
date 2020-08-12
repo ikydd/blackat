@@ -130,6 +130,22 @@ describe('Types filters', () => {
         expect(hardware).toBeChecked();
     });
 
+    it('includes filters appropriate to both sides', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('types-filters');
+        fireEvent.click(getByText(/Types/));
+
+        let hardware = await within(filterBlock)
+            .findByLabelText('Identity');
+        fireEvent.click(hardware);
+        fireEvent.click(getByText('Corp'));
+
+        let identity = await within(filterBlock)
+            .findByLabelText('Identity');
+
+        expect(identity).toBeChecked();
+    });
+
     it('retains filters when collapsed', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('types-filters');

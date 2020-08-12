@@ -9,6 +9,12 @@ import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
+const initFilter = () => Object.assign({}, {
+  corp: [],
+  runner: [],
+  both: []
+});
+
 class App extends Component {
   getInitialState = () => {
     return Object.assign({}, {
@@ -18,22 +24,10 @@ class App extends Component {
         title: "",
         text: ""
       },
-      factions: {
-        runner: [],
-        corp: []
-      },
-      types: {
-        runner: [],
-        corp: []
-      },
-      subtypes: {
-        runner: [],
-        corp: []
-      },
-      packs: {
-        runner: [],
-        corp: []
-      }
+      factions: initFilter(),
+      types: initFilter(),
+      subtypes: initFilter(),
+      packs: initFilter()
     });
   };
 
@@ -81,17 +75,10 @@ class App extends Component {
     return this.state.side;
   }
 
-  getFilter = (type, side = null) => {
-    const currentSide = side || this.getSide();
-    return this.state[type][currentSide];
-  }
+  getFilter = (type) => Object.values(this.state[type]).reduce((list, side) => list.concat(side), []);
 
-  setFilter = (type, items, side = null) => {
-    const currentSide = side || this.getSide();
-    const currentValues = Object.assign(this.state[type], {
-        [currentSide]: items
-    });
-    this.setState({ [type]: currentValues });
+  setFilter = (type, items) => {
+    this.setState({ [type]: items });
   }
 
   getSearch = (type) => {

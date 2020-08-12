@@ -67,7 +67,8 @@ describe('saving state', () => {
       side: 'runner',
       factions: {
         corp: [],
-        runner: []
+        runner: [],
+        both: []
       }
     }));
   });

@@ -42,7 +42,18 @@ class FilterList extends Component {
     } else {
       selected = this.props.selected.concat(selection.code);
     }
-    this.props.onChange(selected);
+    const fullSelection = this.state.options
+      .filter(({ code }) => selected.includes(code))
+      .reduce((all, { side, code }) => {
+        const sideString = side || 'both';
+        all[sideString].push(code);
+        return all;
+      }, {
+        corp: [],
+        runner: [],
+        both: []
+      });
+    this.props.onChange(fullSelection);
   }
 
   toggleHidden = () => {
@@ -64,7 +75,7 @@ class FilterList extends Component {
         <div hidden={(hidden ? 'hidden' : false)}>
           <h5 role="button" onClick={this.clearAll} >Clear All</h5>
           {options.filter(this.filterBySide).map((item) => (
-            <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected} onChange={this.change} />
+            <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />
         ))}
         </div>
       </div>
