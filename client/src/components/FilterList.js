@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getData } from '../helpers/api';
-import Icon from './Icon.js';
+import FilterItem from './FilterItem.js';
 import './FilterList.css';
 
 class FilterList extends Component {
@@ -64,12 +64,7 @@ class FilterList extends Component {
         <div hidden={(hidden ? 'hidden' : false)}>
           <h5 role="button" onClick={this.clearAll} >Clear All</h5>
           {options.filter(this.filterBySide).map((item) => (
-          <div key={item.code} className="checkbox">
-            <label htmlFor={`${keyword}-filter-${item.code}`}>
-              <input type="checkbox" id={`${keyword}-filter-${item.code}`} name={item.code} value={item.code} checked={this.isSelected(item)} onChange={this.change(item)} />
-              &nbsp; <Icon code={item.code} /> {item.name}
-            </label>
-          </div>
+            <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected} onChange={this.change} />
         ))}
         </div>
       </div>
