@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
-import packs from '../../../fixtures/api/packs';
+import packs from '../../../fixtures/api/cycles';
 
 jest.mock('../helpers/api');
 
@@ -31,7 +31,10 @@ describe('Packs filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(packs.length);
+        const totalChecks = packs
+            .reduce((total, group) => total + (group.items.length > 1 ? (group.items.length + 1) : 1), 0);
+
+        expect(checkboxes).toHaveLength(totalChecks);
     });
 
     it('starts with empty checkboxes', async () => {
@@ -54,7 +57,10 @@ describe('Packs filters', () => {
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(packs.length);
+        const totalChecks = packs
+            .reduce((total, group) => total + (group.items.length > 1 ? (group.items.length + 1) : 1), 0);
+
+        expect(checkboxes).toHaveLength(totalChecks);
     });
 
     it('selects checkboxes correctly', async () => {
@@ -106,6 +112,32 @@ describe('Packs filters', () => {
             .findByLabelText('What Lies Ahead');
 
         expect(wla).toBeChecked();
+    });
+
+    it('selects all in a group regardless of current state', async () => {
+        const { getByTestId, getByText, findByLabelText } = render(<App />);
+        const filterBlock = getByTestId('packs-filters');
+        fireEvent.click(getByText('Packs'));
+
+        const genesis = packs.find(({ code }) => code === 'genesis');
+
+        const pack = await within(filterBlock)
+            .findByLabelText(genesis.items[3].name);
+        fireEvent.click(pack);
+
+        const cycle = await findByLabelText(genesis.name);
+        fireEvent.click(cycle);
+
+        const checkboxes = await within(filterBlock)
+            .findAllByRole('checkbox');
+
+        const checked = checkboxes
+            .filter(({ checked }) => checked)
+            .map((item) => item.getAttribute('value'));
+
+        const expected = ['genesis'].concat(genesis.items.map(({ code }) => code));
+
+        expect(checked).toEqual(expected);
     });
 
     it('retains filters when collapsed', async () => {

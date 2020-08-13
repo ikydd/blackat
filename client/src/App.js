@@ -94,7 +94,7 @@ class App extends Component {
     items.forEach((item) => {
       if (checked && !selected.find(({ code }) => code === item.code)) {
         selected = selected.concat(item);
-      } else {
+      } else if (!checked && selected.find(({ code }) => code === item.code)) {
         selected = selected.filter(({ code }) => code !== item.code)
       }
     });
