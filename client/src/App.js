@@ -89,6 +89,18 @@ class App extends Component {
     this.setState({ [type]: [] });
   }
 
+  setFilterGroup = (type, items, checked) => {
+    let selected = this.state[type];
+    items.forEach((item) => {
+      if (checked && !selected.find(({ code }) => code === item.code)) {
+        selected = selected.concat(item);
+      } else {
+        selected = selected.filter(({ code }) => code !== item.code)
+      }
+    });
+    this.setState({ [type] : selected });
+  }
+
   getSearch = (type) => {
     return this.state.search[type];
   }
@@ -110,6 +122,7 @@ class App extends Component {
 
   searchHandler = (type) => (term) => this.setSearch(type, term);
   filterHandler = (type) => (item) => this.setFilter(type, item);
+  filterGroupHandler = (type) => (items, select) => this.setFilterGroup(type, items, select);
 
   render() {
     return (
@@ -123,7 +136,7 @@ class App extends Component {
           <TextSearch placeholder="search text" value={this.getSearch('text')} onChange={this.searchHandler('text')} />
           <SortSelect onChange={this.setSort} />
           {this.filters.map(({ title, keyword  }) => (
-            <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} clearAll={this.clearAllFilters(keyword)} onChange={this.filterHandler(keyword)} />
+            <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} clearAll={this.clearAllFilters(keyword)} onChange={this.filterHandler(keyword)} onGroupChange={this.filterGroupHandler(keyword)} />
           ))}
           <Reset onClick={this.reset}/>
           <SmallPrint/>

@@ -83,6 +83,75 @@ describe('FilterList', () => {
     })
   });
 
+  describe('nested options', () => {
+
+    beforeEach(() => {
+      api.setData('foo', require('../../../fixtures/api/foo-nested'));
+    });
+
+    it('default to showing all top-level options and sub-options where there is more than one', async () => {
+      const { findAllByRole } = render(<FilterList dataType="foo" />);
+      const checkboxes = await findAllByRole('checkbox');
+
+      expect(checkboxes).toHaveLength(5);
+    });
+
+    it('calls the callback when the group is checked', async () => {
+      const cb = jest.fn();
+      const { findByLabelText } = render(<FilterList dataType="foo" onGroupChange={cb} />);
+      const group = await findByLabelText('Bar');
+      fireEvent.click(group);
+
+      expect(cb).toHaveBeenCalledWith([
+        expect.objectContaining({ code: 'alpha' }),
+        expect.objectContaining({ code: 'beta' }),
+        expect.objectContaining({ code: 'gamma' })
+      ], true);
+    });
+
+    it('calls the callback when the group is unchecked', async () => {
+      const isSelected = ['alpha', 'beta', 'gamma'];
+      const cb = jest.fn();
+      const { findByLabelText } = render(<FilterList dataType="foo" selected={isSelected} onGroupChange={cb} />);
+      const group = await findByLabelText('Bar');
+      fireEvent.click(group);
+
+      expect(cb).toHaveBeenCalledWith([
+        expect.objectContaining({ code: 'alpha' }),
+        expect.objectContaining({ code: 'beta' }),
+        expect.objectContaining({ code: 'gamma' })
+      ], false);
+    });
+
+    it('checks the sub-items when provided as selected prop', async () => {
+      const isSelected = ['alpha', 'gamma'];
+      const { findAllByRole } = render(<FilterList dataType="foo" selected={isSelected} />);
+      const checkboxes = await findAllByRole('checkbox');
+
+      const checked = checkboxes
+        .filter(({ checked }) => checked)
+        .map((input) => input.getAttribute('value'));
+
+      expect(checked).toEqual(['alpha', 'gamma']);
+    })
+
+    it('does not check the group if not all sub-items are provided as selected prop', async () => {
+      const isSelected = ['alpha', 'beta'];
+      const { findByLabelText } = render(<FilterList dataType="foo" selected={isSelected} />);
+      const bar = await findByLabelText('Bar');
+
+      expect(bar).not.toBeChecked();
+    });
+
+    it('checks the group if all sub-items are provided as selected prop', async () => {
+      const isSelected = ['alpha', 'beta', 'gamma'];
+      const { findByLabelText } = render(<FilterList dataType="foo" selected={isSelected} />);
+      const bar = await findByLabelText('Bar');
+
+      expect(bar).toBeChecked();
+    });
+  });
+
   describe('visibility toggle', () => {
     it('shows options by default', async () => {
       const { findAllByRole } = render(<FilterList dataType="foo" side="runner" />);

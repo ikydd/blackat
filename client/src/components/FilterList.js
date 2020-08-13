@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getData } from '../helpers/api';
-import FilterItem from './FilterItem.js';
+import FilterItem from './FilterItem';
+import FilterGroup from './FilterGroup';
 import './FilterList.css';
 
 class FilterList extends Component {
@@ -31,12 +32,16 @@ class FilterList extends Component {
     return option.side === this.props.side;
   }
 
-  isSelected = (item) => {
-    return this.props.selected.includes(item.code);
-  }
+  isSelected = (item) => this.props.selected.includes(item.code);
 
   change = (item) => () => {
     this.props.onChange(item);
+  }
+
+  isGroupSelected = (items) => items.filter(this.isSelected).length === items.length;
+
+  changeGroup = (currentlySelected) => (group) => () => {
+    this.props.onGroupChange(group.items, !currentlySelected);
   }
 
   toggleHidden = () => {
@@ -53,13 +58,19 @@ class FilterList extends Component {
         <h4 className="filter-list-title" onClick={this.toggleHidden}>{title} {selected.length ? <span role="alert">&bull;</span> : ""}</h4>
         <div hidden={(hidden ? 'hidden' : false)}>
           <h5 role="button" onClick={clearAll} >Clear All</h5>
-          {options.filter(this.filterBySide).map((item) => (
-            <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />
-        ))}
+          {options.filter(this.filterBySide).map((item) => {
+            if (item.items && item.items.length) {
+              return <FilterGroup key={item.code} item={item} keyword={keyword} selected={this.isGroupSelected(item.items)} onChange={this.changeGroup}>
+                  { item.items.length > 1 ? item.items.map((item) => (<FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />)) : "" }
+                </FilterGroup>
+            } else {
+              return <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />
+            }
+          })}
         </div>
       </div>
     );
-  }
+  };
 }
 
 export default FilterList;
