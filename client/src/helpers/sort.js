@@ -27,7 +27,7 @@ const toCodes = ({ code }) => code;
 
 export default ({ types, packs, factions }) => {
   data.type = types.map(toCodes);
-  data.pack = packs.map(toCodes);
+  data.pack = packs.reduce((list, { items }) => list.concat(items), []).map(toCodes);
   data.faction = factions.map(toCodes);
   return (option) => (a, b) => {
     switch (option) {
