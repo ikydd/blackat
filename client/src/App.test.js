@@ -56,20 +56,14 @@ describe('saving state', () => {
   it('clears state when you click the reset button', async () => {
     localStorage.setItem('settings', JSON.stringify({
       side: 'corp',
-      factions: {
-        corp: ['agenda', 'ice']
-      }
+      factions: [{ code: 'agenda', side: 'corp' }, { code: 'ice', side: 'corp' }]
     }));
     const { getByText } = render(<App storage={true} />);
     fireEvent.click(getByText('Reset Filters'));
 
     expect(JSON.parse(localStorage.getItem('settings'))).toEqual(expect.objectContaining({
       side: 'runner',
-      factions: {
-        corp: [],
-        runner: [],
-        both: []
-      }
+      factions: []
     }));
   });
 });

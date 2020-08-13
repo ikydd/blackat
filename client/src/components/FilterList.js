@@ -35,25 +35,9 @@ class FilterList extends Component {
     return this.props.selected.includes(item.code);
   }
 
-  change = selection => () => {
-    let selected = this.props.selected;
-    if (this.props.selected.includes(selection.code)) {
-      selected = this.props.selected.filter(item => item !== selection.code)
-    } else {
-      selected = this.props.selected.concat(selection.code);
-    }
-    const fullSelection = this.state.options
-      .filter(({ code }) => selected.includes(code))
-      .reduce((all, { side, code }) => {
-        const sideString = side || 'both';
-        all[sideString].push(code);
-        return all;
-      }, {
-        corp: [],
-        runner: [],
-        both: []
-      });
-    this.props.onChange(fullSelection);
+  change = (item) => () => {
+    console.log(item);
+    this.props.onChange(item);
   }
 
   toggleHidden = () => {

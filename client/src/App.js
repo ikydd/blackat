@@ -9,12 +9,6 @@ import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
-const initFilter = () => Object.assign({}, {
-  corp: [],
-  runner: [],
-  both: []
-});
-
 class App extends Component {
   getInitialState = () => {
     return Object.assign({}, {
@@ -24,10 +18,10 @@ class App extends Component {
         title: "",
         text: ""
       },
-      factions: initFilter(),
-      types: initFilter(),
-      subtypes: initFilter(),
-      packs: initFilter()
+      factions: [],
+      types: [],
+      subtypes: [],
+      packs: []
     });
   };
 
@@ -75,14 +69,20 @@ class App extends Component {
     return this.state.side;
   }
 
-  getFiltersForSide = (type) => {
-    return this.state[type][this.getSide()].concat(this.state[type].both);
-  }
+  fromCurrentSide = ({ side }) => !side || side === this.getSide();
 
-  getFilter = (type) => Object.values(this.state[type]).reduce((list, side) => list.concat(side), []);
+  getFilter = (type) => this.state[type]
+    .filter(this.fromCurrentSide)
+    .map(({ code }) => code);
 
-  setFilter = (type, items) => {
-    this.setState({ [type]: items });
+  setFilter = (type, item) => {
+    let selected = this.state[type];
+    if (this.state[type].find(({ code }) => code === item.code)) {
+      selected = this.state[type].filter(({ code }) => code !== item.code)
+    } else {
+      selected = this.state[type].concat(item);
+    }
+    this.setState({ [type] : selected });
   }
 
   getSearch = (type) => {
@@ -105,7 +105,7 @@ class App extends Component {
   }
 
   searchHandler = (type) => (term) => this.setSearch(type, term);
-  filterHandler = (type) => (items) => this.setFilter(type, items);
+  filterHandler = (type) => (item) => this.setFilter(type, item);
 
   render() {
     return (
@@ -124,7 +124,7 @@ class App extends Component {
           <Reset onClick={this.reset}/>
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFiltersForSide('factions')} types={this.getFiltersForSide('types')} subtypes={this.getFiltersForSide('subtypes')} packs={this.getFiltersForSide('packs')}/>
+        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} subtypes={this.getFilter('subtypes')} packs={this.getFilter('packs')}/>
       </div>
     );
   }
