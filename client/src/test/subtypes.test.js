@@ -130,6 +130,37 @@ describe('Subtypes filters', () => {
         expect(icebreaker).toBeChecked();
     });
 
+    it('does not apply filters to the wrong side', async () => {
+        const { getByTestId, getByText, findAllByRole } = render(<App />);
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
+
+        let icebreaker = await within(filterBlock)
+            .findByLabelText('Icebreaker');
+        fireEvent.click(icebreaker);
+        fireEvent.click(getByText('Corp'));
+
+        const cards = await findAllByRole('img');
+
+        expect(cards).toHaveLength(4);
+    });
+
+    it('includes filters appropriate to both sides', async () => {
+        const { getByTestId, getByText } = render(<App />);
+        const filterBlock = getByTestId('subtypes-filters');
+        fireEvent.click(getByText('Subtypes'));
+
+        let bioroid = await within(filterBlock)
+            .findByLabelText('Bioroid');
+        fireEvent.click(bioroid);
+        fireEvent.click(getByText('Corp'));
+
+        bioroid = await within(filterBlock)
+            .findByLabelText('Bioroid');
+
+        expect(bioroid).toBeChecked();
+    });
+
     it('retains filters when collapsed', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('subtypes-filters');

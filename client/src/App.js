@@ -75,6 +75,10 @@ class App extends Component {
     return this.state.side;
   }
 
+  getFiltersForSide = (type) => {
+    return this.state[type][this.getSide()].concat(this.state[type].both);
+  }
+
   getFilter = (type) => Object.values(this.state[type]).reduce((list, side) => list.concat(side), []);
 
   setFilter = (type, items) => {
@@ -120,7 +124,7 @@ class App extends Component {
           <Reset onClick={this.reset}/>
           <SmallPrint/>
         </ControlPanel>
-        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} subtypes={this.getFilter('subtypes')} packs={this.getFilter('packs')}/>
+        <CardList side={this.getSide()} sort={this.getSort()} titleSearch={this.getSearch('title')} textSearch={this.getSearch('text')} factions={this.getFiltersForSide('factions')} types={this.getFiltersForSide('types')} subtypes={this.getFiltersForSide('subtypes')} packs={this.getFiltersForSide('packs')}/>
       </div>
     );
   }

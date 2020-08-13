@@ -92,25 +92,20 @@ describe('Packs filters', () => {
         expect(filtered).toHaveAttribute('alt', 'D4v1d');
     });
 
-    it('retains filters from each side', async () => {
+    it('includes filters for both sides', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         fireEvent.click(getByText('Packs'));
 
-        let runner = await within(filterBlock)
+        let wla = await within(filterBlock)
             .findByLabelText('What Lies Ahead');
-        fireEvent.click(runner);
+        fireEvent.click(wla);
         fireEvent.click(getByText('Corp'));
 
-        let corp = await within(filterBlock)
-            .findByLabelText('Future Proof');
-        fireEvent.click(corp);
-        fireEvent.click(getByText('Runner'));
-
-        runner = await within(filterBlock)
+        wla = await within(filterBlock)
             .findByLabelText('What Lies Ahead');
 
-        expect(runner).toBeChecked();
+        expect(wla).toBeChecked();
     });
 
     it('retains filters when collapsed', async () => {

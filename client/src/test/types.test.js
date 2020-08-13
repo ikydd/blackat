@@ -130,6 +130,21 @@ describe('Types filters', () => {
         expect(hardware).toBeChecked();
     });
 
+    it('does not apply filters to the wrong side', async () => {
+        const { getByTestId, getByText, findAllByRole } = render(<App />);
+        const filterBlock = getByTestId('types-filters');
+        fireEvent.click(getByText(/Types/));
+
+        let hardware = await within(filterBlock)
+            .findByLabelText('Hardware');
+        fireEvent.click(hardware);
+        fireEvent.click(getByText('Corp'));
+
+        const cards = await findAllByRole('img');
+
+        expect(cards).toHaveLength(4);
+    });
+
     it('includes filters appropriate to both sides', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('types-filters');

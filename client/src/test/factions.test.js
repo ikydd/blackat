@@ -130,6 +130,21 @@ describe('Faction filters', () => {
         expect(anarch).toBeChecked();
     });
 
+    it('does not apply filters to the wrong side', async () => {
+        const { getByTestId, getByText, findAllByRole } = render(<App />);
+        const filterBlock = getByTestId('factions-filters');
+        fireEvent.click(getByText('Factions'));
+
+        const anarch = await within(filterBlock)
+            .findByLabelText('Anarch');
+        fireEvent.click(anarch);
+        fireEvent.click(getByText('Corp'));
+
+        const cards = await findAllByRole('img');
+
+        expect(cards).toHaveLength(4);
+    });
+
     it('retains filters when collapsed', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
