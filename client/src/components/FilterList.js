@@ -36,7 +36,6 @@ class FilterList extends Component {
   }
 
   change = (item) => () => {
-    console.log(item);
     this.props.onChange(item);
   }
 
