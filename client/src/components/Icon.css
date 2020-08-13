@@ -1,15 +1,15 @@
 @font-face {
     font-family: 'netrunner';
-    src:    url('/css/icons/netrunner.eot');
-    src:    url('/css/icons/netrunner.eot#iefix') format('embedded-opentype'),
-        url('/css/icons/netrunner.ttf') format('truetype'),
-        url('/css/icons/netrunner.woff') format('woff'),
-        url('/css/icons/netrunner.svg#netrunner') format('svg');
+    src:  url('/css/icons/netrunner.eot?cmdd12');
+    src:  url('/css/icons/netrunner.eot?cmdd12#iefix') format('embedded-opentype'),
+      url('/css/icons/netrunner.ttf?cmdd12') format('truetype'),
+      url('/css/icons/netrunner.woff?cmdd12') format('woff'),
+      url('/css/icons/netrunner.svg?cmdd12#netrunner') format('svg');
     font-weight: normal;
     font-style: normal;
-}
+  }
 
-.icon, .icon-bg:before {
+  .icon {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'netrunner' !important;
     font-style: normal;
@@ -21,118 +21,137 @@
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+  }
 
-.icon-bg:before {
-    width: 100%;
-    height: 100%;
-    font-size: 5em;
-    text-align: center;
-    display: block;
-    position: absolute;
-    line-height:4em;
-    left: 0;
-    opacity: 0.2;
-    z-index: 0;
-}
-
-.icon-subroutine:before {
+  .icon-abr:before {
+    content: "\e920";
+  }
+  .icon-subroutine:before {
     content: "\e900";
-}
-.icon-mu3:before {
+  }
+  .icon-mu3:before {
     content: "\e901";
-}
-.icon-mu2:before {
+  }
+  .icon-mu2:before {
     content: "\e902";
-}
-.icon-mu1:before {
+  }
+  .icon-mu1:before {
     content: "\e903";
-}
-.icon-mu:before {
+  }
+  .icon-mu:before {
     content: "\e904";
-}
-.icon-trash:before {
+  }
+  .icon-trash:before {
     content: "\e905";
-}
-.icon-link-half-top:before {
+  }
+  .icon-link-half-top:before {
     content: "\e906";
-}
-.icon-link-half-bottom:before {
+  }
+  .icon-link-half-bottom:before {
     content: "\e907";
-}
-.icon-link:before {
+  }
+  .icon-link:before {
     content: "\e908";
-}
-.icon-click:before {
+  }
+  .icon-click:before {
     content: "\e909";
-}
-.icon-recurring-credit:before {
+  }
+  .icon-recurring-credit:before {
     content: "\e90a";
-}
-.icon-credit:before {
+  }
+  .icon-credit:before {
     content: "\e90b";
-}
-.icon-core:before {
+  }
+  .icon-core:before {
     content: "\e914";
-}
-.icon-genesis:before {
+  }
+  .icon-genesis:before {
     content: "\e911";
-}
-.icon-creation-and-control:before {
+  }
+  .icon-creation-and-control:before {
     content: "\e913";
-}
-.icon-spin:before {
+  }
+  .icon-spin:before {
     content: "\e90c";
-}
-.icon-honor-and-profit:before {
+  }
+  .icon-honor-and-profit:before {
     content: "\e910";
-}
-.icon-lunar:before {
+  }
+  .icon-lunar:before {
     content: "\e90f";
-}
-.icon-order-and-chaos:before {
+  }
+  .icon-order-and-chaos:before {
     content: "\e90e";
-}
-.icon-sansan:before {
+  }
+  .icon-sansan:before {
     content: "\e90d";
-}
-.icon-data-and-destiny:before {
+  }
+  .icon-data-and-destiny:before {
     content: "\e912";
-}
-.icon-mumbad:before {
+  }
+  .icon-mumbad:before {
     content: "\e91f";
-}
-.icon-anarch:before {
+  }
+  .icon-flashpoint:before {
+    content: "\e921";
+  }
+  .icon-red-sand:before {
+    content: "\e922";
+  }
+  .icon-terminal-directive:before {
+    content: "\e923";
+  }
+  .icon-core2:before {
+    content: "\e924";
+  }
+  .icon-kitara:before {
+    content: "\e925";
+  }
+  .icon-reign-and-reverie:before {
+    content: "\e926";
+  }
+  .icon-magnum-opus:before {
+    content: "\e927";
+  }
+  .icon-sc19:before {
+    content: "\e928";
+  }
+  .icon-ashes:before {
+    content: "\e929";
+  }
+  .icon-magnum-opus-reprint:before {
+    content: "\e92a";
+  }
+  .icon-interrupt:before {
+    content: "\e92b";
+  }
+  .icon-anarch:before {
     content: "\e91a";
-}
-.icon-criminal:before {
+  }
+  .icon-criminal:before {
     content: "\e919";
-}
-.icon-shaper:before {
+  }
+  .icon-shaper:before {
     content: "\e91b";
-}
-.icon-jinteki:before {
+  }
+  .icon-jinteki:before {
     content: "\e916";
-}
-.icon-haas-bioroid:before {
+  }
+  .icon-haas-bioroid:before {
     content: "\e918";
-}
-.icon-nbn:before {
+  }
+  .icon-nbn:before {
     content: "\e915";
-}
-.icon-weyland-consortium:before {
+  }
+  .icon-weyland-consortium:before {
     content: "\e917";
-}
-.icon-adam:before {
+  }
+  .icon-adam:before {
     content: "\e91d";
-}
-.icon-apex:before {
+  }
+  .icon-apex:before {
     content: "\e91e";
-}
-.icon-sunny-lebeau:before {
+  }
+  .icon-sunny-lebeau:before {
     content: "\e91c";
-}
-.icon-neutral:before {
-    content: "\e91c";
-    opacity: 0;
-}
+  }

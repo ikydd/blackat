@@ -9,6 +9,7 @@ class FilterGroup extends Component {
             <div className="filter-group">
                 <FilterItem item={item} keyword={keyword} selected={selected} onChange={onChange(selected)} />
                 {this.props.children}
+                <hr className="filter-divider" />
             </div>
           );
     }

@@ -61,7 +61,7 @@ class FilterList extends Component {
           {options.filter(this.filterBySide).map((item) => {
             if (item.items && item.items.length) {
               return <FilterGroup key={item.code} item={item} keyword={keyword} selected={this.isGroupSelected(item.items)} onChange={this.changeGroup}>
-                  { item.items.length > 1 ? item.items.map((item) => (<FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />)) : "" }
+                  { item.items.length > 1 ? item.items.map((item) => (<FilterItem child={true} key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />)) : "" }
                 </FilterGroup>
             } else {
               return <FilterItem key={item.code} item={item} keyword={keyword} selected={this.isSelected(item)} onChange={this.change} />
