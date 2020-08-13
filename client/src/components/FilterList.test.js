@@ -122,10 +122,10 @@ describe('FilterList', () => {
     it('removes all selected filters', async () => {
       const isSelected = ['shaper', 'anarch'];
       const cb = jest.fn();
-      const { getByRole } = render(<FilterList dataType="foo" selected={isSelected} onChange={cb} />);
+      const { getByRole } = render(<FilterList dataType="foo" selected={isSelected} clearAll={cb} />);
       fireEvent.click(getByRole('button'))
 
-      expect(cb).toHaveBeenCalledWith([]);
+      expect(cb).toHaveBeenCalled();
     })
   });
 

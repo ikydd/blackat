@@ -85,6 +85,10 @@ class App extends Component {
     this.setState({ [type] : selected });
   }
 
+  clearAllFilters = (type) => () => {
+    this.setState({ [type]: [] });
+  }
+
   getSearch = (type) => {
     return this.state.search[type];
   }
@@ -119,7 +123,7 @@ class App extends Component {
           <TextSearch placeholder="search text" value={this.getSearch('text')} onChange={this.searchHandler('text')} />
           <SortSelect onChange={this.setSort} />
           {this.filters.map(({ title, keyword  }) => (
-            <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} onChange={this.filterHandler(keyword)} />
+            <FilterList key={keyword} title={title} hidden={true} dataType={keyword} side={this.getSide()} selected={this.getFilter(keyword)} clearAll={this.clearAllFilters(keyword)} onChange={this.filterHandler(keyword)} />
           ))}
           <Reset onClick={this.reset}/>
           <SmallPrint/>
