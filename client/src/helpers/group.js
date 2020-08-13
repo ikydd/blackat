@@ -33,7 +33,7 @@ const defaultGroup = (sections, card) => {
 
 const group = ({ factions, packs, types }) => (sort) => (sections, card) => {
     data.type = types;
-    data.pack = packs;
+    data.pack = packs.reduce((list, { items }) => list.concat(items), []);
     data.faction = factions;
     switch (sort) {
         case 'faction':
