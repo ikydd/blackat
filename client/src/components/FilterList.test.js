@@ -80,7 +80,7 @@ describe('FilterList', () => {
     it('calls the callback when an item is checked', async () => {
       const cb = jest.fn();
       const groupCb = jest.fn();
-      const { findByLabelText } = render(<FilterList options={optionsNested} onChange={cb} onGroupChange={groupCb} />);
+      const { findByLabelText } = render(<FilterList options={optionsNested} onSubitemChange={cb} onGroupChange={groupCb} />);
       const group = await findByLabelText('Alpha');
       fireEvent.click(group);
 

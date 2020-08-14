@@ -24,6 +24,10 @@ class FilterList extends Component {
     this.props.onGroupChange(group);
   }
 
+  changeSubitem = (group) => (item) => () => {
+    this.props.onSubitemChange(group, item);
+  }
+
   toggleHidden = () => {
     this.setState({ hidden: !this.state.hidden });
   }
@@ -39,8 +43,9 @@ class FilterList extends Component {
           <h5 role="button" onClick={clearAll} >Clear All</h5>
           {options.map((item) => {
             if (item.items && item.items.length) {
-              return <FilterGroup key={item.code} item={item} keyword={keyword} onChange={this.changeGroup}>
-                  { item.items.length > 1 ? item.items.map((item) => (<FilterItem child={true} key={item.code} item={item} keyword={keyword} onChange={this.change} />)) : "" }
+              const group = item;
+              return <FilterGroup key={group.code} item={group} keyword={keyword} onChange={this.changeGroup}>
+                  { group.items.length > 1 ? group.items.map((item) => (<FilterItem child={true} key={item.code} item={item} keyword={keyword} onChange={this.changeSubitem(group)} />)) : "" }
                 </FilterGroup>
             } else {
               return <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />

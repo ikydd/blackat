@@ -1,10 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import App from './App';
+import * as api from './helpers/api';
 
 jest.mock('./helpers/api');
 
 afterEach(() => {
+  api.reset();
   localStorage.clear();
 });
 
