@@ -4,6 +4,7 @@ import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
+import NestedFilterList from './components/NestedFilterList';
 import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
@@ -28,31 +29,14 @@ class App extends Component {
 
   state = this.getInitialState();
 
-  filters = [
-    {
-      title: 'Factions',
-      keyword: 'factions'
-    },
-    {
-      title: 'Types',
-      keyword: 'types'
-    },
-    {
-      title: 'Subtypes',
-      keyword: 'subtypes'
-    },
-    {
-      title: 'Packs',
-      keyword: 'packs'
-    }
-  ];
+  unselect = (option) => ({...option, selected: false });
 
   handleData = ([factions, types, packs, subtypes]) => {
     this.setState({
-      factions,
-      types,
-      packs,
-      subtypes
+      factions: factions.map(this.unselect),
+      types: types.map(this.unselect),
+      subtypes: subtypes.map(this.unselect),
+      packs: packs.map((option) => ({...option, selected: false, items: option.items.map(this.unselect) })),
     })
   }
 
@@ -91,50 +75,49 @@ class App extends Component {
   getOptions = (type) => this.state[type]
       .filter(this.fromCurrentSide);
 
-  getFilter = (type) => {
-    const filters = this.state[type]
+  getFilter = (type) => this.state[type]
     .filter(this.fromCurrentSide)
     .reduce((filters, option) => option.items ? filters.concat(option.items) : filters.concat(option), [])
     .filter(({ selected }) => selected)
     .map(({ code }) => code);
-    return filters;
+
+  clearFilters = (type) => () => {
+    const updatedOptions = this.state[type].map(this.setAllItems(false));
+
+    this.setState({ [type]: updatedOptions });
   }
 
-  setFilter = (type, item) => {
+  clearGroupFilters = (type) => () => {
+    const updatedOptions = this.state[type].map((group) => ({ ...group, selected: false, items: group.items.map(this.setAllItems(false)) }));
+
+    this.setState({ [type]: updatedOptions });
+  }
+
+  setAllItems = (checked) => (option) => ({ ...option, selected: checked });
+
+  setFilter = (type, item, checked) => {
     const updatedOptions = this.state[type]
-      .map((option) => option.code === item.code ? ({ ...option, selected: !item.selected }) : option );
+      .map(this.setSingleItem(item, checked));
+
     this.setState({ [type] : updatedOptions });
   }
 
-  clearAllFilters = (type) => () => {
-    this.setState({ [type]: [] });
-  }
-
-  setFilterGroup = (type, item) => {
-    const change = item.selected ? this.deselectAllItems : this.selectAllItems;
-
+  setFilterGroup = (type, item, checked) => {
     const updatedOptions = this.state[type]
-      .map((option) => option.code === item.code ? ({ ...option, selected: !item.selected, items: item.items.map(change) }) : option );
+      .map((option) => option.code === item.code ? ({ ...option, selected: checked, items: item.items.map(this.setAllItems(checked)) }) : option );
+
     this.setState({ [type] : updatedOptions });
   }
 
-
-  toggleSingleItem = (item) => (option) => {
-    if (option.code === item.code) {
-      return { ...option, selected: !item.selected };
-    }
-    return option;
-  }
-
-  selectAllItems = (option) => ({ ...option, selected: true });
-  deselectAllItems = (option) => ({ ...option, selected: false });
-
-  setFilterSubitem = (type, group, item) => {
+  setFilterSubitem = (type, item, checked) => {
     const updatedOptions = this.state[type]
-      .map((option) => option.code === group.code ? {...option, items: option.items.map(this.toggleSingleItem(item)) } : option);
+      .map((option) => ({...option, items: option.items.map(this.setSingleItem(item, checked)) }))
+      .map((option) => ({...option, selected: !option.items.find(({ selected }) => !selected) }));
 
     this.setState({ [type] : updatedOptions });
   }
+
+  setSingleItem = (item, checked) => (option) => option.code === item.code ? ({ ...option, selected: checked }) : option;
 
   getSearch = (type) => {
     return this.state.search[type];
@@ -156,9 +139,9 @@ class App extends Component {
   }
 
   searchHandler = (type) => (term) => this.setSearch(type, term);
-  filterHandler = (type) => (item) => this.setFilter(type, item);
-  filterGroupHandler = (type) => (item) => this.setFilterGroup(type, item);
-  filterSubitemHandler = (type) => (group, item) => this.setFilterSubitem(type, group, item);
+  filterHandler = (type) => (item, checked) => this.setFilter(type, item, checked);
+  filterGroupHandler = (type) => (item, checked) => this.setFilterGroup(type, item, checked);
+  filterSubitemHandler = (type) => (item, checked) => this.setFilterSubitem(type, item, checked);
 
   render() {
     return (
@@ -171,9 +154,12 @@ class App extends Component {
           <TextSearch placeholder="search title" value={this.getSearch('title')} onChange={this.searchHandler('title')} />
           <TextSearch placeholder="search text" value={this.getSearch('text')} onChange={this.searchHandler('text')} />
           <SortSelect onChange={this.setSort} />
-          {this.filters.map(({ title, keyword  }) => (
-            <FilterList key={keyword} title={title} hidden={true} options={this.getOptions(keyword)} clearAll={this.clearAllFilters(keyword)} onChange={this.filterHandler(keyword)} onGroupChange={this.filterGroupHandler(keyword)} onSubitemChange={this.filterSubitemHandler(keyword)} />
-          ))}
+
+          <FilterList title="Factions" hidden={true} options={this.getOptions("factions")} clearAll={this.clearFilters("factions")} onChange={this.filterHandler("factions")} />
+          <FilterList title="Types" hidden={true} options={this.getOptions("types")} clearAll={this.clearFilters("types")} onChange={this.filterHandler("types")} />
+          <FilterList title="Subtypes" hidden={true} options={this.getOptions("subtypes")} clearAll={this.clearFilters("subtypes")} onChange={this.filterHandler("subtypes")} />
+          <NestedFilterList title="Packs" hidden={true} options={this.getOptions("packs")} clearAll={this.clearGroupFilters("packs")} onGroupChange={this.filterGroupHandler("packs")} onSubitemChange={this.filterSubitemHandler("packs")} />
+
           <Reset onClick={this.reset}/>
           <SmallPrint/>
         </ControlPanel>
