@@ -1,7 +1,8 @@
 [
   {
     "code": "anarch",
-    "name": "Anarch"
+    "name": "Anarch",
+    "selected": true
   },
   {
     "code": "criminal",
@@ -9,7 +10,8 @@
   },
   {
     "code": "shaper",
-    "name": "Shaper"
+    "name": "Shaper",
+    "selected": true
   },
   {
     "code": "haas-bioroid",
@@ -21,7 +23,6 @@
   },
   {
     "code": "foo",
-    "name": "Foo",
-    "side": null
+    "name": "Foo"
   }
 ]

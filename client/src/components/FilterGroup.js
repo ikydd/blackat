@@ -3,11 +3,11 @@ import FilterItem from './FilterItem';
 
 class FilterGroup extends Component {
     render() {
-        const { item, keyword, selected, onChange } = this.props;
+        const { item, keyword, onChange } = this.props;
 
         return (
             <div className="filter-group">
-                <FilterItem item={item} keyword={keyword} selected={selected} onChange={onChange(selected)} />
+                <FilterItem item={item} keyword={keyword} onChange={onChange} />
                 {this.props.children}
                 <hr className="filter-divider" />
             </div>
