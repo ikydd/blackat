@@ -83,6 +83,20 @@ describe('FilterList', () => {
 
       expect(checkboxes).toHaveLength(0);
     });
+
+    it('retains selections when collapsed', async () => {
+      const { queryAllByRole, getByRole } = render(<FilterList options={optionsSelected}/>);
+      fireEvent.click(getByRole('heading'));
+      fireEvent.click(getByRole('heading'));
+
+      const checkboxes = await queryAllByRole('checkbox');
+
+      const checked = checkboxes
+        .filter(({ checked }) => checked)
+        .map((input) => input.getAttribute('value'));
+
+      expect(checked).toEqual(['anarch', 'shaper']);
+    });
   });
 
   describe('Clear All', () => {

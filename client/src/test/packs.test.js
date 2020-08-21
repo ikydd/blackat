@@ -24,17 +24,14 @@ describe('Packs filters', () => {
         expect(checkboxes).toHaveLength(0);
     });
 
-    it('shows all checkboxes', async () => {
+    it('shows some checkboxes', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         fireEvent.click(getByText('Packs'));
         const checkboxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        const totalChecks = packs
-            .reduce((total, group) => total + (group.items.length > 1 ? (group.items.length + 1) : 1), 0);
-
-        expect(checkboxes).toHaveLength(totalChecks);
+        expect(checkboxes.length).toBeGreaterThan(0);
     });
 
     it('starts with empty checkboxes', async () => {
@@ -53,14 +50,15 @@ describe('Packs filters', () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         fireEvent.click(getByText('Packs'));
-        fireEvent.click(getByText('Corp'));
-        const checkboxes = await within(filterBlock)
+
+        const runnerBoxes = await within(filterBlock)
             .findAllByRole('checkbox');
 
-        const totalChecks = packs
-            .reduce((total, group) => total + (group.items.length > 1 ? (group.items.length + 1) : 1), 0);
+        fireEvent.click(getByText('Corp'));
+        const corpBoxes = await within(filterBlock)
+            .findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(totalChecks);
+        expect(corpBoxes).toEqual(runnerBoxes);
     });
 
     it('selects checkboxes correctly', async () => {
@@ -98,7 +96,7 @@ describe('Packs filters', () => {
         expect(filtered).toHaveAttribute('alt', 'D4v1d');
     });
 
-    it('includes filters for both sides', async () => {
+    it('retains filters for both sides', async () => {
         const { getByTestId, getByText } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
         fireEvent.click(getByText('Packs'));
@@ -114,51 +112,89 @@ describe('Packs filters', () => {
         expect(wla).toBeChecked();
     });
 
-    it('selects all in a group regardless of current state', async () => {
-        const { getByTestId, getByText, findByLabelText } = render(<App />);
-        const filterBlock = getByTestId('packs-filters');
-        fireEvent.click(getByText('Packs'));
+    describe('Cycle Checkbox', () => {
+        it('does not select the cycle when a subitem is checked', async () => {
+            const { getByTestId, getByText, findByLabelText } = render(<App />);
+            const filterBlock = getByTestId('packs-filters');
+            fireEvent.click(getByText('Packs'));
 
-        const genesis = packs.find(({ code }) => code === 'genesis');
+            const genesis = packs.find(({ code }) => code === 'genesis');
 
-        const pack = await within(filterBlock)
-            .findByLabelText(genesis.items[3].name);
-        fireEvent.click(pack);
+            const pack = await within(filterBlock)
+                .findByLabelText(genesis.items[3].name);
+            fireEvent.click(pack);
 
-        const cycle = await findByLabelText(genesis.name);
-        fireEvent.click(cycle);
+            const cycle = await findByLabelText(genesis.name);
+            expect(cycle).not.toBeChecked();
+        });
 
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
+        it('selects all in a cycle when clicked regardless of their current state', async () => {
+            const { getByTestId, getByText, findByLabelText } = render(<App />);
+            const filterBlock = getByTestId('packs-filters');
+            fireEvent.click(getByText('Packs'));
 
-        const checked = checkboxes
-            .filter(({ checked }) => checked)
-            .map((item) => item.getAttribute('value'));
+            const genesis = packs.find(({ code }) => code === 'genesis');
 
-        const expected = ['genesis'].concat(genesis.items.map(({ code }) => code));
+            const pack = await within(filterBlock)
+                .findByLabelText(genesis.items[3].name);
+            fireEvent.click(pack);
 
-        expect(checked).toEqual(expected);
-    });
+            const cycle = await findByLabelText(genesis.name);
+            fireEvent.click(cycle);
 
-    it('retains filters when collapsed', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('packs-filters');
-        fireEvent.click(getByText('Packs'));
-        const unchecked = await within(filterBlock)
-            .findAllByRole('checkbox');
+            const checkboxes = await within(filterBlock)
+                .findAllByRole('checkbox');
 
-        fireEvent.click(unchecked[0]);
+            const checked = checkboxes
+                .filter(({ checked }) => checked)
+                .map((item) => item.getAttribute('value'));
 
-        fireEvent.click(getByText('Packs'));
-        fireEvent.click(getByText('Packs'));
+            const expected = ['genesis'].concat(genesis.items.map(({ code }) => code));
 
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
-        const checked = checkboxes.shift();
+            expect(checked).toEqual(expected);
+        });
 
-        expect(checked).toBeChecked();
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
+        it('deselects all in a cycle when deselected', async () => {
+            const { getByTestId, getByText, findByLabelText } = render(<App />);
+            const filterBlock = getByTestId('packs-filters');
+            fireEvent.click(getByText('Packs'));
+
+            const genesis = packs.find(({ code }) => code === 'genesis');
+
+            const pack = await within(filterBlock)
+                .findByLabelText(genesis.items[3].name);
+            fireEvent.click(pack);
+
+            let cycle = await findByLabelText(genesis.name);
+            fireEvent.click(cycle);
+            fireEvent.click(cycle);
+
+            const checkboxes = await within(filterBlock)
+                .findAllByRole('checkbox');
+
+            const checked = checkboxes
+                .filter(({ checked }) => checked)
+                .map((item) => item.getAttribute('value'));
+
+            expect(checked).toHaveLength(0);
+        });
+
+        it('deselects cycle when not all subitems are checked', async () => {
+            const { getByTestId, getByText, findByLabelText } = render(<App />);
+            const filterBlock = getByTestId('packs-filters');
+            fireEvent.click(getByText('Packs'));
+
+            const genesis = packs.find(({ code }) => code === 'genesis');
+
+            let cycle = await findByLabelText(genesis.name);
+            fireEvent.click(cycle);
+
+            const pack = await within(filterBlock)
+                .findByLabelText(genesis.items[3].name);
+            fireEvent.click(pack);
+
+            cycle = await findByLabelText(genesis.name);
+            expect(cycle).not.toBeChecked();
         });
     });
 });

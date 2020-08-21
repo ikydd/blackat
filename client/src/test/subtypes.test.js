@@ -160,26 +160,4 @@ describe('Subtypes filters', () => {
 
         expect(bioroid).toBeChecked();
     });
-
-    it('retains filters when collapsed', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        const unchecked = await within(filterBlock)
-            .findAllByRole('checkbox');
-
-        fireEvent.click(unchecked[0]);
-
-        fireEvent.click(getByText('Subtypes'));
-        fireEvent.click(getByText('Subtypes'));
-
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
-        const checked = checkboxes.shift();
-
-        expect(checked).toBeChecked();
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        });
-    });
 });

@@ -160,26 +160,4 @@ describe('Types filters', () => {
 
         expect(identity).toBeChecked();
     });
-
-    it('retains filters when collapsed', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('types-filters');
-        fireEvent.click(getByText(/Types/));
-        const unchecked = await within(filterBlock)
-            .findAllByRole('checkbox');
-
-        fireEvent.click(unchecked[0]);
-
-        fireEvent.click(getByText(/Types/));
-        fireEvent.click(getByText(/Types/));
-
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
-        const checked = checkboxes.shift();
-
-        expect(checked).toBeChecked();
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        });
-    });
 });

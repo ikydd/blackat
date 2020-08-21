@@ -66,9 +66,7 @@ class App extends Component {
     this.setState({ side });
   }
 
-  getSide = () => {
-    return this.state.side;
-  }
+  getSide = () => this.state.side;
 
   fromCurrentSide = ({ side }) => !side || side === this.getSide();
 
