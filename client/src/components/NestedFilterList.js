@@ -49,7 +49,7 @@ class NestedFilterList extends Component {
     })
 
     const filters = hidden !== true &&
-      <div class="filter-list-items">
+      <div className="filter-list-items">
         <h5 role="button" onClick={clearAll} >Clear All</h5>
         {generateFilters(options)}
       </div>;

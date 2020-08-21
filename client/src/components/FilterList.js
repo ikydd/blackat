@@ -29,7 +29,7 @@ class FilterList extends Component {
     const { hidden } = this.state;
 
     const filters = hidden !== true &&
-      <div class="filter-list-items">
+      <div className="filter-list-items">
         <h5 role="button" onClick={clearAll} >Clear All</h5>
         {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />)}
       </div>;
