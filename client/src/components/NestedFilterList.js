@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import FilterItem from './FilterItem';
-import FilterGroup from './FilterGroup';
 import FilterNotification from './FilterNotification';
 import './FilterList.css';
+import './NestedFilterList.css';
 
 class NestedFilterList extends Component {
 
@@ -34,17 +34,34 @@ class NestedFilterList extends Component {
     const keyword = this.props.title.toLowerCase();
     const { title, clearAll, options } = this.props;
     const { hidden } = this.state;
+
+    const generateFilters = (options) => options.map((group) => {
+      let subFilters = '';
+      if (group.items.length > 1) {
+        subFilters = <div className="filter-group-items">
+          {group.items.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.changeSubitem} />)}
+        </div>
+      }
+      return <div class="filter-group">
+        <FilterItem item={group} keyword={keyword} onChange={this.changeGroup} />
+        {subFilters}
+        <hr className="filter-divider" />
+      </div>
+    })
+
+    let filters = '';
+    if (hidden !== true) {
+      filters = <div>
+        <h5 role="button" onClick={clearAll} >Clear All</h5>
+        {generateFilters(options)}
+      </div>
+    }
+
+
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
         <h4 className="filter-list-title" onClick={this.toggleHidden}>{title} {<FilterNotification on={this.inUse()} />}</h4>
-        <div hidden={(hidden ? 'hidden' : false)}>
-          <h5 role="button" onClick={clearAll} >Clear All</h5>
-          {options.map((group) =>
-                <FilterGroup key={group.code} item={group} keyword={keyword} onChange={this.changeGroup}>
-                  { group.items.length > 1 ? group.items.map((item) => (<FilterItem child={true} key={item.code} item={item} keyword={keyword} onChange={this.changeSubitem} />)) : "" }
-                </FilterGroup>
-          )}
-        </div>
+        {filters}
       </div>
     );
   };

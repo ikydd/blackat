@@ -1,11 +1,3 @@
 .filter-list {
     color: #555;
 }
-
-.filter-list .checkbox label.indent {
-    padding-left: 3em;
-}
-.filter-divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}

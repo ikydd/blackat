@@ -27,13 +27,19 @@ class FilterList extends Component {
     const keyword = this.props.title.toLowerCase();
     const { title, clearAll, options } = this.props;
     const { hidden } = this.state;
+
+    let filters = '';
+    if (hidden !== true) {
+      filters = <div>
+        <h5 role="button" onClick={clearAll} >Clear All</h5>
+        {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />)}
+      </div>
+    }
+
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
         <h4 className="filter-list-title" onClick={this.toggleHidden}>{title} {<FilterNotification on={this.inUse()} />}</h4>
-        <div hidden={(hidden ? 'hidden' : false)}>
-          <h5 role="button" onClick={clearAll} >Clear All</h5>
-          {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />)}
-        </div>
+        {filters}
       </div>
     );
   };
