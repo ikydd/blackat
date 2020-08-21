@@ -69,43 +69,36 @@ class App extends Component {
 
   handleData = ([factions, types, packs, subtypes]) => {
     const previousSession = this.props.storage && localStorage.getItem('settings');
-    let settings;
     if (previousSession) {
-      const previousData = previousSession ? JSON.parse(previousSession) : {};
+      try {
+        const storage = JSON.parse(previousSession);
+        const { side, sort, search: { title, text } = {} } = storage;
+        const settings = {};
+        settings.side = side || undefined;
+        settings.sort = sort || undefined;
+        if (title || text) {
+          settings.search = {};
+          settings.search.title = title || this.state.search.title;
+          settings.search.text = text || this.state.search.text;
+        }
+        settings.factions = Array.isArray(storage.factions) ? factions.map(this.setNormalSelection(storage.factions)) : factions;
+        settings.types = Array.isArray(storage.types) ? types.map(this.setNormalSelection(storage.types)) : types;
+        settings.subtypes = Array.isArray(storage.subtypes) ? subtypes.map(this.setNormalSelection(storage.subtypes)) : subtypes;
+        settings.packs = Array.isArray(storage.packs) ? packs.map(this.setNestedSelection(storage.packs)) : packs;
 
-      settings = this.getInitialState();
-      let {
-        side = 'runner',
-        sort = 'faction',
-        search: { title = '', text = '' } = {},
-        factions: factionStorage = [],
-        types: typeStorage = [],
-        subtypes: subtypeStorage = [],
-        packs: packStorage = []
-      } = previousData;
+        this.setState(settings);
+        return;
 
-      settings = Object.assign(settings, { side, sort, search: { title, text } });
-
-      factionStorage = Array.isArray(factionStorage) ? factionStorage : [];
-      typeStorage = Array.isArray(typeStorage) ? typeStorage : [];
-      subtypeStorage = Array.isArray(subtypeStorage) ? subtypeStorage : [];
-      packStorage = Array.isArray(packStorage) ? packStorage : [];
-
-      settings.factions = factions.map(this.setNormalSelection(factionStorage));
-      settings.types = types.map(this.setNormalSelection(typeStorage));
-      settings.subtypes = subtypes.map(this.setNormalSelection(subtypeStorage));
-      settings.packs = packs.map(this.setNestedSelection(packStorage));
-
-    } else {
-      settings = {
-        factions: factions.map(this.unselected),
-        types: types.map(this.unselected),
-        subtypes: subtypes.map(this.unselected),
-        packs: packs.map(this.nestedUnselected),
-      };
+      } catch (e) {
+        console.log('Failed to load previous settings', e);
+      }
     }
-
-    this.setState(settings);
+    this.setState({
+      factions: factions.map(this.unselected),
+      types: types.map(this.unselected),
+      subtypes: subtypes.map(this.unselected),
+      packs: packs.map(this.nestedUnselected),
+    });
   }
 
   componentDidMount () {

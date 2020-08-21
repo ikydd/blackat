@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, within } from '@testing-library/react';
 import App from './App';
 import * as api from './helpers/api';
 
@@ -35,6 +35,17 @@ it('loads the corp cards with a prop', async () => {
 });
 
 describe('saving state', () => {
+  let realLog;
+
+  beforeEach(() => {
+    realLog = console.log;
+    console.log = jest.fn();
+  });
+
+  afterEach(() => {
+    console.log = realLog;
+  });
+
   it('set state into localStorage', async () => {
     const { findAllByRole, getByText } = render(<App storage={true} />);
     fireEvent.click(getByText('Corp'))
@@ -54,6 +65,21 @@ describe('saving state', () => {
     const cards = await findAllByRole('img');
 
     expect(cards).toHaveLength(1);
+  });
+
+  it('reject malformed JSON', async () => {
+    const types = require('../../fixtures/api/types');
+    localStorage.setItem('settings', '}does not parse[');
+
+    const { getByTestId, getByText } = render(<App storage={true} />);
+    fireEvent.click(getByText(/Types/));
+    const filterBlock = getByTestId('types-filters');
+    const checkboxes = await within(filterBlock)
+        .findAllByRole('checkbox');
+
+    const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
+
+    expect(checkboxes).toHaveLength(runnerTypes);
   });
 
   it('clears state when you click the reset button', async () => {
