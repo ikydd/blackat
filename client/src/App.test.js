@@ -35,17 +35,6 @@ it('loads the corp cards with a prop', async () => {
 });
 
 describe('saving state', () => {
-  let realLog;
-
-  beforeEach(() => {
-    realLog = console.log;
-    console.log = jest.fn();
-  });
-
-  afterEach(() => {
-    console.log = realLog;
-  });
-
   it('set state into localStorage', async () => {
     const { findAllByRole, getByText } = render(<App storage={true} />);
     fireEvent.click(getByText('Corp'))

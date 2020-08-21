@@ -68,7 +68,7 @@ const integrate = (store, { factions, types, packs, subtypes }) => {
             return settings;
 
         } catch (e) {
-            console.log('Failed to load previous settings', e);
+            // fail silently
         }
     }
     return {
