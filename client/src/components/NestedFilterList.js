@@ -41,7 +41,7 @@ class NestedFilterList extends Component {
           {group.items.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.changeSubitem} />)}
         </div>;
 
-      return <div class="filter-group">
+      return <div class="filter-group" key={group.code}>
         <FilterItem item={group} keyword={keyword} onChange={this.changeGroup} />
         {subFilters}
         <hr className="filter-divider" />
