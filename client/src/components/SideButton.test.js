@@ -2,8 +2,6 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import SideButton from './SideButton';
 
-jest.mock('../helpers/api');
-
 describe('CardList', () => {
   it('renders without crashing', () => {
     render(<SideButton/>);

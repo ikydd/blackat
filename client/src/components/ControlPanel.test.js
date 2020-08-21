@@ -2,8 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ControlPanel from './ControlPanel';
 
-jest.mock('../helpers/api');
-
 describe('CardList', () => {
   it('renders without crashing', () => {
     render(<ControlPanel/>);
