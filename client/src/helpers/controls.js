@@ -36,17 +36,17 @@ const setFilterItem = (options, item, checked) => options
       .map((option) => ({...option, items: option.items.map(setSingle(item, checked)) }))
       .map((option) => ({...option, selected: !option.items.find(({ selected }) => !selected) }));
 
-module.exports = {
-    filters: {
-        get: getFilter,
-        set: setFilter,
-        clear: clearFilters,
-        options: getOptions
-    },
-    nestedFilters: {
-        get: getNestedFilter,
-        setGroup: setFilterGroup,
-        setItem: setFilterItem,
-        clear: clearFilterGroup
-    }
-};
+export const filters = {
+    get: getFilter,
+    set: setFilter,
+    clear: clearFilters,
+    options: getOptions
+}
+
+export const nestedFilters = {
+    get: getNestedFilter,
+    setGroup: setFilterGroup,
+    setItem: setFilterItem,
+    clear: clearFilterGroup
+}
+
