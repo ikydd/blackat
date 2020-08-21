@@ -29,33 +29,93 @@ class App extends Component {
 
   state = this.getInitialState();
 
-  unselect = (option) => ({...option, selected: false });
+  setStorage() {
+    let storage = this.getInitialState();
+    const normalFilters = ['factions', 'types', 'subtypes'];
+    const nestedFilters = ['packs'];
 
-  handleData = ([factions, types, packs, subtypes]) => {
-    this.setState({
-      factions: factions.map(this.unselect),
-      types: types.map(this.unselect),
-      subtypes: subtypes.map(this.unselect),
-      packs: packs.map((option) => ({...option, selected: false, items: option.items.map(this.unselect) })),
-    })
+    const { side, sort, search } = this.state;
+    storage = Object.assign(storage, { side, sort, search });
+
+    storage = normalFilters.reduce((data, type) =>
+      ({ ...data,
+          [type]: this.state[type]
+            .filter(({ selected }) => selected)
+            .map(({ code }) => code)
+      }), storage)
+    storage = nestedFilters.reduce((data, type) =>
+    ({ ...data,
+        [type]: this.state[type]
+          .reduce((list, { code, selected, items }) => list.concat(
+            (selected ? [code] : [])
+              .concat(items
+                .filter(({ selected }) => selected)
+                .map(({ code }) => code)
+              )), [])
+    }), storage);
+
+    localStorage.setItem('settings', JSON.stringify(storage));
   }
 
-  handleState = () => {
+  unselected = (option) => ({...option, selected: false });
+  nestedUnselected = (option) => ({...option, selected: false, items: option.items.map(this.unselected) });
+  setNormalSelection = (storage) => (option) => ({...option,
+    selected: storage.includes(option.code)
+  });
+  setNestedSelection = (storage) => (group) => ({...group,
+    selected: storage.includes(group.code),
+    items: group.items.map(this.setNormalSelection(storage))
+  });
+
+  handleData = ([factions, types, packs, subtypes]) => {
     const previousSession = this.props.storage && localStorage.getItem('settings');
+    let settings;
     if (previousSession) {
-      this.setState(JSON.parse(previousSession));
+      const previousData = previousSession ? JSON.parse(previousSession) : {};
+
+      settings = this.getInitialState();
+      let {
+        side = 'runner',
+        sort = 'faction',
+        search: { title = '', text = '' } = {},
+        factions: factionStorage = [],
+        types: typeStorage = [],
+        subtypes: subtypeStorage = [],
+        packs: packStorage = []
+      } = previousData;
+
+      settings = Object.assign(settings, { side, sort, search: { title, text } });
+
+      factionStorage = Array.isArray(factionStorage) ? factionStorage : [];
+      typeStorage = Array.isArray(typeStorage) ? typeStorage : [];
+      subtypeStorage = Array.isArray(subtypeStorage) ? subtypeStorage : [];
+      packStorage = Array.isArray(packStorage) ? packStorage : [];
+
+      settings.factions = factions.map(this.setNormalSelection(factionStorage));
+      settings.types = types.map(this.setNormalSelection(typeStorage));
+      settings.subtypes = subtypes.map(this.setNormalSelection(subtypeStorage));
+      settings.packs = packs.map(this.setNestedSelection(packStorage));
+
+    } else {
+      settings = {
+        factions: factions.map(this.unselected),
+        types: types.map(this.unselected),
+        subtypes: subtypes.map(this.unselected),
+        packs: packs.map(this.nestedUnselected),
+      };
     }
+
+    this.setState(settings);
   }
 
   componentDidMount () {
     Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
       .then(this.handleData)
-      .then(this.handleState)
       .catch(err => console.log(err));
   }
 
   componentDidUpdate () {
-    localStorage.setItem('settings', JSON.stringify(this.state));
+    this.setStorage()
   }
 
   reset = () => {
