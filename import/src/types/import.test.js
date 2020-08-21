@@ -3,7 +3,7 @@ const save = require("../helpers/save");
 const apiUrl = require("../helpers/api-url");
 const localPath = require("../helpers/local-path");
 const process = require("./process");
-const factions = require("./import");
+const types = require("./import");
 
 jest.mock("../helpers/request");
 jest.mock("../helpers/save");
@@ -37,32 +37,32 @@ describe("main", () => {
     save.mockImplementation(() => Promise.resolve());
   });
 
-  it("gets the NRDB factions endpoint", async () => {
-    await factions();
+  it("gets the NRDB types endpoint", async () => {
+    await types();
 
     expect(apiUrl).toHaveBeenCalledWith('/types');
   });
 
   it("calls the NRDB endpoint", async () => {
-    await factions();
+    await types();
 
     expect(request).toHaveBeenCalledWith(mockUrl);
   });
 
   it("applies the processor", async () => {
-    await factions();
+    await types();
 
     expect(process).toHaveBeenCalledWith(mockData);
   });
 
   it("gets the local save path", async () => {
-    await factions();
+    await types();
 
     expect(localPath).toHaveBeenCalledWith('types.json');
   });
 
   it("saves the processed data", async () => {
-    await factions();
+    await types();
 
     expect(save).toHaveBeenCalledWith(
       mockProcessedData,
