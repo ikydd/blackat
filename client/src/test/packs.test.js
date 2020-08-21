@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent } from '@testing-library/react';
 import App from '../App';
-import packs from '../../../fixtures/api/cycles';
+import packs from '../../../fixtures/api/packs';
 
 jest.mock('../helpers/api');
 

@@ -1,7 +1,7 @@
 const cards = require('../../../../fixtures/api/cards');
 const factions = require('../../../../fixtures/api/factions');
 const types = require('../../../../fixtures/api/types');
-const packs = require('../../../../fixtures/api/cycles');
+const packs = require('../../../../fixtures/api/packs');
 const subtypes = require('../../../../fixtures/api/subtypes');
 
 const data = {

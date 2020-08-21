@@ -1,7 +1,7 @@
 const process = require('./process');
 
 const mockCardsData = require('../../../fixtures/nrdb/cards');
-const mockPackData = require('../../../fixtures/api/cycles');
+const mockPackData = require('../../../fixtures/api/packs');
 
 describe('process cards', () => {
 
