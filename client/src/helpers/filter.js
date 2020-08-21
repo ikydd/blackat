@@ -1,5 +1,3 @@
-
-
 const bySide = (side) => (card) => {
   if (!side) {
     return card;
