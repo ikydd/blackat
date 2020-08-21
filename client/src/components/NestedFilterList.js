@@ -36,12 +36,11 @@ class NestedFilterList extends Component {
     const { hidden } = this.state;
 
     const generateFilters = (options) => options.map((group) => {
-      let subFilters = '';
-      if (group.items.length > 1) {
-        subFilters = <div className="filter-group-items">
+      const subFilters = group.items.length > 1 &&
+        <div className="filter-group-items">
           {group.items.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.changeSubitem} />)}
-        </div>
-      }
+        </div>;
+
       return <div class="filter-group">
         <FilterItem item={group} keyword={keyword} onChange={this.changeGroup} />
         {subFilters}
@@ -49,14 +48,11 @@ class NestedFilterList extends Component {
       </div>
     })
 
-    let filters = '';
-    if (hidden !== true) {
-      filters = <div>
+    const filters = hidden !== true &&
+      <div class="filter-list-items">
         <h5 role="button" onClick={clearAll} >Clear All</h5>
         {generateFilters(options)}
-      </div>
-    }
-
+      </div>;
 
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>

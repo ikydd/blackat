@@ -28,13 +28,11 @@ class FilterList extends Component {
     const { title, clearAll, options } = this.props;
     const { hidden } = this.state;
 
-    let filters = '';
-    if (hidden !== true) {
-      filters = <div>
+    const filters = hidden !== true &&
+      <div class="filter-list-items">
         <h5 role="button" onClick={clearAll} >Clear All</h5>
         {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />)}
-      </div>
-    }
+      </div>;
 
     return (
       <div className="filter-list" data-testid={keyword + '-filters'}>
