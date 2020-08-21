@@ -1,0 +1,12 @@
+[
+  {
+    "code": "foo",
+    "name": "Foo",
+    "items": [
+      {
+        "code": "bar",
+        "name": "Bar"
+      }
+    ]
+  }
+]

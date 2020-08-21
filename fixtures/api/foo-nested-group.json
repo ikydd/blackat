@@ -1,0 +1,20 @@
+[
+  {
+    "code": "bar",
+    "name": "Bar",
+    "items": [
+      {
+        "code": "alpha",
+        "name": "Alpha"
+      },
+      {
+        "code": "beta",
+        "name": "Beta"
+      },
+      {
+        "code": "gamma",
+        "name": "Gamma"
+      }
+    ]
+  }
+]

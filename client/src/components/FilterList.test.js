@@ -22,15 +22,15 @@ describe('FilterList', () => {
     expect(getByRole('heading')).toHaveTextContent('Foo');
   });
 
-  describe('options', () => {
-    it('default to showing all options', async () => {
+  describe('Options', () => {
+    it('shows provided options', async () => {
       const { findAllByRole } = render(<FilterList options={options} />);
       const checkboxes = await findAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(options.length);
     });
 
-    it('shows filters as selected', async () => {
+    it('shows correct filters as selected', async () => {
       const { findAllByRole } = render(<FilterList options={optionsSelected} />);
       const checkboxes = await findAllByRole('checkbox');
 
@@ -39,56 +39,19 @@ describe('FilterList', () => {
         .map((input) => input.getAttribute('value'));
 
       expect(checked).toEqual(['anarch', 'shaper']);
-    })
-  });
-
-  describe('nested options', () => {
-    const optionsNested = require('../../../fixtures/api/foo-nested');
-
-    it('default to showing all top-level options and sub-options where there is more than one', async () => {
-      const cb = jest.fn();
-      const groupCb = jest.fn();
-      const { findAllByRole } = render(<FilterList options={optionsNested} onChange={cb} onGroupChange={groupCb}  />);
-      const checkboxes = await findAllByRole('checkbox');
-
-      const expected = optionsNested.reduce((total, group) => (group.items.length > 1 ? total + group.items.length : total) + 1, 0);
-
-      expect(checkboxes).toHaveLength(expected);
-    });
-
-    it('calls the callback when the group is checked', async () => {
-      const cb = jest.fn();
-      const groupCb = jest.fn();
-      const { findByLabelText } = render(<FilterList options={optionsNested} onChange={cb} onGroupChange={groupCb} />);
-      const group = await findByLabelText('Bar');
-      fireEvent.click(group);
-
-      expect(groupCb).toHaveBeenCalled();
-    });
-
-    it('calls the callback when the group is unchecked', async () => {
-      const cb = jest.fn();
-      const groupCb = jest.fn();
-      const optionsNestedSelected = require('../../../fixtures/api/foo-nested-selected');
-      const { findByLabelText } = render(<FilterList options={optionsNestedSelected} onChange={cb} onGroupChange={groupCb} />);
-      const group = await findByLabelText('Bar');
-      fireEvent.click(group);
-
-      expect(groupCb).toHaveBeenCalled();
     });
 
     it('calls the callback when an item is checked', async () => {
       const cb = jest.fn();
-      const groupCb = jest.fn();
-      const { findByLabelText } = render(<FilterList options={optionsNested} onSubitemChange={cb} onGroupChange={groupCb} />);
-      const group = await findByLabelText('Alpha');
+      const { findByLabelText } = render(<FilterList options={options} onChange={cb} />);
+      const group = await findByLabelText('Anarch');
       fireEvent.click(group);
 
       expect(cb).toHaveBeenCalled();
     });
   });
 
-  describe('visibility toggle', () => {
+  describe('Visibility Toggle', () => {
     it('shows options by default', async () => {
       const { findAllByRole } = render(<FilterList options={options} />);
       const checkboxes = await findAllByRole('checkbox');
@@ -103,7 +66,7 @@ describe('FilterList', () => {
       expect(checkboxes).toHaveLength(0);
     });
 
-    it('toggles options when heading is clicked', async () => {
+    it('shows options when hidden and heading is clicked', async () => {
       const { findAllByRole, getByRole } = render(<FilterList options={options} hidden={true} />);
       fireEvent.click(getByRole('heading'));
 
@@ -112,9 +75,8 @@ describe('FilterList', () => {
       expect(checkboxes).toHaveLength(options.length);
     });
 
-    it('toggles options again when heading is clicked a second time', async () => {
-      const { queryAllByRole, getByRole } = render(<FilterList options={options} hidden={true} />);
-      fireEvent.click(getByRole('heading'));
+    it('hides options when showing and heading is clicked', async () => {
+      const { queryAllByRole, getByRole } = render(<FilterList options={options} />);
       fireEvent.click(getByRole('heading'));
 
       const checkboxes = await queryAllByRole('checkbox');
@@ -123,7 +85,13 @@ describe('FilterList', () => {
     });
   });
 
-  describe('clear all button', () => {
+  describe('Clear All', () => {
+    it('has a button', async () => {
+      const { getByRole } = render(<FilterList options={options} />);
+
+      expect(getByRole('button')).toBeTruthy();
+    });
+
     it('removes all selected filters', async () => {
       const cb = jest.fn();
       const { getByRole } = render(<FilterList options={options} clearAll={cb} />);
@@ -133,7 +101,7 @@ describe('FilterList', () => {
     })
   });
 
-  describe('active notifier', () => {
+  describe('Active Notifier', () => {
     it('has no visual mark when no filters are selected', async () => {
       const { queryByRole, findAllByRole } = render(<FilterList options={options} />);
       await findAllByRole('checkbox');
