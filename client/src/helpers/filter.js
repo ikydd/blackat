@@ -70,6 +70,15 @@ const byText = (text) => (card) => {
   return card;
 }
 
+const bySort = (sort) => {
+  switch (sort) {
+    case 'illustrator':
+      return ({ illustrator }) => illustrator;
+    default:
+      return () => true;
+  }
+}
+
 const resetDisplay = (card) => {
   card.show = true;
   return card;
@@ -77,6 +86,7 @@ const resetDisplay = (card) => {
 
 const filter = (cards, filters) => cards
   .map(resetDisplay)
+  .filter(bySort(filters.sort))
   .filter(bySide(filters.side))
   .filter(byTitle(filters.titleSearch))
   .filter(byText(filters.textSearch))

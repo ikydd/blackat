@@ -236,7 +236,7 @@ describe('CardList', () => {
   })
 
 
-  fdescribe('Illustrator', () => {
+  describe('Illustrator', () => {
     it('sorts by illustrator', async () => {
       api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
       const { findAllByRole } = render(<CardList sort="illustrator" />);

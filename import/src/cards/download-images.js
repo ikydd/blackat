@@ -32,10 +32,10 @@ const setLocalImage = (serverFolder) => {
 
 const download = async (imgFolder, data) => {
     return createFolder(imgFolder)
-        .then(() => Promise.all(data
-            .filter(existingCards(imgFolder))
-            .map(downloadCardTo(imgFolder))
-        ))
+        // .then(() => Promise.all(data
+        //     .filter(existingCards(imgFolder))
+        //     .map(downloadCardTo(imgFolder))
+        // ))
         .then(() => data.map(setLocalImage(imgFolder)));
 }
 
