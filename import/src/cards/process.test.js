@@ -106,4 +106,72 @@ describe('process cards', () => {
         expect(output[2].keywords).toEqual(mockCardsData.data[2].keywords);
         expect(output[3].keywords).toEqual(mockCardsData.data[3].keywords);
     });
+
+    it('outputs the agenda points', () => {
+        const testCardsData = require('../../../fixtures/nrdb/cards-agendas');
+        const output = process(testCardsData, mockPackData);
+
+        expect(output[0].agenda).toEqual(undefined);
+        expect(output[1].agenda).toEqual(2);
+        expect(output[2].agenda).toEqual(2);
+        expect(output[3].agenda).toEqual(2);
+    });
+
+    it('outputs the advancement cost', () => {
+        const testCardsData = require('../../../fixtures/nrdb/cards-agendas');
+        const output = process(testCardsData, mockPackData);
+
+        expect(output[0].advancement).toEqual(undefined);
+        expect(output[1].advancement).toEqual(3);
+        expect(output[2].advancement).toEqual(4);
+        expect(output[3].advancement).toEqual(3);
+    });
+
+    it('outputs the strength', () => {
+        const output = process(mockCardsData, mockPackData);
+
+        expect(output[0].strength).toEqual(mockCardsData.data[0].strength);
+        expect(output[1].strength).toEqual(mockCardsData.data[1].strength);
+        expect(output[2].strength).toEqual(mockCardsData.data[2].strength);
+        expect(output[3].strength).toEqual(mockCardsData.data[3].strength);
+    });
+
+    it('outputs the cost', () => {
+        const output = process(mockCardsData, mockPackData);
+
+        expect(output[0].cost).toEqual(mockCardsData.data[0].cost);
+        expect(output[1].cost).toEqual(mockCardsData.data[1].cost);
+        expect(output[2].cost).toEqual(mockCardsData.data[2].cost);
+        expect(output[3].cost).toEqual(mockCardsData.data[3].cost);
+    });
+
+    it('outputs the trash cost', () => {
+        const testCardsData = require('../../../fixtures/nrdb/cards-trash');
+        const output = process(testCardsData, mockPackData);
+
+        expect(output[0].trash).toEqual(undefined);
+        expect(output[1].trash).toEqual(3);
+        expect(output[2].trash).toEqual(0);
+        expect(output[3].trash).toEqual(undefined);
+    });
+
+    it('outputs the illustrator', () => {
+        const output = process(mockCardsData, mockPackData);
+
+        expect(output[0].illustrator).toEqual(mockCardsData.data[0].illustrator);
+        expect(output[1].illustrator).toEqual(mockCardsData.data[1].illustrator);
+        expect(output[2].illustrator).toEqual(mockCardsData.data[2].illustrator);
+        expect(output[3].illustrator).toEqual(mockCardsData.data[3].illustrator);
+    });
+
+    it('outputs the number of subroutines', () => {
+        const testCardsData = require('../../../fixtures/nrdb/cards-subroutines');
+        const output = process(testCardsData, mockPackData);
+
+        expect(output[0].subroutines).toEqual(undefined);
+        expect(output[1].subroutines).toEqual(3);
+        expect(output[2].subroutines).toEqual(3);
+        expect(output[3].subroutines).toEqual(2);
+        expect(output[4].subroutines).toEqual('x');
+    });
 })

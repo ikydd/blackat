@@ -3,9 +3,13 @@ const includedCards = (cycles) => {
     return ({ pack_code }) => packs.find(({ code }) => code === pack_code)
 }
 
+const countSubroutines = (text) =>
+    text.match(/"\[subroutine\]/g) ? 'x' : text.match(/\[subroutine\]/g).length;
+
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
     .filter(includedCards(cycles))
-    .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code, keywords }) => ({
+    .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code,
+            keywords, cost, strength, agenda_points, advancement_cost, trash_cost, illustrator }) => ({
         code,
         title,
         text: text || '',
@@ -14,7 +18,14 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
         faction: faction_code,
         type: type_code,
         pack: pack_code,
-        keywords
+        keywords,
+        cost,
+        strength,
+        trash: trash_cost,
+        agenda: agenda_points,
+        advancement: advancement_cost,
+        illustrator,
+        subroutines: type_code === 'ice' ? countSubroutines(text) : undefined
     }));
 
 module.exports = process
