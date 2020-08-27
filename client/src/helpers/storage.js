@@ -10,7 +10,7 @@ const setNestedSelection = (storage) => (group) => ({...group,
     items: group.items.map(setNormalSelection(storage))
 });
 
-const init = (side) => Object.assign({}, {
+const init = ({ side } = {}) => Object.assign({}, {
     side: side || "runner",
     sort: "faction",
     title: "",

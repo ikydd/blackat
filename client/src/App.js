@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getData } from './helpers/api';
 import * as storage from './helpers/storage';
 import { filters, nestedFilters } from './helpers/controls';
+import options from './helpers/options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
@@ -15,7 +16,7 @@ import './App.css';
 
 class App extends Component {
 
-  state = storage.init(this.props.side);
+  state = storage.init({ side: this.props.side });
 
   componentDidMount () {
     Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
@@ -65,7 +66,7 @@ class App extends Component {
           </div>
           <TextSearch placeholder="search title" value={this.get('title')} onChange={this.set('title')} />
           <TextSearch placeholder="search text" value={this.get('text')} onChange={this.set('text')} />
-          <SortSelect onChange={this.set('sort')} />
+          <SortSelect options={options} default={this.state.sort} onChange={this.set('sort')} />
 
           <FilterList title="Factions" hidden={true} options={this.getOptions("factions")} clearAll={this.clearFilters("factions")} onChange={this.filterHandler("factions")} />
           <FilterList title="Types" hidden={true} options={this.getOptions("types")} clearAll={this.clearFilters("types")} onChange={this.filterHandler("types")} />
