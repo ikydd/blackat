@@ -31,6 +31,17 @@ const defaultGroup = (sections, card) => {
     return sections;
 }
 
+const customGroup = (sections, card, sort) => {
+    const prop = card[sort];
+    ensureSection(sections, [], prop);
+    sections[prop].info = {
+        name: prop,
+        code: prop
+    }
+    addCard(sections[prop], card);
+    return sections;
+}
+
 const group = ({ factions, packs, types }) => (sort) => (sections, card) => {
     data.type = types;
     data.pack = packs.reduce((list, { items }) => list.concat(items), []);
@@ -40,6 +51,8 @@ const group = ({ factions, packs, types }) => (sort) => (sections, card) => {
         case 'pack':
         case 'type':
             return standardGroup(sections, card, sort);
+        case 'illustrator':
+            return customGroup(sections, card, sort);
         default:
             return defaultGroup(sections, card);
     }

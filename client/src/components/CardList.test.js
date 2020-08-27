@@ -235,6 +235,37 @@ describe('CardList', () => {
     });
   })
 
+
+  fdescribe('Illustrator', () => {
+    it('sorts by illustrator', async () => {
+      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
+      const { findAllByRole } = render(<CardList sort="illustrator" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["ZU.13 Key Master", "Mandatory Upgrades"]);
+    });
+
+    it('has named separators', async () => {
+      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
+      const { findAllByRole } = render(<CardList sort="illustrator" />);
+      await findAllByRole('img');
+      const hrs = await findAllByRole('separator');
+      const titles = hrs.map(({ textContent }) => textContent.trim());
+
+      expect(titles).toEqual(["Liiga Smilshkalne", "Mauricio Herrera"]);
+    });
+
+    it('sorts by title after illustrator', async () => {
+      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator-title'));
+      const { findAllByRole } = render(<CardList sort="illustrator" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Uroboros", "ZU.13 Key Master"]);
+    });
+  });
+
   describe('Card Updates', () => {
     it('only shows the most recent version when versions are consecutive', async () => {
       api.setData('cards', require('../../../fixtures/api/versions'));

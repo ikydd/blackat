@@ -9,7 +9,9 @@ const compare = (a, b) =>
 
 const rankOf = (prop, item) => data[prop].indexOf(item[prop]);
 
-const standardCompare = (prop, a, b) => compare(rankOf(prop, a), rankOf(prop, b));
+const rankCompare = (prop, a, b) => compare(rankOf(prop, a), rankOf(prop, b));
+
+const propCompare = (prop, a, b) => compare(a[prop], b[prop]);
 
 const sort = (option, a, b, result = 0) => {
   if (result !== 0) {
@@ -17,9 +19,10 @@ const sort = (option, a, b, result = 0) => {
   }
   switch (option) {
     case 'title':
-      return compare(a.title, b.title);
+    case 'illustrator':
+      return propCompare(option, a, b);
     default:
-      return standardCompare(option, a, b);
+      return rankCompare(option, a, b);
   }
 }
 
@@ -33,6 +36,9 @@ export default ({ types, packs, factions }) => {
     switch (option) {
       case 'title':
           return sort('title', a, b);
+      case 'illustrator':
+        let ill = sort('illustrator', a, b);
+        return sort('title', a, b, ill);
       case 'type':
         let type = sort('type', a, b);
         type = sort('faction', a, b, type);
