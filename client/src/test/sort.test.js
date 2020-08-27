@@ -10,6 +10,31 @@ describe('Sort', () => {
     api.reset();
   })
 
+  it('has the correct options', async () => {
+    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'))
+    const { findAllByRole } = render(<App />);
+    const options = await findAllByRole('option');
+
+    expect(options).toEqual([
+      expect.objectContaining({
+          textContent: 'Sort by Faction',
+          value: 'faction'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Type',
+          value: 'type'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Pack',
+          value: 'pack'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Title',
+          value: 'title'
+      })
+    ]);
+  })
+
   it('sorts by faction by default', async () => {
     api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'))
     const { findAllByRole, getByRole } = render(<App />);
