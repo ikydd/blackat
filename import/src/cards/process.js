@@ -3,8 +3,13 @@ const includedCards = (cycles) => {
     return ({ pack_code }) => packs.find(({ code }) => code === pack_code)
 }
 
-const countSubroutines = (text) =>
-    text.match(/"\[subroutine\]/g) ? 'x' : text.match(/\[subroutine\]/g).length;
+const countSubroutines = (text) => {
+    const subs = text.match(/\[subroutine\]/g);
+    if (!subs) {
+        return 0;
+    }
+    return text.match(/"\[subroutine\]/g) ? 'x' : subs.length;
+}
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
     .filter(includedCards(cycles))

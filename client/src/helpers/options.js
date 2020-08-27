@@ -14,6 +14,10 @@ const options =  [
     {
         title: "Title",
         value: "title"
+    },
+    {
+        title: "Illustrator",
+        value: "illustrator"
     }
 ]
 

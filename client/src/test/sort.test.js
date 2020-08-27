@@ -11,7 +11,6 @@ describe('Sort', () => {
   })
 
   it('has the correct options', async () => {
-    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'))
     const { findAllByRole } = render(<App />);
     const options = await findAllByRole('option');
 
@@ -31,6 +30,10 @@ describe('Sort', () => {
       expect.objectContaining({
           textContent: 'Sort by Title',
           value: 'title'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Illustrator',
+          value: 'illustrator'
       })
     ]);
   })
@@ -87,5 +90,17 @@ describe('Sort', () => {
     const cards = images.map(({ alt }) => alt);
 
     expect(cards).toEqual(['Chum', 'Data Mine', 'Mandatory Upgrades', 'Neural Katana']);
+  })
+
+  it('sorts by illustrator', async () => {
+    api.setData('cards', require('../../../fixtures/api/illustrator-sort/corp'))
+    const { findAllByRole, getByRole, getByText } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'illustrator' }});
+    fireEvent.click(getByText('Corp'));
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['SanSan City Grid', 'Mandatory Upgrades']);
   })
 });
