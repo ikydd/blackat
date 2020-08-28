@@ -384,6 +384,15 @@ describe('CardList', () => {
 
       expect(cards).toEqual(["Bar", "Foo"]);
     });
+
+    it('includes cards that act as agenda points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/as-an-agenda'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
   });
 
   describe('Card Updates', () => {

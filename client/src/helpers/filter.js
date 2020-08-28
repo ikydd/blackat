@@ -77,7 +77,7 @@ const bySort = (sort) => {
     case 'cost':
       return ({ cost }) => cost !== undefined;
     case 'agenda':
-      return ({ agenda }) => agenda !== undefined;
+      return ({ agenda, text }) => agenda !== undefined || (text && text.search(/as an agenda/) !== -1);
     default:
       return () => true;
   }

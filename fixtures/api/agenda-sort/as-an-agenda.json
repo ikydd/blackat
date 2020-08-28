@@ -1,0 +1,20 @@
+[
+
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "type": "asset",
+    "title": "Bar",
+    "text": "Something as an agenda",
+    "side": "corp"
+  },
+  {
+      "title": "Foo",
+      "code": "01075",
+      "faction": "jinteki",
+      "type": "agenda",
+      "side": "corp",
+      "agenda": 0,
+      "advancement": 3
+  }
+]

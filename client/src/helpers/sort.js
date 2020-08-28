@@ -62,6 +62,7 @@ export default ({ types, packs, factions }) => {
 
       case 'agenda':
         let points = sort('agenda', a, b);
+        points = sort('type', a, b, points);
         points = sort('faction', a, b, points);
         points = sort('advancement', a, b, points);
         return sort('title', a, b, points);
