@@ -235,7 +235,6 @@ describe('CardList', () => {
     });
   })
 
-
   describe('Illustrator', () => {
     it('sorts by illustrator', async () => {
       api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
@@ -244,6 +243,15 @@ describe('CardList', () => {
       const cards = images.map(({ alt }) => alt);
 
       expect(cards).toEqual(["ZU.13 Key Master", "Mandatory Upgrades"]);
+    });
+
+    it('skips cards with no illustrator', async () => {
+      api.setData('cards', require('../../../fixtures/api/illustrator-sort/no-illustrator'));
+      const { findAllByRole } = render(<CardList sort="illustrator" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Mandatory Upgrades"]);
     });
 
     it('has named separators', async () => {
@@ -263,6 +271,53 @@ describe('CardList', () => {
       const cards = images.map(({ alt }) => alt);
 
       expect(cards).toEqual(["Uroboros", "ZU.13 Key Master"]);
+    });
+  });
+
+  describe('Cost', () => {
+    it('sorts by cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/cost'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('skips cards with no cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/no-cost'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo"]);
+    });
+
+    it('sorts by faction after cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
+    });
+
+    it('sorts by type after faction', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction-type'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('sorts by title after type', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction-type-name'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
     });
   });
 

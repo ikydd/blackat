@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Foo",
+        "code": "01076",
+        "faction": "jinteki",
+        "type": "ice",
+        "cost": 1
+    },
+    {
+        "title": "Bar",
+        "code": "01075",
+        "faction": "jinteki",
+        "type": "ice",
+        "cost": 1
+    }
+]

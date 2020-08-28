@@ -20,6 +20,7 @@ const sort = (option, a, b, result = 0) => {
   switch (option) {
     case 'title':
     case 'illustrator':
+    case 'cost':
       return propCompare(option, a, b);
     default:
       return rankCompare(option, a, b);
@@ -45,6 +46,11 @@ export default ({ types, packs, factions }) => {
         return sort('title', a, b, type);
       case 'pack':
         return sort('pack', a, b);
+      case 'cost':
+        let cost = sort('cost', a, b);
+        cost = sort('faction', a, b, cost);
+        cost = sort('type', a, b, cost);
+        return sort('title', a, b, cost);
       case 'faction':
       default:
         let faction = sort('faction', a, b);

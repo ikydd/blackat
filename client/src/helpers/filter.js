@@ -74,6 +74,8 @@ const bySort = (sort) => {
   switch (sort) {
     case 'illustrator':
       return ({ illustrator }) => illustrator;
+    case 'cost':
+      return ({ cost }) => cost;
     default:
       return () => true;
   }

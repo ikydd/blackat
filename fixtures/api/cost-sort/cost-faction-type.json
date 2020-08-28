@@ -1,0 +1,16 @@
+[
+    {
+        "code": "25050",
+        "faction": "shaper",
+        "title": "Bar",
+        "type": "hardware",
+        "cost": 2
+    },
+    {
+        "title": "Foo",
+        "code": "01043",
+        "faction": "shaper",
+        "type": "program",
+        "cost": 2
+    }
+]

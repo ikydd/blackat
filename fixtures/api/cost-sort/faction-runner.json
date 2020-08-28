@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Gordian Blade",
+        "code": "01043",
+        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+        "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core",
+        "keywords": "Icebreaker - Decoder"
+    },
+    {
+        "title": "D4v1d",
+        "code": "06033",
+        "text": "Place 3 power counters on D4v1d when it is installed.\n<strong>Hosted power counter:</strong> Break ice subroutine on a piece of ice that has a strength of 5 or greater.",
+        "imagesrc": "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_33.png",
+        "side": "runner",
+        "faction": "anarch",
+        "type": "program",
+        "pack": "wla"
+    }
+]
