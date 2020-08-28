@@ -32,6 +32,10 @@ describe('Sort', () => {
           value: 'title'
       }),
       expect.objectContaining({
+          textContent: 'Sort by Cost',
+          value: 'cost'
+      }),
+      expect.objectContaining({
           textContent: 'Sort by Illustrator',
           value: 'illustrator'
       })
@@ -102,5 +106,17 @@ describe('Sort', () => {
     const cards = images.map(({ alt }) => alt);
 
     expect(cards).toEqual(['SanSan City Grid', 'Mandatory Upgrades']);
+  })
+
+  it('sorts by cost', async () => {
+    api.setData('cards', require('../../../fixtures/api/cost-sort/cost'))
+    const { findAllByRole, getByRole, getByText } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'cost' }});
+    fireEvent.click(getByText('Corp'));
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['Foo', 'Bar']);
   })
 });

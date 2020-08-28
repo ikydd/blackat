@@ -4,12 +4,14 @@
         "code": "01075",
         "faction": "shaper",
         "type": "hardware",
+        "side": "corp",
         "cost": 4
     },
     {
       "code": "25050",
       "faction": "shaper",
       "title": "Foo",
+      "side": "corp",
       "type": "hardware",
       "cost": 1
     }
