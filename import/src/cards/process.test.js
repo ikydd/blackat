@@ -173,7 +173,7 @@ describe('process cards', () => {
         expect(output[1].subroutines).toEqual(3);
         expect(output[2].subroutines).toEqual(3);
         expect(output[3].subroutines).toEqual(2);
-        expect(output[4].subroutines).toEqual('x');
+        expect(output[4].subroutines).toEqual(9999);
         expect(output[5].subroutines).toEqual(0);
     });
 })

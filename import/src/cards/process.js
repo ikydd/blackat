@@ -8,7 +8,7 @@ const countSubroutines = (text) => {
     if (!subs) {
         return 0;
     }
-    return text.match(/"\[subroutine\]/g) ? 'x' : subs.length;
+    return text.match(/"\[subroutine\]/g) ? 9999 : subs.length;
 }
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
