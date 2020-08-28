@@ -142,7 +142,7 @@ describe('process cards', () => {
         expect(output[0].cost).toEqual(mockCardsData.data[0].cost);
         expect(output[1].cost).toEqual(mockCardsData.data[1].cost);
         expect(output[2].cost).toEqual(mockCardsData.data[2].cost);
-        expect(output[3].cost).toEqual(mockCardsData.data[3].cost);
+        expect(output[3].cost).toEqual(9999);
     });
 
     it('outputs the trash cost', () => {

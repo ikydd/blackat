@@ -24,7 +24,7 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
         type: type_code,
         pack: pack_code,
         keywords,
-        cost,
+        cost: cost === null ? 9999 : cost,
         strength,
         trash: trash_cost,
         agenda: agenda_points,

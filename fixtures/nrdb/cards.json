@@ -61,7 +61,7 @@
     },
     {
       "code": "01090",
-      "cost": 8,
+      "cost": null,
       "deck_limit": 3,
       "faction_code": "nbn",
       "faction_cost": 2,

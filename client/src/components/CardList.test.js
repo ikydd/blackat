@@ -293,6 +293,15 @@ describe('CardList', () => {
       expect(cards).toEqual(["Foo"]);
     });
 
+    it('includes cards with 0 cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/zero-cost'));
+      const { findAllByRole } = render(<CardList sort="cost" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
+    });
+
     it('sorts by faction after cost', async () => {
       api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction'));
       const { findAllByRole } = render(<CardList sort="cost" />);

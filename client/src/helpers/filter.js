@@ -75,7 +75,7 @@ const bySort = (sort) => {
     case 'illustrator':
       return ({ illustrator }) => illustrator;
     case 'cost':
-      return ({ cost }) => cost;
+      return ({ cost }) => cost !== undefined;
     default:
       return () => true;
   }
