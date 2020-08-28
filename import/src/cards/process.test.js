@@ -128,12 +128,13 @@ describe('process cards', () => {
     });
 
     it('outputs the strength', () => {
-        const output = process(mockCardsData, mockPackData);
+        const testCardsData = require('../../../fixtures/nrdb/cards-strength');
+        const output = process(testCardsData, mockPackData);
 
-        expect(output[0].strength).toEqual(mockCardsData.data[0].strength);
-        expect(output[1].strength).toEqual(mockCardsData.data[1].strength);
-        expect(output[2].strength).toEqual(mockCardsData.data[2].strength);
-        expect(output[3].strength).toEqual(mockCardsData.data[3].strength);
+        expect(output[0].strength).toEqual(2);
+        expect(output[1].strength).toEqual(undefined);
+        expect(output[2].strength).toEqual(5);
+        expect(output[3].strength).toEqual(9999);
     });
 
     it('outputs the cost', () => {
