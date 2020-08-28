@@ -330,6 +330,62 @@ describe('CardList', () => {
     });
   });
 
+  describe('Agenda Points', () => {
+    it('sorts by agenda points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('skips cards with no agenda points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/no-agenda'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar"]);
+    });
+
+    it('includes cards with 0 points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/zero-agenda'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
+    });
+
+    it('sorts by faction after agenda points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('sorts by advancement cost after faction', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction-cost'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('sorts by title after advancement', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction-cost-name'));
+      const { findAllByRole } = render(<CardList sort="agenda" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
+    });
+  });
+
   describe('Card Updates', () => {
     it('only shows the most recent version when versions are consecutive', async () => {
       api.setData('cards', require('../../../fixtures/api/versions'));

@@ -21,7 +21,10 @@ const sort = (option, a, b, result = 0) => {
     case 'title':
     case 'illustrator':
     case 'cost':
+    case 'advancement':
       return propCompare(option, a, b);
+    case 'agenda':
+      return propCompare(option, b, a);
     default:
       return rankCompare(option, a, b);
   }
@@ -35,22 +38,34 @@ export default ({ types, packs, factions }) => {
   data.faction = factions.map(toCodes);
   return (option) => (a, b) => {
     switch (option) {
+
       case 'title':
           return sort('title', a, b);
+
       case 'illustrator':
         let ill = sort('illustrator', a, b);
         return sort('title', a, b, ill);
+
       case 'type':
         let type = sort('type', a, b);
         type = sort('faction', a, b, type);
         return sort('title', a, b, type);
+
       case 'pack':
         return sort('pack', a, b);
+
       case 'cost':
         let cost = sort('cost', a, b);
         cost = sort('faction', a, b, cost);
         cost = sort('type', a, b, cost);
         return sort('title', a, b, cost);
+
+      case 'agenda':
+        let points = sort('agenda', a, b);
+        points = sort('faction', a, b, points);
+        points = sort('advancement', a, b, points);
+        return sort('title', a, b, points);
+
       case 'faction':
       default:
         let faction = sort('faction', a, b);

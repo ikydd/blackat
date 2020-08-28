@@ -114,7 +114,7 @@ describe('process cards', () => {
         expect(output[0].agenda).toEqual(undefined);
         expect(output[1].agenda).toEqual(2);
         expect(output[2].agenda).toEqual(2);
-        expect(output[3].agenda).toEqual(2);
+        expect(output[3].agenda).toEqual(-1);
     });
 
     it('outputs the advancement cost', () => {
@@ -124,7 +124,7 @@ describe('process cards', () => {
         expect(output[0].advancement).toEqual(undefined);
         expect(output[1].advancement).toEqual(3);
         expect(output[2].advancement).toEqual(4);
-        expect(output[3].advancement).toEqual(3);
+        expect(output[3].advancement).toEqual(undefined);
     });
 
     it('outputs the strength', () => {

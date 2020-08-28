@@ -11,6 +11,15 @@ const countSubroutines = (text) => {
     return text.match(/"\[subroutine\]/g) ? 'x' : subs.length;
 }
 
+const assessAgendaPoints = (agenda_points, text) => {
+    if (agenda_points !== undefined) {
+        return agenda_points;
+    }
+    if (text && text.search(/as an agenda/) !== -1) {
+        return -1;
+    }
+}
+
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
     .filter(includedCards(cycles))
     .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code,
@@ -27,7 +36,7 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
         cost: cost === null ? 9999 : cost,
         strength,
         trash: trash_cost,
-        agenda: agenda_points,
+        agenda: assessAgendaPoints(agenda_points, text),
         advancement: advancement_cost,
         illustrator,
         subroutines: type_code === 'ice' ? countSubroutines(text) : undefined

@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Bar",
+        "code": "01075",
+        "faction": "jinteki",
+        "side": "corp",
+        "agenda": 2,
+        "advancement": 4
+    },
+    {
+      "code": "25050",
+      "faction": "jinteki",
+      "title": "Foo",
+      "side": "corp",
+      "agenda": 3,
+      "advancement": 4
+    }
+]

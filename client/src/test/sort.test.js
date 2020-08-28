@@ -36,6 +36,10 @@ describe('Sort', () => {
           value: 'cost'
       }),
       expect.objectContaining({
+          textContent: 'Sort by Agenda Points',
+          value: 'agenda'
+      }),
+      expect.objectContaining({
           textContent: 'Sort by Illustrator',
           value: 'illustrator'
       })
@@ -110,8 +114,19 @@ describe('Sort', () => {
 
   it('sorts by cost', async () => {
     api.setData('cards', require('../../../fixtures/api/cost-sort/cost'))
-    const { findAllByRole, getByRole, getByText } = render(<App />);
+    const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'cost' }});
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['Foo', 'Bar']);
+  })
+
+  it('sorts by agenda points', async () => {
+    api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda'))
+    const { findAllByRole, getByRole, getByText } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'agenda' }});
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');

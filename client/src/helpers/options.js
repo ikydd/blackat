@@ -20,6 +20,10 @@ const options =  [
         value: "cost"
     },
     {
+        title: "Agenda Points",
+        value: "agenda"
+    },
+    {
         title: "Illustrator",
         value: "illustrator"
     }
