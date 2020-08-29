@@ -24,6 +24,8 @@ const sort = (option, a, b, result = 0) => {
     case 'advancement':
       return propCompare(option, a, b);
     case 'agenda':
+    case 'strength':
+    case 'subroutines':
       return propCompare(option, b, a);
     default:
       return rankCompare(option, a, b);
@@ -66,6 +68,11 @@ export default ({ types, packs, factions }) => {
         points = sort('faction', a, b, points);
         points = sort('advancement', a, b, points);
         return sort('title', a, b, points);
+
+      case 'strength':
+        let strength = sort('strength', a, b);
+        strength = sort('subroutines', a, b, strength);
+        return sort('title', a, b, strength);
 
       case 'faction':
       default:

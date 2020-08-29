@@ -76,6 +76,8 @@ const bySort = (sort) => {
       return ({ illustrator }) => illustrator;
     case 'cost':
       return ({ cost }) => cost !== undefined;
+    case 'strength':
+      return ({ strength }) => strength !== undefined;
     case 'agenda':
       return ({ agenda, text }) => agenda !== undefined || (text && text.search(/as an agenda/) !== -1);
     default:
