@@ -442,6 +442,53 @@ describe('CardList', () => {
     });
   });
 
+  describe('Subroutines', () => {
+    it('sorts by subroutines', async () => {
+      api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines'));
+      const { findAllByRole } = render(<CardList sort="subroutines" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('skips cards with no subroutines', async () => {
+      api.setData('cards', require('../../../fixtures/api/subroutines-sort/no-subroutines'));
+      const { findAllByRole } = render(<CardList sort="subroutines" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar"]);
+    });
+
+    it('includes cards with 0 subroutines', async () => {
+      api.setData('cards', require('../../../fixtures/api/subroutines-sort/zero-subroutines'));
+      const { findAllByRole } = render(<CardList sort="subroutines" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('sorts by strength after subroutines', async () => {
+      api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines-strength'));
+      const { findAllByRole } = render(<CardList sort="subroutines" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Foo", "Bar"]);
+    });
+
+    it('sorts by title after strength', async () => {
+      api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines-strength-name'));
+      const { findAllByRole } = render(<CardList sort="subroutines" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(["Bar", "Foo"]);
+    });
+  });
+
   describe('Card Updates', () => {
     it('only shows the most recent version when versions are consecutive', async () => {
       api.setData('cards', require('../../../fixtures/api/versions'));

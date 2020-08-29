@@ -70,14 +70,15 @@ const byText = (text) => (card) => {
   return card;
 }
 
+const propFilter = (prop) => (card) => card[prop] !== undefined;
+
 const bySort = (sort) => {
   switch (sort) {
     case 'illustrator':
-      return ({ illustrator }) => illustrator;
     case 'cost':
-      return ({ cost }) => cost !== undefined;
     case 'strength':
-      return ({ strength }) => strength !== undefined;
+    case 'subroutines':
+      return propFilter(sort);
     case 'agenda':
       return ({ agenda, text }) => agenda !== undefined || (text && text.search(/as an agenda/) !== -1);
     default:

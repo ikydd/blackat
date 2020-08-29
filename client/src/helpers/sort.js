@@ -74,6 +74,11 @@ export default ({ types, packs, factions }) => {
         strength = sort('subroutines', a, b, strength);
         return sort('title', a, b, strength);
 
+      case 'subroutines':
+        let subs = sort('subroutines', a, b);
+        subs = sort('strength', a, b, subs);
+        return sort('title', a, b, subs);
+
       case 'faction':
       default:
         let faction = sort('faction', a, b);

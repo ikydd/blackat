@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Foo",
+        "code": "01075",
+        "side": "corp",
+        "type": "ice",
+        "strength": 2,
+        "subroutines": 3
+    },
+    {
+      "code": "25050",
+      "title": "Bar",
+      "side": "corp",
+      "type": "ice",
+      "strength": 2,
+      "subroutines": 3
+    }
+]
