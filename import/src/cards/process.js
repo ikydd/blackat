@@ -4,11 +4,12 @@ const includedCards = (cycles) => {
 }
 
 const countSubroutines = (text) => {
-    const subs = text.match(/\[subroutine\]/g);
-    if (!subs) {
+    const hasSubs = text.match(/\[subroutine\]/g);
+    if (!hasSubs) {
         return 0;
     }
-    return text.match(/"\[subroutine\]/g) ? 9999 : subs.length;
+    const subs = text.match(/(\n|^)\[subroutine\]/g);
+    return subs ? subs.length : 9999;
 }
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards

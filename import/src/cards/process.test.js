@@ -175,5 +175,6 @@ describe('process cards', () => {
         expect(output[3].subroutines).toEqual(2);
         expect(output[4].subroutines).toEqual(9999);
         expect(output[5].subroutines).toEqual(0);
+        expect(output[6].subroutines).toEqual(1);
     });
 })

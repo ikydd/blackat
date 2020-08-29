@@ -114,6 +114,25 @@
       "title": "Troll",
       "type_code": "ice",
       "uniqueness": false
+    },
+    {
+      "code": "02034",
+      "cost": 3,
+      "deck_limit": 3,
+      "faction_code": "jinteki",
+      "faction_cost": 1,
+      "flavor": "Peace and violence. Both must lead to the same place.",
+      "illustrator": "Sandara Tang",
+      "keywords": "Code Gate",
+      "pack_code": "ta",
+      "position": 34,
+      "quantity": 3,
+      "side_code": "corp",
+      "strength": 5,
+      "text": "[subroutine] For the remainder of this run, each piece of ice encountered except Sensei gains \"[subroutine] End the run\" after all its other subroutines.",
+      "title": "Sensei",
+      "type_code": "ice",
+      "uniqueness": false
     }
   ],
   "total": 1842,
