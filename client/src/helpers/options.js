@@ -8,14 +8,6 @@ const options =  [
         value: "type"
     },
     {
-        title: "Pack",
-        value: "pack"
-    },
-    {
-        title: "Title",
-        value: "title"
-    },
-    {
         title: "Cost",
         value: "cost"
     },
@@ -24,8 +16,20 @@ const options =  [
         value: "strength"
     },
     {
+        title: "Subroutines",
+        value: "subroutines"
+    },
+    {
         title: "Agenda Points",
         value: "agenda"
+    },
+    {
+        title: "Pack",
+        value: "pack"
+    },
+    {
+        title: "Title",
+        value: "title"
     },
     {
         title: "Illustrator",

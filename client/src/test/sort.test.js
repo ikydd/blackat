@@ -24,14 +24,6 @@ describe('Sort', () => {
           value: 'type'
       }),
       expect.objectContaining({
-          textContent: 'Sort by Pack',
-          value: 'pack'
-      }),
-      expect.objectContaining({
-          textContent: 'Sort by Title',
-          value: 'title'
-      }),
-      expect.objectContaining({
           textContent: 'Sort by Cost',
           value: 'cost'
       }),
@@ -40,8 +32,20 @@ describe('Sort', () => {
           value: 'strength'
       }),
       expect.objectContaining({
+          textContent: 'Sort by Subroutines',
+          value: 'subroutines'
+      }),
+      expect.objectContaining({
           textContent: 'Sort by Agenda Points',
           value: 'agenda'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Pack',
+          value: 'pack'
+      }),
+      expect.objectContaining({
+          textContent: 'Sort by Title',
+          value: 'title'
       }),
       expect.objectContaining({
           textContent: 'Sort by Illustrator',
@@ -143,6 +147,18 @@ describe('Sort', () => {
     api.setData('cards', require('../../../fixtures/api/strength-sort/strength'))
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'strength' }});
+    fireEvent.click(getByText('Corp'));
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['Foo', 'Bar']);
+  })
+
+  it('sorts by subroutines', async () => {
+    api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines'))
+    const { findAllByRole, getByRole, getByText } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'subroutines' }});
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');
