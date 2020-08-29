@@ -146,16 +146,6 @@ describe('process cards', () => {
         expect(output[3].cost).toEqual(9999);
     });
 
-    it('outputs the trash cost', () => {
-        const testCardsData = require('../../../fixtures/nrdb/cards-trash');
-        const output = process(testCardsData, mockPackData);
-
-        expect(output[0].trash).toEqual(undefined);
-        expect(output[1].trash).toEqual(3);
-        expect(output[2].trash).toEqual(0);
-        expect(output[3].trash).toEqual(undefined);
-    });
-
     it('outputs the illustrator', () => {
         const output = process(mockCardsData, mockPackData);
 

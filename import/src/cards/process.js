@@ -15,7 +15,7 @@ const countSubroutines = (text) => {
 const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
     .filter(includedCards(cycles))
     .map(({ title, text, code, image_url, side_code, faction_code, type_code, pack_code,
-            keywords, cost, strength, agenda_points, advancement_cost, trash_cost, illustrator }) => ({
+            keywords, cost, strength, agenda_points, advancement_cost, illustrator }) => ({
         code,
         title,
         text: text || '',
@@ -27,7 +27,6 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => cards
         keywords,
         cost: cost === null ? 9999 : cost,
         strength: strength === null ? 9999 : strength,
-        trash: trash_cost,
         agenda: agenda_points,
         advancement: advancement_cost,
         illustrator,
