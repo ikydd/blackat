@@ -14,7 +14,6 @@ const ensureSection = (sections, list = [], prop = 'default') => {
 const addCard = (section, card) => {
     section.show = card.show ? true : section.show;
     section.cards.push(card);
-
 }
 
 const standardGroup = (sections, card, sort) => {
@@ -32,6 +31,9 @@ const defaultGroup = (sections, card) => {
 }
 
 const customGroup = (sections, card, sort) => {
+    if (card[sort] === undefined) {
+        return sections;
+    }
     const prop = card[sort];
     ensureSection(sections, [], prop);
     sections[prop].info = {
