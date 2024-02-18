@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React,{ useEffect, useState } from 'react';
 import CardSection from './CardSection';
 import Loader from './Loader';
 import Empty from './Empty';
@@ -8,54 +8,49 @@ import group from '../helpers/group';
 import sort from '../helpers/sort';
 import './CardList.css';
 
-class CardList extends Component {
-  static defaultProps = {
-    side: "",
-    titleSearch: "",
-    textSearch: "",
-    factions: [],
-    types: [],
-    subtypes: [],
-    packs: []
-  }
+const CardList = ({ sort: sortMethod, ...props }) => {
+  // const [loaded, setLoaded] = useState(false);
+  // const [cards, setCards] = useState([]);
+  // const [sortOptions, setSortOptions] = useState(() => () => () => 0);
+  // const [groupOptions, setGroupOptions] = useState(() => () => acc => acc);
 
-  state = {
+  const handleData = ([cards, factions, types, packs]) => {
+    setThings({
+      loaded: true,
+      cards,
+      sort: sort({ factions, types, packs }),
+      group: group({ factions, types, packs })
+    });
+  };
+
+  const [things, setThings] = useState({
     loaded: false,
     cards: [],
     sort: () => {},
     group: () => () => {}
-  }
-
-  handleData = ([cards, factions, types, packs]) => this.setState({
-    loaded: true,
-    cards,
-    sort: sort({ factions, types, packs }),
-    group: group({ factions, types, packs })
   })
 
-  componentDidMount() {
+  useEffect(() => {
     Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
-      .then(this.handleData)
+      .then(handleData)
       .catch(err => console.log(err));
-  }
+  }, []);
 
-  render() {
-    const { sort, group, cards, loaded } = this.state;
-    let empty = true;
-    return (
+  const filteredCards = filter(things.cards, props);
+  const sortedCards = filteredCards.sort(things.sort(sortMethod));
+  const reducedCards = sortedCards.reduce(things.group(sortMethod), {});
+
+  const sections = Object.values(reducedCards );
+
+  const empty = sections.reduce((acc, { show }) => show ? false : acc, true)
+
+  return (
     <div id="cards">
-      {loaded ? "" : <Loader/>}
-      {Object.values(filter(cards, this.props)
-          .sort(sort(this.props.sort))
-          .reduce(group(this.props.sort), {}))
-          .map((section, index) => {
-            empty = section.show ? false : empty;
-            return (<CardSection key={index} section={section}></CardSection>)
-          })}
-      {loaded && empty ? <Empty/> : ""}
-      </div>
-    );
-  }
+      {things.loaded ? "" : <Loader/>}
+      {sections.map((section, index) => <CardSection key={index} section={section}></CardSection>)}
+      {things.loaded && empty ? <Empty/> : ""}
+    </div>
+  );
 }
 
 export default CardList;

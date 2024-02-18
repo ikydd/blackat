@@ -1,46 +1,41 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import FilterItem from './FilterItem';
 import FilterNotification from './FilterNotification';
 import './FilterList.css';
 
-class FilterList extends Component {
+const FilterList = ({
+    hidden = false,
+    title = "Missing",
+    onChange,
+    options = [],
+    clearAll
+  }) => {
 
-  static defaultProps = {
-    title: "Missing"
+  const [isHidden, setHidden] = useState(hidden);
+
+  const change = (item) => ({ target: { checked }}) => {
+    onChange(item, checked);
   }
 
-  state = {
-      hidden: this.props.hidden || false
+  const toggleHidden = () => {
+    setHidden(!isHidden)
   }
 
-  change = (item) => ({ target: { checked }}) => {
-    this.props.onChange(item, checked);
-  }
+  const inUse = () => options.find(({ selected }) => selected);
 
-  toggleHidden = () => {
-    this.setState({ hidden: !this.state.hidden });
-  }
+  const keyword = title.toLowerCase();
 
-  inUse = () => this.props.options.find(({ selected }) => selected);
-
-  render() {
-    const keyword = this.props.title.toLowerCase();
-    const { title, clearAll, options } = this.props;
-    const { hidden } = this.state;
-
-    const filters = hidden !== true &&
-      <div className="filter-list-items">
-        <h5 role="button" onClick={clearAll} >Clear All</h5>
-        {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={this.change} />)}
-      </div>;
-
-    return (
-      <div className="filter-list" data-testid={keyword + '-filters'}>
-        <h4 className="filter-list-title" onClick={this.toggleHidden}>{title} {<FilterNotification on={this.inUse()} />}</h4>
-        {filters}
-      </div>
-    );
-  };
+  return (
+    <div className="filter-list" data-testid={`${keyword}-filters`}>
+      <h4 className="filter-list-title" onClick={toggleHidden}>{title} {<FilterNotification on={inUse()} />}</h4>
+      {isHidden !== true &&
+        <div className="filter-list-items">
+          <h5 role="button" onClick={clearAll} >Clear All</h5>
+          {options.map((item) => <FilterItem key={item.code} item={item} keyword={keyword} onChange={change} />)}
+        </div>
+      }
+    </div>
+  );
 }
 
 export default FilterList;

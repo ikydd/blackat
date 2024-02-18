@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('/img/blackat-background-thin.png');
+    background-image: url('../public/img/blackat-background-thin.png');
     background-repeat: no-repeat;
     font-size: 1.4rem;
 }

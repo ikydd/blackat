@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './SortSelect.css';
 
-class SortSelect extends Component {
-    static defaultProps = {
-        options: []
-    }
+const SortSelect = ({
+        default: defaultValue,
+        options = [],
+        onChange
+    }) => {
 
-    handleChange = ev => {
+    const handleChange = ev => {
         ev.preventDefault();
-        this.props.onChange(ev.target.value);
+        onChange(ev.target.value);
     }
 
-    render() {
-        return (
-            <div className="form-group">
-                <select className="form-control" value={this.props.default} onChange={this.handleChange}>
-                    {this.props.options.map(({ title, value }) => <option key={value} value={value}>Sort by {title}</option>)}
-                </select>
-            </div>
-        );
-    }
+    return (
+        <div className="form-group">
+            <select className="form-control" value={defaultValue} onChange={handleChange}>
+                {options.map(({ title, value }) => <option key={value} value={value}>Sort by {title}</option>)}
+            </select>
+        </div>
+    );
 }
 
 

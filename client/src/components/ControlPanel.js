@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header';
 import './ControlPanel.css';
 
-class ControlPanel extends Component {
-  render() {
-    return (
-      <div id="control-panel">
-          <Header />
-          <div id="filters">
-            {this.props.children}
-          </div>
+const ControlPanel = ({ children }) => 
+  <div id="control-panel">
+      <Header />
+      <div id="filters">
+        {children}
       </div>
-    );
-  }
-}
+  </div>;
 
 export default ControlPanel;

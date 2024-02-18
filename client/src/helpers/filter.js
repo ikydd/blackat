@@ -31,15 +31,15 @@ const bySort = (sort) => {
 }
 
 const filterByAll = ({
-    sort,
-    side,
-    titleSearch,
-    textSearch,
-    factions,
-    types,
-    packs,
-    subtypes
-  }) => {
+  sort = 'default',
+  side = '',
+  titleSearch = '',
+  textSearch = '',
+  factions = [],
+  types = [],
+  subtypes = [],
+  packs = []
+}) => {
     const sortCb = bySort(sort);
     const sideCb = bySide(side);
     const titleCb = byTitle(titleSearch);

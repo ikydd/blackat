@@ -1,23 +1,17 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import './Card.css';
 
-class Card extends Component {
-  show() {
-    return this.props.data.show === false ? '' : ' show';
-  }
+const showCard = (show) => show === false ? '' : ' show';
 
-  hide() {
-    return this.props.data.show === false ? 'hidden' : false;
-  }
+const hideCard = (show) => show === false ? 'hidden' : false;
 
-  render() {
-    const { data: { title, imagesrc } } = this.props;
-    return (
-      <div className={"card-tile" + this.show()} title={title} hidden={this.hide()} >
-          <img src={imagesrc} alt={title}/>
-      </div>
-    );
-  }
+const Card = ({ data: { title, imagesrc, show } }) => {
+
+  return (
+    <div className={"card-tile" + showCard(show)} title={title} hidden={hideCard(show)} >
+        <img src={imagesrc} alt={title}/>
+    </div>
+  );
 }
 
 export default Card;

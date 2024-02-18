@@ -14,8 +14,7 @@
     "client": "cd client && npm start",
     "dev": "npm run client"
   },
-  "dependencies": {},
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^8.2.2"
   }
 }

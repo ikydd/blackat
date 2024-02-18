@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
 import * as storage from './helpers/storage';
 import { filters, nestedFilters } from './helpers/controls';
@@ -14,72 +14,71 @@ import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
-class App extends Component {
+const App = ({ storage: storageProp, side }) => {
 
-  state = storage.init({ side: this.props.side });
+  const savedSettings = storage.init({ side });
+  const [settings, setSettings] = useState(savedSettings);
 
-  componentDidMount () {
+  useEffect(() => {
     Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
       .then(([factions, types, packs, subtypes]) =>
-        this.setState(storage.integrate(this.props.storage, { factions, types, subtypes, packs })))
+        setSettings(storage.integrate(storageProp, { factions, types, subtypes, packs })))
       .catch(err => console.log(err));
-  }
+  }, [storageProp]);
 
-  componentDidUpdate () {
-    storage.save(this.state)
-  }
+  useEffect(() => {
+    storage.save(settings)
+  }, [settings]);
 
-  reset = () => this.setState(storage.init());
+  const reset = () => setSettings(storage.init());
 
-  get = (prop) => this.state[prop];
+  const get = (prop) => settings[prop];
 
-  set = (prop) => (value) => this.setState({ [prop]: value })
+  const set = (prop) => (value) => setSettings({ ...settings, [prop]: value })
 
-  getOptions = (type) => filters.options(this.state[type], this.get('side'));
+  const getOptions = (type) => filters.options(settings[type], get('side'));
 
-  getFilter = (type) => filters.get(this.state[type], this.get('side'));
+  const getFilter = (type) => filters.get(settings[type], get('side'));
 
-  getNestedFilter = (type) => nestedFilters.get(this.state[type], this.get('side'));
+  const getNestedFilter = (type) => nestedFilters.get(settings[type], get('side'));
 
-  clearFilters = (type) => () =>
-    this.setState({ [type]: filters.clear(this.state[type]) });
+  const clearFilters = (type) => () =>
+    setSettings({ ...settings, [type]: filters.clear(settings[type]) });
 
-  clearGroupFilters = (type) => () =>
-    this.setState({ [type]: nestedFilters.clear(this.state[type]) });
+  const clearGroupFilters = (type) => () =>
+    setSettings({ ...settings, [type]: nestedFilters.clear(settings[type]) });
 
-  filterHandler = (type) => (item, checked) =>
-    this.setState({ [type] : filters.set(this.state[type], item, checked) });
+  const filterHandler = (type) => (item, checked) =>
+    setSettings({ ...settings, [type] : filters.set(settings[type], item, checked) });
 
-  filterGroupHandler = (type) => (item, checked) =>
-    this.setState({ [type] : nestedFilters.setGroup(this.state[type], item, checked) });
+  const filterGroupHandler = (type) => (item, checked) =>
+    setSettings({ ...settings, [type] : nestedFilters.setGroup(settings[type], item, checked) });
 
-  filterSubitemHandler = (type) => (item, checked) =>
-    this.setState({ [type] : nestedFilters.setItem(this.state[type], item, checked) });
+  const filterSubitemHandler = (type) => (item, checked) =>
+    setSettings({ ...settings, [type] : nestedFilters.setItem(settings[type], item, checked) });
 
-  render() {
-    return (
-      <div className="App">
-        <ControlPanel>
-          <div id="sides" data-testid="sides">
-            <SideButton title='Runner' side="runner" selected={this.get('side') === 'runner'} onSelect={this.set('side')} />
-            <SideButton title='Corp' side="corp" selected={this.get('side') === 'corp'} onSelect={this.set('side')} />
-          </div>
-          <TextSearch placeholder="search title" value={this.get('title')} onChange={this.set('title')} />
-          <TextSearch placeholder="search text" value={this.get('text')} onChange={this.set('text')} />
-          <SortSelect options={options} default={this.state.sort} onChange={this.set('sort')} />
+  return (
+    <div className="App">
+      <ControlPanel>
+        <div id="sides" data-testid="sides">
+          <SideButton title='Runner' side="runner" selected={get('side') === 'runner'} onSelect={set('side')} />
+          <SideButton title='Corp' side="corp" selected={get('side') === 'corp'} onSelect={set('side')} />
+        </div>
+        <TextSearch placeholder="search title" value={get('title')} onChange={set('title')} />
+        <TextSearch placeholder="search text" value={get('text')} onChange={set('text')} />
+        <SortSelect options={options} default={settings.sort} onChange={set('sort')} />
 
-          <FilterList title="Factions" hidden={true} options={this.getOptions("factions")} clearAll={this.clearFilters("factions")} onChange={this.filterHandler("factions")} />
-          <FilterList title="Types" hidden={true} options={this.getOptions("types")} clearAll={this.clearFilters("types")} onChange={this.filterHandler("types")} />
-          <FilterList title="Subtypes" hidden={true} options={this.getOptions("subtypes")} clearAll={this.clearFilters("subtypes")} onChange={this.filterHandler("subtypes")} />
-          <NestedFilterList title="Packs" hidden={true} options={this.getOptions("packs")} clearAll={this.clearGroupFilters("packs")} onGroupChange={this.filterGroupHandler("packs")} onSubitemChange={this.filterSubitemHandler("packs")} />
+        <FilterList title="Factions" hidden={true} options={getOptions("factions")} clearAll={clearFilters("factions")} onChange={filterHandler("factions")} />
+        <FilterList title="Types" hidden={true} options={getOptions("types")} clearAll={clearFilters("types")} onChange={filterHandler("types")} />
+        <FilterList title="Subtypes" hidden={true} options={getOptions("subtypes")} clearAll={clearFilters("subtypes")} onChange={filterHandler("subtypes")} />
+        <NestedFilterList title="Packs" hidden={true} options={getOptions("packs")} clearAll={clearGroupFilters("packs")} onGroupChange={filterGroupHandler("packs")} onSubitemChange={filterSubitemHandler("packs")} />
 
-          <Reset onClick={this.reset}/>
-          <SmallPrint/>
-        </ControlPanel>
-        <CardList side={this.get('side')} sort={this.get('sort')} titleSearch={this.get('title')} textSearch={this.get('text')} factions={this.getFilter('factions')} types={this.getFilter('types')} subtypes={this.getFilter('subtypes')} packs={this.getNestedFilter('packs')}/>
-      </div>
-    );
-  }
+        <Reset onClick={reset}/>
+        <SmallPrint/>
+      </ControlPanel>
+      <CardList side={get('side')} sort={get('sort')} titleSearch={get('title')} textSearch={get('text')} factions={getFilter('factions')} types={getFilter('types')} subtypes={getFilter('subtypes')} packs={getNestedFilter('packs')}/>
+    </div>
+  );
 }
 
 export default App;
