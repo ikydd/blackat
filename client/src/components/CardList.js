@@ -8,11 +8,13 @@ import group from '../helpers/group';
 import sort from '../helpers/sort';
 import './CardList.css';
 
-const CardList = ({ sort: sortMethod, ...props }) => {
-  // const [loaded, setLoaded] = useState(false);
-  // const [cards, setCards] = useState([]);
-  // const [sortOptions, setSortOptions] = useState(() => () => () => 0);
-  // const [groupOptions, setGroupOptions] = useState(() => () => acc => acc);
+const CardList = (props) => {
+  const [things, setThings] = useState({
+    loaded: false,
+    cards: [],
+    sort: () => {},
+    group: () => () => {}
+  })
 
   const handleData = ([cards, factions, types, packs]) => {
     setThings({
@@ -23,13 +25,6 @@ const CardList = ({ sort: sortMethod, ...props }) => {
     });
   };
 
-  const [things, setThings] = useState({
-    loaded: false,
-    cards: [],
-    sort: () => {},
-    group: () => () => {}
-  })
-
   useEffect(() => {
     Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
       .then(handleData)
@@ -37,8 +32,8 @@ const CardList = ({ sort: sortMethod, ...props }) => {
   }, []);
 
   const filteredCards = filter(things.cards, props);
-  const sortedCards = filteredCards.sort(things.sort(sortMethod));
-  const reducedCards = sortedCards.reduce(things.group(sortMethod), {});
+  const sortedCards = filteredCards.sort(things.sort(props.sort));
+  const reducedCards = sortedCards.reduce(things.group(props.sort), {});
 
   const sections = Object.values(reducedCards );
 
