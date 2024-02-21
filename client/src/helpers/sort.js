@@ -34,7 +34,7 @@ const sort = (option, a, b, result = 0) => {
 
 const toCodes = ({ code }) => code;
 
-export default ({ types, packs, factions }) => {
+const sortingCallback = ({ types, packs, factions }) => {
   data.type = types.map(toCodes);
   data.pack = packs.reduce((list, { items }) => list.concat(items), []).map(toCodes);
   data.faction = factions.map(toCodes);
@@ -87,3 +87,5 @@ export default ({ types, packs, factions }) => {
     }
   }
 }
+
+export default sortingCallback;
