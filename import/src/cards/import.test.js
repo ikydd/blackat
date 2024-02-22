@@ -1,5 +1,4 @@
-const path = require("path");
-const fs = require('fs');
+const fs = require("fs");
 const request = require("../helpers/request");
 const save = require("../helpers/save");
 const apiUrl = require("../helpers/api-url");
@@ -7,7 +6,7 @@ const localPath = require("../helpers/local-path");
 const process = require("./process");
 const download = require("./download-images");
 const cards = require("./import");
-const mockPackData = require('../../../fixtures/api/packs');
+const mockPackData = require("../../../fixtures/api/packs.json");
 
 jest.mock("../helpers/request");
 jest.mock("../helpers/save");
@@ -16,8 +15,8 @@ jest.mock("./download-images");
 jest.mock("../helpers/api-url");
 jest.mock("../helpers/local-path");
 
-const mockUrl = 'https://foo.co.uk/bar';
-const mockPath = './test/foo/bar/file.json';
+const mockUrl = "https://foo.co.uk/bar";
+const mockPath = "./test/foo/bar/file.json";
 
 const mockData = {
   foo: "bar",
@@ -45,13 +44,15 @@ describe("main", () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
-    download.mockImplementation(() => Promise.resolve(mockFurtherProcessedData));
+    download.mockImplementation(() =>
+      Promise.resolve(mockFurtherProcessedData)
+    );
   });
 
   it("gets NRDB cards endpoint", async () => {
     await cards(mockPackData);
 
-    expect(apiUrl).toHaveBeenCalledWith('/cards');
+    expect(apiUrl).toHaveBeenCalledWith("/cards");
   });
 
   it("calls the NRDB endpoint", async () => {
@@ -67,7 +68,9 @@ describe("main", () => {
   });
 
   it("downloads the images", async () => {
-    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
+    const path = fs.realpathSync(
+      `${__dirname}/../../../client/public/img/cards`
+    );
 
     await cards(mockPackData);
 
@@ -77,16 +80,13 @@ describe("main", () => {
   it("gets the local save path", async () => {
     await cards(mockPackData);
 
-    expect(localPath).toHaveBeenCalledWith('cards.json');
+    expect(localPath).toHaveBeenCalledWith("cards.json");
   });
 
   it("saves the processed data", async () => {
     await cards(mockPackData);
 
-    expect(save).toHaveBeenCalledWith(
-      mockFurtherProcessedData,
-      mockPath
-    );
+    expect(save).toHaveBeenCalledWith(mockFurtherProcessedData, mockPath);
   });
 
   it("returns the list of cards", async () => {

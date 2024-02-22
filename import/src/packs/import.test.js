@@ -11,9 +11,9 @@ jest.mock("./process");
 jest.mock("../helpers/api-url");
 jest.mock("../helpers/local-path");
 
-const mockPacksUrl = 'https://foo.co.uk/packs';
-const mockCyclesUrl = 'https://foo.co.uk/cycles';
-const mockPath = './test/foo/bar/file.json';
+const mockPacksUrl = "https://foo.co.uk/packs";
+const mockCyclesUrl = "https://foo.co.uk/cycles";
+const mockPath = "./test/foo/bar/file.json";
 
 const mockPacksData = {
   foo: "bar",
@@ -35,10 +35,12 @@ describe("main", () => {
     apiUrl.mockClear();
     localPath.mockClear();
 
-    apiUrl.mockImplementation((type) => type === '/packs' ? mockPacksUrl : mockCyclesUrl );
+    apiUrl.mockImplementation((type) =>
+      type === "/packs" ? mockPacksUrl : mockCyclesUrl
+    );
     request.mockImplementation((url) => {
       const data = url === mockPacksUrl ? mockPacksData : mockCyclesData;
-      return Promise.resolve(data)
+      return Promise.resolve(data);
     });
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
@@ -48,7 +50,7 @@ describe("main", () => {
   it("gets the NRDB packs endpoint", async () => {
     await packs();
 
-    expect(apiUrl).toHaveBeenCalledWith('/packs');
+    expect(apiUrl).toHaveBeenCalledWith("/packs");
   });
 
   it("calls the NRDB packs endpoint", async () => {
@@ -60,7 +62,7 @@ describe("main", () => {
   it("gets the NRDB cycles endpoint", async () => {
     await packs();
 
-    expect(apiUrl).toHaveBeenCalledWith('/cycles');
+    expect(apiUrl).toHaveBeenCalledWith("/cycles");
   });
 
   it("calls the NRDB cycles endpoint", async () => {
@@ -78,15 +80,12 @@ describe("main", () => {
   it("gets the local save path", async () => {
     await packs();
 
-    expect(localPath).toHaveBeenCalledWith('packs.json');
+    expect(localPath).toHaveBeenCalledWith("packs.json");
   });
 
   it("saves the processed data", async () => {
     await packs();
 
-    expect(save).toHaveBeenCalledWith(
-      mockProcessedData,
-      mockPath
-    );
+    expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
   });
 });

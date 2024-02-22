@@ -7,7 +7,7 @@ jest.mock("../helpers/save");
 jest.mock("./process");
 jest.mock("../helpers/local-path");
 
-const mockPath = './test/foo/bar/file.json';
+const mockPath = "./test/foo/bar/file.json";
 
 const mockData = {
   foo: "bar",
@@ -37,15 +37,12 @@ describe("main", () => {
   it("gets the local save path", async () => {
     await subtypes(mockData);
 
-    expect(localPath).toHaveBeenCalledWith('subtypes.json');
+    expect(localPath).toHaveBeenCalledWith("subtypes.json");
   });
 
   it("saves the processed data", async () => {
     await subtypes(mockData);
 
-    expect(save).toHaveBeenCalledWith(
-      mockProcessedData,
-      mockPath
-    );
+    expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
   });
 });

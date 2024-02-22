@@ -1,122 +1,122 @@
-const nock = require('nock');
-const download = require('./download-images');
-const fs = require('fs-extra');
+/* eslint-disable no-console */
+const nock = require("nock");
+const fs = require("fs-extra");
+const download = require("./download-images");
 
-describe('download images', () => {
+describe("download images", () => {
+  const chum = {
+    imagesrc: "https://netrunnerdb.com/card_image/01075.png",
+    code: "01075",
+  };
 
-    const chum = {
-        imagesrc: 'https://netrunnerdb.com/card_image/01075.png',
-        code: '01075'
-    };
+  const dirtyLaundry = {
+    imagesrc: "https://netrunnerdb.com/card_image/25060.png",
+    code: "25060",
+  };
 
-    const dirtyLaundry = {
-        imagesrc: 'https://netrunnerdb.com/card_image/25060.png',
-        code: '25060'
+  const edenFragment = {
+    imagesrc: "http://www.cardgamedb.com/forums/uploads/an/med_ADN17_30.png",
+    code: "06030",
+  };
+
+  const testDir = `${__dirname}/public`;
+  const dir = `${__dirname}/public/tmp`;
+  const webDir = `/tmp`;
+  const fixtures = `${__dirname}/fixtures`;
+  const originalLog = console.error;
+
+  const setup = async () => {
+    if (fs.existsSync(testDir)) {
+      await fs.emptyDir(testDir);
+      await fs.remove(testDir);
     }
+  };
 
-    const edenFragment = {
-        imagesrc: 'http://www.cardgamedb.com/forums/uploads/an/med_ADN17_30.png',
-        code: '06030'
-    }
+  beforeEach(async () => {
+    await setup();
+    console.error = jest.fn();
+  });
 
-    const testDir = `${__dirname}/public`;
-    const dir = `${__dirname}/public/tmp`;
-    const webDir = `/tmp`;
-    const fixtures = `${__dirname}/fixtures`;
-    const originalLog = console.error;
+  afterEach(async () => {
+    await setup();
+    console.error = originalLog;
+    nock.cleanAll();
+  });
 
-    const setup = async () => {
-      if (fs.existsSync(testDir)){
-          await fs.emptyDir(testDir);
-          await fs.remove(testDir);
-      }
-    }
+  it("saves the image of each card to a specified folder", async () => {
+    nock.load(`${fixtures}/chum.json`);
+    nock.load(`${fixtures}/dirty-laundry.json`);
 
-    beforeEach(async () => {
-        await setup();
-        console.error = jest.fn();
-    });
+    await download(dir, [chum, dirtyLaundry]);
 
-    afterEach(async () => {
-        await setup();
-        console.error = originalLog;
-        nock.cleanAll()
-    });
+    const files = await fs.readdir(dir);
+    expect(files).toEqual(["01075.png", "25060.png"]);
+  });
 
-    it('saves the image of each card to a specified folder', async () => {
-        nock.load(`${fixtures}/chum.json`);
-        nock.load(`${fixtures}/dirty-laundry.json`);
+  it("handles cardgame db links", async () => {
+    nock.load(`${fixtures}/eden-fragment.json`);
 
-        await download(dir, [chum, dirtyLaundry]);
+    await download(dir, [edenFragment]);
 
-        const files = await fs.readdir(dir);
-        expect(files).toEqual(['01075.png', '25060.png']);
-    });
+    const files = await fs.readdir(dir);
+    expect(files).toEqual(["06030.png"]);
+  });
 
-    it('handles cardgame db links', async () => {
-        nock.load(`${fixtures}/eden-fragment.json`);
+  it("does not save the image if there already is a file in place", async () => {
+    const testBody = new Array(100000).fill("test").join("");
+    nock.load(`${fixtures}/chum.json`);
+    await fs.ensureDir(dir);
+    await fs.writeFile(`${dir}/01075.png`, testBody, "utf8");
 
-        await download(dir, [edenFragment]);
+    await download(dir, [chum]);
+    const data = await fs.readFile(`${dir}/01075.png`, "utf8");
 
-        const files = await fs.readdir(dir);
-        expect(files).toEqual(['06030.png']);
-    });
+    expect(data).toEqual(testBody);
+  });
 
-    it('does not save the image if there already is a file in place', async () => {
-        const testBody = new Array(100000).fill('test').join("");
-        nock.load(`${fixtures}/chum.json`);
-        await fs.ensureDir(dir);
-        await fs.writeFile(`${dir}/01075.png`, testBody, 'utf8');
+  it("does save the image if there already is a file but it is smaller than 30k", async () => {
+    const testBody = "test";
+    nock.load(`${fixtures}/chum.json`);
+    await fs.ensureDir(dir);
+    await fs.writeFile(`${dir}/01075.png`, testBody, "utf8");
 
-        await download(dir, [chum]);
-        const data = await fs.readFile(`${dir}/01075.png`, 'utf8');
+    await download(dir, [chum]);
+    const data = await fs.readFile(`${dir}/01075.png`, "utf8");
 
-        expect(data).toEqual(testBody);
-    });
+    expect(data).not.toEqual(testBody);
+  });
 
-    it('does save the image if there already is a file but it is smaller than 30k', async () => {
-        const testBody = 'test';
-        nock.load(`${fixtures}/chum.json`);
-        await fs.ensureDir(dir);
-        await fs.writeFile(`${dir}/01075.png`, testBody, 'utf8');
+  it("logs an error if there is a problem", async () => {
+    nock("https://netrunnerdb.com").get("/card_image/01075.png").reply(500);
 
-        await download(dir, [chum]);
-        const data = await fs.readFile(`${dir}/01075.png`, 'utf8');
+    await download(dir, [chum]);
 
-        expect(data).not.toEqual(testBody);
-    });
+    expect(console.error).toHaveBeenCalled();
+  });
 
-    it('logs an error if there is a problem', async () => {
-        nock('https://netrunnerdb.com')
-            .get('/card_image/01075.png')
-            .reply(500);
+  it("returns the card data after downloading", async () => {
+    nock.load(`${fixtures}/chum.json`);
+    nock.load(`${fixtures}/dirty-laundry.json`);
 
-        await download(dir, [chum]);
+    const expectations = [chum, dirtyLaundry].map(({ code }) =>
+      expect.objectContaining({ code })
+    );
 
-        expect(console.error).toHaveBeenCalled();
-    });
+    const cards = await download(dir, [chum, dirtyLaundry]);
 
-    it('returns the card data after downloading', async () => {
-        nock.load(`${fixtures}/chum.json`);
-        nock.load(`${fixtures}/dirty-laundry.json`);
+    expect(cards).toEqual(expectations);
+  });
 
-        const expectations = [chum, dirtyLaundry]
-            .map(({ code }) => expect.objectContaining({ code }));
+  it("fixes the imagesrc", async () => {
+    nock.load(`${fixtures}/chum.json`);
+    nock.load(`${fixtures}/dirty-laundry.json`);
 
-        const cards = await download(dir, [chum, dirtyLaundry]);
+    const expectations = ["01075.png", "25060.png"].map((file) =>
+      expect.objectContaining({ imagesrc: `${webDir}/${file}` })
+    );
 
-        expect(cards).toEqual(expectations);
-    });
+    const cards = await download(dir, [chum, dirtyLaundry]);
 
-    it('fixes the imagesrc', async () => {
-        nock.load(`${fixtures}/chum.json`);
-        nock.load(`${fixtures}/dirty-laundry.json`);
-
-        const expectations = ['01075.png', '25060.png']
-            .map((file) => expect.objectContaining({ imagesrc: `${webDir}/${file}`}));
-
-        const cards = await download(dir, [chum, dirtyLaundry]);
-
-        expect(cards).toEqual(expectations);
-    });
-})
+    expect(cards).toEqual(expectations);
+  });
+});

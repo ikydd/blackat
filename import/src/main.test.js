@@ -3,8 +3,8 @@ const factions = require("./factions/import");
 const types = require("./types/import");
 const packs = require("./packs/import");
 const subtypes = require("./subtypes/import");
-const mockPackData = require("../../fixtures/api/packs");
-const mockCardData = require("../../fixtures/api/cards");
+const mockPackData = require("../../fixtures/api/packs.json");
+const mockCardData = require("../../fixtures/api/cards.json");
 
 const main = require("./main");
 

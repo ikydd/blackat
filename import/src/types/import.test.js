@@ -11,8 +11,8 @@ jest.mock("./process");
 jest.mock("../helpers/api-url");
 jest.mock("../helpers/local-path");
 
-const mockUrl = 'https://foo.co.uk/bar';
-const mockPath = './test/foo/bar/file.json';
+const mockUrl = "https://foo.co.uk/bar";
+const mockPath = "./test/foo/bar/file.json";
 
 const mockData = {
   foo: "bar",
@@ -40,7 +40,7 @@ describe("main", () => {
   it("gets the NRDB types endpoint", async () => {
     await types();
 
-    expect(apiUrl).toHaveBeenCalledWith('/types');
+    expect(apiUrl).toHaveBeenCalledWith("/types");
   });
 
   it("calls the NRDB endpoint", async () => {
@@ -58,15 +58,12 @@ describe("main", () => {
   it("gets the local save path", async () => {
     await types();
 
-    expect(localPath).toHaveBeenCalledWith('types.json');
+    expect(localPath).toHaveBeenCalledWith("types.json");
   });
 
   it("saves the processed data", async () => {
     await types();
 
-    expect(save).toHaveBeenCalledWith(
-      mockProcessedData,
-      mockPath
-    );
+    expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
   });
 });

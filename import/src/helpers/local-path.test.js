@@ -6,7 +6,16 @@ describe("data-path", () => {
     const result = dataPath("/foo.json");
 
     expect(result).toEqual(
-      path.join(__dirname, "..", "..", "..", "client", "public", "data", "foo.json")
+      path.join(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "client",
+        "public",
+        "data",
+        "foo.json"
+      )
     );
   });
 });

@@ -5,11 +5,11 @@ describe("save", () => {
   const dir = `${__dirname}/tmp`;
 
   const setup = async () => {
-    if (fs.existsSync(dir)){
-        await fs.emptyDir(dir);
-        await fs.remove(dir);
+    if (fs.existsSync(dir)) {
+      await fs.emptyDir(dir);
+      await fs.remove(dir);
     }
-  }
+  };
 
   beforeEach(setup);
   afterEach(setup);
@@ -33,7 +33,7 @@ describe("save", () => {
 
     await save(mockData, `${dir}/bar.json`);
 
-    const file = await fs.readFile(`${dir}/bar.json`, 'utf-8');
+    const file = await fs.readFile(`${dir}/bar.json`, "utf-8");
 
     expect(file).toBe(JSON.stringify(mockData));
   });
