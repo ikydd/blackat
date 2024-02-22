@@ -1,22 +1,22 @@
-import React from 'react'
-import './SideButton.css'
+import React from "react";
+import "./SideButton.css";
 
 const SideButton = ({ title, selected, side, onSelect }) => {
   const select = () => {
     if (!selected) {
-      onSelect(side)
+      onSelect(side);
     }
-  }
+  };
 
   return (
     <h4
       role="button"
-      className={'side-button' + (selected ? ' selected' : '')}
+      className={"side-button" + (selected ? " selected" : "")}
       onClick={select}
     >
       {title}
     </h4>
-  )
-}
+  );
+};
 
-export default SideButton
+export default SideButton;

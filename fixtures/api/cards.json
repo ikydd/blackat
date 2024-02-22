@@ -1,75 +1,75 @@
 [
-    {
-        "title": "Chum",
-        "code": "01075",
-        "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
-        "imagesrc": "/data/img/01075.png",
-        "side": "corp",
-        "faction": "jinteki",
-        "type": "ice",
-        "pack": "core",
-        "keywords": "Code Gate"
-    },
-    {
-        "title": "Data Mine",
-        "code": "01076",
-        "text": "[subroutine] Do 1 net damage. Trash Data Mine.",
-        "imagesrc": "/data/img/01076.png",
-        "side": "corp",
-        "faction": "jinteki",
-        "type": "ice",
-        "pack": "core",
-        "keywords": "Trap - AP"
-    },
-    {
-        "title": "Neural Katana",
-        "code": "01077",
-        "text": "[subroutine] Do 3 net damage.",
-        "imagesrc": "/data/img/01077.png",
-        "side": "corp",
-        "faction": "jinteki",
-        "type": "ice",
-        "pack": "core",
-        "keywords": "Sentry - AP"
-    },
-    {
-        "code": "25050",
-        "faction": "shaper",
-        "pack": "fp",
-        "side": "runner",
-        "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
-        "title": "R&D Interface",
-        "type": "hardware"
-    },
-    {
-        "title": "Gordian Blade",
-        "code": "01043",
-        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
-        "imagesrc": "/data/img/01043.png",
-        "side": "runner",
-        "faction": "shaper",
-        "type": "program",
-        "pack": "core",
-        "keywords": "Icebreaker - Decoder"
-    },
-    {
-        "code": "02011",
-        "faction": "haas-bioroid",
-        "pack": "wla",
-        "side": "corp",
-        "text": "You have 1 additional [click] to spend each turn.",
-        "title": "Mandatory Upgrades",
-        "type": "agenda",
-        "keywords": "Initiative"
-    },
-    {
-        "title": "D4v1d",
-        "code": "06033",
-        "text": "Place 3 power counters on D4v1d when it is installed.\n<strong>Hosted power counter:</strong> Break ice subroutine on a piece of ice that has a strength of 5 or greater.",
-        "imagesrc": "/data/img/06033.png",
-        "side": "runner",
-        "faction": "anarch",
-        "type": "program",
-        "pack": "wla"
-    }
+  {
+    "title": "Chum",
+    "code": "01075",
+    "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
+    "imagesrc": "/data/img/01075.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice",
+    "pack": "core",
+    "keywords": "Code Gate"
+  },
+  {
+    "title": "Data Mine",
+    "code": "01076",
+    "text": "[subroutine] Do 1 net damage. Trash Data Mine.",
+    "imagesrc": "/data/img/01076.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice",
+    "pack": "core",
+    "keywords": "Trap - AP"
+  },
+  {
+    "title": "Neural Katana",
+    "code": "01077",
+    "text": "[subroutine] Do 3 net damage.",
+    "imagesrc": "/data/img/01077.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice",
+    "pack": "core",
+    "keywords": "Sentry - AP"
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "pack": "fp",
+    "side": "runner",
+    "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+    "title": "R&D Interface",
+    "type": "hardware"
+  },
+  {
+    "title": "Gordian Blade",
+    "code": "01043",
+    "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+    "imagesrc": "/data/img/01043.png",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "program",
+    "pack": "core",
+    "keywords": "Icebreaker - Decoder"
+  },
+  {
+    "code": "02011",
+    "faction": "haas-bioroid",
+    "pack": "wla",
+    "side": "corp",
+    "text": "You have 1 additional [click] to spend each turn.",
+    "title": "Mandatory Upgrades",
+    "type": "agenda",
+    "keywords": "Initiative"
+  },
+  {
+    "title": "D4v1d",
+    "code": "06033",
+    "text": "Place 3 power counters on D4v1d when it is installed.\n<strong>Hosted power counter:</strong> Break ice subroutine on a piece of ice that has a strength of 5 or greater.",
+    "imagesrc": "/data/img/06033.png",
+    "side": "runner",
+    "faction": "anarch",
+    "type": "program",
+    "pack": "wla"
+  }
 ]

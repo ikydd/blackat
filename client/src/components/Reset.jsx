@@ -1,5 +1,5 @@
-import React from 'react'
-import './Reset.css'
+import React from "react";
+import "./Reset.css";
 
 const Reset = ({ onClick }) => (
   <div id="reset">
@@ -7,6 +7,6 @@ const Reset = ({ onClick }) => (
       Reset Filters
     </h5>
   </div>
-)
+);
 
-export default Reset
+export default Reset;

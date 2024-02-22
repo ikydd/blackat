@@ -1,21 +1,21 @@
 [
-    {
-        "code": "02067",
-        "title": "All-nighter",
-        "text": "[click], [trash]: Gain [click][click].",
-        "imagesrc": "https://netrunnerdb.com/card_image/large/02067.jpg",
-        "side": "runner",
-        "faction": "shaper",
-        "type": "resource",
-        "pack": "asis"
-    },
-    {
-        "code": "25050",
-        "faction": "shaper",
-        "pack": "fp",
-        "side": "runner",
-        "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
-        "title": "R&D Interface",
-        "type": "hardware"
-    }
+  {
+    "code": "02067",
+    "title": "All-nighter",
+    "text": "[click], [trash]: Gain [click][click].",
+    "imagesrc": "https://netrunnerdb.com/card_image/large/02067.jpg",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "resource",
+    "pack": "asis"
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "pack": "fp",
+    "side": "runner",
+    "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+    "title": "R&D Interface",
+    "type": "hardware"
+  }
 ]

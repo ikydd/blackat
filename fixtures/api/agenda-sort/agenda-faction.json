@@ -1,11 +1,11 @@
 [
   {
-      "title": "Bar",
-      "code": "01075",
-      "faction": "nbn",
-      "side": "corp",
-      "agenda": 3,
-      "advancement": 4
+    "title": "Bar",
+    "code": "01075",
+    "faction": "nbn",
+    "side": "corp",
+    "agenda": 3,
+    "advancement": 4
   },
   {
     "code": "25050",

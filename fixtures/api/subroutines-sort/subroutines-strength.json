@@ -1,18 +1,18 @@
 [
-    {
-        "title": "Bar",
-        "code": "01075",
-        "side": "corp",
-        "type": "ice",
-        "strength": 2,
-        "subroutines": 3
-    },
-    {
-      "code": "25050",
-      "title": "Foo",
-      "side": "corp",
-      "type": "ice",
-      "strength": 3,
-      "subroutines": 3
-    }
+  {
+    "title": "Bar",
+    "code": "01075",
+    "side": "corp",
+    "type": "ice",
+    "strength": 2,
+    "subroutines": 3
+  },
+  {
+    "code": "25050",
+    "title": "Foo",
+    "side": "corp",
+    "type": "ice",
+    "strength": 3,
+    "subroutines": 3
+  }
 ]

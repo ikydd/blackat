@@ -1,5 +1,5 @@
-import React from 'react'
-import './Loader.css'
+import React from "react";
+import "./Loader.css";
 
 const Loader = () => (
   <div className="spinner" role="progressbar">
@@ -7,6 +7,6 @@ const Loader = () => (
     <div className="bounce2"></div>
     <div className="bounce3"></div>
   </div>
-)
+);
 
-export default Loader
+export default Loader;

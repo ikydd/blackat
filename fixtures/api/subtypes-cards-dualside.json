@@ -1,24 +1,24 @@
 [
-    {
-      "code": "09037",
-      "faction": "adam",
-      "imagesrc": "https://netrunnerdb.com/card_image/09037.png",
-      "keywords": "Bioroid",
-      "pack": "dad",
-      "side": "runner",
-      "text": "You start the game with 3 different <strong>directive</strong> cards installed (these cards are not considered part of your deck).",
-      "title": "Adam: Compulsive Hacker",
-      "type": "identity"
-    },
-    {
-      "code": "11010",
-      "faction": "haas-bioroid",
-      "imagesrc": "https://netrunnerdb.com/card_image/11010.png",
-      "keywords": "Code Gate - Bioroid",
-      "pack": "23s",
-      "side": "corp",
-      "text": "The Runner can spend [click] to break any subroutine on Fairchild 1.0.\n[subroutine]The Runner must pay 1[credit] or trash 1 of his or her installed cards.\n[subroutine]The Runner must pay 1[credit] or trash 1 of his or her installed cards.",
-      "title": "Fairchild 1.0",
-      "type": "ice"
-    }
+  {
+    "code": "09037",
+    "faction": "adam",
+    "imagesrc": "https://netrunnerdb.com/card_image/09037.png",
+    "keywords": "Bioroid",
+    "pack": "dad",
+    "side": "runner",
+    "text": "You start the game with 3 different <strong>directive</strong> cards installed (these cards are not considered part of your deck).",
+    "title": "Adam: Compulsive Hacker",
+    "type": "identity"
+  },
+  {
+    "code": "11010",
+    "faction": "haas-bioroid",
+    "imagesrc": "https://netrunnerdb.com/card_image/11010.png",
+    "keywords": "Code Gate - Bioroid",
+    "pack": "23s",
+    "side": "corp",
+    "text": "The Runner can spend [click] to break any subroutine on Fairchild 1.0.\n[subroutine]The Runner must pay 1[credit] or trash 1 of his or her installed cards.\n[subroutine]The Runner must pay 1[credit] or trash 1 of his or her installed cards.",
+    "title": "Fairchild 1.0",
+    "type": "ice"
+  }
 ]

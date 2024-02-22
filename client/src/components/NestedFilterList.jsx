@@ -1,41 +1,41 @@
-import React, { useState } from 'react'
-import FilterItem from './FilterItem'
-import FilterNotification from './FilterNotification'
-import './FilterList.css'
-import './NestedFilterList.css'
+import React, { useState } from "react";
+import FilterItem from "./FilterItem";
+import FilterNotification from "./FilterNotification";
+import "./FilterList.css";
+import "./NestedFilterList.css";
 
 const NestedFilterList = ({
-  title = 'Missing',
+  title = "Missing",
   hidden = false,
   clearAll,
   onGroupChange,
   onSubitemChange,
   options = [],
 }) => {
-  const [isHidden, setHidden] = useState(hidden)
+  const [isHidden, setHidden] = useState(hidden);
 
   const changeGroup =
     (group) =>
     ({ target: { checked } }) => {
-      onGroupChange(group, checked)
-    }
+      onGroupChange(group, checked);
+    };
 
   const changeSubitem =
     (item) =>
     ({ target: { checked } }) => {
-      onSubitemChange(item, checked)
-    }
+      onSubitemChange(item, checked);
+    };
 
   const toggleHidden = () => {
-    setHidden(!isHidden)
-  }
+    setHidden(!isHidden);
+  };
 
   const inUse = () =>
     options
       .reduce((list, group) => list.concat(group.items), [])
-      .find(({ selected }) => selected)
+      .find(({ selected }) => selected);
 
-  const keyword = title.toLowerCase()
+  const keyword = title.toLowerCase();
 
   const generateFilters = (options) =>
     options.map((group) => {
@@ -50,7 +50,7 @@ const NestedFilterList = ({
             />
           ))}
         </div>
-      )
+      );
 
       return (
         <div className="filter-group" key={group.code}>
@@ -58,8 +58,8 @@ const NestedFilterList = ({
           {subFilters}
           <hr className="filter-divider" />
         </div>
-      )
-    })
+      );
+    });
 
   const filters = isHidden !== true && (
     <div className="filter-list-items">
@@ -68,16 +68,16 @@ const NestedFilterList = ({
       </h5>
       {generateFilters(options)}
     </div>
-  )
+  );
 
   return (
-    <div className="filter-list" data-testid={keyword + '-filters'}>
+    <div className="filter-list" data-testid={keyword + "-filters"}>
       <h4 className="filter-list-title" onClick={toggleHidden}>
         {title} {<FilterNotification on={inUse()} />}
       </h4>
       {filters}
     </div>
-  )
-}
+  );
+};
 
-export default NestedFilterList
+export default NestedFilterList;

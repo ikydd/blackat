@@ -1,11 +1,11 @@
 [
   {
-      "title": "Bar",
-      "code": "01075",
-      "faction": "jinteki",
-      "side": "corp",
-      "agenda": 2,
-      "advancement": 4
+    "title": "Bar",
+    "code": "01075",
+    "faction": "jinteki",
+    "side": "corp",
+    "agenda": 2,
+    "advancement": 4
   },
   {
     "code": "25050",

@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
-import FilterItem from './FilterItem'
-import FilterNotification from './FilterNotification'
-import './FilterList.css'
+import React, { useState } from "react";
+import FilterItem from "./FilterItem";
+import FilterNotification from "./FilterNotification";
+import "./FilterList.css";
 
 const FilterList = ({
   hidden = false,
-  title = 'Missing',
+  title = "Missing",
   onChange,
   options = [],
   clearAll,
 }) => {
-  const [isHidden, setHidden] = useState(hidden)
+  const [isHidden, setHidden] = useState(hidden);
 
   const change =
     (item) =>
     ({ target: { checked } }) => {
-      onChange(item, checked)
-    }
+      onChange(item, checked);
+    };
 
   const toggleHidden = () => {
-    setHidden(!isHidden)
-  }
+    setHidden(!isHidden);
+  };
 
-  const inUse = () => options.some(({ selected }) => selected)
+  const inUse = () => options.some(({ selected }) => selected);
 
-  const keyword = title.toLowerCase()
+  const keyword = title.toLowerCase();
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
@@ -47,7 +47,7 @@ const FilterList = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default FilterList
+export default FilterList;

@@ -1,5 +1,5 @@
-import React from 'react'
-import Icon from './Icon'
+import React from "react";
+import Icon from "./Icon";
 
 const FilterItem = ({ item, keyword, onChange }) => (
   <div className="checkbox">
@@ -15,6 +15,6 @@ const FilterItem = ({ item, keyword, onChange }) => (
       &nbsp; <Icon code={item.code} /> {item.name}
     </label>
   </div>
-)
+);
 
-export default FilterItem
+export default FilterItem;

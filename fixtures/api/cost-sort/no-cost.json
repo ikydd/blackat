@@ -1,15 +1,15 @@
 [
-    {
-        "title": "Foo",
-        "code": "01075",
-        "faction": "jinteki",
-        "type": "ice",
-        "cost": 1
-    },
-    {
-      "code": "02011",
-      "faction": "haas-bioroid",
-      "title": "Mandatory Upgrades",
-      "type": "agenda"
-    }
+  {
+    "title": "Foo",
+    "code": "01075",
+    "faction": "jinteki",
+    "type": "ice",
+    "cost": 1
+  },
+  {
+    "code": "02011",
+    "faction": "haas-bioroid",
+    "title": "Mandatory Upgrades",
+    "type": "agenda"
+  }
 ]

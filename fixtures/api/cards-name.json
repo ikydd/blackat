@@ -9,13 +9,13 @@
     "type": "agenda"
   },
   {
-      "title": "Chum",
-      "code": "01075",
-      "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
-      "imagesrc": "/data/img/01075.png",
-      "side": "corp",
-      "faction": "jinteki",
-      "type": "ice",
-      "pack": "core"
+    "title": "Chum",
+    "code": "01075",
+    "text": "[subroutine] The next piece of ice the Runner encounters during this run has +2 strength. When that encounter ends, if the Runner did not break all subroutines on that ice, do 3 net damage.\n<errata>Errata from CR 1.2</errata>",
+    "imagesrc": "/data/img/01075.png",
+    "side": "corp",
+    "faction": "jinteki",
+    "type": "ice",
+    "pack": "core"
   }
 ]

@@ -1,25 +1,25 @@
 .card-tile.show {
-    display:block;
+  display: block;
 }
 
 .card-tile {
-    float:left;
-    margin: 6px;
-    overflow: visible;
-    height: 279.3px;
-    width: 200px;
+  float: left;
+  margin: 6px;
+  overflow: visible;
+  height: 279.3px;
+  width: 200px;
 }
 
 .card-tile img {
-    position:relative;
-    height: 279.3px;
-    width: 200px;
+  position: relative;
+  height: 279.3px;
+  width: 200px;
 }
 
 .card-tile img:hover {
-    height: 419px;
-    width: 300px;
-    left:-50px;
-    top:-69.8px;
-    z-index:9999;
+  height: 419px;
+  width: 300px;
+  left: -50px;
+  top: -69.8px;
+  z-index: 9999;
 }

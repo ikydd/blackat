@@ -1,16 +1,16 @@
 [
-    {
-        "title": "Foo",
-        "code": "01075",
-        "faction": "shaper",
-        "type": "hardware",
-        "cost": 3
-    },
-    {
-      "code": "25050",
-      "faction": "criminal",
-      "title": "Bar",
-      "type": "hardware",
-      "cost": 3
-    }
+  {
+    "title": "Foo",
+    "code": "01075",
+    "faction": "shaper",
+    "type": "hardware",
+    "cost": 3
+  },
+  {
+    "code": "25050",
+    "faction": "criminal",
+    "title": "Bar",
+    "type": "hardware",
+    "cost": 3
+  }
 ]

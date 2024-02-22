@@ -1,11 +1,11 @@
-import React from 'react'
-import './SortSelect.css'
+import React from "react";
+import "./SortSelect.css";
 
 const SortSelect = ({ default: defaultValue, options = [], onChange }) => {
   const handleChange = (ev) => {
-    ev.preventDefault()
-    onChange(ev.target.value)
-  }
+    ev.preventDefault();
+    onChange(ev.target.value);
+  };
 
   return (
     <div className="form-group">
@@ -21,7 +21,7 @@ const SortSelect = ({ default: defaultValue, options = [], onChange }) => {
         ))}
       </select>
     </div>
-  )
-}
+  );
+};
 
-export default SortSelect
+export default SortSelect;

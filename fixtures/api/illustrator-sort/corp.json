@@ -1,14 +1,14 @@
 [
-    {
-        "code": "02011",
-        "title": "Mandatory Upgrades",
-        "side": "corp",
-        "illustrator": "Mauricio Herrera"
-    },
-    {
-        "code": "01092",
-        "illustrator": "Ed Mattinian",
-        "side": "corp",
-        "title": "SanSan City Grid"
-    }
+  {
+    "code": "02011",
+    "title": "Mandatory Upgrades",
+    "side": "corp",
+    "illustrator": "Mauricio Herrera"
+  },
+  {
+    "code": "01092",
+    "illustrator": "Ed Mattinian",
+    "side": "corp",
+    "title": "SanSan City Grid"
+  }
 ]

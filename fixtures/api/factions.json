@@ -1,62 +1,62 @@
 [
-    {
-        "code": "adam",
-        "name": "Adam",
-        "side": "runner"
-    },
-    {
-        "code": "anarch",
-        "name": "Anarch",
-        "side": "runner"
-    },
-    {
-        "code": "apex",
-        "name": "Apex",
-        "side": "runner"
-    },
-    {
-        "code": "criminal",
-        "name": "Criminal",
-        "side": "runner"
-    },
-    {
-        "code": "haas-bioroid",
-        "name": "Haas-Bioroid",
-        "side": "corp"
-    },
-    {
-        "code": "jinteki",
-        "name": "Jinteki",
-        "side": "corp"
-    },
-    {
-        "code": "nbn",
-        "name": "NBN",
-        "side": "corp"
-    },
-    {
-        "code": "shaper",
-        "name": "Shaper",
-        "side": "runner"
-    },
-    {
-        "code": "sunny-lebeau",
-        "name": "Sunny Lebeau",
-        "side": "runner"
-    },
-    {
-        "code": "weyland-consortium",
-        "name": "Weyland Consortium",
-        "side": "corp"
-    },
-    {
-        "code": "neutral-corp",
-        "name": "Neutral",
-        "side": "corp"
-    },
-    {
-        "code": "neutral-runner",
-        "name": "Neutral",
-        "side": "runner"
-    }
+  {
+    "code": "adam",
+    "name": "Adam",
+    "side": "runner"
+  },
+  {
+    "code": "anarch",
+    "name": "Anarch",
+    "side": "runner"
+  },
+  {
+    "code": "apex",
+    "name": "Apex",
+    "side": "runner"
+  },
+  {
+    "code": "criminal",
+    "name": "Criminal",
+    "side": "runner"
+  },
+  {
+    "code": "haas-bioroid",
+    "name": "Haas-Bioroid",
+    "side": "corp"
+  },
+  {
+    "code": "jinteki",
+    "name": "Jinteki",
+    "side": "corp"
+  },
+  {
+    "code": "nbn",
+    "name": "NBN",
+    "side": "corp"
+  },
+  {
+    "code": "shaper",
+    "name": "Shaper",
+    "side": "runner"
+  },
+  {
+    "code": "sunny-lebeau",
+    "name": "Sunny Lebeau",
+    "side": "runner"
+  },
+  {
+    "code": "weyland-consortium",
+    "name": "Weyland Consortium",
+    "side": "corp"
+  },
+  {
+    "code": "neutral-corp",
+    "name": "Neutral",
+    "side": "corp"
+  },
+  {
+    "code": "neutral-runner",
+    "name": "Neutral",
+    "side": "runner"
+  }
 ]

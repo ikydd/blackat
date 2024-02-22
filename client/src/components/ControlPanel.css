@@ -1,19 +1,19 @@
 #control-panel {
-    background-image: url('../../public/img/blackat-trim-flip.png');
-    background-size: 260px;
-    background-repeat: no-repeat;
-    background-position: 20px 0px;
-    position:absolute;
-    top: 0;
-    left: 0;
-    padding-top: 1em;
-    padding-left: 2em;
-    padding-right: 3em;
-    width: 20em;
-    min-height: 454px;
+  background-image: url("../../public/img/blackat-trim-flip.png");
+  background-size: 260px;
+  background-repeat: no-repeat;
+  background-position: 20px 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 1em;
+  padding-left: 2em;
+  padding-right: 3em;
+  width: 20em;
+  min-height: 454px;
 }
 
 #sides {
-    text-align:center;
-    color: #fff;
+  text-align: center;
+  color: #fff;
 }

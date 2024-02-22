@@ -1,22 +1,22 @@
 [
-    {
-        "code": "01050",
-        "title": "Sure Gamble",
-        "text": "Gain 9[credit].",
-        "imagesrc": "https://netrunnerdb.com/card_image/large/01050.jpg",
-        "side": "runner",
-        "faction": "neutral-runner",
-        "type": "event",
-        "pack": "core"
-    },
-    {
-        "title": "Gordian Blade",
-        "code": "01043",
-        "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
-        "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
-        "side": "runner",
-        "faction": "shaper",
-        "type": "program",
-        "pack": "core"
-    }
+  {
+    "code": "01050",
+    "title": "Sure Gamble",
+    "text": "Gain 9[credit].",
+    "imagesrc": "https://netrunnerdb.com/card_image/large/01050.jpg",
+    "side": "runner",
+    "faction": "neutral-runner",
+    "type": "event",
+    "pack": "core"
+  },
+  {
+    "title": "Gordian Blade",
+    "code": "01043",
+    "text": "1[credit]: Break <strong>code gate</strong> subroutine.\n1[credit]: +1 strength for the remainder of this run.",
+    "imagesrc": "https://netrunnerdb.com/card_image/01043.png",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "program",
+    "pack": "core"
+  }
 ]
