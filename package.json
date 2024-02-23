@@ -7,6 +7,7 @@
     "build:client": "parcel build client/public/index.html --dist-dir client/build",
     "build:data": "node import/index.js",
     "test": "jest",
+    "watch": "jest --watch",
     "test:client": "jest client",
     "test:import": "jest import",
     "watch:import": "jest import/**/*.test.js --watch",

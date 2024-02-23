@@ -22,7 +22,7 @@ describe("process factions", () => {
   });
 
   it("orders the subtypes alphabetically", () => {
-    const output = process(mockDataSides);
+    const output = process(mockData);
 
     expect(output.map(({ name }) => name)).toEqual([
       "AP",
@@ -33,7 +33,7 @@ describe("process factions", () => {
   });
 
   it("outputs the side code", () => {
-    const output = process(mockDataDualSide);
+    const output = process(mockDataSides);
 
     expect(output.map(({ side }) => side)).toEqual([
       "corp",
@@ -44,7 +44,7 @@ describe("process factions", () => {
   });
 
   it("outputs null when a subtype is for both sides", () => {
-    const output = process(mockData);
+    const output = process(mockDataDualSide);
 
     expect(output[0].side).toBeNull();
   });
