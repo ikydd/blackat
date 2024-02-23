@@ -30,9 +30,7 @@ describe('Subtypes filters', () => {
     fireEvent.click(getByText('Subtypes'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const runnerSubtypes = subtypes.filter(
-      ({ side }) => side === 'runner' || side === null
-    ).length;
+    const runnerSubtypes = subtypes.filter(({ side }) => side === 'runner' || side === null).length;
 
     expect(checkboxes).toHaveLength(runnerSubtypes);
   });
@@ -55,9 +53,7 @@ describe('Subtypes filters', () => {
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const corpSubtypes = subtypes.filter(
-      ({ side }) => side === 'corp' || side === null
-    ).length;
+    const corpSubtypes = subtypes.filter(({ side }) => side === 'corp' || side === null).length;
 
     expect(checkboxes).toHaveLength(corpSubtypes);
   });
@@ -92,9 +88,7 @@ describe('Subtypes filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(
-      <App />
-    );
+    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
     const filterBlock = getByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     const unchecked = await within(filterBlock).findByLabelText('Icebreaker');

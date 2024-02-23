@@ -42,18 +42,14 @@ describe('SortSelect', () => {
   });
 
   it('respsects the provided default', () => {
-    const { getByRole } = render(
-      <SortSelect options={testOptions} default="type" />
-    );
+    const { getByRole } = render(<SortSelect options={testOptions} default="type" />);
 
     expect(getByRole('combobox').value).toEqual('type');
   });
 
   it('calls a callback on change', async () => {
     const cb = jest.fn();
-    const { getByRole } = render(
-      <SortSelect options={testOptions} onChange={cb} />
-    );
+    const { getByRole } = render(<SortSelect options={testOptions} onChange={cb} />);
     const input = getByRole('combobox');
 
     fireEvent.change(input, { currentTarget: { value: 'pack' } });

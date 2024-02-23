@@ -49,16 +49,10 @@ describe('process cards', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].imagesrc).toEqual(
-      mockCardsData.imageUrlTemplate.replace(
-        '{code}',
-        mockCardsData.data[0].code
-      )
+      mockCardsData.imageUrlTemplate.replace('{code}', mockCardsData.data[0].code)
     );
     expect(output[1].imagesrc).toEqual(
-      mockCardsData.imageUrlTemplate.replace(
-        '{code}',
-        mockCardsData.data[1].code
-      )
+      mockCardsData.imageUrlTemplate.replace('{code}', mockCardsData.data[1].code)
     );
   });
 

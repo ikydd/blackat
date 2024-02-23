@@ -74,9 +74,7 @@ describe.skip('saving state', () => {
     const filterBlock = getByTestId('types-filters');
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const runnerTypes = types.filter(
-      ({ side }) => side === 'runner' || side === null
-    ).length;
+    const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
 
     expect(checkboxes).toHaveLength(runnerTypes);
   });

@@ -20,10 +20,7 @@ describe('ApiCall', () => {
   it('calls the correct URL on the api', async () => {
     await getData('foo');
 
-    expect(global.fetch).toHaveBeenCalledWith(
-      '/data/foo.json',
-      expect.any(Object)
-    );
+    expect(global.fetch).toHaveBeenCalledWith('/data/foo.json', expect.any(Object));
   });
 
   it('request the data gzipped', async () => {

@@ -31,9 +31,7 @@ const NestedFilterList = ({
   };
 
   const inUse = () =>
-    options
-      .reduce((list, group) => list.concat(group.items), [])
-      .find(({ selected }) => selected);
+    options.reduce((list, group) => list.concat(group.items), []).find(({ selected }) => selected);
 
   const keyword = title.toLowerCase();
 
@@ -42,12 +40,7 @@ const NestedFilterList = ({
       const subFilters = group.items.length > 1 && (
         <div className="filter-group-items">
           {group.items.map((item) => (
-            <FilterItem
-              key={item.code}
-              item={item}
-              keyword={keyword}
-              onChange={changeSubitem}
-            />
+            <FilterItem key={item.code} item={item} keyword={keyword} onChange={changeSubitem} />
           ))}
         </div>
       );

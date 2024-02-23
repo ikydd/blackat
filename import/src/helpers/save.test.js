@@ -15,17 +15,13 @@ describe('save', () => {
   afterEach(setup);
 
   it('errors if you do not pass in data', async () => {
-    await expect(save(null, `${dir}/bar.json`)).rejects.toThrow(
-      'Some data is required to save'
-    );
+    await expect(save(null, `${dir}/bar.json`)).rejects.toThrow('Some data is required to save');
   });
 
   it('errors if you do not pass in a file path', async () => {
     const mockData = {};
 
-    await expect(save(mockData)).rejects.toThrow(
-      'A file path is required to save data'
-    );
+    await expect(save(mockData)).rejects.toThrow('A file path is required to save data');
   });
 
   it('saves to the requested path', async () => {

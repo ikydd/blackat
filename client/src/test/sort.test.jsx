@@ -55,10 +55,7 @@ describe('Sort', () => {
   });
 
   it('sorts by faction by default', async () => {
-    api.setData(
-      'cards',
-      require('../../../fixtures/api/faction-sort/faction-runner')
-    );
+    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'));
     const { findAllByRole, getByRole } = render(<App />);
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -68,10 +65,7 @@ describe('Sort', () => {
   });
 
   it('sorts by faction', async () => {
-    api.setData(
-      'cards',
-      require('../../../fixtures/api/faction-sort/faction-runner')
-    );
+    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'));
     const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'faction' } });
 
@@ -111,19 +105,11 @@ describe('Sort', () => {
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
 
-    expect(cards).toEqual([
-      'Chum',
-      'Data Mine',
-      'Mandatory Upgrades',
-      'Neural Katana'
-    ]);
+    expect(cards).toEqual(['Chum', 'Data Mine', 'Mandatory Upgrades', 'Neural Katana']);
   });
 
   it('sorts by illustrator', async () => {
-    api.setData(
-      'cards',
-      require('../../../fixtures/api/illustrator-sort/corp')
-    );
+    api.setData('cards', require('../../../fixtures/api/illustrator-sort/corp'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), {
       target: { value: 'illustrator' }
@@ -160,10 +146,7 @@ describe('Sort', () => {
   });
 
   it('sorts by strength', async () => {
-    api.setData(
-      'cards',
-      require('../../../fixtures/api/strength-sort/strength')
-    );
+    api.setData('cards', require('../../../fixtures/api/strength-sort/strength'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'strength' } });
     fireEvent.click(getByText('Corp'));
@@ -175,10 +158,7 @@ describe('Sort', () => {
   });
 
   it('sorts by subroutines', async () => {
-    api.setData(
-      'cards',
-      require('../../../fixtures/api/subroutines-sort/subroutines')
-    );
+    api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), {
       target: { value: 'subroutines' }

@@ -75,14 +75,10 @@ describe('Packs filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(
-      <App />
-    );
+    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
     const filterBlock = getByTestId('packs-filters');
     fireEvent.click(getByText('Packs'));
-    const unchecked = await within(filterBlock).findByLabelText(
-      'What Lies Ahead'
-    );
+    const unchecked = await within(filterBlock).findByLabelText('What Lies Ahead');
     const all = await findAllByRole('img');
 
     await waitFor(() => {
@@ -119,9 +115,7 @@ describe('Packs filters', () => {
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
-      const pack = await within(filterBlock).findByLabelText(
-        genesis.items[3].name
-      );
+      const pack = await within(filterBlock).findByLabelText(genesis.items[3].name);
       fireEvent.click(pack);
 
       const cycle = await findByLabelText(genesis.name);
@@ -135,9 +129,7 @@ describe('Packs filters', () => {
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
-      const pack = await within(filterBlock).findByLabelText(
-        genesis.items[3].name
-      );
+      const pack = await within(filterBlock).findByLabelText(genesis.items[3].name);
       fireEvent.click(pack);
 
       const cycle = await findByLabelText(genesis.name);
@@ -149,9 +141,7 @@ describe('Packs filters', () => {
         .filter(({ checked }) => checked)
         .map((item) => item.getAttribute('value'));
 
-      const expected = ['genesis'].concat(
-        genesis.items.map(({ code }) => code)
-      );
+      const expected = ['genesis'].concat(genesis.items.map(({ code }) => code));
 
       expect(checked).toEqual(expected);
     });
@@ -163,9 +153,7 @@ describe('Packs filters', () => {
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
-      const pack = await within(filterBlock).findByLabelText(
-        genesis.items[3].name
-      );
+      const pack = await within(filterBlock).findByLabelText(genesis.items[3].name);
       fireEvent.click(pack);
 
       let cycle = await findByLabelText(genesis.name);
@@ -191,9 +179,7 @@ describe('Packs filters', () => {
       let cycle = await findByLabelText(genesis.name);
       fireEvent.click(cycle);
 
-      const pack = await within(filterBlock).findByLabelText(
-        genesis.items[3].name
-      );
+      const pack = await within(filterBlock).findByLabelText(genesis.items[3].name);
       fireEvent.click(pack);
 
       cycle = await findByLabelText(genesis.name);

@@ -44,9 +44,7 @@ describe('main', () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
-    download.mockImplementation(() =>
-      Promise.resolve(mockFurtherProcessedData)
-    );
+    download.mockImplementation(() => Promise.resolve(mockFurtherProcessedData));
   });
 
   it('gets NRDB cards endpoint', async () => {
@@ -68,9 +66,7 @@ describe('main', () => {
   });
 
   it('downloads the images', async () => {
-    const path = fs.realpathSync(
-      `${__dirname}/../../../client/public/img/cards`
-    );
+    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
 
     await cards(mockPackData);
 

@@ -13,34 +13,19 @@ describe('process factions', () => {
   it('gives each subtype a code', () => {
     const output = process(mockData);
 
-    expect(output.map(({ code }) => code)).toEqual([
-      'AP',
-      'Code Gate',
-      'Sentry',
-      'Trap'
-    ]);
+    expect(output.map(({ code }) => code)).toEqual(['AP', 'Code Gate', 'Sentry', 'Trap']);
   });
 
   it('orders the subtypes alphabetically', () => {
     const output = process(mockData);
 
-    expect(output.map(({ name }) => name)).toEqual([
-      'AP',
-      'Code Gate',
-      'Sentry',
-      'Trap'
-    ]);
+    expect(output.map(({ name }) => name)).toEqual(['AP', 'Code Gate', 'Sentry', 'Trap']);
   });
 
   it('outputs the side code', () => {
     const output = process(mockDataSides);
 
-    expect(output.map(({ side }) => side)).toEqual([
-      'corp',
-      'runner',
-      'runner',
-      'corp'
-    ]);
+    expect(output.map(({ side }) => side)).toEqual(['corp', 'runner', 'runner', 'corp']);
   });
 
   it('outputs null when a subtype is for both sides', () => {

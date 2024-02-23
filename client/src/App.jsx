@@ -25,12 +25,7 @@ const App = ({ side: sideProp = 'runner' }) => {
   const [packs, setPacks] = useState([]);
 
   useEffect(() => {
-    Promise.all([
-      getData('factions'),
-      getData('types'),
-      getData('packs'),
-      getData('subtypes')
-    ])
+    Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
       .then(([factions, types, packs, subtypes]) => {
         setFactions(factions.map((option) => ({ ...option, selected: false })));
         setTypes(types.map((option) => ({ ...option, selected: false })));
@@ -69,8 +64,7 @@ const App = ({ side: sideProp = 'runner' }) => {
 
   const clearFilters = (type, setter) => () => setter(filters.clear(type));
 
-  const clearGroupFilters = (type, setter) => () =>
-    setter(nestedFilters.clear(type));
+  const clearGroupFilters = (type, setter) => () => setter(nestedFilters.clear(type));
 
   const filterHandler = (type, setter) => (item, checked) =>
     setter(filters.set(type, item, checked));
@@ -91,18 +85,9 @@ const App = ({ side: sideProp = 'runner' }) => {
             selected={side === 'runner'}
             onSelect={setSide}
           />
-          <SideButton
-            title="Corp"
-            side="corp"
-            selected={side === 'corp'}
-            onSelect={setSide}
-          />
+          <SideButton title="Corp" side="corp" selected={side === 'corp'} onSelect={setSide} />
         </div>
-        <TextSearch
-          placeholder="search title"
-          value={title}
-          onChange={setTitle}
-        />
+        <TextSearch placeholder="search title" value={title} onChange={setTitle} />
         <TextSearch placeholder="search text" value={text} onChange={setText} />
         <SortSelect options={options} default={sort} onChange={setSort} />
 

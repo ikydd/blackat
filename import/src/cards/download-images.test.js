@@ -98,9 +98,7 @@ describe('download images', () => {
     nock.load(`${fixtures}/chum.json`);
     nock.load(`${fixtures}/dirty-laundry.json`);
 
-    const expectations = [chum, dirtyLaundry].map(({ code }) =>
-      expect.objectContaining({ code })
-    );
+    const expectations = [chum, dirtyLaundry].map(({ code }) => expect.objectContaining({ code }));
 
     const cards = await download(dir, [chum, dirtyLaundry]);
 

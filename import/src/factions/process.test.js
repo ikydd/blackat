@@ -14,13 +14,7 @@ describe('process factions', () => {
       .map(({ name }) => name)
       .slice(0, 5);
 
-    expect(output).toEqual([
-      'Adam',
-      'Anarch',
-      'Apex',
-      'Criminal',
-      'Haas-Bioroid'
-    ]);
+    expect(output).toEqual(['Adam', 'Anarch', 'Apex', 'Criminal', 'Haas-Bioroid']);
   });
 
   it('orders the neutral factions last', () => {

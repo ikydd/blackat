@@ -30,19 +30,13 @@ const downloadCardTo = (target) => (card) =>
 
 const setLocalImage = (serverFolder) => {
   const segments = serverFolder.split('/');
-  const webFolder = `/${segments
-    .slice(segments.indexOf('public') + 1)
-    .join('/')}/`;
+  const webFolder = `/${segments.slice(segments.indexOf('public') + 1).join('/')}/`;
   return (card) => ({ ...card, imagesrc: `${webFolder}${card.code}.png` });
 };
 
 const download = async (imgFolder, data) => {
   return createFolder(imgFolder)
-    .then(() =>
-      Promise.all(
-        data.filter(existingCards(imgFolder)).map(downloadCardTo(imgFolder))
-      )
-    )
+    .then(() => Promise.all(data.filter(existingCards(imgFolder)).map(downloadCardTo(imgFolder))))
     .then(() => data.map(setLocalImage(imgFolder)));
 };
 

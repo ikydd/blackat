@@ -3,13 +3,7 @@ import FilterItem from './FilterItem';
 import FilterNotification from './FilterNotification';
 import './FilterList.css';
 
-const FilterList = ({
-  hidden = false,
-  title = 'Missing',
-  onChange,
-  options = [],
-  clearAll
-}) => {
+const FilterList = ({ hidden = false, title = 'Missing', onChange, options = [], clearAll }) => {
   const [isHidden, setHidden] = useState(hidden);
 
   const change =
@@ -37,12 +31,7 @@ const FilterList = ({
             Clear All
           </h5>
           {options.map((item) => (
-            <FilterItem
-              key={item.code}
-              item={item}
-              keyword={keyword}
-              onChange={change}
-            />
+            <FilterItem key={item.code} item={item} keyword={keyword} onChange={change} />
           ))}
         </div>
       )}

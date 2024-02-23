@@ -12,8 +12,7 @@ const typeList = [
   'operation'
 ];
 
-const byType = (a, b) =>
-  typeList.indexOf(a.code) > typeList.indexOf(b.code) ? 1 : -1;
+const byType = (a, b) => (typeList.indexOf(a.code) > typeList.indexOf(b.code) ? 1 : -1);
 
 const process = ({ data: types }) =>
   types

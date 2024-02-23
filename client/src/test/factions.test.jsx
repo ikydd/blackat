@@ -30,9 +30,7 @@ describe('Faction filters', () => {
     fireEvent.click(getByText('Factions'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const runnerFactions = factions.filter(
-      ({ side }) => side === 'runner'
-    ).length;
+    const runnerFactions = factions.filter(({ side }) => side === 'runner').length;
 
     expect(checkboxes).toHaveLength(runnerFactions);
   });
@@ -90,9 +88,7 @@ describe('Faction filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(
-      <App />
-    );
+    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
     const filterBlock = getByTestId('factions-filters');
     fireEvent.click(getByText('Factions'));
     const unchecked = await within(filterBlock).findByLabelText('Anarch');

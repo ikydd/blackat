@@ -26,12 +26,7 @@ const CardList = (props) => {
   };
 
   useEffect(() => {
-    Promise.all([
-      getData('cards'),
-      getData('factions'),
-      getData('types'),
-      getData('packs')
-    ])
+    Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
       .then(handleData)
       .catch((err) => console.log(err));
   }, []);

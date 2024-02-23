@@ -24,9 +24,7 @@ describe('CardList', () => {
   it('displays as selected depending on props', () => {
     const title = 'Foo';
     const isSelected = true;
-    const { container } = render(
-      <SideButton title={title} selected={isSelected} />
-    );
+    const { container } = render(<SideButton title={title} selected={isSelected} />);
 
     expect(container.firstChild).toHaveClass('selected');
   });
@@ -37,12 +35,7 @@ describe('CardList', () => {
     const isSelected = false;
     const cb = jest.fn();
     const { container } = render(
-      <SideButton
-        title={title}
-        side={side}
-        selected={isSelected}
-        onSelect={cb}
-      />
+      <SideButton title={title} side={side} selected={isSelected} onSelect={cb} />
     );
     fireEvent.click(container.firstChild);
 
@@ -55,12 +48,7 @@ describe('CardList', () => {
     const isSelected = true;
     const cb = jest.fn();
     const { container } = render(
-      <SideButton
-        title={title}
-        side={side}
-        selected={isSelected}
-        onSelect={cb}
-      />
+      <SideButton title={title} side={side} selected={isSelected} onSelect={cb} />
     );
     fireEvent.click(container.firstChild);
 

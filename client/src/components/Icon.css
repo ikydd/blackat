@@ -1,8 +1,7 @@
 @font-face {
   font-family: 'netrunner';
   src: url('../../public/css/icons/netrunner.eot?cmdd12');
-  src: url('../../public/css/icons/netrunner.eot?cmdd12#iefix')
-      format('embedded-opentype'),
+  src: url('../../public/css/icons/netrunner.eot?cmdd12#iefix') format('embedded-opentype'),
     url('../../public/css/icons/netrunner.ttf?cmdd12') format('truetype'),
     url('../../public/css/icons/netrunner.woff?cmdd12') format('woff'),
     url('../../public/css/icons/netrunner.svg?cmdd12#netrunner') format('svg');

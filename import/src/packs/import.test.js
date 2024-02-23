@@ -35,9 +35,7 @@ describe('main', () => {
     apiUrl.mockClear();
     localPath.mockClear();
 
-    apiUrl.mockImplementation((type) =>
-      type === '/packs' ? mockPacksUrl : mockCyclesUrl
-    );
+    apiUrl.mockImplementation((type) => (type === '/packs' ? mockPacksUrl : mockCyclesUrl));
     request.mockImplementation((url) => {
       const data = url === mockPacksUrl ? mockPacksData : mockCyclesData;
       return Promise.resolve(data);

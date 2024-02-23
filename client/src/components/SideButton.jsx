@@ -9,11 +9,7 @@ const SideButton = ({ title, selected, side, onSelect }) => {
   };
 
   return (
-    <h4
-      role="button"
-      className={'side-button' + (selected ? ' selected' : '')}
-      onClick={select}
-    >
+    <h4 role="button" className={'side-button' + (selected ? ' selected' : '')} onClick={select}>
       {title}
     </h4>
   );

@@ -40,9 +40,7 @@ const save = (data) => {
   storage = normalFilters.reduce(
     (data, type) => ({
       ...data,
-      [type]: data[type]
-        .filter(({ selected }) => selected)
-        .map(({ code }) => code)
+      [type]: data[type].filter(({ selected }) => selected).map(({ code }) => code)
     }),
     storage
   );

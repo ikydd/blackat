@@ -17,8 +17,7 @@ const clearFilterGroup = (options) =>
     items: group.items.map(setAll(false))
   }));
 
-const setFilter = (options, item, checked) =>
-  options.map(setSingle(item, checked));
+const setFilter = (options, item, checked) => options.map(setSingle(item, checked));
 
 const getFilter = (options, side) =>
   options

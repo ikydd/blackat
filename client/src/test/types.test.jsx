@@ -30,9 +30,7 @@ describe('Types filters', () => {
     fireEvent.click(getByText(/Types/));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const runnerTypes = types.filter(
-      ({ side }) => side === 'runner' || side === null
-    ).length;
+    const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
 
     expect(checkboxes).toHaveLength(runnerTypes);
   });
@@ -55,9 +53,7 @@ describe('Types filters', () => {
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-    const corpTypes = types.filter(
-      ({ side }) => side === 'corp' || side === null
-    ).length;
+    const corpTypes = types.filter(({ side }) => side === 'corp' || side === null).length;
 
     expect(checkboxes).toHaveLength(corpTypes);
   });
@@ -92,9 +88,7 @@ describe('Types filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(
-      <App />
-    );
+    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
     const filterBlock = getByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     const unchecked = await within(filterBlock).findByLabelText('Hardware');

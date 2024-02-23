@@ -31,9 +31,7 @@ describe('FilterList', () => {
     });
 
     it('shows correct filters as selected', async () => {
-      const { findAllByRole } = render(
-        <FilterList options={optionsSelected} />
-      );
+      const { findAllByRole } = render(<FilterList options={optionsSelected} />);
       const checkboxes = await findAllByRole('checkbox');
 
       const checked = checkboxes
@@ -45,9 +43,7 @@ describe('FilterList', () => {
 
     it('calls the callback when an item is checked', async () => {
       const cb = jest.fn();
-      const { findByLabelText } = render(
-        <FilterList options={options} onChange={cb} />
-      );
+      const { findByLabelText } = render(<FilterList options={options} onChange={cb} />);
       const group = await findByLabelText('Anarch');
       fireEvent.click(group);
 
@@ -64,18 +60,14 @@ describe('FilterList', () => {
     });
 
     it('can be configured to hide filters via a prop', async () => {
-      const { queryAllByRole } = render(
-        <FilterList options={options} hidden={true} />
-      );
+      const { queryAllByRole } = render(<FilterList options={options} hidden={true} />);
       const checkboxes = await queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
     it('shows options when hidden and heading is clicked', async () => {
-      const { findAllByRole, getByRole } = render(
-        <FilterList options={options} hidden={true} />
-      );
+      const { findAllByRole, getByRole } = render(<FilterList options={options} hidden={true} />);
       fireEvent.click(getByRole('heading'));
 
       const checkboxes = await findAllByRole('checkbox');
@@ -84,9 +76,7 @@ describe('FilterList', () => {
     });
 
     it('hides options when showing and heading is clicked', async () => {
-      const { queryAllByRole, getByRole } = render(
-        <FilterList options={options} />
-      );
+      const { queryAllByRole, getByRole } = render(<FilterList options={options} />);
       fireEvent.click(getByRole('heading'));
 
       const checkboxes = await queryAllByRole('checkbox');
@@ -95,9 +85,7 @@ describe('FilterList', () => {
     });
 
     it('retains selections when collapsed', async () => {
-      const { queryAllByRole, getByRole } = render(
-        <FilterList options={optionsSelected} />
-      );
+      const { queryAllByRole, getByRole } = render(<FilterList options={optionsSelected} />);
       fireEvent.click(getByRole('heading'));
       fireEvent.click(getByRole('heading'));
 
@@ -120,9 +108,7 @@ describe('FilterList', () => {
 
     it('removes all selected filters', async () => {
       const cb = jest.fn();
-      const { getByRole } = render(
-        <FilterList options={options} clearAll={cb} />
-      );
+      const { getByRole } = render(<FilterList options={options} clearAll={cb} />);
       fireEvent.click(getByRole('button'));
 
       expect(cb).toHaveBeenCalled();
@@ -131,9 +117,7 @@ describe('FilterList', () => {
 
   describe('Active Notifier', () => {
     it('has no visual mark when no filters are selected', async () => {
-      const { queryByRole, findAllByRole } = render(
-        <FilterList options={options} />
-      );
+      const { queryByRole, findAllByRole } = render(<FilterList options={options} />);
       await findAllByRole('checkbox');
 
       const alert = queryByRole('alert');
