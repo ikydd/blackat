@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import CardList from "./CardList";
 import * as api from "../helpers/api";
 
@@ -9,14 +9,18 @@ describe("CardList", () => {
   afterEach(() => {
     api.reset();
   });
-  it("renders without crashing", () => {
-    expect(() => render(<CardList />)).not.toThrow();
+  it("renders without crashing", async () => {
+    await waitFor(() => {
+      expect(() => render(<CardList />)).not.toThrow();
+    });
   });
 
   it("renders with no cards to begin with", async () => {
     const { queryByRole } = render(<CardList />);
 
-    expect(queryByRole("img")).toBeFalsy();
+    await waitFor(() => {
+      expect(queryByRole("img")).toBeFalsy();
+    });
   });
 
   it("defaults to showing all cards", async () => {
@@ -108,7 +112,7 @@ describe("CardList", () => {
   });
 
   describe("Sort", () => {
-    describe("Faction", () => {
+  //   describe("Faction", () => {
       it("sorts by faction", async () => {
         api.setData(
           "cards",
@@ -604,11 +608,13 @@ describe("CardList", () => {
   });
 
   describe("Loading Spinner", () => {
-    it("starts with a loading icon", () => {
+    it("starts with a loading icon", async () => {
       const { getByRole } = render(<CardList />);
       const spinner = getByRole("progressbar");
 
-      expect(spinner).toBeTruthy();
+      await waitFor(() =>{
+        expect(spinner).toBeTruthy();
+      });
     });
 
     it("hides the spinner once the cards are loaded", async () => {
@@ -632,15 +638,17 @@ describe("CardList", () => {
   });
 
   describe("Empty message", () => {
-    it("starts with no empty message", () => {
+    it("starts with no empty message", async () => {
       const { queryByRole } = render(<CardList />);
       const message = queryByRole("alert");
 
-      expect(message).toBeFalsy();
+      await waitFor(() => {
+        expect(message).toBeFalsy();
+      });
     });
 
     it("shows a message when no cards are found", async () => {
-      const search = "xxx";
+      const search = "no cards with this text";
       const { findAllByRole, rerender, getByRole } = render(<CardList />);
       await findAllByRole("img");
 
@@ -650,4 +658,4 @@ describe("CardList", () => {
       expect(message).toBeTruthy();
     });
   });
-});
+// });
