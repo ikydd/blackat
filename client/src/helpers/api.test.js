@@ -1,13 +1,13 @@
-const { getData } = require("./api");
+const { getData } = require('./api');
 
-describe("ApiCall", () => {
+describe('ApiCall', () => {
   let mockSuccessResponse = {};
 
   beforeEach(() => {
     const mockJsonPromise = async () => Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = () =>
       Promise.resolve({
-        json: mockJsonPromise,
+        json: mockJsonPromise
       });
     global.fetch = jest.fn().mockImplementation(mockFetchPromise);
   });
@@ -17,29 +17,29 @@ describe("ApiCall", () => {
     delete global.fetch;
   });
 
-  it("calls the correct URL on the api", async () => {
-    await getData("foo");
+  it('calls the correct URL on the api', async () => {
+    await getData('foo');
 
     expect(global.fetch).toHaveBeenCalledWith(
-      "/data/foo.json",
+      '/data/foo.json',
       expect.any(Object)
     );
   });
 
-  it("request the data gzipped", async () => {
-    await getData("foo");
+  it('request the data gzipped', async () => {
+    await getData('foo');
 
     expect(global.fetch).toHaveBeenCalledWith(
       expect.any(String),
-      expect.objectContaining({ headers: { "Accept-Encoding": "gzip" } })
+      expect.objectContaining({ headers: { 'Accept-Encoding': 'gzip' } })
     );
   });
 
-  it("returns the payload", async () => {
+  it('returns the payload', async () => {
     mockSuccessResponse = {
-      foo: "bar",
+      foo: 'bar'
     };
-    const data = await getData("foo");
+    const data = await getData('foo');
 
     expect(data).toEqual(mockSuccessResponse);
   });

@@ -1,659 +1,659 @@
-import React from "react";
-import { render, waitFor } from "@testing-library/react";
-import CardList from "./CardList";
-import * as api from "../helpers/api";
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
+import CardList from './CardList';
+import * as api from '../helpers/api';
 
-jest.mock("../helpers/api");
+jest.mock('../helpers/api');
 
-describe("CardList", () => {
+describe('CardList', () => {
   afterEach(() => {
     api.reset();
   });
-  it("renders without crashing", async () => {
+  it('renders without crashing', async () => {
     await waitFor(() => {
       expect(() => render(<CardList />)).not.toThrow();
     });
   });
 
-  it("renders with no cards to begin with", async () => {
+  it('renders with no cards to begin with', async () => {
     const { queryByRole } = render(<CardList />);
 
     await waitFor(() => {
-      expect(queryByRole("img")).toBeFalsy();
+      expect(queryByRole('img')).toBeFalsy();
     });
   });
 
-  it("defaults to showing all cards", async () => {
+  it('defaults to showing all cards', async () => {
     const { findAllByRole } = render(<CardList />);
-    const cards = await findAllByRole("img");
+    const cards = await findAllByRole('img');
 
     expect(cards).toHaveLength(7);
   });
 
-  describe("Filter", () => {
-    it("only shows cards from the correct side", async () => {
+  describe('Filter', () => {
+    it('only shows cards from the correct side', async () => {
       const { findAllByRole } = render(<CardList side="runner" />);
-      const cards = await findAllByRole("img");
+      const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(3);
     });
 
-    it("only shows cards from the correct factions", async () => {
-      const factions = ["shaper"];
+    it('only shows cards from the correct factions', async () => {
+      const factions = ['shaper'];
       const { findAllByRole } = render(<CardList factions={factions} />);
-      const cards = await findAllByRole("img");
+      const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(2);
     });
 
-    it("only shows cards from the correct types", async () => {
-      const types = ["program"];
+    it('only shows cards from the correct types', async () => {
+      const types = ['program'];
       const { findAllByRole } = render(<CardList types={types} />);
-      const cards = await findAllByRole("img");
+      const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(2);
     });
 
-    it("only shows cards from the correct subtypes", async () => {
-      const subtypes = ["Icebreaker"];
+    it('only shows cards from the correct subtypes', async () => {
+      const subtypes = ['Icebreaker'];
       const { findByRole } = render(<CardList subtypes={subtypes} />);
-      const card = await findByRole("img");
+      const card = await findByRole('img');
 
-      expect(card).toHaveAttribute("alt", "Gordian Blade");
+      expect(card).toHaveAttribute('alt', 'Gordian Blade');
     });
 
-    it("only shows cards from the correct packs", async () => {
-      const packs = ["wla"];
+    it('only shows cards from the correct packs', async () => {
+      const packs = ['wla'];
       const { findAllByRole } = render(<CardList packs={packs} />);
-      const cards = await findAllByRole("img");
+      const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(2);
     });
   });
 
-  describe("Title Search", () => {
-    it("only shows relevant cards given a search", async () => {
-      const search = "Blade";
+  describe('Title Search', () => {
+    it('only shows relevant cards given a search', async () => {
+      const search = 'Blade';
       const { findByRole } = render(<CardList titleSearch={search} />);
-      const card = await findByRole("img");
+      const card = await findByRole('img');
 
-      expect(card).toHaveAttribute("alt", "Gordian Blade");
+      expect(card).toHaveAttribute('alt', 'Gordian Blade');
     });
 
-    it("is not case-sensitive", async () => {
-      const search = "blADE";
+    it('is not case-sensitive', async () => {
+      const search = 'blADE';
       const { findByRole } = render(<CardList titleSearch={search} />);
-      const card = await findByRole("img");
+      const card = await findByRole('img');
 
-      expect(card).toHaveAttribute("alt", "Gordian Blade");
+      expect(card).toHaveAttribute('alt', 'Gordian Blade');
     });
   });
 
-  describe("Text Search", () => {
-    it("only shows relevant cards given a text search", async () => {
-      const search = "net damage";
+  describe('Text Search', () => {
+    it('only shows relevant cards given a text search', async () => {
+      const search = 'net damage';
       const { findAllByRole } = render(<CardList textSearch={search} />);
-      const cards = await findAllByRole("img");
-      const titles = cards.map((card) => card.getAttribute("alt"));
+      const cards = await findAllByRole('img');
+      const titles = cards.map((card) => card.getAttribute('alt'));
 
       expect(titles).toHaveLength(3);
-      expect(titles).toEqual(["Chum", "Data Mine", "Neural Katana"]);
+      expect(titles).toEqual(['Chum', 'Data Mine', 'Neural Katana']);
     });
 
-    it("is not case-sensitive", async () => {
-      const search = "NEt daMAge";
+    it('is not case-sensitive', async () => {
+      const search = 'NEt daMAge';
       const { findAllByRole } = render(<CardList textSearch={search} />);
-      const cards = await findAllByRole("img");
-      const titles = cards.map((card) => card.getAttribute("alt"));
+      const cards = await findAllByRole('img');
+      const titles = cards.map((card) => card.getAttribute('alt'));
 
       expect(titles).toHaveLength(3);
-      expect(titles).toEqual(["Chum", "Data Mine", "Neural Katana"]);
+      expect(titles).toEqual(['Chum', 'Data Mine', 'Neural Katana']);
     });
   });
 
-  describe("Sort", () => {
-    describe("Faction", () => {
-      it("sorts by faction", async () => {
+  describe('Sort', () => {
+    describe('Faction', () => {
+      it('sorts by faction', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/faction-sort/faction-corp")
+          'cards',
+          require('../../../fixtures/api/faction-sort/faction-corp')
         );
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Mandatory Upgrades", "Chum"]);
+        expect(cards).toEqual(['Mandatory Upgrades', 'Chum']);
       });
 
-      it("sorts neutral last", async () => {
+      it('sorts neutral last', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/faction-sort/faction-neutral")
+          'cards',
+          require('../../../fixtures/api/faction-sort/faction-neutral')
         );
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Gordian Blade", "Sure Gamble"]);
+        expect(cards).toEqual(['Gordian Blade', 'Sure Gamble']);
       });
 
-      it("sorts by type after faction", async () => {
+      it('sorts by type after faction', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/faction-sort/faction-type")
+          'cards',
+          require('../../../fixtures/api/faction-sort/faction-type')
         );
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Gordian Blade", "R&D Interface"]);
+        expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
       });
 
-      it("sorts by name after type", async () => {
+      it('sorts by name after type', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/faction-sort/faction-type-name")
+          'cards',
+          require('../../../fixtures/api/faction-sort/faction-type-name')
         );
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Chum", "Data Mine"]);
+        expect(cards).toEqual(['Chum', 'Data Mine']);
       });
 
-      it("has named separators", async () => {
+      it('has named separators', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/faction-sort/faction-corp")
+          'cards',
+          require('../../../fixtures/api/faction-sort/faction-corp')
         );
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const hrs = await findAllByRole("separator");
+        const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(["Haas-Bioroid", "Jinteki"]);
+        expect(titles).toEqual(['Haas-Bioroid', 'Jinteki']);
       });
     });
 
-    describe("Type", () => {
-      it("sorts by type", async () => {
-        api.setData("cards", require("../../../fixtures/api/type-sort/runner"));
+    describe('Type', () => {
+      it('sorts by type', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
         const { findAllByRole } = render(<CardList sort="type" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["R&D Interface", "All-nighter"]);
+        expect(cards).toEqual(['R&D Interface', 'All-nighter']);
       });
 
-      it("sorts by faction after type", async () => {
+      it('sorts by faction after type', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/type-sort/type-faction")
+          'cards',
+          require('../../../fixtures/api/type-sort/type-faction')
         );
         const { findAllByRole } = render(<CardList sort="type" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Ichi 1.0", "Chum"]);
+        expect(cards).toEqual(['Ichi 1.0', 'Chum']);
       });
 
-      it("sorts by name after faction", async () => {
+      it('sorts by name after faction', async () => {
         api.setData(
-          "cards",
-          require("../../../fixtures/api/type-sort/type-faction-name")
+          'cards',
+          require('../../../fixtures/api/type-sort/type-faction-name')
         );
         const { findAllByRole } = render(<CardList sort="type" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Battering Ram", "Gordian Blade"]);
+        expect(cards).toEqual(['Battering Ram', 'Gordian Blade']);
       });
 
-      it("has named separators", async () => {
-        api.setData("cards", require("../../../fixtures/api/type-sort/runner"));
+      it('has named separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
         const { findAllByRole } = render(<CardList sort="type" />);
-        const hrs = await findAllByRole("separator");
+        const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(["Hardware", "Resource"]);
+        expect(titles).toEqual(['Hardware', 'Resource']);
       });
     });
 
-    describe("Pack", () => {
-      it("sorts by pack", async () => {
-        api.setData("cards", require("../../../fixtures/api/pack-sort/runner"));
+    describe('Pack', () => {
+      it('sorts by pack', async () => {
+        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
         const { findAllByRole } = render(<CardList sort="pack" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Gordian Blade", "R&D Interface"]);
+        expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
       });
 
-      it("has named separators", async () => {
-        api.setData("cards", require("../../../fixtures/api/pack-sort/runner"));
+      it('has named separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
         const { findAllByRole } = render(<CardList sort="pack" />);
-        const hrs = await findAllByRole("separator");
+        const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(["Core Set", "Future Proof"]);
+        expect(titles).toEqual(['Core Set', 'Future Proof']);
       });
     });
 
-    describe("Title", () => {
-      it("sorts by title", async () => {
-        api.setData("cards", require("../../../fixtures/api/cards-name"));
+    describe('Title', () => {
+      it('sorts by title', async () => {
+        api.setData('cards', require('../../../fixtures/api/cards-name'));
         const { findAllByRole } = render(<CardList sort="title" />);
-        const images = await findAllByRole("img");
+        const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
 
-        expect(cards).toEqual(["Chum", "Mandatory Upgrades"]);
+        expect(cards).toEqual(['Chum', 'Mandatory Upgrades']);
       });
 
-      it("has no separators", async () => {
-        api.setData("cards", require("../../../fixtures/api/cards-name"));
+      it('has no separators', async () => {
+        api.setData('cards', require('../../../fixtures/api/cards-name'));
         const { findAllByRole, queryAllByRole } = render(
           <CardList sort="title" />
         );
-        await findAllByRole("img");
-        const hrs = queryAllByRole("separator");
+        await findAllByRole('img');
+        const hrs = queryAllByRole('separator');
 
         expect(hrs).toHaveLength(0);
       });
     });
   });
 
-  describe("Illustrator", () => {
-    it("sorts by illustrator", async () => {
+  describe('Illustrator', () => {
+    it('sorts by illustrator', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/illustrator-sort/illustrator")
+        'cards',
+        require('../../../fixtures/api/illustrator-sort/illustrator')
       );
       const { findAllByRole } = render(<CardList sort="illustrator" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["ZU.13 Key Master", "Mandatory Upgrades"]);
+      expect(cards).toEqual(['ZU.13 Key Master', 'Mandatory Upgrades']);
     });
 
-    it("skips cards with no illustrator", async () => {
+    it('skips cards with no illustrator', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/illustrator-sort/no-illustrator")
+        'cards',
+        require('../../../fixtures/api/illustrator-sort/no-illustrator')
       );
       const { findAllByRole } = render(<CardList sort="illustrator" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Mandatory Upgrades"]);
+      expect(cards).toEqual(['Mandatory Upgrades']);
     });
 
-    it("has named separators", async () => {
+    it('has named separators', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/illustrator-sort/illustrator")
+        'cards',
+        require('../../../fixtures/api/illustrator-sort/illustrator')
       );
       const { findAllByRole } = render(<CardList sort="illustrator" />);
-      await findAllByRole("img");
-      const hrs = await findAllByRole("separator");
+      await findAllByRole('img');
+      const hrs = await findAllByRole('separator');
       const titles = hrs.map(({ textContent }) => textContent.trim());
 
-      expect(titles).toEqual(["Liiga Smilshkalne", "Mauricio Herrera"]);
+      expect(titles).toEqual(['Liiga Smilshkalne', 'Mauricio Herrera']);
     });
 
-    it("sorts by title after illustrator", async () => {
+    it('sorts by title after illustrator', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/illustrator-sort/illustrator-title")
+        'cards',
+        require('../../../fixtures/api/illustrator-sort/illustrator-title')
       );
       const { findAllByRole } = render(<CardList sort="illustrator" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Uroboros", "ZU.13 Key Master"]);
+      expect(cards).toEqual(['Uroboros', 'ZU.13 Key Master']);
     });
   });
 
-  describe("Cost", () => {
-    it("sorts by cost", async () => {
-      api.setData("cards", require("../../../fixtures/api/cost-sort/cost"));
+  describe('Cost', () => {
+    it('sorts by cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/cost'));
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("skips cards with no cost", async () => {
-      api.setData("cards", require("../../../fixtures/api/cost-sort/no-cost"));
+    it('skips cards with no cost', async () => {
+      api.setData('cards', require('../../../fixtures/api/cost-sort/no-cost'));
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo"]);
+      expect(cards).toEqual(['Foo']);
     });
 
-    it("includes cards with 0 cost", async () => {
+    it('includes cards with 0 cost', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/cost-sort/zero-cost")
+        'cards',
+        require('../../../fixtures/api/cost-sort/zero-cost')
       );
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
 
-    it("sorts by faction after cost", async () => {
+    it('sorts by faction after cost', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/cost-sort/cost-faction")
+        'cards',
+        require('../../../fixtures/api/cost-sort/cost-faction')
       );
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
 
-    it("sorts by type after faction", async () => {
+    it('sorts by type after faction', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/cost-sort/cost-faction-type")
+        'cards',
+        require('../../../fixtures/api/cost-sort/cost-faction-type')
       );
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by title after type", async () => {
+    it('sorts by title after type', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/cost-sort/cost-faction-type-name")
+        'cards',
+        require('../../../fixtures/api/cost-sort/cost-faction-type-name')
       );
       const { findAllByRole } = render(<CardList sort="cost" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
   });
 
-  describe("Agenda Points", () => {
-    it("sorts by agenda points", async () => {
-      api.setData("cards", require("../../../fixtures/api/agenda-sort/agenda"));
+  describe('Agenda Points', () => {
+    it('sorts by agenda points', async () => {
+      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("skips cards with no agenda points", async () => {
+    it('skips cards with no agenda points', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/no-agenda")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/no-agenda')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar"]);
+      expect(cards).toEqual(['Bar']);
     });
 
-    it("includes cards with 0 points", async () => {
+    it('includes cards with 0 points', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/zero-agenda")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/zero-agenda')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
 
-    it("sorts by faction after agenda points", async () => {
+    it('sorts by faction after agenda points', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/agenda-faction")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/agenda-faction')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by advancement cost after faction", async () => {
+    it('sorts by advancement cost after faction', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/agenda-faction-cost")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/agenda-faction-cost')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by title after advancement", async () => {
+    it('sorts by title after advancement', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/agenda-faction-cost-name")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/agenda-faction-cost-name')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
 
-    it("includes cards that act as agenda points", async () => {
+    it('includes cards that act as agenda points', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/agenda-sort/as-an-agenda")
+        'cards',
+        require('../../../fixtures/api/agenda-sort/as-an-agenda')
       );
       const { findAllByRole } = render(<CardList sort="agenda" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
   });
 
-  describe("Strength", () => {
-    it("sorts by strength", async () => {
+  describe('Strength', () => {
+    it('sorts by strength', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/strength-sort/strength")
+        'cards',
+        require('../../../fixtures/api/strength-sort/strength')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("skips cards with no strength", async () => {
+    it('skips cards with no strength', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/strength-sort/no-strength")
+        'cards',
+        require('../../../fixtures/api/strength-sort/no-strength')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar"]);
+      expect(cards).toEqual(['Bar']);
     });
 
-    it("includes cards with 0 strength", async () => {
+    it('includes cards with 0 strength', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/strength-sort/zero-strength")
+        'cards',
+        require('../../../fixtures/api/strength-sort/zero-strength')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by subroutines after strength", async () => {
+    it('sorts by subroutines after strength', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/strength-sort/strength-subroutines")
+        'cards',
+        require('../../../fixtures/api/strength-sort/strength-subroutines')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by title after subroutines", async () => {
+    it('sorts by title after subroutines', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/strength-sort/strength-subroutines-name")
+        'cards',
+        require('../../../fixtures/api/strength-sort/strength-subroutines-name')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
   });
 
-  describe("Subroutines", () => {
-    it("sorts by subroutines", async () => {
+  describe('Subroutines', () => {
+    it('sorts by subroutines', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/subroutines-sort/subroutines")
+        'cards',
+        require('../../../fixtures/api/subroutines-sort/subroutines')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("skips cards with no subroutines", async () => {
+    it('skips cards with no subroutines', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/subroutines-sort/no-subroutines")
+        'cards',
+        require('../../../fixtures/api/subroutines-sort/no-subroutines')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar"]);
+      expect(cards).toEqual(['Bar']);
     });
 
-    it("includes cards with 0 subroutines", async () => {
+    it('includes cards with 0 subroutines', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/subroutines-sort/zero-subroutines")
+        'cards',
+        require('../../../fixtures/api/subroutines-sort/zero-subroutines')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by strength after subroutines", async () => {
+    it('sorts by strength after subroutines', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/subroutines-sort/subroutines-strength")
+        'cards',
+        require('../../../fixtures/api/subroutines-sort/subroutines-strength')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Foo", "Bar"]);
+      expect(cards).toEqual(['Foo', 'Bar']);
     });
 
-    it("sorts by title after strength", async () => {
+    it('sorts by title after strength', async () => {
       api.setData(
-        "cards",
-        require("../../../fixtures/api/subroutines-sort/subroutines-strength-name")
+        'cards',
+        require('../../../fixtures/api/subroutines-sort/subroutines-strength-name')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Bar", "Foo"]);
+      expect(cards).toEqual(['Bar', 'Foo']);
     });
   });
 
-  describe("Card Updates", () => {
-    it("only shows the most recent version when versions are consecutive", async () => {
-      api.setData("cards", require("../../../fixtures/api/versions"));
+  describe('Card Updates', () => {
+    it('only shows the most recent version when versions are consecutive', async () => {
+      api.setData('cards', require('../../../fixtures/api/versions'));
       const { findAllByRole } = render(<CardList sort="title" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Gordian Blade", "Magnum Opus"]);
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
     });
 
-    it("shows all versions when not consecutive", async () => {
-      api.setData("cards", require("../../../fixtures/api/versions"));
+    it('shows all versions when not consecutive', async () => {
+      api.setData('cards', require('../../../fixtures/api/versions'));
       const { findAllByRole } = render(<CardList sort="pack" />);
-      const images = await findAllByRole("img");
+      const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
-      expect(cards).toEqual(["Gordian Blade", "Magnum Opus", "Gordian Blade"]);
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus', 'Gordian Blade']);
     });
   });
 
-  describe("Loading Spinner", () => {
-    it("starts with a loading icon", async () => {
+  describe('Loading Spinner', () => {
+    it('starts with a loading icon', async () => {
       const { getByRole } = render(<CardList />);
-      const spinner = getByRole("progressbar");
+      const spinner = getByRole('progressbar');
 
-      await waitFor(() =>{
+      await waitFor(() => {
         expect(spinner).toBeTruthy();
       });
     });
 
-    it("hides the spinner once the cards are loaded", async () => {
+    it('hides the spinner once the cards are loaded', async () => {
       const { queryByRole, findAllByRole } = render(<CardList />);
-      await findAllByRole("img");
-      const spinner = queryByRole("progressbar");
+      await findAllByRole('img');
+      const spinner = queryByRole('progressbar');
 
       expect(spinner).toBeFalsy();
     });
 
-    it("does not show the spinner when no cards are found", async () => {
-      const search = "xxx";
+    it('does not show the spinner when no cards are found', async () => {
+      const search = 'xxx';
       const { queryByRole, findAllByRole, rerender } = render(<CardList />);
-      await findAllByRole("img");
+      await findAllByRole('img');
 
       rerender(<CardList textSearch={search} />);
-      const spinner = queryByRole("progressbar");
+      const spinner = queryByRole('progressbar');
 
       expect(spinner).toBeFalsy();
     });
   });
 
-  describe("Empty message", () => {
-    it("starts with no empty message", async () => {
+  describe('Empty message', () => {
+    it('starts with no empty message', async () => {
       const { queryByRole } = render(<CardList />);
-      const message = queryByRole("alert");
+      const message = queryByRole('alert');
 
       await waitFor(() => {
         expect(message).toBeFalsy();
       });
     });
 
-    it("shows a message when no cards are found", async () => {
-      const search = "no cards with this text";
+    it('shows a message when no cards are found', async () => {
+      const search = 'no cards with this text';
       const { findAllByRole, rerender, getByRole } = render(<CardList />);
-      await findAllByRole("img");
+      await findAllByRole('img');
 
       rerender(<CardList textSearch={search} />);
-      const message = getByRole("alert");
+      const message = getByRole('alert');
 
       expect(message).toBeTruthy();
     });

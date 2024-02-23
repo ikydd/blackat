@@ -17,7 +17,7 @@ const addSubtype =
     const item = {
       name,
       side: subtype ? null : side,
-      code,
+      code
     };
 
     list.set(name, item);
@@ -27,7 +27,7 @@ const addSubtype =
 const buildSubtype = (side) => (name) => ({
   side,
   name,
-  code: name,
+  code: name
 });
 
 const toAccumulator = (list) => list;
@@ -41,14 +41,14 @@ const process = (cards) =>
       .reduce(
         (list, { side, keywords }) =>
           keywords
-            .split(" - ")
+            .split(' - ')
             .map(buildSubtype(side))
             .filter(alreadyPresent(list))
             .map(addSubtype(list))
             .reduce(toAccumulator, list),
         new Map()
       )
-      .values(),
+      .values()
   ].sort(byName);
 
 module.exports = process;

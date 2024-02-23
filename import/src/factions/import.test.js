@@ -1,28 +1,28 @@
-const request = require("../helpers/request");
-const save = require("../helpers/save");
-const apiUrl = require("../helpers/api-url");
-const localPath = require("../helpers/local-path");
-const process = require("./process");
-const factions = require("./import");
+const request = require('../helpers/request');
+const save = require('../helpers/save');
+const apiUrl = require('../helpers/api-url');
+const localPath = require('../helpers/local-path');
+const process = require('./process');
+const factions = require('./import');
 
-jest.mock("../helpers/request");
-jest.mock("../helpers/save");
-jest.mock("./process");
-jest.mock("../helpers/api-url");
-jest.mock("../helpers/local-path");
+jest.mock('../helpers/request');
+jest.mock('../helpers/save');
+jest.mock('./process');
+jest.mock('../helpers/api-url');
+jest.mock('../helpers/local-path');
 
-const mockUrl = "https://foo.co.uk/bar";
-const mockPath = "./test/foo/bar/file.json";
+const mockUrl = 'https://foo.co.uk/bar';
+const mockPath = './test/foo/bar/file.json';
 
 const mockData = {
-  foo: "bar",
+  foo: 'bar'
 };
 
 const mockProcessedData = {
-  bar: "foo",
+  bar: 'foo'
 };
 
-describe("main", () => {
+describe('main', () => {
   beforeEach(() => {
     request.mockClear();
     save.mockClear();
@@ -37,31 +37,31 @@ describe("main", () => {
     save.mockImplementation(() => Promise.resolve());
   });
 
-  it("gets the NRDB factions endpoint", async () => {
+  it('gets the NRDB factions endpoint', async () => {
     await factions();
 
-    expect(apiUrl).toHaveBeenCalledWith("/factions");
+    expect(apiUrl).toHaveBeenCalledWith('/factions');
   });
 
-  it("calls the NRDB endpoint", async () => {
+  it('calls the NRDB endpoint', async () => {
     await factions();
 
     expect(request).toHaveBeenCalledWith(mockUrl);
   });
 
-  it("applies the processor", async () => {
+  it('applies the processor', async () => {
     await factions();
 
     expect(process).toHaveBeenCalledWith(mockData);
   });
 
-  it("gets the local save path", async () => {
+  it('gets the local save path', async () => {
     await factions();
 
-    expect(localPath).toHaveBeenCalledWith("factions.json");
+    expect(localPath).toHaveBeenCalledWith('factions.json');
   });
 
-  it("saves the processed data", async () => {
+  it('saves the processed data', async () => {
     await factions();
 
     expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);

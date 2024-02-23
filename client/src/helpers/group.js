@@ -1,11 +1,11 @@
 const data = {};
 
-const ensureSection = (sections, list = [], prop = "default") => {
+const ensureSection = (sections, list = [], prop = 'default') => {
   if (!sections[prop]) {
     sections[prop] = {
       show: false,
       info: list.find(({ code }) => code === prop),
-      cards: [],
+      cards: []
     };
   }
 };
@@ -25,7 +25,7 @@ const standardGroup = (sections, card, sort) => {
 
 const defaultGroup = (sections, card) => {
   ensureSection(sections);
-  addCard(sections["default"], card);
+  addCard(sections['default'], card);
   return sections;
 };
 
@@ -37,7 +37,7 @@ const customGroup = (sections, card, sort) => {
   ensureSection(sections, [], prop);
   sections[prop].info = {
     name: prop,
-    code: prop,
+    code: prop
   };
   addCard(sections[prop], card);
   return sections;
@@ -51,11 +51,11 @@ const group =
     data.pack = packs.reduce((list, { items }) => list.concat(items), []);
     data.faction = factions;
     switch (sort) {
-      case "faction":
-      case "pack":
-      case "type":
+      case 'faction':
+      case 'pack':
+      case 'type':
         return standardGroup(sections, card, sort);
-      case "illustrator":
+      case 'illustrator':
         return customGroup(sections, card, sort);
       default:
         return defaultGroup(sections, card);

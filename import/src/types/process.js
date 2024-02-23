@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
 const typeList = [
-  "identity",
-  "program",
-  "hardware",
-  "resource",
-  "event",
-  "agenda",
-  "ice",
-  "asset",
-  "upgrade",
-  "operation",
+  'identity',
+  'program',
+  'hardware',
+  'resource',
+  'event',
+  'agenda',
+  'ice',
+  'asset',
+  'upgrade',
+  'operation'
 ];
 
 const byType = (a, b) =>
@@ -21,7 +21,7 @@ const process = ({ data: types }) =>
     .map(({ name, code, side_code }) => ({
       code,
       name,
-      side: side_code,
+      side: side_code
     }))
     .sort(byType);
 

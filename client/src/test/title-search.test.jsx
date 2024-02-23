@@ -20,7 +20,7 @@ describe('Title Search', () => {
     fireEvent.input(input, { target: { value: search } });
     const card = await findByRole('img');
 
-    expect(card).toHaveAttribute('alt', "Gordian Blade");
+    expect(card).toHaveAttribute('alt', 'Gordian Blade');
   });
 
   it('sets the default value given a title search', async () => {
@@ -30,8 +30,7 @@ describe('Title Search', () => {
     fireEvent.input(input, { target: { value: search } });
 
     await waitFor(() => {
-      expect(input).toHaveAttribute('value', "Blade");
+      expect(input).toHaveAttribute('value', 'Blade');
     });
   });
 });
-

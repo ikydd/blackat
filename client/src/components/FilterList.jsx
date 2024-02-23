@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import FilterItem from "./FilterItem";
-import FilterNotification from "./FilterNotification";
-import "./FilterList.css";
+import React, { useState } from 'react';
+import FilterItem from './FilterItem';
+import FilterNotification from './FilterNotification';
+import './FilterList.css';
 
 const FilterList = ({
   hidden = false,
-  title = "Missing",
+  title = 'Missing',
   onChange,
   options = [],
-  clearAll,
+  clearAll
 }) => {
   const [isHidden, setHidden] = useState(hidden);
 

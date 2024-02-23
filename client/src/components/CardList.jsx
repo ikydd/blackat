@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import CardSection from "./CardSection";
-import Loader from "./Loader";
-import Empty from "./Empty";
-import { getData } from "../helpers/api";
-import filter from "../helpers/filter";
-import group from "../helpers/group";
-import sort from "../helpers/sort";
-import "./CardList.css";
+import React, { useEffect, useState } from 'react';
+import CardSection from './CardSection';
+import Loader from './Loader';
+import Empty from './Empty';
+import { getData } from '../helpers/api';
+import filter from '../helpers/filter';
+import group from '../helpers/group';
+import sort from '../helpers/sort';
+import './CardList.css';
 
 const CardList = (props) => {
   const [things, setThings] = useState({
     loaded: false,
     cards: [],
     sort: () => {},
-    group: () => () => {},
+    group: () => () => {}
   });
 
   const handleData = ([cards, factions, types, packs]) => {
@@ -21,16 +21,16 @@ const CardList = (props) => {
       loaded: true,
       cards,
       sort: sort({ factions, types, packs }),
-      group: group({ factions, types, packs }),
+      group: group({ factions, types, packs })
     });
   };
 
   useEffect(() => {
     Promise.all([
-      getData("cards"),
-      getData("factions"),
-      getData("types"),
-      getData("packs"),
+      getData('cards'),
+      getData('factions'),
+      getData('types'),
+      getData('packs')
     ])
       .then(handleData)
       .catch((err) => console.log(err));
@@ -46,11 +46,11 @@ const CardList = (props) => {
 
   return (
     <div id="cards">
-      {things.loaded ? "" : <Loader />}
+      {things.loaded ? '' : <Loader />}
       {sections.map((section, index) => (
         <CardSection key={index} section={section}></CardSection>
       ))}
-      {things.loaded && empty ? <Empty /> : ""}
+      {things.loaded && empty ? <Empty /> : ''}
     </div>
   );
 };

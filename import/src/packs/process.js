@@ -11,7 +11,7 @@ const packsIntoCycles = (cycles, pack) => {
   return cycles;
 };
 
-const officialPacks = ({ date_release }) => date_release < "2018-09-07";
+const officialPacks = ({ date_release }) => date_release < '2018-09-07';
 
 const includedCycles = ({ items }) => items.length;
 
@@ -21,14 +21,14 @@ const process = ({ data: packs }, { data: cycles }) =>
     .map(({ name, code, cycle_code }) => ({
       code,
       name,
-      cycle: cycle_code,
+      cycle: cycle_code
     }))
     .reduce(packsIntoCycles, cycles.map(additionalFields))
     .filter(includedCycles)
     .map(({ name, code, items }) => ({
       name,
       code,
-      items,
+      items
     }));
 
 module.exports = process;

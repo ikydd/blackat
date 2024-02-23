@@ -31,12 +31,12 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) =>
         strength,
         agenda_points,
         advancement_cost,
-        illustrator,
+        illustrator
       }) => ({
         code,
         title,
-        text: text || "",
-        imagesrc: image_url || imageUrlTemplate.replace("{code}", code),
+        text: text || '',
+        imagesrc: image_url || imageUrlTemplate.replace('{code}', code),
         side: side_code,
         faction: faction_code,
         type: type_code,
@@ -47,7 +47,7 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) =>
         agenda: agenda_points,
         advancement: advancement_cost,
         illustrator,
-        subroutines: type_code === "ice" ? countSubroutines(text) : undefined,
+        subroutines: type_code === 'ice' ? countSubroutines(text) : undefined
       })
     );
 

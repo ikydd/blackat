@@ -17,21 +17,21 @@ const byPacks = (packs) => (card) =>
   packs.length ? packs.includes(card.pack) : true;
 
 const byTitle = (title) => (card) =>
-  title ? card.title.search(new RegExp(title, "i")) !== -1 : true;
+  title ? card.title.search(new RegExp(title, 'i')) !== -1 : true;
 
 const byText = (text) => (card) =>
-  text ? card.text.search(new RegExp(text, "i")) !== -1 : true;
+  text ? card.text.search(new RegExp(text, 'i')) !== -1 : true;
 
 const propFilter = (prop) => (card) => card[prop] !== undefined;
 
 const bySort = (sort) => {
   switch (sort) {
-    case "illustrator":
-    case "cost":
-    case "strength":
-    case "subroutines":
+    case 'illustrator':
+    case 'cost':
+    case 'strength':
+    case 'subroutines':
       return propFilter(sort);
-    case "agenda":
+    case 'agenda':
       return ({ agenda, text }) =>
         agenda !== undefined || !!(text && text.search(/as an agenda/) !== -1);
     default:
@@ -40,14 +40,14 @@ const bySort = (sort) => {
 };
 
 const filterByAll = ({
-  sort = "default",
-  side = "",
-  titleSearch = "",
-  textSearch = "",
+  sort = 'default',
+  side = '',
+  titleSearch = '',
+  textSearch = '',
   factions = [],
   types = [],
   subtypes = [],
-  packs = [],
+  packs = []
 }) => {
   const sortCb = bySort(sort);
   const sideCb = bySide(side);

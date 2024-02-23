@@ -1,7 +1,7 @@
-import React from "react";
-import "./TextSearch.css";
+import React from 'react';
+import './TextSearch.css';
 
-const TextSearch = ({ placeholder = "search", value = "", onChange }) => {
+const TextSearch = ({ placeholder = 'search', value = '', onChange }) => {
   const handleChange = (ev) => {
     ev.preventDefault();
     onChange(ev.target.value);

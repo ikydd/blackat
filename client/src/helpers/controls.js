@@ -14,7 +14,7 @@ const clearFilterGroup = (options) =>
   options.map((group) => ({
     ...group,
     selected: false,
-    items: group.items.map(setAll(false)),
+    items: group.items.map(setAll(false))
   }));
 
 const setFilter = (options, item, checked) =>
@@ -47,23 +47,23 @@ const setFilterItem = (options, item, checked) =>
   options
     .map((option) => ({
       ...option,
-      items: option.items.map(setSingle(item, checked)),
+      items: option.items.map(setSingle(item, checked))
     }))
     .map((option) => ({
       ...option,
-      selected: !option.items.find(({ selected }) => !selected),
+      selected: !option.items.find(({ selected }) => !selected)
     }));
 
 export const filters = {
   get: getFilter,
   set: setFilter,
   clear: clearFilters,
-  options: getOptions,
+  options: getOptions
 };
 
 export const nestedFilters = {
   get: getNestedFilter,
   setGroup: setFilterGroup,
   setItem: setFilterItem,
-  clear: clearFilterGroup,
+  clear: clearFilterGroup
 };

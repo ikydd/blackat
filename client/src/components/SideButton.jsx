@@ -1,5 +1,5 @@
-import React from "react";
-import "./SideButton.css";
+import React from 'react';
+import './SideButton.css';
 
 const SideButton = ({ title, selected, side, onSelect }) => {
   const select = () => {
@@ -11,7 +11,7 @@ const SideButton = ({ title, selected, side, onSelect }) => {
   return (
     <h4
       role="button"
-      className={"side-button" + (selected ? " selected" : "")}
+      className={'side-button' + (selected ? ' selected' : '')}
       onClick={select}
     >
       {title}

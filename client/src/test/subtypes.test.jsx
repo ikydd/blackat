@@ -6,160 +6,151 @@ import subtypes from '../../../fixtures/api/subtypes';
 jest.mock('../helpers/api');
 
 describe('Subtypes filters', () => {
-    it('has the correct title', async () => {
-        const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        const heading = await within(filterBlock)
-            .findByRole('heading');
+  it('has the correct title', async () => {
+    const { getByTestId } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    const heading = await within(filterBlock).findByRole('heading');
 
-        expect(heading).toHaveTextContent('Subtypes');
+    expect(heading).toHaveTextContent('Subtypes');
+  });
+
+  it('starts with no checkboxes', async () => {
+    const { getByTestId } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    const checkboxes = within(filterBlock).queryAllByRole('checkbox');
+
+    await waitFor(() => {
+      expect(checkboxes).toHaveLength(0);
     });
+  });
 
-    it('starts with no checkboxes', async () => {
-        const { getByTestId } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        const checkboxes = within(filterBlock)
-            .queryAllByRole('checkbox');
+  it('loads some checkboxes for runner', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-        await waitFor(() => {
-            expect(checkboxes).toHaveLength(0);
-        })
+    const runnerSubtypes = subtypes.filter(
+      ({ side }) => side === 'runner' || side === null
+    ).length;
+
+    expect(checkboxes).toHaveLength(runnerSubtypes);
+  });
+
+  it('starts with empty checkboxes for runner', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
+
+    checkboxes.forEach((box) => {
+      expect(box).not.toBeChecked();
     });
+  });
 
-    it('loads some checkboxes for runner', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
+  it('loads some checkboxes for corp', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    fireEvent.click(getByText('Corp'));
+    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-        const runnerSubtypes = subtypes.filter(({ side }) => side === 'runner' || side === null).length;
+    const corpSubtypes = subtypes.filter(
+      ({ side }) => side === 'corp' || side === null
+    ).length;
 
-        expect(checkboxes).toHaveLength(runnerSubtypes);
+    expect(checkboxes).toHaveLength(corpSubtypes);
+  });
+
+  it('starts with empty checkboxes for corp', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    fireEvent.click(getByText('Corp'));
+    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
+
+    checkboxes.forEach((box) => {
+      expect(box).not.toBeChecked();
     });
+  });
 
-    it('starts with empty checkboxes for runner', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
+  it('selects checkboxes correctly', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    const unchecked = await within(filterBlock).findAllByRole('checkbox');
 
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        })
+    fireEvent.click(unchecked[0]);
+
+    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
+    const checked = checkboxes.shift();
+
+    expect(checked).toBeChecked();
+    checkboxes.forEach((box) => {
+      expect(box).not.toBeChecked();
     });
+  });
 
-    it('loads some checkboxes for corp', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        fireEvent.click(getByText('Corp'));
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
+  it('filters cards correctly', async () => {
+    const { getByTestId, findAllByRole, findByRole, getByText } = render(
+      <App />
+    );
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
+    const unchecked = await within(filterBlock).findByLabelText('Icebreaker');
+    const all = await findAllByRole('img');
 
-        const corpSubtypes = subtypes.filter(({ side }) => side === 'corp' || side === null).length;
+    expect(all).toHaveLength(3);
 
-        expect(checkboxes).toHaveLength(corpSubtypes);
-    });
+    fireEvent.click(unchecked);
+    const filtered = await findByRole('img');
 
-    it('starts with empty checkboxes for corp', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        fireEvent.click(getByText('Corp'));
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
+    expect(filtered).toHaveAttribute('alt', 'Gordian Blade');
+  });
 
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        })
-    });
+  it('retains filters from each side', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
 
-    it('selects checkboxes correctly', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        const unchecked = await within(filterBlock)
-            .findAllByRole('checkbox');
+    let icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
+    fireEvent.click(icebreaker);
+    fireEvent.click(getByText('Corp'));
 
-        fireEvent.click(unchecked[0]);
+    let codeGate = await within(filterBlock).findByLabelText('Code Gate');
+    fireEvent.click(codeGate);
+    fireEvent.click(getByText('Runner'));
 
-        const checkboxes = await within(filterBlock)
-            .findAllByRole('checkbox');
-        const checked = checkboxes.shift();
+    icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
 
-        expect(checked).toBeChecked();
-        checkboxes.forEach((box) => {
-            expect(box).not.toBeChecked();
-        });
-    });
+    expect(icebreaker).toBeChecked();
+  });
 
-    it('filters cards correctly', async () => {
-        const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-        const unchecked = await within(filterBlock)
-            .findByLabelText('Icebreaker');
-        const all = await findAllByRole('img');
+  it('does not apply filters to the wrong side', async () => {
+    const { getByTestId, getByText, findAllByRole } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
 
-        expect(all).toHaveLength(3);
+    let icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
+    fireEvent.click(icebreaker);
+    fireEvent.click(getByText('Corp'));
 
-        fireEvent.click(unchecked);
-        const filtered = await findByRole('img');
+    const cards = await findAllByRole('img');
 
-        expect(filtered).toHaveAttribute('alt', 'Gordian Blade');
-    });
+    expect(cards).toHaveLength(4);
+  });
 
-    it('retains filters from each side', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
+  it('includes filters appropriate to both sides', async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const filterBlock = getByTestId('subtypes-filters');
+    fireEvent.click(getByText('Subtypes'));
 
-        let icebreaker = await within(filterBlock)
-            .findByLabelText('Icebreaker');
-        fireEvent.click(icebreaker);
-        fireEvent.click(getByText('Corp'));
+    let bioroid = await within(filterBlock).findByLabelText('Bioroid');
+    fireEvent.click(bioroid);
+    fireEvent.click(getByText('Corp'));
 
-        let codeGate = await within(filterBlock)
-            .findByLabelText('Code Gate');
-        fireEvent.click(codeGate);
-        fireEvent.click(getByText('Runner'));
+    bioroid = await within(filterBlock).findByLabelText('Bioroid');
 
-        icebreaker = await within(filterBlock)
-            .findByLabelText('Icebreaker');
-
-        expect(icebreaker).toBeChecked();
-    });
-
-    it('does not apply filters to the wrong side', async () => {
-        const { getByTestId, getByText, findAllByRole } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-
-        let icebreaker = await within(filterBlock)
-            .findByLabelText('Icebreaker');
-        fireEvent.click(icebreaker);
-        fireEvent.click(getByText('Corp'));
-
-        const cards = await findAllByRole('img');
-
-        expect(cards).toHaveLength(4);
-    });
-
-    it('includes filters appropriate to both sides', async () => {
-        const { getByTestId, getByText } = render(<App />);
-        const filterBlock = getByTestId('subtypes-filters');
-        fireEvent.click(getByText('Subtypes'));
-
-        let bioroid = await within(filterBlock)
-            .findByLabelText('Bioroid');
-        fireEvent.click(bioroid);
-        fireEvent.click(getByText('Corp'));
-
-        bioroid = await within(filterBlock)
-            .findByLabelText('Bioroid');
-
-        expect(bioroid).toBeChecked();
-    });
+    expect(bioroid).toBeChecked();
+  });
 });

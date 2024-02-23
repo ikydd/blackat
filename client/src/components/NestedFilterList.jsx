@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import FilterItem from "./FilterItem";
-import FilterNotification from "./FilterNotification";
-import "./FilterList.css";
-import "./NestedFilterList.css";
+import React, { useState } from 'react';
+import FilterItem from './FilterItem';
+import FilterNotification from './FilterNotification';
+import './FilterList.css';
+import './NestedFilterList.css';
 
 const NestedFilterList = ({
-  title = "Missing",
+  title = 'Missing',
   hidden = false,
   clearAll,
   onGroupChange,
   onSubitemChange,
-  options = [],
+  options = []
 }) => {
   const [isHidden, setHidden] = useState(hidden);
 
@@ -71,7 +71,7 @@ const NestedFilterList = ({
   );
 
   return (
-    <div className="filter-list" data-testid={keyword + "-filters"}>
+    <div className="filter-list" data-testid={keyword + '-filters'}>
       <h4 className="filter-list-title" onClick={toggleHidden}>
         {title} {<FilterNotification on={inUse()} />}
       </h4>

@@ -1,23 +1,23 @@
-const save = require("../helpers/save");
-const localPath = require("../helpers/local-path");
-const process = require("./process");
-const subtypes = require("./import");
+const save = require('../helpers/save');
+const localPath = require('../helpers/local-path');
+const process = require('./process');
+const subtypes = require('./import');
 
-jest.mock("../helpers/save");
-jest.mock("./process");
-jest.mock("../helpers/local-path");
+jest.mock('../helpers/save');
+jest.mock('./process');
+jest.mock('../helpers/local-path');
 
-const mockPath = "./test/foo/bar/file.json";
+const mockPath = './test/foo/bar/file.json';
 
 const mockData = {
-  foo: "bar",
+  foo: 'bar'
 };
 
 const mockProcessedData = {
-  bar: "foo",
+  bar: 'foo'
 };
 
-describe("main", () => {
+describe('main', () => {
   beforeEach(() => {
     save.mockClear();
     process.mockClear();
@@ -28,19 +28,19 @@ describe("main", () => {
     save.mockImplementation(() => Promise.resolve());
   });
 
-  it("applies the processor", async () => {
+  it('applies the processor', async () => {
     await subtypes(mockData);
 
     expect(process).toHaveBeenCalledWith(mockData);
   });
 
-  it("gets the local save path", async () => {
+  it('gets the local save path', async () => {
     await subtypes(mockData);
 
-    expect(localPath).toHaveBeenCalledWith("subtypes.json");
+    expect(localPath).toHaveBeenCalledWith('subtypes.json');
   });
 
-  it("saves the processed data", async () => {
+  it('saves the processed data', async () => {
     await subtypes(mockData);
 
     expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);

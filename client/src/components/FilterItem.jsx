@@ -1,5 +1,5 @@
-import React from "react";
-import Icon from "./Icon";
+import React from 'react';
+import Icon from './Icon';
 
 const FilterItem = ({ item, keyword, onChange }) => (
   <div className="checkbox">

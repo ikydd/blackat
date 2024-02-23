@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "./Header";
-import "./ControlPanel.css";
+import React from 'react';
+import Header from './Header';
+import './ControlPanel.css';
 
 const ControlPanel = ({ children }) => (
   <div id="control-panel">

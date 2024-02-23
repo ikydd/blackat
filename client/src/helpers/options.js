@@ -1,40 +1,40 @@
 const options = [
   {
-    title: "Faction",
-    value: "faction",
+    title: 'Faction',
+    value: 'faction'
   },
   {
-    title: "Type",
-    value: "type",
+    title: 'Type',
+    value: 'type'
   },
   {
-    title: "Cost",
-    value: "cost",
+    title: 'Cost',
+    value: 'cost'
   },
   {
-    title: "Strength",
-    value: "strength",
+    title: 'Strength',
+    value: 'strength'
   },
   {
-    title: "Subroutines",
-    value: "subroutines",
+    title: 'Subroutines',
+    value: 'subroutines'
   },
   {
-    title: "Agenda Points",
-    value: "agenda",
+    title: 'Agenda Points',
+    value: 'agenda'
   },
   {
-    title: "Pack",
-    value: "pack",
+    title: 'Pack',
+    value: 'pack'
   },
   {
-    title: "Title",
-    value: "title",
+    title: 'Title',
+    value: 'title'
   },
   {
-    title: "Illustrator",
-    value: "illustrator",
-  },
+    title: 'Illustrator',
+    value: 'illustrator'
+  }
 ];
 
 export default options;

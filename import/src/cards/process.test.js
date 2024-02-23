@@ -1,27 +1,27 @@
-const process = require("./process");
+const process = require('./process');
 
-const mockCardsData = require("../../../fixtures/nrdb/cards.json");
-const mockPackData = require("../../../fixtures/api/packs.json");
-const testCardsData = require("../../../fixtures/nrdb/cards-agendas.json");
-const advancementCostTestCardsData = require("../../../fixtures/nrdb/cards-agendas.json");
-const strengthTestCardsData = require("../../../fixtures/nrdb/cards-strength.json");
-const subroutinesTestCardsData = require("../../../fixtures/nrdb/cards-subroutines.json");
+const mockCardsData = require('../../../fixtures/nrdb/cards.json');
+const mockPackData = require('../../../fixtures/api/packs.json');
+const testCardsData = require('../../../fixtures/nrdb/cards-agendas.json');
+const advancementCostTestCardsData = require('../../../fixtures/nrdb/cards-agendas.json');
+const strengthTestCardsData = require('../../../fixtures/nrdb/cards-strength.json');
+const subroutinesTestCardsData = require('../../../fixtures/nrdb/cards-subroutines.json');
 
-describe("process cards", () => {
-  it("outputs the correct number of cards", () => {
+describe('process cards', () => {
+  it('outputs the correct number of cards', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output.length).toEqual(5);
   });
 
-  it("does not output cards for not included packs", () => {
+  it('does not output cards for not included packs', () => {
     const output = process(mockCardsData, mockPackData);
-    const cards = output.find((card) => card.title === "Border Control");
+    const cards = output.find((card) => card.title === 'Border Control');
 
     expect(cards).toBeFalsy();
   });
 
-  it("outputs the titles", () => {
+  it('outputs the titles', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].title).toEqual(mockCardsData.data[0].title);
@@ -29,7 +29,7 @@ describe("process cards", () => {
     expect(output[2].title).toEqual(mockCardsData.data[2].title);
   });
 
-  it("outputs the text", () => {
+  it('outputs the text', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].text).toEqual(mockCardsData.data[0].text);
@@ -37,45 +37,45 @@ describe("process cards", () => {
     expect(output[2].text).toEqual(mockCardsData.data[2].text);
   });
 
-  it("adds a text property even if the text is empty", () => {
+  it('adds a text property even if the text is empty', () => {
     const output = process(mockCardsData, mockPackData);
-    const sunny = output.find((card) => card.title.includes("Sunny Lebeau"));
+    const sunny = output.find((card) => card.title.includes('Sunny Lebeau'));
 
-    expect(sunny).toHaveProperty("text");
-    expect(sunny.text).toBe("");
+    expect(sunny).toHaveProperty('text');
+    expect(sunny.text).toBe('');
   });
 
-  it("adds an image URL to each card using the template", () => {
+  it('adds an image URL to each card using the template', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].imagesrc).toEqual(
       mockCardsData.imageUrlTemplate.replace(
-        "{code}",
+        '{code}',
         mockCardsData.data[0].code
       )
     );
     expect(output[1].imagesrc).toEqual(
       mockCardsData.imageUrlTemplate.replace(
-        "{code}",
+        '{code}',
         mockCardsData.data[1].code
       )
     );
   });
 
-  it("uses a specified image if present", () => {
+  it('uses a specified image if present', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[2].imagesrc).toEqual(mockCardsData.data[2].image_url);
   });
 
-  it("outputs the side", () => {
+  it('outputs the side', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[2].side).toEqual(mockCardsData.data[2].side_code);
     expect(output[3].side).toEqual(mockCardsData.data[3].side_code);
   });
 
-  it("outputs the card code", () => {
+  it('outputs the card code', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].code).toEqual(mockCardsData.data[0].code);
@@ -84,7 +84,7 @@ describe("process cards", () => {
     expect(output[3].code).toEqual(mockCardsData.data[3].code);
   });
 
-  it("outputs the faction code", () => {
+  it('outputs the faction code', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].faction).toEqual(mockCardsData.data[0].faction_code);
@@ -93,7 +93,7 @@ describe("process cards", () => {
     expect(output[3].faction).toEqual(mockCardsData.data[3].faction_code);
   });
 
-  it("outputs the type code", () => {
+  it('outputs the type code', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].type).toEqual(mockCardsData.data[0].type_code);
@@ -102,7 +102,7 @@ describe("process cards", () => {
     expect(output[3].type).toEqual(mockCardsData.data[3].type_code);
   });
 
-  it("outputs the pack code", () => {
+  it('outputs the pack code', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].pack).toEqual(mockCardsData.data[0].pack_code);
@@ -111,7 +111,7 @@ describe("process cards", () => {
     expect(output[3].pack).toEqual(mockCardsData.data[3].pack_code);
   });
 
-  it("outputs the keywords", () => {
+  it('outputs the keywords', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].keywords).toEqual(mockCardsData.data[0].keywords);
@@ -120,7 +120,7 @@ describe("process cards", () => {
     expect(output[3].keywords).toEqual(mockCardsData.data[3].keywords);
   });
 
-  it("outputs the agenda points", () => {
+  it('outputs the agenda points', () => {
     const output = process(testCardsData, mockPackData);
 
     expect(output[0].agenda).toEqual(undefined);
@@ -129,7 +129,7 @@ describe("process cards", () => {
     expect(output[3].agenda).toEqual(2);
   });
 
-  it("outputs the advancement cost", () => {
+  it('outputs the advancement cost', () => {
     const output = process(advancementCostTestCardsData, mockPackData);
 
     expect(output[0].advancement).toEqual(undefined);
@@ -138,7 +138,7 @@ describe("process cards", () => {
     expect(output[3].advancement).toEqual(3);
   });
 
-  it("outputs the strength", () => {
+  it('outputs the strength', () => {
     const output = process(strengthTestCardsData, mockPackData);
 
     expect(output[0].strength).toEqual(2);
@@ -147,7 +147,7 @@ describe("process cards", () => {
     expect(output[3].strength).toEqual(9999);
   });
 
-  it("outputs the cost", () => {
+  it('outputs the cost', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].cost).toEqual(mockCardsData.data[0].cost);
@@ -156,7 +156,7 @@ describe("process cards", () => {
     expect(output[3].cost).toEqual(9999);
   });
 
-  it("outputs the illustrator", () => {
+  it('outputs the illustrator', () => {
     const output = process(mockCardsData, mockPackData);
 
     expect(output[0].illustrator).toEqual(mockCardsData.data[0].illustrator);
@@ -165,7 +165,7 @@ describe("process cards", () => {
     expect(output[3].illustrator).toEqual(mockCardsData.data[3].illustrator);
   });
 
-  it("outputs the number of subroutines", () => {
+  it('outputs the number of subroutines', () => {
     const output = process(subroutinesTestCardsData, mockPackData);
 
     expect(output[0].subroutines).toEqual(undefined);

@@ -1,16 +1,16 @@
-const process = require("./process");
+const process = require('./process');
 
-const mockPacks = require("../../../fixtures/nrdb/packs.json");
-const mockCycles = require("../../../fixtures/nrdb/cycles.json");
+const mockPacks = require('../../../fixtures/nrdb/packs.json');
+const mockCycles = require('../../../fixtures/nrdb/cycles.json');
 
-describe("process factions", () => {
-  it("outputs the correct number of cycles", () => {
+describe('process factions', () => {
+  it('outputs the correct number of cycles', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output.length).toEqual(5);
   });
 
-  it("outputs the correct number of packs", () => {
+  it('outputs the correct number of packs', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output[0].items.length).toEqual(1);
@@ -20,7 +20,7 @@ describe("process factions", () => {
     expect(output[4].items.length).toEqual(1);
   });
 
-  it("outputs the names of the cycles", () => {
+  it('outputs the names of the cycles', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output[0].name).toEqual(mockCycles.data[0].name);
@@ -28,7 +28,7 @@ describe("process factions", () => {
     expect(output[2].name).toEqual(mockCycles.data[2].name);
   });
 
-  it("outputs the names of the packs", () => {
+  it('outputs the names of the packs', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output[0].items[0].name).toEqual(mockPacks.data[0].name);
@@ -36,7 +36,7 @@ describe("process factions", () => {
     expect(output[1].items[1].name).toEqual(mockPacks.data[2].name);
   });
 
-  it("outputs the cycle code", () => {
+  it('outputs the cycle code', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output[0].code).toEqual(mockCycles.data[0].code);
@@ -45,7 +45,7 @@ describe("process factions", () => {
     expect(output[3].code).toEqual(mockCycles.data[3].code);
   });
 
-  it("outputs the pack code", () => {
+  it('outputs the pack code', () => {
     const output = process(mockPacks, mockCycles);
 
     expect(output[0].items[0].code).toEqual(mockPacks.data[0].code);
@@ -54,16 +54,16 @@ describe("process factions", () => {
     expect(output[1].items[2].code).toEqual(mockPacks.data[3].code);
   });
 
-  it("does not output fan-made packs", () => {
+  it('does not output fan-made packs', () => {
     const output = process(mockPacks, mockCycles);
-    const cycle = output.find(({ code }) => code === "magnum-opus");
+    const cycle = output.find(({ code }) => code === 'magnum-opus');
 
     expect(cycle).toBeFalsy();
   });
 
-  it("does not output draft packs", () => {
+  it('does not output draft packs', () => {
     const output = process(mockPacks, mockCycles);
-    const cycle = output.find(({ code }) => code === "draft");
+    const cycle = output.find(({ code }) => code === 'draft');
 
     expect(cycle).toBeFalsy();
   });

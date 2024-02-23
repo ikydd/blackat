@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { getData } from "./helpers/api";
+import React, { useState, useEffect } from 'react';
+import { getData } from './helpers/api';
 // import * as storage from './helpers/storage'
-import { filters, nestedFilters } from "./helpers/controls";
-import options from "./helpers/options";
-import CardList from "./components/CardList";
-import ControlPanel from "./components/ControlPanel";
-import SideButton from "./components/SideButton";
-import FilterList from "./components/FilterList";
-import NestedFilterList from "./components/NestedFilterList";
-import TextSearch from "./components/TextSearch";
-import SortSelect from "./components/SortSelect";
-import Reset from "./components/Reset";
-import SmallPrint from "./components/SmallPrint";
-import "./App.css";
+import { filters, nestedFilters } from './helpers/controls';
+import options from './helpers/options';
+import CardList from './components/CardList';
+import ControlPanel from './components/ControlPanel';
+import SideButton from './components/SideButton';
+import FilterList from './components/FilterList';
+import NestedFilterList from './components/NestedFilterList';
+import TextSearch from './components/TextSearch';
+import SortSelect from './components/SortSelect';
+import Reset from './components/Reset';
+import SmallPrint from './components/SmallPrint';
+import './App.css';
 
-const App = ({ side: sideProp = "runner" }) => {
+const App = ({ side: sideProp = 'runner' }) => {
   const [side, setSide] = useState(sideProp);
-  const [sort, setSort] = useState("faction");
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [sort, setSort] = useState('faction');
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
   const [factions, setFactions] = useState([]);
   const [types, setTypes] = useState([]);
   const [subtypes, setSubtypes] = useState([]);
@@ -26,16 +26,22 @@ const App = ({ side: sideProp = "runner" }) => {
 
   useEffect(() => {
     Promise.all([
-      getData("factions"),
-      getData("types"),
-      getData("packs"),
-      getData("subtypes"),
+      getData('factions'),
+      getData('types'),
+      getData('packs'),
+      getData('subtypes')
     ])
       .then(([factions, types, packs, subtypes]) => {
         setFactions(factions.map((option) => ({ ...option, selected: false })));
         setTypes(types.map((option) => ({ ...option, selected: false })));
         setSubtypes(subtypes.map((option) => ({ ...option, selected: false })));
-        setPacks(packs.map((option) => ({ ...option, selected: false })));
+        setPacks(
+          packs.map((option) => ({
+            ...option,
+            items: option.items.map((item) => ({ ...item, selected: false })),
+            selected: false
+          }))
+        );
       })
       .catch((err) => console.log(err));
   }, []);
@@ -45,10 +51,10 @@ const App = ({ side: sideProp = "runner" }) => {
   // }, [settings]);
 
   const reset = () => {
-    setSide("runner");
-    setSort("faction");
-    setTitle("");
-    setText("");
+    setSide('runner');
+    setSort('faction');
+    setTitle('');
+    setText('');
     setFactions(factions);
     setTypes(types);
     setSubtypes(subtypes);
@@ -82,13 +88,13 @@ const App = ({ side: sideProp = "runner" }) => {
           <SideButton
             title="Runner"
             side="runner"
-            selected={side === "runner"}
+            selected={side === 'runner'}
             onSelect={setSide}
           />
           <SideButton
             title="Corp"
             side="corp"
-            selected={side === "corp"}
+            selected={side === 'corp'}
             onSelect={setSide}
           />
         </div>
