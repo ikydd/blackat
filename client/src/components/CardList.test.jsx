@@ -112,7 +112,7 @@ describe("CardList", () => {
   });
 
   describe("Sort", () => {
-  //   describe("Faction", () => {
+    describe("Faction", () => {
       it("sorts by faction", async () => {
         api.setData(
           "cards",
@@ -658,4 +658,4 @@ describe("CardList", () => {
       expect(message).toBeTruthy();
     });
   });
-// });
+});
