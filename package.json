@@ -18,17 +18,16 @@
     "dev": "parcel client/public/index.html --open --dist-dir client/build"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.23.9",
     "axios": "^0.19.2",
     "fs-extra": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
-    "concurrently": "^8.2.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
