@@ -6,7 +6,7 @@ describe("Card", () => {
   const data = require("../../../fixtures/api/cards")[0];
 
   it("renders without crashing", () => {
-    render(<Card data={data} />);
+    expect(() => render(<Card data={data} />)).not.toThrow();
   });
 
   it("has an img using the card code", async () => {

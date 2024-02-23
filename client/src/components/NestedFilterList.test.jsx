@@ -14,7 +14,7 @@ const countCheckboxes = (options) =>
 
 describe("NestedFilterList", () => {
   it("renders without crashing", () => {
-    render(<NestedFilterList options={options} />);
+    expect(() => render(<NestedFilterList options={options} />)).not.toThrow();
   });
 
   it("has defaults to an obvious error title", () => {

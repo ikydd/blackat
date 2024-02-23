@@ -4,7 +4,7 @@ import ControlPanel from "./ControlPanel";
 
 describe("CardList", () => {
   it("renders without crashing", () => {
-    render(<ControlPanel />);
+    expect(() => render(<ControlPanel />)).not.toThrow();
   });
 
   it("has a header", () => {

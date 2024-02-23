@@ -4,7 +4,7 @@ import TextSearch from "./TextSearch";
 
 describe("TextSearch", () => {
   it("renders without crashing", () => {
-    render(<TextSearch />);
+    expect(() => render(<TextSearch />)).not.toThrow();
   });
 
   it("contains a text input field", () => {

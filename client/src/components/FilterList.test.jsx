@@ -7,7 +7,7 @@ const optionsSelected = require("../../../fixtures/api/foo-selected");
 
 describe("FilterList", () => {
   it("renders without crashing", () => {
-    render(<FilterList options={options} />);
+    expect(() => render(<FilterList options={options} />)).not.toThrow();
   });
 
   it("has defaults to an obvious error title", () => {

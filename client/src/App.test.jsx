@@ -11,7 +11,7 @@ afterEach(() => {
 });
 
 it("renders without crashing", () => {
-  render(<App />);
+  expect(() => render(<App />)).not.toThrow();
 });
 
 it("starts with no cards to begin with", async () => {

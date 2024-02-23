@@ -4,7 +4,7 @@ import SideButton from "./SideButton";
 
 describe("CardList", () => {
   it("renders without crashing", () => {
-    render(<SideButton />);
+    expect(() => render(<SideButton />)).not.toThrow();
   });
 
   it("uses the name passed in", () => {

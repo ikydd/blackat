@@ -15,7 +15,7 @@ const testOptions = [
 
 describe("SortSelect", () => {
   it("renders without crashing", () => {
-    render(<SortSelect />);
+    expect(() => render(<SortSelect />)).not.toThrow();
   });
 
   it("contains a select dropdown field", () => {

@@ -10,7 +10,7 @@ describe("CardList", () => {
     api.reset();
   });
   it("renders without crashing", () => {
-    render(<CardList />);
+    expect(() => render(<CardList />)).not.toThrow();
   });
 
   it("renders with no cards to begin with", async () => {
