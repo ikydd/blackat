@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, fireEvent } from '@testing-library/react';
+import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import types from '../../../fixtures/api/types';
 
@@ -21,7 +21,9 @@ describe('Types filters', () => {
         const checkboxes = await within(filterBlock)
             .queryAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(0);
+        await waitFor(() => {
+            expect(checkboxes).toHaveLength(0);
+        });
     });
 
     it('loads some checkboxes for runner', async () => {

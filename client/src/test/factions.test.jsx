@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, fireEvent } from '@testing-library/react';
+import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import factions from '../../../fixtures/api/factions';
 
@@ -18,10 +18,12 @@ describe('Faction filters', () => {
     it('starts with no checkboxes', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('factions-filters');
-        const checkboxes = await within(filterBlock)
+        const checkboxes = within(filterBlock)
             .queryAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(0);
+        await waitFor(() => {
+            expect(checkboxes).toHaveLength(0);
+        });
     });
 
     it('has some checkboxes for runner when clicked', async () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, fireEvent } from '@testing-library/react';
+import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import subtypes from '../../../fixtures/api/subtypes';
 
@@ -18,10 +18,12 @@ describe('Subtypes filters', () => {
     it('starts with no checkboxes', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('subtypes-filters');
-        const checkboxes = await within(filterBlock)
+        const checkboxes = within(filterBlock)
             .queryAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(0);
+        await waitFor(() => {
+            expect(checkboxes).toHaveLength(0);
+        })
     });
 
     it('loads some checkboxes for runner', async () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, fireEvent } from '@testing-library/react';
+import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import packs from '../../../fixtures/api/packs';
 
@@ -18,10 +18,12 @@ describe('Packs filters', () => {
     it('starts with no checkboxes', async () => {
         const { getByTestId } = render(<App />);
         const filterBlock = getByTestId('packs-filters');
-        const checkboxes = await within(filterBlock)
+        const checkboxes = within(filterBlock)
             .queryAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(0);
+        await waitFor(() => {
+            expect(checkboxes).toHaveLength(0);
+        });
     });
 
     it('shows some checkboxes', async () => {
@@ -88,12 +90,16 @@ describe('Packs filters', () => {
             .findByLabelText('What Lies Ahead');
         const all = await findAllByRole('img');
 
-        expect(all).toHaveLength(3);
+        await waitFor(() => {
+            expect(all).toHaveLength(3);
+        });
 
         fireEvent.click(unchecked);
         const filtered = await findByRole('img');
 
-        expect(filtered).toHaveAttribute('alt', 'D4v1d');
+        await waitFor(() => {
+            expect(filtered).toHaveAttribute('alt', 'D4v1d');
+        });
     });
 
     it('retains filters for both sides', async () => {
