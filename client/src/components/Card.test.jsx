@@ -1,10 +1,10 @@
 import React from 'react';
-import Card from './Card';
 import { render } from '@testing-library/react';
+import Card from './Card';
+
+const data = require('../../../fixtures/api/cards.json')[0];
 
 describe('Card', () => {
-  const data = require('../../../fixtures/api/cards')[0];
-
   it('renders without crashing', () => {
     expect(() => render(<Card data={data} />)).not.toThrow();
   });
@@ -29,7 +29,7 @@ describe('Card', () => {
   });
 
   it('is hidden when data.show is false', () => {
-    const card = Object.assign({ show: false }, data);
+    const card = { show: false, ...data };
     const { container } = render(<Card data={card} />);
 
     expect(container.firstChild).toHaveClass('card-tile');
