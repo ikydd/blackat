@@ -6,7 +6,7 @@
     "es6": true,
     "amd": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:jest/recommended", "plugin:import/react", "prettier"],
+  "extends": ["eslint:recommended", "react-app", "plugin:jest/recommended", "airbnb-base", "prettier"],
   "plugins": ["jest", "import", "promise", "react"],
   
   "parserOptions": {
