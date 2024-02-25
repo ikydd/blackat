@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
-import * as storage from './helpers/storage';
+import * as settingsHelper from './helpers/settings';
 import { filters } from './helpers/controls';
 import options from './helpers/options';
 import CardList from './components/CardList';
@@ -30,28 +30,32 @@ const setNestedSelection = (settings) => (group) => {
   };
 };
 
-const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
-  const initialSettings = storage.init({ side: sideProp });
+const App = ({ saveState = false, side: sideProp = 'runner' }) => {
+  const initialSettings = settingsHelper.init({ side: sideProp });
   const [settings, setSettings] = useState(initialSettings);
   const [factions, setFactions] = useState([]);
   const [types, setTypes] = useState([]);
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
 
-  useEffect(() => {
-    const previousSession = storageProp && storage.get();
+  const loadSettings = () => {
+    const previousSession = saveState && settingsHelper.load();
     if (previousSession) {
       setSettings(previousSession);
     }
-  }, [storageProp]);
+  };
 
   const updateSettings = (updates) => {
     const updatedSettings = { ...settings, ...updates };
-    if (storageProp) {
-      storage.save(updatedSettings);
+    if (saveState) {
+      settingsHelper.save(updatedSettings);
     }
     setSettings(updatedSettings);
   };
+
+  useEffect(() => {
+    loadSettings();
+  }, [saveState]);
 
   useEffect(() => {
     Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
@@ -66,7 +70,7 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
   }, []);
 
   const reset = () => {
-    updateSettings(storage.init());
+    updateSettings(settingsHelper.init());
   };
 
   const getOptions = (type, selected) =>

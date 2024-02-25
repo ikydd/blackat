@@ -41,7 +41,7 @@ it('loads the corp cards with a prop', async () => {
 
 describe('saving state', () => {
   it('set state into localStorage', async () => {
-    const { findAllByRole, getByText } = render(<App storage={true} />);
+    const { findAllByRole, getByText } = render(<App saveState={true} />);
     fireEvent.click(getByText('Corp'));
     await findAllByRole('img');
 
@@ -60,7 +60,7 @@ describe('saving state', () => {
         factions: ['haas-bioroid']
       })
     );
-    const { findAllByRole } = render(<App storage={true} />);
+    const { findAllByRole } = render(<App saveState={true} />);
     const cards = await findAllByRole('img');
 
     expect(cards).toHaveLength(1);
@@ -69,7 +69,7 @@ describe('saving state', () => {
   it('reject malformed JSON', async () => {
     localStorage.setItem('settings', '}does not parse[');
 
-    const { getByTestId, getByText } = render(<App storage={true} />);
+    const { getByTestId, getByText } = render(<App saveState={true} />);
     fireEvent.click(getByText(/Types/));
     const filterBlock = getByTestId('types-filters');
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -88,7 +88,7 @@ describe('saving state', () => {
       })
     );
 
-    const { getByText } = render(<App storage={true} />);
+    const { getByText } = render(<App saveState={true} />);
     fireEvent.click(getByText('Reset Filters'));
 
     await waitFor(() => {
