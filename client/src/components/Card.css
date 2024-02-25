@@ -1,5 +1,8 @@
-.card-tile {
+.card-tile.show {
   display: block;
+}
+
+.card-tile {
   float: left;
   margin: 6px;
   overflow: visible;
