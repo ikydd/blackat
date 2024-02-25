@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
 import { initSettings, loadSettings, saveSettings } from './helpers/settings';
-import sortOptions from './helpers/options';
+import sortOptions from './helpers/sort-options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
@@ -18,18 +18,21 @@ const filterBySide =
   ({ side }) =>
     !side || side === desiredSide;
 
-const setOptionToMatchSettings = (option, settings) => ({
-  ...option,
-  selected: settings.includes(option.code)
-});
-
-const setGroupOfFiltersToMatchSettings = (group, settings) => {
-  const items = group.items.map((option) => setOptionToMatchSettings(option, settings));
-  const allItemsInGroupSelected = items.filter(({ selected }) => selected).length === items.length;
+const setOptionToMatchSettings = (option, settings) => {
+  const isGroup = option.items;
+  if (isGroup) {
+    const items = option.items.map((subOption) => setOptionToMatchSettings(subOption, settings));
+    const allItemsInGroupSelected =
+      items.filter(({ selected }) => selected).length === items.length;
+    return {
+      ...option,
+      selected: allItemsInGroupSelected,
+      items
+    };
+  }
   return {
-    ...group,
-    selected: allItemsInGroupSelected,
-    items
+    ...option,
+    selected: settings.includes(option.code)
   };
 };
 
@@ -80,11 +83,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions);
   const currentTypes = setupFilterForCurrentSide(types, settings.types);
   const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes);
-  const currentPacks = packs.map((group) =>
-    setGroupOfFiltersToMatchSettings(group, settings.packs)
-  );
+  const currentPacks = setupFilterForCurrentSide(packs, settings.packs);
 
-  const filterSettingsToMatchCurrentOptions = (selected, filterOptions) => {
+  const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
     const appearsInCurrentOptions = (selection) =>
       filterOptions.some(({ code }) => code === selection);
     return selected.filter((selection) => appearsInCurrentOptions(selection));
@@ -190,9 +191,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         sort={settings.sort}
         titleSearch={settings.title}
         textSearch={settings.text}
-        factions={filterSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
-        types={filterSettingsToMatchCurrentOptions(settings.types, currentTypes)}
-        subtypes={filterSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
+        factions={adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
+        types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
+        subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
         packs={settings.packs}
       />
     </div>
