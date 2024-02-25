@@ -2,8 +2,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import FilterList from './FilterList';
 
-const options = require('../../../fixtures/api/foo');
-const optionsSelected = require('../../../fixtures/api/foo-selected');
+const options = require('../../../fixtures/api/foo.json');
+const optionsSelected = require('../../../fixtures/api/foo-selected.json');
 
 describe('FilterList', () => {
   it('renders without crashing', () => {
@@ -91,11 +91,11 @@ describe('FilterList', () => {
 
       const checkboxes = await queryAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((input) => input.getAttribute('value'));
 
-      expect(checked).toEqual(['anarch', 'shaper']);
+      expect(selected).toEqual(['anarch', 'shaper']);
     });
   });
 

@@ -1,6 +1,11 @@
 const data = {};
 
-const compare = (a, b) => (a > b ? 1 : a < b ? -1 : 0);
+const compare = (a, b) => {
+  if(a === b) {
+    return 0
+  }
+  return a > b ? 1 : -1;
+};
 
 const rankOf = (prop, item) => data[prop].indexOf(item[prop]);
 

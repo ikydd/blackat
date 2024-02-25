@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
 import * as storage from './helpers/storage';
-import { filters, nestedFilters } from './helpers/controls';
+import { filters } from './helpers/controls';
 import options from './helpers/options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';

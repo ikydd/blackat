@@ -2,11 +2,13 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import NestedFilterList from './NestedFilterList';
 
-const options = require('../../../fixtures/api/foo-nested');
-const optionsSelected = require('../../../fixtures/api/foo-nested-selected');
+const options = require('../../../fixtures/api/foo-nested.json');
+const optionsSelected = require('../../../fixtures/api/foo-nested-selected.json');
+const singleOptions = require('../../../fixtures/api/foo-nested-single.json');
+const groupOptions = require('../../../fixtures/api/foo-nested-group.json');
 
-const countCheckboxes = (options) =>
-  options.reduce(
+const countCheckboxes = (checkboxes) =>
+  checkboxes.reduce(
     (total, group) => (group.items.length > 1 ? total + group.items.length : total) + 1,
     0
   );
@@ -30,8 +32,6 @@ describe('NestedFilterList', () => {
 
   describe('Options', () => {
     it('shows provided grouped options with grouping', async () => {
-      const groupOptions = require('../../../fixtures/api/foo-nested-group');
-
       const { findAllByRole } = render(<NestedFilterList options={groupOptions} />);
       const checkboxes = await findAllByRole('checkbox');
 
@@ -41,8 +41,6 @@ describe('NestedFilterList', () => {
     });
 
     it('does not show subitems for groups with only one item', async () => {
-      const singleOptions = require('../../../fixtures/api/foo-nested-single');
-
       const { findAllByRole } = render(<NestedFilterList options={singleOptions} />);
       const checkboxes = await findAllByRole('checkbox');
 
@@ -55,11 +53,11 @@ describe('NestedFilterList', () => {
       const { findAllByRole } = render(<NestedFilterList options={optionsSelected} />);
       const checkboxes = await findAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((input) => input.getAttribute('value'));
 
-      expect(checked).toEqual(['bar', 'alpha', 'beta', 'gamma']);
+      expect(selected).toEqual(['bar', 'alpha', 'beta', 'gamma']);
     });
 
     it('calls the callback when the group is checked', async () => {
@@ -140,11 +138,11 @@ describe('NestedFilterList', () => {
 
       const checkboxes = await queryAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((input) => input.getAttribute('value'));
 
-      expect(checked).toEqual(['bar', 'alpha', 'beta', 'gamma']);
+      expect(selected).toEqual(['bar', 'alpha', 'beta', 'gamma']);
     });
   });
 

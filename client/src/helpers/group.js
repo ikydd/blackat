@@ -25,7 +25,7 @@ const standardGroup = (sections, card, sort) => {
 
 const defaultGroup = (sections, card) => {
   ensureSection(sections);
-  addCard(sections['default'], card);
+  addCard(sections.default, card);
   return sections;
 };
 
