@@ -1,4 +1,4 @@
-const init = ({ side } = {}) => ({
+export const initSettings = ({ side } = {}) => ({
   side: side || 'runner',
   sort: 'faction',
   title: '',
@@ -9,18 +9,16 @@ const init = ({ side } = {}) => ({
   packs: []
 });
 
-const save = (data) => {
+export const saveSettings = (data) => {
   localStorage.setItem('settings', JSON.stringify(data));
 };
 
-const load = () => {
+export const loadSettings = () => {
   try {
-    const initialSettings = init();
+    const initialSettings = initSettings();
     const previousSession = JSON.parse(localStorage.getItem('settings'));
     return { ...initialSettings, ...previousSession };
   } catch (e) {
     return false;
   }
 };
-
-export default { init, save, load };

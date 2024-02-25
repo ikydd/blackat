@@ -8,8 +8,7 @@ const NestedFilterList = ({
   title = 'Missing',
   hidden = false,
   clearAll,
-  onGroupChange,
-  onSubitemChange,
+  onChange,
   options = []
 }) => {
   const [isHidden, setHidden] = useState(hidden);
@@ -17,13 +16,14 @@ const NestedFilterList = ({
   const changeGroup =
     (group) =>
     ({ target: { checked } }) => {
-      onGroupChange(group, checked);
+      const codes = group.items.map(({ code }) => code);
+      onChange(codes, checked);
     };
 
   const changeSubitem =
     (item) =>
     ({ target: { checked } }) => {
-      onSubitemChange(item, checked);
+      onChange(item.code, checked);
     };
 
   const toggleHidden = () => {

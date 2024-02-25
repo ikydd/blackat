@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
-import settingsHelper from './helpers/settings';
-import filterHelper from './helpers/controls';
-import options from './helpers/options';
+import { initSettings, loadSettings, saveSettings } from './helpers/settings';
+import sortOptions from './helpers/options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
@@ -19,32 +18,31 @@ const filterBySide =
   ({ side }) =>
     !side || side === desiredSide;
 
-const selectFilterFromSettings = (settings) => (option) => ({
+const setOptionToMatchSettings = (option, settings) => ({
   ...option,
   selected: settings.includes(option.code)
 });
 
-const selectNestedFiltersFromSettings = (settings) => (group) => {
-  const items = group.items ? group.items.map(selectFilterFromSettings(settings)) : [];
-  const allItemsSelected =
-    items.length && items.filter(({ selected }) => selected).length === items.length;
+const setGroupOfFiltersToMatchSettings = (group, settings) => {
+  const items = group.items.map((option) => setOptionToMatchSettings(option, settings));
+  const allItemsInGroupSelected = items.filter(({ selected }) => selected).length === items.length;
   return {
     ...group,
-    selected: allItemsSelected,
+    selected: allItemsInGroupSelected,
     items
   };
 };
 
 const App = ({ saveState = false, side: sideProp = 'runner' }) => {
-  const initialSettings = settingsHelper.init({ side: sideProp });
+  const initialSettings = initSettings({ side: sideProp });
   const [settings, setSettings] = useState(initialSettings);
   const [factions, setFactions] = useState([]);
   const [types, setTypes] = useState([]);
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
 
-  const loadSettings = () => {
-    const previousSession = saveState && settingsHelper.load();
+  const loadPreviousSession = () => {
+    const previousSession = saveState && loadSettings();
     if (previousSession) {
       setSettings(previousSession);
     }
@@ -53,13 +51,13 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const updateSettings = (updates) => {
     const updatedSettings = { ...settings, ...updates };
     if (saveState) {
-      settingsHelper.save(updatedSettings);
+      saveSettings(updatedSettings);
     }
     setSettings(updatedSettings);
   };
 
   useEffect(() => {
-    loadSettings();
+    loadPreviousSession();
   }, [saveState]);
 
   useEffect(() => {
@@ -74,51 +72,44 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const currentFactions = factions
-    .filter(filterBySide(settings.side))
-    .map(selectFilterFromSettings(settings.factions));
-  const currentTypes = types
-    .filter(filterBySide(settings.side))
-    .map(selectFilterFromSettings(settings.types));
-  const currentSubtypes = subtypes
-    .filter(filterBySide(settings.side))
-    .map(selectFilterFromSettings(settings.subtypes));
-  const currentPacks = packs.map(selectNestedFiltersFromSettings(settings.packs));
+  const setupFilterForCurrentSide = (options, filterSettings) =>
+    options
+      .filter(filterBySide(settings.side))
+      .map((option) => setOptionToMatchSettings(option, filterSettings));
 
-  const getSelections = (type, selected) =>
-    selected.reduce((acc, code) => {
-      const sideOptions = filterHelper.options(type, settings.side);
-      if (sideOptions.find((choice) => choice.code === code)) {
-        acc.push(code);
-      }
-      return acc;
-    }, []);
+  const currentFactions = setupFilterForCurrentSide(factions, settings.factions);
+  const currentTypes = setupFilterForCurrentSide(types, settings.types);
+  const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes);
+  const currentPacks = packs.map((group) =>
+    setGroupOfFiltersToMatchSettings(group, settings.packs)
+  );
+
+  const filterSettingsToMatchCurrentOptions = (selected, filterOptions) => {
+    const appearsInCurrentOptions = (selection) =>
+      filterOptions.some(({ code }) => code === selection);
+    return selected.filter((selection) => appearsInCurrentOptions(selection));
+  };
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
   };
 
-  const filterHandler = (type) => (item, checked) => {
-    const filterSettings = new Set(settings[type]);
-    if (checked) {
-      filterSettings.add(item.code);
-    } else {
-      filterSettings.delete(item.code);
-    }
-    updateSettings({ [type]: [...filterSettings] });
-  };
-
-  const filterGroupHandler = (type) => (group, checked) => {
-    const itemCodes = group.items.map(({ code }) => code);
-    const filterSettings = new Set(settings[type]);
-    itemCodes.forEach((code) => {
-      if (checked) {
-        filterSettings.add(code);
+  const addOrRemoveSelections = (currentSettings, codes, selected) => {
+    const listOfCodes = Array.isArray(codes) ? codes : [codes];
+    const dedupedSettings = new Set(currentSettings);
+    listOfCodes.forEach((code) => {
+      if (selected) {
+        dedupedSettings.add(code);
       } else {
-        filterSettings.delete(code);
+        dedupedSettings.delete(code);
       }
     });
-    updateSettings({ [type]: [...filterSettings] });
+    return [...dedupedSettings];
+  };
+
+  const onSelectionHandler = (type) => (code, checked) => {
+    const updatedSettings = addOrRemoveSelections(settings[type], code, checked);
+    updateSettings({ [type]: updatedSettings });
   };
 
   const clearListFilter = (type) => () => {
@@ -126,7 +117,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   };
 
   const resetAllFilters = () => {
-    updateSettings(settingsHelper.init());
+    updateSettings(initSettings());
   };
 
   return (
@@ -157,7 +148,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           onChange={updateSimpleFilter('text')}
         />
         <SortSelect
-          options={options}
+          options={sortOptions}
           default={settings.sort}
           onChange={updateSimpleFilter('sort')}
         />
@@ -167,29 +158,28 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           hidden={true}
           options={currentFactions}
           clearAll={clearListFilter('factions')}
-          onChange={filterHandler('factions')}
+          onChange={onSelectionHandler('factions')}
         />
         <FilterList
           title="Types"
           hidden={true}
           options={currentTypes}
           clearAll={clearListFilter('types')}
-          onChange={filterHandler('types')}
+          onChange={onSelectionHandler('types')}
         />
         <FilterList
           title="Subtypes"
           hidden={true}
           options={currentSubtypes}
           clearAll={clearListFilter('subtypes')}
-          onChange={filterHandler('subtypes')}
+          onChange={onSelectionHandler('subtypes')}
         />
         <NestedFilterList
           title="Packs"
           hidden={true}
           options={currentPacks}
           clearAll={clearListFilter('packs')}
-          onGroupChange={filterGroupHandler('packs')}
-          onSubitemChange={filterHandler('packs')}
+          onChange={onSelectionHandler('packs')}
         />
 
         <Reset onClick={resetAllFilters} />
@@ -200,9 +190,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         sort={settings.sort}
         titleSearch={settings.title}
         textSearch={settings.text}
-        factions={getSelections(factions, settings.factions)}
-        types={getSelections(types, settings.types)}
-        subtypes={getSelections(subtypes, settings.subtypes)}
+        factions={filterSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
+        types={filterSettingsToMatchCurrentOptions(settings.types, currentTypes)}
+        subtypes={filterSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
         packs={settings.packs}
       />
     </div>

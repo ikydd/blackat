@@ -62,9 +62,7 @@ describe('NestedFilterList', () => {
 
     it('calls the callback when the group is checked', async () => {
       const groupCb = jest.fn();
-      const { findByLabelText } = render(
-        <NestedFilterList options={options} onGroupChange={groupCb} />
-      );
+      const { findByLabelText } = render(<NestedFilterList options={options} onChange={groupCb} />);
       const group = await findByLabelText('Bar');
       fireEvent.click(group);
 
@@ -74,7 +72,7 @@ describe('NestedFilterList', () => {
     it('calls the callback when the group is unchecked', async () => {
       const groupCb = jest.fn();
       const { findByLabelText } = render(
-        <NestedFilterList options={optionsSelected} onGroupChange={groupCb} />
+        <NestedFilterList options={optionsSelected} onChange={groupCb} />
       );
       const group = await findByLabelText('Bar');
       fireEvent.click(group);
@@ -84,9 +82,7 @@ describe('NestedFilterList', () => {
 
     it('calls the callback when an item is checked', async () => {
       const cb = jest.fn();
-      const { findByLabelText } = render(
-        <NestedFilterList options={options} onSubitemChange={cb} />
-      );
+      const { findByLabelText } = render(<NestedFilterList options={options} onChange={cb} />);
       const group = await findByLabelText('Alpha');
       fireEvent.click(group);
 

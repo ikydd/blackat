@@ -9,7 +9,7 @@ const FilterList = ({ hidden = false, title = 'Missing', onChange, options = [],
   const change =
     (item) =>
     ({ target: { checked } }) => {
-      onChange(item, checked);
+      onChange(item.code, checked);
     };
 
   const toggleHidden = () => {
