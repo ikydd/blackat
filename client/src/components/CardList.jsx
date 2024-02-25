@@ -28,6 +28,7 @@ const CardList = (props) => {
   useEffect(() => {
     Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
       .then(handleData)
+      /* eslint-disable-next-line no-console */
       .catch((err) => console.log(err));
   }, []);
 

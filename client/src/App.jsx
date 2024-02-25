@@ -65,6 +65,7 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
         setSubtypes(loadedSubtypes);
         setPacks(loadedPacks);
       })
+      /* eslint-disable-next-line no-console */
       .catch((err) => console.log(err));
   }, []);
 

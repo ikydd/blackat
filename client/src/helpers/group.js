@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const data = {};
 
 const ensureSection = (sections, list = [], prop = 'default') => {

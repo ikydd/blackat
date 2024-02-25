@@ -53,7 +53,7 @@ const filterByAll = ({
   const subtypesCb = bySubtypes(subtypes);
 
   return (card) => {
-    card.show =
+    const show =
       sortCb(card) &&
       sideCb(card) &&
       titleCb(card) &&
@@ -62,13 +62,12 @@ const filterByAll = ({
       typesCb(card) &&
       packsCb(card) &&
       subtypesCb(card);
-    return card;
+    return { ...card, show };
   };
 };
 
 const resetDisplay = (card) => {
-  card.show = true;
-  return card;
+  return { ...card, show: true };
 };
 
 const filter = (cards, filters) => cards.map(resetDisplay).map(filterByAll(filters));

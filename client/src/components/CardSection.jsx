@@ -6,6 +6,7 @@ import './CardSection.css';
 const versionControl = (last, current) => {
   const showing = current.show !== false;
   if (showing && last && last.title === current.title) {
+    // eslint-disable-next-line no-param-reassign
     last.show = false;
   }
   return showing ? current : last;
