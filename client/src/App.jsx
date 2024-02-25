@@ -13,11 +13,6 @@ import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
-const filterBySide =
-  (desiredSide) =>
-  ({ side }) =>
-    !side || side === desiredSide;
-
 const setOptionToMatchSettings = (option, settings) => {
   const isGroup = option.items;
   if (isGroup) {
@@ -34,6 +29,19 @@ const setOptionToMatchSettings = (option, settings) => {
     ...option,
     selected: settings.includes(option.code)
   };
+};
+
+const addOrRemoveSelections = (currentSettings, codes, selected) => {
+  const listOfCodes = Array.isArray(codes) ? codes : [codes];
+  const dedupedSettings = new Set(currentSettings);
+  listOfCodes.forEach((code) => {
+    if (selected) {
+      dedupedSettings.add(code);
+    } else {
+      dedupedSettings.delete(code);
+    }
+  });
+  return [...dedupedSettings];
 };
 
 const App = ({ saveState = false, side: sideProp = 'runner' }) => {
@@ -77,7 +85,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
   const setupFilterForCurrentSide = (options, filterSettings) =>
     options
-      .filter(filterBySide(settings.side))
+      .filter(({ side }) => !side || side === settings.side)
       .map((option) => setOptionToMatchSettings(option, filterSettings));
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions);
@@ -93,19 +101,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
-  };
-
-  const addOrRemoveSelections = (currentSettings, codes, selected) => {
-    const listOfCodes = Array.isArray(codes) ? codes : [codes];
-    const dedupedSettings = new Set(currentSettings);
-    listOfCodes.forEach((code) => {
-      if (selected) {
-        dedupedSettings.add(code);
-      } else {
-        dedupedSettings.delete(code);
-      }
-    });
-    return [...dedupedSettings];
   };
 
   const onSelectionHandler = (type) => (code, checked) => {
