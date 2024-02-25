@@ -34,11 +34,11 @@ describe('FilterList', () => {
       const { findAllByRole } = render(<FilterList options={optionsSelected} />);
       const checkboxes = await findAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((input) => input.getAttribute('value'));
 
-      expect(checked).toEqual(['anarch', 'shaper']);
+      expect(selected).toEqual(['anarch', 'shaper']);
     });
 
     it('calls the callback when an item is checked', async () => {
