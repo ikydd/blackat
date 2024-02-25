@@ -18,8 +18,8 @@ export const getData = async (type) => user[type] || data[type];
 
 export const setData = (type, fixture) => {
   user[type] = fixture;
-}
+};
 
 export const reset = () => {
   user = {};
-}
+};
