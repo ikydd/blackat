@@ -38,10 +38,6 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
 
-  const getSetting = (setting) => {
-    return settings[setting];
-  };
-
   useEffect(() => {
     const previousSession = storageProp && storage.get();
     if (previousSession) {
@@ -74,11 +70,11 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
   };
 
   const getOptions = (type, selected) =>
-    filters.options(type, getSetting('side')).map(setNormalSelection(selected));
+    filters.options(type, settings.side).map(setNormalSelection(selected));
 
   const getSelections = (type, selected) =>
     selected.reduce((acc, code) => {
-      const sideOptions = filters.options(type, getSetting('side'));
+      const sideOptions = filters.options(type, settings.side);
       if (sideOptions.find((choice) => choice.code === code)) {
         acc.push(code);
       }
@@ -86,7 +82,7 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
     }, []);
 
   const getNestedOptions = (type, selected) =>
-    filters.options(type, getSetting('side')).map(setNestedSelection(selected));
+    filters.options(type, settings.side).map(setNestedSelection(selected));
 
   const clearFilters = (type) => () => {
     updateSettings({ [type]: [] });
@@ -97,7 +93,7 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
   };
 
   const filterHandler = (type) => (item, checked) => {
-    const filterSettings = new Set(getSetting(type));
+    const filterSettings = new Set(settings[type]);
     if (checked) {
       filterSettings.add(item.code);
     } else {
@@ -108,7 +104,7 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
 
   const filterGroupHandler = (type) => (group, checked) => {
     const itemCodes = group.items.map(({ code }) => code);
-    const filterSettings = new Set(getSetting(type));
+    const filterSettings = new Set(settings[type]);
     itemCodes.forEach((code) => {
       if (checked) {
         filterSettings.add(code);
@@ -126,57 +122,53 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
           <SideButton
             title="Runner"
             side="runner"
-            selected={getSetting('side') === 'runner'}
+            selected={settings.side === 'runner'}
             onSelect={simpleHandler('side')}
           />
           <SideButton
             title="Corp"
             side="corp"
-            selected={getSetting('side') === 'corp'}
+            selected={settings.side === 'corp'}
             onSelect={simpleHandler('side')}
           />
         </div>
         <TextSearch
           placeholder="search title"
-          value={getSetting('title')}
+          value={settings.title}
           onChange={simpleHandler('title')}
         />
         <TextSearch
           placeholder="search text"
-          value={getSetting('text')}
+          value={settings.text}
           onChange={simpleHandler('text')}
         />
-        <SortSelect
-          options={options}
-          default={getSetting('sort')}
-          onChange={simpleHandler('sort')}
-        />
+        <SortSelect options={options} default={settings.sort} onChange={simpleHandler('sort')} />
 
         <FilterList
           title="Factions"
           hidden={true}
-          options={getOptions(factions, getSetting('factions'))}
+          options={getOptions(factions, settings.factions)}
           clearAll={clearFilters('factions')}
           onChange={filterHandler('factions')}
         />
         <FilterList
           title="Types"
           hidden={true}
-          options={getOptions(types, getSetting('types'))}
+          options={getOptions(types, settings.types)}
           clearAll={clearFilters('types')}
           onChange={filterHandler('types')}
         />
         <FilterList
           title="Subtypes"
           hidden={true}
-          options={getOptions(subtypes, getSetting('subtypes'))}
+          options={getOptions(subtypes, settings.subtypes)}
           clearAll={clearFilters('subtypes')}
           onChange={filterHandler('subtypes')}
         />
         <NestedFilterList
           title="Packs"
           hidden={true}
-          options={getNestedOptions(packs, getSetting('packs'))}
+          options={getNestedOptions(packs, settings.packs)}
           clearAll={clearFilters('packs')}
           onGroupChange={filterGroupHandler('packs')}
           onSubitemChange={filterHandler('packs')}
@@ -186,14 +178,14 @@ const App = ({ storage: storageProp = false, side: sideProp = 'runner' }) => {
         <SmallPrint />
       </ControlPanel>
       <CardList
-        side={getSetting('side')}
-        sort={getSetting('sort')}
-        titleSearch={getSetting('title')}
-        textSearch={getSetting('text')}
-        factions={getSelections(factions, getSetting('factions'))}
-        types={getSelections(types, getSetting('types'))}
-        subtypes={getSelections(subtypes, getSetting('subtypes'))}
-        packs={getSetting('packs')}
+        side={settings.side}
+        sort={settings.sort}
+        titleSearch={settings.title}
+        textSearch={settings.text}
+        factions={getSelections(factions, settings.factions)}
+        types={getSelections(types, settings.types)}
+        subtypes={getSelections(subtypes, settings.subtypes)}
+        packs={settings.packs}
       />
     </div>
   );
