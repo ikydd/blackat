@@ -145,6 +145,24 @@
       "ffg_id": null
     },
     {
+      "code": "td",
+      "cycle_code": "terminal-directive",
+      "date_release": "2017-04-27",
+      "name": "Terminal Directive Cards",
+      "position": 1,
+      "size": 57,
+      "ffg_id": null
+    },
+    {
+      "code": "tdc",
+      "cycle_code": "terminal-directive",
+      "date_release": "2017-04-27",
+      "name": "Terminal Directive Campaign",
+      "position": 2,
+      "size": 28,
+      "ffg_id": null
+    },
+    {
       "code": "mo",
       "cycle_code": "magnum-opus",
       "date_release": "2018-09-07",

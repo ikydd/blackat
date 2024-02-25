@@ -13,11 +13,14 @@ const packsIntoCycles = (cycles, pack) => {
 
 const officialPacks = ({ date_release }) => date_release < '2018-09-07';
 
+const nonCampaignPacks = ({ code }) => code !== 'tdc';
+
 const includedCycles = ({ items }) => items.length;
 
 const process = ({ data: packs }, { data: cycles }) =>
   packs
     .filter(officialPacks)
+    .filter(nonCampaignPacks)
     .map(({ name, code, cycle_code }) => ({
       code,
       name,

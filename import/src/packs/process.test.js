@@ -7,7 +7,7 @@ describe('process factions', () => {
   it('outputs the correct number of cycles', () => {
     const output = process(mockPacks, mockCycles);
 
-    expect(output.length).toEqual(5);
+    expect(output.length).toEqual(6);
   });
 
   it('outputs the correct number of packs', () => {
@@ -66,5 +66,13 @@ describe('process factions', () => {
     const cycle = output.find(({ code }) => code === 'draft');
 
     expect(cycle).toBeFalsy();
+  });
+
+  it('does not output campaign card from terminal directive', () => {
+    const output = process(mockPacks, mockCycles);
+    const terminalDirective = output.find(({ code }) => code === 'terminal-directive');
+
+    expect(terminalDirective.items).toHaveLength(1);
+    expect(terminalDirective.items[0].code).toEqual('td');
   });
 });

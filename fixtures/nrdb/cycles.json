@@ -43,6 +43,13 @@
       "rotated": false
     },
     {
+      "code": "terminal-directive",
+      "name": "Terminal Directive",
+      "position": 13,
+      "size": 2,
+      "rotated": false
+    },
+    {
       "code": "magnum-opus",
       "name": "Magnum Opus",
       "position": 23,
