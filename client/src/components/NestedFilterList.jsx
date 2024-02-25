@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FilterItem from './FilterItem';
-import FilterNotification from './FilterNotification';
+import FilterHeading from './FilterHeading';
 import './FilterList.css';
 import './NestedFilterList.css';
 
@@ -13,25 +13,22 @@ const NestedFilterList = ({
 }) => {
   const [isClosed, setClosed] = useState(closed);
 
-  const changeGroup =
-    (group) =>
-    ({ target: { checked } }) => {
-      const codes = group.items.map(({ code }) => code);
-      onChange(codes, checked);
-    };
+  const handleGroupOptionSelection = (group, checked) => {
+    const codes = group.items.map(({ code }) => code);
+    onChange(codes, checked);
+  };
 
-  const changeSubitem =
-    (item) =>
-    ({ target: { checked } }) => {
-      onChange(item.code, checked);
-    };
+  const handleSubOptionSelection = (item, checked) => {
+    onChange(item.code, checked);
+  };
 
   const toggleClosed = () => {
     setClosed(!isClosed);
   };
 
-  const inUse = () =>
-    options.reduce((list, group) => list.concat(group.items), []).find(({ selected }) => selected);
+  const inUse = options
+    .reduce((list, group) => list.concat(group.items), [])
+    .find(({ selected }) => selected);
 
   const keyword = title.toLowerCase();
 
@@ -40,14 +37,19 @@ const NestedFilterList = ({
       const subFilters = group.items.length > 1 && (
         <div className="filter-group-items">
           {group.items.map((item) => (
-            <FilterItem key={item.code} item={item} keyword={keyword} onChange={changeSubitem} />
+            <FilterItem
+              key={item.code}
+              item={item}
+              keyword={keyword}
+              onChange={handleSubOptionSelection}
+            />
           ))}
         </div>
       );
 
       return (
         <div className="filter-group" key={group.code}>
-          <FilterItem item={group} keyword={keyword} onChange={changeGroup} />
+          <FilterItem item={group} keyword={keyword} onChange={handleGroupOptionSelection} />
           {subFilters}
           <hr className="filter-divider" />
         </div>
@@ -65,9 +67,7 @@ const NestedFilterList = ({
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
-      <h4 className="filter-list-title" onClick={toggleClosed}>
-        {title} {<FilterNotification on={inUse()} />}
-      </h4>
+      <FilterHeading title={title} inUse={inUse} onClick={toggleClosed} />
       {filters}
     </div>
   );
