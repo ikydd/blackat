@@ -1,9 +1,13 @@
 import React from 'react';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 import { render, fireEvent } from '@testing-library/react';
 import App from '../App';
 import * as api from '../helpers/api';
 
 jest.mock('../helpers/api');
+
+const loadFile = (path) => JSON.parse(readFileSync(join(__dirname, path), 'utf-8'));
 
 describe('Sort', () => {
   afterEach(() => {
@@ -55,7 +59,7 @@ describe('Sort', () => {
   });
 
   it('sorts by faction by default', async () => {
-    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'));
+    api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
     const { findAllByRole, getByRole } = render(<App />);
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -65,7 +69,7 @@ describe('Sort', () => {
   });
 
   it('sorts by faction', async () => {
-    api.setData('cards', require('../../../fixtures/api/faction-sort/faction-runner'));
+    api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
     const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'faction' } });
 
@@ -76,7 +80,7 @@ describe('Sort', () => {
   });
 
   it('sorts by type', async () => {
-    api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
+    api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
     const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'type' } });
 
@@ -87,7 +91,7 @@ describe('Sort', () => {
   });
 
   it('sorts by pack', async () => {
-    api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
+    api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
     const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'pack' } });
 
@@ -109,7 +113,7 @@ describe('Sort', () => {
   });
 
   it('sorts by illustrator', async () => {
-    api.setData('cards', require('../../../fixtures/api/illustrator-sort/corp'));
+    api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/corp.json'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), {
       target: { value: 'illustrator' }
@@ -123,7 +127,7 @@ describe('Sort', () => {
   });
 
   it('sorts by cost', async () => {
-    api.setData('cards', require('../../../fixtures/api/cost-sort/cost'));
+    api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost.json'));
     const { findAllByRole, getByRole } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'cost' } });
 
@@ -134,7 +138,7 @@ describe('Sort', () => {
   });
 
   it('sorts by agenda points', async () => {
-    api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda'));
+    api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda.json'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'agenda' } });
     fireEvent.click(getByText('Corp'));
@@ -146,7 +150,7 @@ describe('Sort', () => {
   });
 
   it('sorts by strength', async () => {
-    api.setData('cards', require('../../../fixtures/api/strength-sort/strength'));
+    api.setData('cards', loadFile('../../../fixtures/api/strength-sort/strength.json'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), { target: { value: 'strength' } });
     fireEvent.click(getByText('Corp'));
@@ -158,7 +162,7 @@ describe('Sort', () => {
   });
 
   it('sorts by subroutines', async () => {
-    api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines'));
+    api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/subroutines.json'));
     const { findAllByRole, getByRole, getByText } = render(<App />);
     fireEvent.change(getByRole('combobox'), {
       target: { value: 'subroutines' }

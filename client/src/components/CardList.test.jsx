@@ -1,9 +1,13 @@
 import React from 'react';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 import { render, waitFor } from '@testing-library/react';
 import CardList from './CardList';
 import * as api from '../helpers/api';
 
 jest.mock('../helpers/api');
+
+const loadFile = (path) => JSON.parse(readFileSync(join(__dirname, path), 'utf-8'));
 
 describe('CardList', () => {
   afterEach(() => {
@@ -114,7 +118,7 @@ describe('CardList', () => {
   describe('Sort', () => {
     describe('Faction', () => {
       it('sorts by faction', async () => {
-        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-corp'));
+        api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-corp.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -123,7 +127,7 @@ describe('CardList', () => {
       });
 
       it('sorts neutral last', async () => {
-        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-neutral'));
+        api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-neutral.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -132,7 +136,7 @@ describe('CardList', () => {
       });
 
       it('sorts by type after faction', async () => {
-        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-type'));
+        api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-type.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -141,7 +145,7 @@ describe('CardList', () => {
       });
 
       it('sorts by name after type', async () => {
-        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-type-name'));
+        api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-type-name.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -150,7 +154,7 @@ describe('CardList', () => {
       });
 
       it('has named separators', async () => {
-        api.setData('cards', require('../../../fixtures/api/faction-sort/faction-corp'));
+        api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-corp.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
         const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
@@ -161,7 +165,7 @@ describe('CardList', () => {
 
     describe('Type', () => {
       it('sorts by type', async () => {
-        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
+        api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="type" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -170,7 +174,7 @@ describe('CardList', () => {
       });
 
       it('sorts by faction after type', async () => {
-        api.setData('cards', require('../../../fixtures/api/type-sort/type-faction'));
+        api.setData('cards', loadFile('../../../fixtures/api/type-sort/type-faction.json'));
         const { findAllByRole } = render(<CardList sort="type" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -179,7 +183,7 @@ describe('CardList', () => {
       });
 
       it('sorts by name after faction', async () => {
-        api.setData('cards', require('../../../fixtures/api/type-sort/type-faction-name'));
+        api.setData('cards', loadFile('../../../fixtures/api/type-sort/type-faction-name.json'));
         const { findAllByRole } = render(<CardList sort="type" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -188,7 +192,7 @@ describe('CardList', () => {
       });
 
       it('has named separators', async () => {
-        api.setData('cards', require('../../../fixtures/api/type-sort/runner'));
+        api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="type" />);
         const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
@@ -199,7 +203,7 @@ describe('CardList', () => {
 
     describe('Pack', () => {
       it('sorts by pack', async () => {
-        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
+        api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="pack" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -208,7 +212,7 @@ describe('CardList', () => {
       });
 
       it('has named separators', async () => {
-        api.setData('cards', require('../../../fixtures/api/pack-sort/runner'));
+        api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="pack" />);
         const hrs = await findAllByRole('separator');
         const titles = hrs.map(({ textContent }) => textContent.trim());
@@ -219,7 +223,7 @@ describe('CardList', () => {
 
     describe('Title', () => {
       it('sorts by title', async () => {
-        api.setData('cards', require('../../../fixtures/api/cards-name'));
+        api.setData('cards', loadFile('../../../fixtures/api/cards-name.json'));
         const { findAllByRole } = render(<CardList sort="title" />);
         const images = await findAllByRole('img');
         const cards = images.map(({ alt }) => alt);
@@ -228,7 +232,7 @@ describe('CardList', () => {
       });
 
       it('has no separators', async () => {
-        api.setData('cards', require('../../../fixtures/api/cards-name'));
+        api.setData('cards', loadFile('../../../fixtures/api/cards-name.json'));
         const { findAllByRole, queryAllByRole } = render(<CardList sort="title" />);
         await findAllByRole('img');
         const hrs = queryAllByRole('separator');
@@ -240,7 +244,7 @@ describe('CardList', () => {
 
   describe('Illustrator', () => {
     it('sorts by illustrator', async () => {
-      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
+      api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/illustrator.json'));
       const { findAllByRole } = render(<CardList sort="illustrator" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -249,7 +253,7 @@ describe('CardList', () => {
     });
 
     it('skips cards with no illustrator', async () => {
-      api.setData('cards', require('../../../fixtures/api/illustrator-sort/no-illustrator'));
+      api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/no-illustrator.json'));
       const { findAllByRole } = render(<CardList sort="illustrator" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -258,7 +262,7 @@ describe('CardList', () => {
     });
 
     it('has named separators', async () => {
-      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator'));
+      api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/illustrator.json'));
       const { findAllByRole } = render(<CardList sort="illustrator" />);
       await findAllByRole('img');
       const hrs = await findAllByRole('separator');
@@ -268,7 +272,10 @@ describe('CardList', () => {
     });
 
     it('sorts by title after illustrator', async () => {
-      api.setData('cards', require('../../../fixtures/api/illustrator-sort/illustrator-title'));
+      api.setData(
+        'cards',
+        loadFile('../../../fixtures/api/illustrator-sort/illustrator-title.json')
+      );
       const { findAllByRole } = render(<CardList sort="illustrator" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -279,7 +286,7 @@ describe('CardList', () => {
 
   describe('Cost', () => {
     it('sorts by cost', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/cost'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -288,7 +295,7 @@ describe('CardList', () => {
     });
 
     it('skips cards with no cost', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/no-cost'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/no-cost.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -297,7 +304,7 @@ describe('CardList', () => {
     });
 
     it('includes cards with 0 cost', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/zero-cost'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/zero-cost.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -306,7 +313,7 @@ describe('CardList', () => {
     });
 
     it('sorts by faction after cost', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost-faction.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -315,7 +322,7 @@ describe('CardList', () => {
     });
 
     it('sorts by type after faction', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction-type'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost-faction-type.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -324,7 +331,7 @@ describe('CardList', () => {
     });
 
     it('sorts by title after type', async () => {
-      api.setData('cards', require('../../../fixtures/api/cost-sort/cost-faction-type-name'));
+      api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost-faction-type-name.json'));
       const { findAllByRole } = render(<CardList sort="cost" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -335,7 +342,7 @@ describe('CardList', () => {
 
   describe('Agenda Points', () => {
     it('sorts by agenda points', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -344,7 +351,7 @@ describe('CardList', () => {
     });
 
     it('skips cards with no agenda points', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/no-agenda'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/no-agenda.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -353,7 +360,7 @@ describe('CardList', () => {
     });
 
     it('includes cards with 0 points', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/zero-agenda'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/zero-agenda.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -362,7 +369,7 @@ describe('CardList', () => {
     });
 
     it('sorts by faction after agenda points', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda-faction.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -371,7 +378,7 @@ describe('CardList', () => {
     });
 
     it('sorts by advancement cost after faction', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction-cost'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda-faction-cost.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -380,7 +387,10 @@ describe('CardList', () => {
     });
 
     it('sorts by title after advancement', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/agenda-faction-cost-name'));
+      api.setData(
+        'cards',
+        loadFile('../../../fixtures/api/agenda-sort/agenda-faction-cost-name.json')
+      );
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -389,7 +399,7 @@ describe('CardList', () => {
     });
 
     it('includes cards that act as agenda points', async () => {
-      api.setData('cards', require('../../../fixtures/api/agenda-sort/as-an-agenda'));
+      api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/as-an-agenda.json'));
       const { findAllByRole } = render(<CardList sort="agenda" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -400,7 +410,7 @@ describe('CardList', () => {
 
   describe('Strength', () => {
     it('sorts by strength', async () => {
-      api.setData('cards', require('../../../fixtures/api/strength-sort/strength'));
+      api.setData('cards', loadFile('../../../fixtures/api/strength-sort/strength.json'));
       const { findAllByRole } = render(<CardList sort="strength" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -409,7 +419,7 @@ describe('CardList', () => {
     });
 
     it('skips cards with no strength', async () => {
-      api.setData('cards', require('../../../fixtures/api/strength-sort/no-strength'));
+      api.setData('cards', loadFile('../../../fixtures/api/strength-sort/no-strength.json'));
       const { findAllByRole } = render(<CardList sort="strength" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -418,7 +428,7 @@ describe('CardList', () => {
     });
 
     it('includes cards with 0 strength', async () => {
-      api.setData('cards', require('../../../fixtures/api/strength-sort/zero-strength'));
+      api.setData('cards', loadFile('../../../fixtures/api/strength-sort/zero-strength.json'));
       const { findAllByRole } = render(<CardList sort="strength" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -427,7 +437,10 @@ describe('CardList', () => {
     });
 
     it('sorts by subroutines after strength', async () => {
-      api.setData('cards', require('../../../fixtures/api/strength-sort/strength-subroutines'));
+      api.setData(
+        'cards',
+        loadFile('../../../fixtures/api/strength-sort/strength-subroutines.json')
+      );
       const { findAllByRole } = render(<CardList sort="strength" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -438,7 +451,7 @@ describe('CardList', () => {
     it('sorts by title after subroutines', async () => {
       api.setData(
         'cards',
-        require('../../../fixtures/api/strength-sort/strength-subroutines-name')
+        loadFile('../../../fixtures/api/strength-sort/strength-subroutines-name.json')
       );
       const { findAllByRole } = render(<CardList sort="strength" />);
       const images = await findAllByRole('img');
@@ -450,7 +463,7 @@ describe('CardList', () => {
 
   describe('Subroutines', () => {
     it('sorts by subroutines', async () => {
-      api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines'));
+      api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/subroutines.json'));
       const { findAllByRole } = render(<CardList sort="subroutines" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -459,7 +472,7 @@ describe('CardList', () => {
     });
 
     it('skips cards with no subroutines', async () => {
-      api.setData('cards', require('../../../fixtures/api/subroutines-sort/no-subroutines'));
+      api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/no-subroutines.json'));
       const { findAllByRole } = render(<CardList sort="subroutines" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -468,7 +481,10 @@ describe('CardList', () => {
     });
 
     it('includes cards with 0 subroutines', async () => {
-      api.setData('cards', require('../../../fixtures/api/subroutines-sort/zero-subroutines'));
+      api.setData(
+        'cards',
+        loadFile('../../../fixtures/api/subroutines-sort/zero-subroutines.json')
+      );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -477,7 +493,10 @@ describe('CardList', () => {
     });
 
     it('sorts by strength after subroutines', async () => {
-      api.setData('cards', require('../../../fixtures/api/subroutines-sort/subroutines-strength'));
+      api.setData(
+        'cards',
+        loadFile('../../../fixtures/api/subroutines-sort/subroutines-strength.json')
+      );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -488,7 +507,7 @@ describe('CardList', () => {
     it('sorts by title after strength', async () => {
       api.setData(
         'cards',
-        require('../../../fixtures/api/subroutines-sort/subroutines-strength-name')
+        loadFile('../../../fixtures/api/subroutines-sort/subroutines-strength-name.json')
       );
       const { findAllByRole } = render(<CardList sort="subroutines" />);
       const images = await findAllByRole('img');
@@ -500,7 +519,7 @@ describe('CardList', () => {
 
   describe('Card Updates', () => {
     it('only shows the most recent version when versions are consecutive', async () => {
-      api.setData('cards', require('../../../fixtures/api/versions'));
+      api.setData('cards', loadFile('../../../fixtures/api/versions.json'));
       const { findAllByRole } = render(<CardList sort="title" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
@@ -509,7 +528,7 @@ describe('CardList', () => {
     });
 
     it('shows all versions when not consecutive', async () => {
-      api.setData('cards', require('../../../fixtures/api/versions'));
+      api.setData('cards', loadFile('../../../fixtures/api/versions.json'));
       const { findAllByRole } = render(<CardList sort="pack" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);

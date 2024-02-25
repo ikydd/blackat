@@ -12,12 +12,12 @@ const existingCards = (filepath) => (card) => {
 const createFolder = fs.ensureDir;
 
 const saveImageTo = (target, card) => (response) =>
-  new Promise((resolve, reject) =>
+  new Promise((resolve, reject) => {
     response.data
       .pipe(fs.createWriteStream(cardPath(card, target)))
       .on('close', () => resolve())
-      .on('error', (error) => reject(error))
-  );
+      .on('error', (error) => reject(error));
+  });
 
 const downloadCardTo = (target) => (card) =>
   axios({

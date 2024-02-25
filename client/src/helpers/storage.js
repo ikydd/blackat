@@ -14,17 +14,16 @@ const setNestedSelection = (storage) => (group) => ({
   items: group.items.map(setNormalSelection(storage))
 });
 
-const init = ({ side } = {}) =>
-  ({
-    side: side || 'runner',
-    sort: 'faction',
-    title: '',
-    text: '',
-    factions: [],
-    types: [],
-    subtypes: [],
-    packs: []
-  });
+const init = ({ side } = {}) => ({
+  side: side || 'runner',
+  sort: 'faction',
+  title: '',
+  text: '',
+  factions: [],
+  types: [],
+  subtypes: [],
+  packs: []
+});
 
 const save = (data) => {
   localStorage.setItem('settings', JSON.stringify(data));
@@ -36,9 +35,9 @@ const get = () => {
     const previousSession = JSON.parse(localStorage.getItem('settings'));
     return { ...initialSettings, ...previousSession };
   } catch (e) {
-    return false
+    return false;
   }
-}
+};
 
 const integrate = (previousSession, { factions, types, packs, subtypes }) => {
   if (previousSession) {
