@@ -23,4 +23,4 @@ const load = () => {
   }
 };
 
-export { init, save, load };
+export default { init, save, load };

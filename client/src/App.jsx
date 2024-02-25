@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from './helpers/api';
-import * as settingsHelper from './helpers/settings';
-import { filters } from './helpers/controls';
+import settingsHelper from './helpers/settings';
+import filterHelper from './helpers/controls';
 import options from './helpers/options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
@@ -14,13 +14,18 @@ import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import './App.css';
 
-const setNormalSelection = (settings) => (option) => ({
+const filterBySide =
+  (desiredSide) =>
+  ({ side }) =>
+    !side || side === desiredSide;
+
+const selectFilterFromSettings = (settings) => (option) => ({
   ...option,
   selected: settings.includes(option.code)
 });
 
-const setNestedSelection = (settings) => (group) => {
-  const items = group.items ? group.items.map(setNormalSelection(settings)) : [];
+const selectNestedFiltersFromSettings = (settings) => (group) => {
+  const items = group.items ? group.items.map(selectFilterFromSettings(settings)) : [];
   const allItemsSelected =
     items.length && items.filter(({ selected }) => selected).length === items.length;
   return {
@@ -69,20 +74,25 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const getOptions = (type, selected) =>
-    filters.options(type, settings.side).map(setNormalSelection(selected));
+  const currentFactions = factions
+    .filter(filterBySide(settings.side))
+    .map(selectFilterFromSettings(settings.factions));
+  const currentTypes = types
+    .filter(filterBySide(settings.side))
+    .map(selectFilterFromSettings(settings.types));
+  const currentSubtypes = subtypes
+    .filter(filterBySide(settings.side))
+    .map(selectFilterFromSettings(settings.subtypes));
+  const currentPacks = packs.map(selectNestedFiltersFromSettings(settings.packs));
 
   const getSelections = (type, selected) =>
     selected.reduce((acc, code) => {
-      const sideOptions = filters.options(type, settings.side);
+      const sideOptions = filterHelper.options(type, settings.side);
       if (sideOptions.find((choice) => choice.code === code)) {
         acc.push(code);
       }
       return acc;
     }, []);
-
-  const getNestedOptions = (type, selected) =>
-    filters.options(type, settings.side).map(setNestedSelection(selected));
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
@@ -155,28 +165,28 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         <FilterList
           title="Factions"
           hidden={true}
-          options={getOptions(factions, settings.factions)}
+          options={currentFactions}
           clearAll={clearListFilter('factions')}
           onChange={filterHandler('factions')}
         />
         <FilterList
           title="Types"
           hidden={true}
-          options={getOptions(types, settings.types)}
+          options={currentTypes}
           clearAll={clearListFilter('types')}
           onChange={filterHandler('types')}
         />
         <FilterList
           title="Subtypes"
           hidden={true}
-          options={getOptions(subtypes, settings.subtypes)}
+          options={currentSubtypes}
           clearAll={clearListFilter('subtypes')}
           onChange={filterHandler('subtypes')}
         />
         <NestedFilterList
           title="Packs"
           hidden={true}
-          options={getNestedOptions(packs, settings.packs)}
+          options={currentPacks}
           clearAll={clearListFilter('packs')}
           onGroupChange={filterGroupHandler('packs')}
           onSubitemChange={filterHandler('packs')}
