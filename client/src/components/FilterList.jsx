@@ -3,8 +3,8 @@ import FilterItem from './FilterItem';
 import FilterNotification from './FilterNotification';
 import './FilterList.css';
 
-const FilterList = ({ hidden = false, title = 'Missing', onChange, options = [], clearAll }) => {
-  const [isHidden, setHidden] = useState(hidden);
+const FilterList = ({ closed = false, title = 'Missing', onChange, options = [], clearAll }) => {
+  const [isClosed, setClosed] = useState(closed);
 
   const change =
     (item) =>
@@ -12,8 +12,8 @@ const FilterList = ({ hidden = false, title = 'Missing', onChange, options = [],
       onChange(item.code, checked);
     };
 
-  const toggleHidden = () => {
-    setHidden(!isHidden);
+  const toggleClosed = () => {
+    setClosed(!isClosed);
   };
 
   const inUse = () => options.some(({ selected }) => selected);
@@ -22,10 +22,10 @@ const FilterList = ({ hidden = false, title = 'Missing', onChange, options = [],
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
-      <h4 className="filter-list-title" onClick={toggleHidden}>
+      <h4 className="filter-list-title" onClick={toggleClosed}>
         {title} {<FilterNotification on={inUse()} />}
       </h4>
-      {isHidden !== true && (
+      {isClosed !== true && (
         <div className="filter-list-items">
           <h5 role="button" onClick={clearAll}>
             Clear All

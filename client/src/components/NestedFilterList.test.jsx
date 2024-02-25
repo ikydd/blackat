@@ -101,15 +101,15 @@ describe('NestedFilterList', () => {
     });
 
     it('can be configured to hide filters via a prop', async () => {
-      const { queryAllByRole } = render(<NestedFilterList options={options} hidden={true} />);
+      const { queryAllByRole } = render(<NestedFilterList options={options} closed={true} />);
       const checkboxes = await queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
-    it('shows options when hidden and heading is clicked', async () => {
+    it('shows options when closed and heading is clicked', async () => {
       const { findAllByRole, getByRole } = render(
-        <NestedFilterList options={options} hidden={true} />
+        <NestedFilterList options={options} closed={true} />
       );
       fireEvent.click(getByRole('heading'));
       const checkboxes = await findAllByRole('checkbox');

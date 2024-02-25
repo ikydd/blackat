@@ -6,12 +6,12 @@ import './NestedFilterList.css';
 
 const NestedFilterList = ({
   title = 'Missing',
-  hidden = false,
+  closed = false,
   clearAll,
   onChange,
   options = []
 }) => {
-  const [isHidden, setHidden] = useState(hidden);
+  const [isClosed, setClosed] = useState(closed);
 
   const changeGroup =
     (group) =>
@@ -26,8 +26,8 @@ const NestedFilterList = ({
       onChange(item.code, checked);
     };
 
-  const toggleHidden = () => {
-    setHidden(!isHidden);
+  const toggleClosed = () => {
+    setClosed(!isClosed);
   };
 
   const inUse = () =>
@@ -54,7 +54,7 @@ const NestedFilterList = ({
       );
     });
 
-  const filters = isHidden !== true && (
+  const filters = isClosed !== true && (
     <div className="filter-list-items">
       <h5 role="button" onClick={clearAll}>
         Clear All
@@ -65,7 +65,7 @@ const NestedFilterList = ({
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
-      <h4 className="filter-list-title" onClick={toggleHidden}>
+      <h4 className="filter-list-title" onClick={toggleClosed}>
         {title} {<FilterNotification on={inUse()} />}
       </h4>
       {filters}

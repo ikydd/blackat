@@ -151,28 +151,28 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
         <FilterList
           title="Factions"
-          hidden={true}
+          closed={true}
           options={currentFactions}
           clearAll={clearListFilter('factions')}
           onChange={onSelectionHandler('factions')}
         />
         <FilterList
           title="Types"
-          hidden={true}
+          closed={true}
           options={currentTypes}
           clearAll={clearListFilter('types')}
           onChange={onSelectionHandler('types')}
         />
         <FilterList
           title="Subtypes"
-          hidden={true}
+          closed={true}
           options={currentSubtypes}
           clearAll={clearListFilter('subtypes')}
           onChange={onSelectionHandler('subtypes')}
         />
         <NestedFilterList
           title="Packs"
-          hidden={true}
+          closed={true}
           options={currentPacks}
           clearAll={clearListFilter('packs')}
           onChange={onSelectionHandler('packs')}

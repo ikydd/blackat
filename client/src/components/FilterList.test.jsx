@@ -60,14 +60,14 @@ describe('FilterList', () => {
     });
 
     it('can be configured to hide filters via a prop', async () => {
-      const { queryAllByRole } = render(<FilterList options={options} hidden={true} />);
+      const { queryAllByRole } = render(<FilterList options={options} closed={true} />);
       const checkboxes = await queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
-    it('shows options when hidden and heading is clicked', async () => {
-      const { findAllByRole, getByRole } = render(<FilterList options={options} hidden={true} />);
+    it('shows options when closed and heading is clicked', async () => {
+      const { findAllByRole, getByRole } = render(<FilterList options={options} closed={true} />);
       fireEvent.click(getByRole('heading'));
 
       const checkboxes = await findAllByRole('checkbox');
