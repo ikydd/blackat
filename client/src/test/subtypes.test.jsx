@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
-import subtypes from '../../../fixtures/api/subtypes';
+import subtypes from '../../../fixtures/api/subtypes.json';
 
 jest.mock('../helpers/api');
 
@@ -111,7 +111,7 @@ describe('Subtypes filters', () => {
     fireEvent.click(icebreaker);
     fireEvent.click(getByText('Corp'));
 
-    let codeGate = await within(filterBlock).findByLabelText('Code Gate');
+    const codeGate = await within(filterBlock).findByLabelText('Code Gate');
     fireEvent.click(codeGate);
     fireEvent.click(getByText('Runner'));
 
@@ -125,7 +125,7 @@ describe('Subtypes filters', () => {
     const filterBlock = getByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
 
-    let icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
+    const icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
     fireEvent.click(icebreaker);
     fireEvent.click(getByText('Corp'));
 

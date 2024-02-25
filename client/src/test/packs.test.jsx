@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
-import packs from '../../../fixtures/api/packs';
+import packs from '../../../fixtures/api/packs.json';
 
 jest.mock('../helpers/api');
 
@@ -137,13 +137,13 @@ describe('Packs filters', () => {
 
       const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((item) => item.getAttribute('value'));
 
       const expected = ['genesis'].concat(genesis.items.map(({ code }) => code));
 
-      expect(checked).toEqual(expected);
+      expect(selected).toEqual(expected);
     });
 
     it('deselects all in a cycle when deselected', async () => {
@@ -156,17 +156,17 @@ describe('Packs filters', () => {
       const pack = await within(filterBlock).findByLabelText(genesis.items[3].name);
       fireEvent.click(pack);
 
-      let cycle = await findByLabelText(genesis.name);
+      const cycle = await findByLabelText(genesis.name);
       fireEvent.click(cycle);
       fireEvent.click(cycle);
 
       const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
-      const checked = checkboxes
+      const selected = checkboxes
         .filter(({ checked }) => checked)
         .map((item) => item.getAttribute('value'));
 
-      expect(checked).toHaveLength(0);
+      expect(selected).toHaveLength(0);
     });
 
     it('deselects cycle when not all subitems are checked', async () => {

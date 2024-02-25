@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
-import factions from '../../../fixtures/api/factions';
+import factions from '../../../fixtures/api/factions.json';
 
 jest.mock('../helpers/api');
 
@@ -111,7 +111,7 @@ describe('Faction filters', () => {
     fireEvent.click(anarch);
     fireEvent.click(getByText('Corp'));
 
-    let jinteki = await within(filterBlock).findByLabelText('Jinteki');
+    const jinteki = await within(filterBlock).findByLabelText('Jinteki');
     fireEvent.click(jinteki);
     fireEvent.click(getByText('Runner'));
 

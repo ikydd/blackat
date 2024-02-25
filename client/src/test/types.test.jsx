@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
-import types from '../../../fixtures/api/types';
+import types from '../../../fixtures/api/types.json';
 
 jest.mock('../helpers/api');
 
@@ -111,7 +111,7 @@ describe('Types filters', () => {
     fireEvent.click(hardware);
     fireEvent.click(getByText('Corp'));
 
-    let agenda = await within(filterBlock).findByLabelText('Agenda');
+    const agenda = await within(filterBlock).findByLabelText('Agenda');
     fireEvent.click(agenda);
     fireEvent.click(getByText('Runner'));
 
@@ -125,7 +125,7 @@ describe('Types filters', () => {
     const filterBlock = getByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
 
-    let hardware = await within(filterBlock).findByLabelText('Hardware');
+    const hardware = await within(filterBlock).findByLabelText('Hardware');
     fireEvent.click(hardware);
     fireEvent.click(getByText('Corp'));
 
@@ -139,11 +139,11 @@ describe('Types filters', () => {
     const filterBlock = getByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
 
-    let hardware = await within(filterBlock).findByLabelText('Identity');
+    const hardware = await within(filterBlock).findByLabelText('Identity');
     fireEvent.click(hardware);
     fireEvent.click(getByText('Corp'));
 
-    let identity = await within(filterBlock).findByLabelText('Identity');
+    const identity = await within(filterBlock).findByLabelText('Identity');
 
     expect(identity).toBeChecked();
   });
