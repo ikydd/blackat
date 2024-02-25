@@ -35,8 +35,8 @@ const NestedFilterList = ({
 
   const keyword = title.toLowerCase();
 
-  const generateFilters = (options) =>
-    options.map((group) => {
+  const generateFilters = (filterOptions) =>
+    filterOptions.map((group) => {
       const subFilters = group.items.length > 1 && (
         <div className="filter-group-items">
           {group.items.map((item) => (
@@ -64,7 +64,7 @@ const NestedFilterList = ({
   );
 
   return (
-    <div className="filter-list" data-testid={keyword + '-filters'}>
+    <div className="filter-list" data-testid={`${keyword}-filters`}>
       <h4 className="filter-list-title" onClick={toggleHidden}>
         {title} {<FilterNotification on={inUse()} />}
       </h4>

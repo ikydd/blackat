@@ -15,65 +15,41 @@ const setNestedSelection = (storage) => (group) => ({
 });
 
 const init = ({ side } = {}) =>
-  Object.assign(
-    {},
-    {
-      side: side || 'runner',
-      sort: 'faction',
-      title: '',
-      text: '',
-      factions: [],
-      types: [],
-      subtypes: [],
-      packs: []
-    }
-  );
+  ({
+    side: side || 'runner',
+    sort: 'faction',
+    title: '',
+    text: '',
+    factions: [],
+    types: [],
+    subtypes: [],
+    packs: []
+  });
 
 const save = (data) => {
-  let storage = init();
-  const normalFilters = ['factions', 'types', 'subtypes'];
-  const nestedFilters = ['packs'];
-
-  const { side, sort, title, text } = data;
-  storage = Object.assign(storage, { side, sort, title, text });
-
-  storage = normalFilters.reduce(
-    (data, type) => ({
-      ...data,
-      [type]: data[type].filter(({ selected }) => selected).map(({ code }) => code)
-    }),
-    storage
-  );
-  storage = nestedFilters.reduce(
-    (data, type) => ({
-      ...data,
-      [type]: data[type].reduce(
-        (list, { code, selected, items }) =>
-          list.concat(
-            (selected ? [code] : []).concat(
-              items.filter(({ selected }) => selected).map(({ code }) => code)
-            )
-          ),
-        []
-      )
-    }),
-    storage
-  );
-
-  localStorage.setItem('settings', JSON.stringify(storage));
+  localStorage.setItem('settings', JSON.stringify(data));
 };
 
-const integrate = (store, { factions, types, packs, subtypes }) => {
-  const previousSession = store && localStorage.getItem('settings');
+const get = () => {
+  try {
+    const initialSettings = init();
+    const previousSession = JSON.parse(localStorage.getItem('settings'));
+    return { ...initialSettings, ...previousSession };
+  } catch (e) {
+    return false
+  }
+}
+
+const integrate = (previousSession, { factions, types, packs, subtypes }) => {
   if (previousSession) {
     try {
       const storage = JSON.parse(previousSession);
       const { side, sort, title, text } = storage;
       const settings = {};
-      settings.side = side || undefined;
-      settings.sort = sort || undefined;
-      settings.title = title || undefined;
-      settings.text = text || undefined;
+      settings.side = side || 'runner';
+      settings.sort = sort || 'faction';
+      settings.title = title || '';
+      settings.text = text || '';
       settings.factions = Array.isArray(storage.factions)
         ? factions.map(setNormalSelection(storage.factions))
         : factions;
@@ -100,4 +76,4 @@ const integrate = (store, { factions, types, packs, subtypes }) => {
   };
 };
 
-export { init, save, integrate };
+export { init, save, get, integrate };

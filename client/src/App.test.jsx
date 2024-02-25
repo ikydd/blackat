@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, within, waitFor } from '@testing-library/react';
 import App from './App';
 import * as api from './helpers/api';
+import types from '../../fixtures/api/types.json';
 
 jest.mock('./helpers/api');
 
@@ -38,7 +39,7 @@ it('loads the corp cards with a prop', async () => {
   expect(cards).toHaveLength(4);
 });
 
-describe.skip('saving state', () => {
+describe('saving state', () => {
   it('set state into localStorage', async () => {
     const { findAllByRole, getByText } = render(<App storage={true} />);
     fireEvent.click(getByText('Corp'));
@@ -66,7 +67,6 @@ describe.skip('saving state', () => {
   });
 
   it('reject malformed JSON', async () => {
-    const types = require('../../fixtures/api/types');
     localStorage.setItem('settings', '}does not parse[');
 
     const { getByTestId, getByText } = render(<App storage={true} />);
@@ -91,11 +91,13 @@ describe.skip('saving state', () => {
     const { getByText } = render(<App storage={true} />);
     fireEvent.click(getByText('Reset Filters'));
 
-    expect(JSON.parse(localStorage.getItem('settings'))).toEqual(
-      expect.objectContaining({
-        side: 'runner',
-        types: []
-      })
-    );
+    await waitFor(() => {
+      expect(JSON.parse(localStorage.getItem('settings'))).toEqual(
+        expect.objectContaining({
+          side: 'runner',
+          types: []
+        })
+      );
+    });
   });
 });
