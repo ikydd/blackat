@@ -69,10 +69,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const reset = () => {
-    updateSettings(settingsHelper.init());
-  };
-
   const getOptions = (type, selected) =>
     filters.options(type, settings.side).map(setNormalSelection(selected));
 
@@ -88,11 +84,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const getNestedOptions = (type, selected) =>
     filters.options(type, settings.side).map(setNestedSelection(selected));
 
-  const clearFilters = (type) => () => {
-    updateSettings({ [type]: [] });
-  };
-
-  const simpleHandler = (type) => (value) => {
+  const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
   };
 
@@ -119,6 +111,14 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     updateSettings({ [type]: [...filterSettings] });
   };
 
+  const clearListFilter = (type) => () => {
+    updateSettings({ [type]: [] });
+  };
+
+  const resetAllFilters = () => {
+    updateSettings(settingsHelper.init());
+  };
+
   return (
     <div className="App">
       <ControlPanel>
@@ -127,58 +127,62 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
             title="Runner"
             side="runner"
             selected={settings.side === 'runner'}
-            onSelect={simpleHandler('side')}
+            onSelect={updateSimpleFilter('side')}
           />
           <SideButton
             title="Corp"
             side="corp"
             selected={settings.side === 'corp'}
-            onSelect={simpleHandler('side')}
+            onSelect={updateSimpleFilter('side')}
           />
         </div>
         <TextSearch
           placeholder="search title"
           value={settings.title}
-          onChange={simpleHandler('title')}
+          onChange={updateSimpleFilter('title')}
         />
         <TextSearch
           placeholder="search text"
           value={settings.text}
-          onChange={simpleHandler('text')}
+          onChange={updateSimpleFilter('text')}
         />
-        <SortSelect options={options} default={settings.sort} onChange={simpleHandler('sort')} />
+        <SortSelect
+          options={options}
+          default={settings.sort}
+          onChange={updateSimpleFilter('sort')}
+        />
 
         <FilterList
           title="Factions"
           hidden={true}
           options={getOptions(factions, settings.factions)}
-          clearAll={clearFilters('factions')}
+          clearAll={clearListFilter('factions')}
           onChange={filterHandler('factions')}
         />
         <FilterList
           title="Types"
           hidden={true}
           options={getOptions(types, settings.types)}
-          clearAll={clearFilters('types')}
+          clearAll={clearListFilter('types')}
           onChange={filterHandler('types')}
         />
         <FilterList
           title="Subtypes"
           hidden={true}
           options={getOptions(subtypes, settings.subtypes)}
-          clearAll={clearFilters('subtypes')}
+          clearAll={clearListFilter('subtypes')}
           onChange={filterHandler('subtypes')}
         />
         <NestedFilterList
           title="Packs"
           hidden={true}
           options={getNestedOptions(packs, settings.packs)}
-          clearAll={clearFilters('packs')}
+          clearAll={clearListFilter('packs')}
           onGroupChange={filterGroupHandler('packs')}
           onSubitemChange={filterHandler('packs')}
         />
 
-        <Reset onClick={reset} />
+        <Reset onClick={resetAllFilters} />
         <SmallPrint />
       </ControlPanel>
       <CardList
