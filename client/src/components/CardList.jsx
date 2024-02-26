@@ -4,8 +4,8 @@ import Loader from './Loader';
 import Empty from './Empty';
 import getData from '../helpers/api';
 import filterCards from '../helpers/filter-cards';
-import { prepareGroupingData, prepareGroupingAlgo } from '../helpers/group';
-import { prepareSortingData, prepareSortingAlgo } from '../helpers/sort-cards';
+import { prepareGroupingData, groupCards } from '../helpers/group-cards';
+import { prepareSortingData, sortCards } from '../helpers/sort-cards';
 import './CardList.css';
 
 const CardList = (props) => {
@@ -26,16 +26,12 @@ const CardList = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const sortCardsByMethod = prepareSortingAlgo(sortingData, props.sort);
-  const groupCardsByCategoryItems = prepareGroupingAlgo(groupingData, props.sort);
-
   const filteredCards = filterCards(cards, props);
-  const sortedCards = filteredCards.sort(sortCardsByMethod);
-  const reducedCards = sortedCards.reduce(groupCardsByCategoryItems, {});
+  const sortedCards = sortCards(filteredCards, sortingData, props.sort);
+  const groupedCards = groupCards(sortedCards, groupingData, props.sort);
+  const sections = Object.values(groupedCards);
 
-  const sections = Object.values(reducedCards);
-
-  const empty = sections.reduce((acc, { show }) => (show ? false : acc), true);
+  const empty = !sections.some(({ show }) => show);
 
   return (
     <div id="cards">

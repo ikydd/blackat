@@ -26,8 +26,8 @@ const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') 
   };
 };
 
-const standardGroup = (sections, card, groups, sort) => {
-  const groupCode = card[sort];
+const standardGroup = (sections, card, groups, sortProp) => {
+  const groupCode = card[sortProp];
   const groupInfo = groups.find(({ code }) => code === groupCode);
   return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
@@ -36,11 +36,12 @@ const defaultGroup = (sections, card) => {
   return safelyAddCardToGroup(sections, card);
 };
 
-const customGroup = (sections, card, sort) => {
-  if (card[sort] === undefined) {
+const customGroup = (sections, card, sortProp) => {
+  const ignoreCard = card[sortProp] === undefined
+  if (ignoreCard) {
     return sections;
   }
-  const groupCode = card[sort];
+  const groupCode = card[sortProp];
   const groupInfo = { name: groupCode, code: groupCode };
   return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
@@ -51,9 +52,7 @@ export const prepareGroupingData = ({ types, packs, factions }) => ({
   faction: factions
 });
 
-export const prepareGroupingAlgo =
-  (categories = { type: [], pack: [], faction: [] }, sort = 'factions') =>
-  (sections, card) => {
+export const groupCards = (cards = [], categories = { type: [], pack: [], faction: [] }, sort = 'factions') => cards.reduce((sections, card) => {
     switch (sort) {
       case 'faction':
       case 'pack':
@@ -64,4 +63,4 @@ export const prepareGroupingAlgo =
       default:
         return defaultGroup(sections, card);
     }
-  };
+  }, {});
