@@ -1,66 +1,67 @@
 /* eslint-disable no-param-reassign */
-const data = {};
-
-const ensureSection = (sections, list = [], prop = 'default') => {
-  if (!sections[prop]) {
-    sections[prop] = {
-      show: false,
-      info: list.find(({ code }) => code === prop),
-      cards: []
-    };
+const ensureSection = (sections, groupInfo, groupCode = 'default') => {
+  if (sections[groupCode]) {
+    return sections[groupCode];
   }
+  return {
+    show: false,
+    info: groupInfo,
+    cards: []
+  };
 };
 
 const addCard = (section, card) => {
-  section.show = card.show ? true : section.show;
   section.cards.push(card);
+  return {
+    ...section,
+    show: card.show || section.show
+  };
 };
 
-const standardGroup = (sections, card, sort) => {
-  const prop = card[sort];
-  const list = data[sort];
-  ensureSection(sections, list, prop);
-  addCard(sections[prop], card);
-  return sections;
+const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') => {
+  const section = ensureSection(sections, groupInfo, groupCode);
+  return {
+    ...sections,
+    [groupCode]: addCard(section, card)
+  };
+};
+
+const standardGroup = (sections, card, groups, sort) => {
+  const groupCode = card[sort];
+  const groupInfo = groups.find(({ code }) => code === groupCode);
+  return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
 
 const defaultGroup = (sections, card) => {
-  ensureSection(sections);
-  addCard(sections.default, card);
-  return sections;
+  return safelyAddCardToGroup(sections, card);
 };
 
 const customGroup = (sections, card, sort) => {
   if (card[sort] === undefined) {
     return sections;
   }
-  const prop = card[sort];
-  ensureSection(sections, [], prop);
-  sections[prop].info = {
-    name: prop,
-    code: prop
-  };
-  addCard(sections[prop], card);
-  return sections;
+  const groupCode = card[sort];
+  const groupInfo = { name: groupCode, code: groupCode };
+  return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
 
-const group =
-  ({ factions, packs, types }) =>
-  (sort) =>
+export const prepareGroupingData = ({ types, packs, factions }) => ({
+  type: types,
+  pack: packs.reduce((list, { items }) => list.concat(items), []),
+  faction: factions
+});
+
+export const prepareGroupingAlgo =
+  (categories = { type: [], pack: [], faction: [] }, sort = 'factions') =>
   (sections, card) => {
-    data.type = types;
-    data.pack = packs.reduce((list, { items }) => list.concat(items), []);
-    data.faction = factions;
     switch (sort) {
       case 'faction':
       case 'pack':
       case 'type':
-        return standardGroup(sections, card, sort);
+        return standardGroup(sections, card, categories[sort], sort);
       case 'illustrator':
         return customGroup(sections, card, sort);
       default:
         return defaultGroup(sections, card);
     }
   };
-
-export default group;
