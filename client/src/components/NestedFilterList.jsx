@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FilterItem from './FilterItem';
 import FilterHeading from './FilterHeading';
+import FilterClearButton from './FilterClearButton';
 import './FilterList.css';
 import './NestedFilterList.css';
 
@@ -34,41 +35,35 @@ const NestedFilterList = ({
 
   const generateFilters = (filterOptions) =>
     filterOptions.map((group) => {
-      const subFilters = group.items.length > 1 && (
-        <div className="filter-group-items">
-          {group.items.map((item) => (
-            <FilterItem
-              key={item.code}
-              item={item}
-              keyword={keyword}
-              onChange={handleSubOptionSelection}
-            />
-          ))}
-        </div>
-      );
-
       return (
         <div className="filter-group" key={group.code}>
           <FilterItem item={group} keyword={keyword} onChange={handleGroupOptionSelection} />
-          {subFilters}
+          {group.items.length > 1 && (
+            <div className="filter-group-items">
+              {group.items.map((item) => (
+                <FilterItem
+                  key={item.code}
+                  item={item}
+                  keyword={keyword}
+                  onChange={handleSubOptionSelection}
+                />
+              ))}
+            </div>
+          )}
           <hr className="filter-divider" />
         </div>
       );
     });
 
-  const filters = isClosed !== true && (
-    <div className="filter-list-items">
-      <h5 role="button" onClick={clearAll}>
-        Clear All
-      </h5>
-      {generateFilters(options)}
-    </div>
-  );
-
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
       <FilterHeading title={title} inUse={inUse} onClick={toggleClosed} />
-      {filters}
+      {isClosed !== true && (
+        <div className="filter-list-items">
+          <FilterClearButton onClick={clearAll} />
+          {generateFilters(options)}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FilterItem from './FilterItem';
 import FilterHeading from './FilterHeading';
+import FilterClearButton from './FilterClearButton';
 import './FilterList.css';
 
 const FilterList = ({ closed = false, title = 'Missing', onChange, options = [], clearAll }) => {
@@ -20,9 +21,7 @@ const FilterList = ({ closed = false, title = 'Missing', onChange, options = [],
       <FilterHeading title={title} inUse={inUse} onClick={toggleClosed} />
       {isClosed !== true && (
         <div className="filter-list-items">
-          <h5 role="button" onClick={clearAll}>
-            Clear All
-          </h5>
+          <FilterClearButton onClick={clearAll} />
           {options.map((item) => (
             <FilterItem key={item.code} item={item} keyword={keyword} onChange={handleSelection} />
           ))}
