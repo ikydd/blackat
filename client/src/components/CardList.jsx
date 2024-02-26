@@ -3,7 +3,7 @@ import CardSection from './CardSection';
 import Loader from './Loader';
 import Empty from './Empty';
 import { getData } from '../helpers/api';
-import filter from '../helpers/filter';
+import filterCards from '../helpers/filter-cards';
 import group from '../helpers/group';
 import sort from '../helpers/sort';
 import './CardList.css';
@@ -26,7 +26,7 @@ const CardList = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const filteredCards = filter(cards, props);
+  const filteredCards = filterCards(cards, props);
   const sortedCards = filteredCards.sort(sorter(props.sort));
   const reducedCards = sortedCards.reduce(grouper(props.sort), {});
 
