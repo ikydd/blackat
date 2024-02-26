@@ -14,9 +14,7 @@ const compareUsingCategory = (prop, categories, a, b) =>
     getPositionOfCardUsingCategory(prop, categories, b)
   );
 
-const comparePropertyAsc = (prop, a, b) => compare(a[prop], b[prop]);
-
-const comparePropertyDesc = (prop, a, b) => compare(b[prop], a[prop]);
+const compareProperty = (prop, a, b) => compare(a[prop], b[prop]);
 
 const compareByProp = (prop, categories, a, b, result = 0) => {
   if (result !== 0) {
@@ -27,11 +25,11 @@ const compareByProp = (prop, categories, a, b, result = 0) => {
     case 'illustrator':
     case 'cost':
     case 'advancement':
-      return comparePropertyAsc(prop, a, b);
+      return compareProperty(prop, a, b);
     case 'agenda':
     case 'strength':
     case 'subroutines':
-      return comparePropertyDesc(prop, a, b);
+      return compareProperty(prop, b, a);
     case 'faction':
     case 'type':
     case 'pack':
@@ -55,20 +53,18 @@ const multiComparisonLists = {
   faction: ['faction', 'type', 'title']
 };
 
-const generateSortingCallback = ({ types, packs, factions }) => {
-  const categories = {
-    type: types.map(toCodes),
-    pack: packs.reduce((list, group) => list.concat(group.items), []).map(toCodes),
-    faction: factions.map(toCodes)
+export const prepareSortingData = ({ types, packs, factions }) => ({
+  type: types.map(toCodes),
+  pack: packs.reduce((list, group) => list.concat(group.items), []).map(toCodes),
+  faction: factions.map(toCodes)
+});
+
+export const prepareSortingAlgo =
+  (categories = { type: [], pack: [], faction: [] }, sortMethod = 'faction') =>
+  (a, b) => {
+    const listOfPropsToSortBy = multiComparisonLists[sortMethod];
+    if (listOfPropsToSortBy) {
+      return compareByMultipleProps(multiComparisonLists[sortMethod], categories, a, b);
+    }
+    return compareByProp(sortMethod, categories, a, b);
   };
-
-  return (method = 'faction') =>
-    (a, b) => {
-      if (multiComparisonLists[method]) {
-        return compareByMultipleProps(multiComparisonLists[method], categories, a, b);
-      }
-      return compareByProp(method, categories, a, b);
-    };
-};
-
-export default generateSortingCallback;
