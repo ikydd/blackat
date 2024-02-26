@@ -22,4 +22,6 @@ export const reset = () => {
   user = {};
 };
 
-export default async function getData(type) { return user[type] || data[type]; }
+export default async function getData(type) {
+  return user[type] || data[type];
+}
