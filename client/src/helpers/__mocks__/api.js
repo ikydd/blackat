@@ -14,8 +14,6 @@ const data = {
 
 let user = {};
 
-export const getData = async (type) => user[type] || data[type];
-
 export const setData = (type, fixture) => {
   user[type] = fixture;
 };
@@ -23,3 +21,5 @@ export const setData = (type, fixture) => {
 export const reset = () => {
   user = {};
 };
+
+export default async function getData(type) { return user[type] || data[type]; }

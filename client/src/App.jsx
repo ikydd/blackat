@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from './helpers/api';
+import getData from './helpers/api';
 import { initSettings, loadSettings, saveSettings } from './helpers/settings-manager';
 import sortOptions from './helpers/sort-options';
 import CardList from './components/CardList';

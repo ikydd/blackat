@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CardSection from './CardSection';
 import Loader from './Loader';
 import Empty from './Empty';
-import { getData } from '../helpers/api';
+import getData from '../helpers/api';
 import filterCards from '../helpers/filter-cards';
 import group from '../helpers/group';
 import sort from '../helpers/sort';
