@@ -5,7 +5,7 @@ import Empty from './Empty';
 import getData from '../helpers/api';
 import filterCards from '../helpers/filter-cards';
 import group from '../helpers/group';
-import sort from '../helpers/sort';
+import generateCardSorter from '../helpers/sort-cards';
 import './CardList.css';
 
 const CardList = (props) => {
@@ -17,7 +17,7 @@ const CardList = (props) => {
   useEffect(() => {
     Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
       .then(([loadedCards, factions, types, packs]) => {
-        setSorter(() => sort({ factions, types, packs }));
+        setSorter(() => generateCardSorter({ factions, types, packs }));
         setGrouper(() => group({ factions, types, packs }));
         setCards(loadedCards);
         setLoaded(true);
