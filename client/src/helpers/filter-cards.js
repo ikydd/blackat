@@ -4,18 +4,22 @@ const hasMatchingFactions = (card, factions) => !factions.length || factions.inc
 
 const hasMatchingType = (card, types) => !types.length || types.includes(card.type);
 
-const hasMatchingSubtypes = (card, subtypes) => !subtypes.length || subtypes.some((subtype) => card.keywords && card.keywords.search(subtype) !== -1);
+const hasMatchingSubtypes = (card, subtypes) =>
+  !subtypes.length ||
+  subtypes.some((subtype) => card.keywords && card.keywords.search(subtype) !== -1);
 
 const isInMatchingPack = (card, packs) => !packs.length || packs.includes(card.pack);
 
 const hasMatchingTitle = (card, title) =>
   title ? card.title.search(new RegExp(title, 'i')) !== -1 : true;
 
-const hasMatchingText = (card, text) => text ? card.text.search(new RegExp(text, 'i')) !== -1 : true;
+const hasMatchingText = (card, text) =>
+  text ? card.text.search(new RegExp(text, 'i')) !== -1 : true;
 
 const hasRelevantProp = (card, prop) => card[prop] !== undefined;
 
-const confersAgendaPoints = (card) => card.agenda !== undefined || !!(card.text && card.text.search(/as an agenda/) !== -1);
+const confersAgendaPoints = (card) =>
+  card.agenda !== undefined || !!(card.text && card.text.search(/as an agenda/) !== -1);
 
 const isRelevantToSortMethod = (card, sort) => {
   switch (sort) {
@@ -31,29 +35,33 @@ const isRelevantToSortMethod = (card, sort) => {
   }
 };
 
-const setCardVisibilityFromSettings = (card, {
-  sort = 'default',
-  side = '',
-  titleSearch = '',
-  textSearch = '',
-  factions = [],
-  types = [],
-  subtypes = [],
-  packs = []
-}) => {
-    const show =
-      isRelevantToSortMethod(card, sort) &&
-      isFromCorrectSide(card, side) &&
-      hasMatchingTitle(card, titleSearch) &&
-      hasMatchingText(card, textSearch) &&
-      hasMatchingFactions(card, factions) &&
-      hasMatchingType(card, types) &&
-      isInMatchingPack(card, packs) &&
-      hasMatchingSubtypes(card, subtypes);
+const setCardVisibilityFromSettings = (
+  card,
+  {
+    sort = 'default',
+    side = '',
+    titleSearch = '',
+    textSearch = '',
+    factions = [],
+    types = [],
+    subtypes = [],
+    packs = []
+  }
+) => {
+  const show =
+    isRelevantToSortMethod(card, sort) &&
+    isFromCorrectSide(card, side) &&
+    hasMatchingTitle(card, titleSearch) &&
+    hasMatchingText(card, textSearch) &&
+    hasMatchingFactions(card, factions) &&
+    hasMatchingType(card, types) &&
+    isInMatchingPack(card, packs) &&
+    hasMatchingSubtypes(card, subtypes);
 
-    return { ...card, show };
-  };
+  return { ...card, show };
+};
 
-const filterCardsByAllSettings = (cards, filters) => cards.map((card) => setCardVisibilityFromSettings(card, filters));
+const filterCardsByAllSettings = (cards, filters) =>
+  cards.map((card) => setCardVisibilityFromSettings(card, filters));
 
 export default filterCardsByAllSettings;
