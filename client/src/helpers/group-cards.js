@@ -37,7 +37,7 @@ const defaultGroup = (sections, card) => {
 };
 
 const customGroup = (sections, card, sortProp) => {
-  const ignoreCard = card[sortProp] === undefined
+  const ignoreCard = card[sortProp] === undefined;
   if (ignoreCard) {
     return sections;
   }
@@ -52,7 +52,12 @@ export const prepareGroupingData = ({ types, packs, factions }) => ({
   faction: factions
 });
 
-export const groupCards = (cards = [], categories = { type: [], pack: [], faction: [] }, sort = 'factions') => cards.reduce((sections, card) => {
+export const groupCards = (
+  cards = [],
+  categories = { type: [], pack: [], faction: [] },
+  sort = 'factions'
+) =>
+  cards.reduce((sections, card) => {
     switch (sort) {
       case 'faction':
       case 'pack':
