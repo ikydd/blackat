@@ -66,10 +66,6 @@ const filterByAll = ({
   };
 };
 
-const resetDisplay = (card) => {
-  return { ...card, show: true };
-};
-
-const filter = (cards, filters) => cards.map(resetDisplay).map(filterByAll(filters));
+const filter = (cards, filters) => cards.map(filterByAll(filters));
 
 export default filter;
