@@ -64,11 +64,8 @@ export const sortCards = (
   categories = { type: [], pack: [], faction: [] },
   sortMethod = 'faction'
 ) => {
-  const listOfPropsToSortBy = multiComparisonLists[sortMethod];
-  if (listOfPropsToSortBy) {
-    return cards.sort((a, b) =>
-      compareByMultipleProps(multiComparisonLists[sortMethod], categories, a, b)
-    );
-  }
-  return cards.sort((a, b) => compareByProp(sortMethod, categories, a, b));
+  const multipleSortMethods = multiComparisonLists[sortMethod];
+  return multipleSortMethods
+    ? cards.sort((a, b) => compareByMultipleProps(multipleSortMethods, categories, a, b))
+    : cards.sort((a, b) => compareByProp(sortMethod, categories, a, b));
 };

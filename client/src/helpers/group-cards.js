@@ -1,28 +1,28 @@
 /* eslint-disable no-param-reassign */
 const ensureSection = (sections, groupInfo, groupCode = 'default') => {
-  if (sections[groupCode]) {
-    return sections[groupCode];
-  }
-  return {
-    show: false,
-    info: groupInfo,
-    cards: []
-  };
+  return (
+    sections[groupCode] || {
+      show: false,
+      info: groupInfo,
+      cards: []
+    }
+  );
 };
 
 const addCard = (section, card) => {
-  section.cards.push(card);
   return {
     ...section,
+    cards: section.cards.concat(card),
     show: card.show || section.show
   };
 };
 
 const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') => {
   const section = ensureSection(sections, groupInfo, groupCode);
+  const updatedSecton = addCard(section, card);
   return {
     ...sections,
-    [groupCode]: addCard(section, card)
+    [groupCode]: updatedSecton
   };
 };
 
