@@ -2,7 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Card from './Card';
 
-const data = require('../../../fixtures/api/cards.json')[0];
+import cardData from '../../../fixtures/api/cards.json';
+
+const data = cardData[0];
 
 describe('Card', () => {
   it('renders without crashing', () => {

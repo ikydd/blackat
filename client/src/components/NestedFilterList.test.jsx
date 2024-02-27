@@ -2,10 +2,10 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import NestedFilterList from './NestedFilterList';
 
-const options = require('../../../fixtures/api/foo-nested.json');
-const optionsSelected = require('../../../fixtures/api/foo-nested-selected.json');
-const singleOptions = require('../../../fixtures/api/foo-nested-single.json');
-const groupOptions = require('../../../fixtures/api/foo-nested-group.json');
+import options from '../../../fixtures/api/foo-nested.json';
+import optionsSelected from '../../../fixtures/api/foo-nested-selected.json';
+import singleOptions from '../../../fixtures/api/foo-nested-single.json';
+import groupOptions from '../../../fixtures/api/foo-nested-group.json';
 
 const countCheckboxes = (checkboxes) =>
   checkboxes.reduce(

@@ -1,8 +1,8 @@
-const cards = require('../../../../fixtures/api/cards.json');
-const factions = require('../../../../fixtures/api/factions.json');
-const types = require('../../../../fixtures/api/types.json');
-const packs = require('../../../../fixtures/api/packs.json');
-const subtypes = require('../../../../fixtures/api/subtypes.json');
+import cards from '../../../../fixtures/api/cards.json';
+import factions from '../../../../fixtures/api/factions.json';
+import types from '../../../../fixtures/api/types.json';
+import packs from '../../../../fixtures/api/packs.json';
+import subtypes from '../../../../fixtures/api/subtypes.json';
 
 const data = {
   cards,

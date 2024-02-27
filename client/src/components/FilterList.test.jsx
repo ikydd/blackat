@@ -2,8 +2,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import FilterList from './FilterList';
 
-const options = require('../../../fixtures/api/foo.json');
-const optionsSelected = require('../../../fixtures/api/foo-selected.json');
+import options from '../../../fixtures/api/foo.json';
+import optionsSelected from '../../../fixtures/api/foo-selected.json';
 
 describe('FilterList', () => {
   it('renders without crashing', () => {
