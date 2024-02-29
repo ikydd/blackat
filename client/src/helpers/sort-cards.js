@@ -2,6 +2,12 @@ const compare = (a, b) => {
   if (a === b) {
     return 0;
   }
+  if(typeof a === 'undefined'){
+    return -1;
+  }
+  if(typeof b === 'undefined') {
+    return 1;
+  }
   return a > b ? 1 : -1;
 };
 
@@ -25,6 +31,7 @@ const compareByProp = (prop, categories, a, b, result = 0) => {
     case 'illustrator':
     case 'cost':
     case 'advancement':
+    case 'code':
       return compareProperty(prop, a, b);
     case 'agenda':
     case 'strength':
@@ -46,11 +53,12 @@ const toCodes = ({ code }) => code;
 const multiComparisonLists = {
   illustrator: ['illustrator', 'title'],
   type: ['type', 'faction', 'title'],
-  cost: ['cost', 'faction', 'type', 'title'],
-  agenda: ['agenda', 'type', 'faction', 'advancement', 'title'],
-  strength: ['strength', 'subroutines', 'title'],
-  subroutines: ['subroutines', 'strength', 'title'],
-  faction: ['faction', 'type', 'title']
+  cost: ['cost', 'type', 'faction', 'title'],
+  agenda: ['agenda', 'advancement', 'type', 'faction', 'title'],
+  strength: ['strength', 'subroutines', 'cost', 'faction', 'title'],
+  subroutines: ['subroutines', 'strength', 'cost', 'faction', 'title'],
+  faction: ['faction', 'type', 'title'],
+  pack: ['pack', 'code']
 };
 
 export const prepareSortingData = ({ types, packs, factions }) => ({
