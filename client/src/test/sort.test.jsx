@@ -174,4 +174,27 @@ describe('Sort', () => {
 
     expect(cards).toEqual(['Foo', 'Bar']);
   });
+
+  it('sorts asc correctly with undefined', async () => {
+    api.setData('cards', loadFile('../../../fixtures/api/cost-sort/undefined.json'));
+    const { findAllByRole, getByRole } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'cost' } });
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['Alpha', 'Zeta', 'Infinity', 'Bar']);
+  });
+
+  it('sorts desc correctly with undefined', async () => {
+    api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/undefined.json'));
+    const { findAllByRole, getByRole, getByText } = render(<App />);
+    fireEvent.change(getByRole('combobox'), { target: { value: 'agenda' } });
+    fireEvent.click(getByText('Corp'));
+
+    const images = await findAllByRole('img');
+    const cards = images.map(({ alt }) => alt);
+
+    expect(cards).toEqual(['Zoo', 'Bar', 'Null', 'Tail']);
+  });
 });
