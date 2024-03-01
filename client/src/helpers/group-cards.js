@@ -19,30 +19,26 @@ const addCard = (section, card) => {
 
 const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') => {
   const section = ensureSection(sections, groupInfo, groupCode);
-  const updatedSecton = addCard(section, card);
+  const updatedSection = addCard(section, card);
   return {
     ...sections,
-    [groupCode]: updatedSecton
+    [groupCode]: updatedSection
   };
 };
 
-const standardGroup = (sections, card, groups, sortProp) => {
+const standardGroup = ({ sections, card, groups, sortProp }) => {
   const groupCode = card[sortProp];
   const groupInfo = groups.find(({ code }) => code === groupCode);
   return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
 
-const defaultGroup = (sections, card) => {
+const defaultGroup = ({ sections, card }) => {
   return safelyAddCardToGroup(sections, card);
 };
 
-const customGroup = (sections, card, sortProp) => {
-  const ignoreCard = card[sortProp] === undefined;
-  if (ignoreCard) {
-    return sections;
-  }
-  const groupCode = card[sortProp];
-  const groupInfo = { name: groupCode, code: groupCode };
+const customGroup = ({ sections, card, sortProp, icon, unknown = "ignored", suffix = '' }) => {
+  const groupCode = typeof card[sortProp] === 'undefined' ? unknown : card[sortProp];
+  const groupInfo = { name: `${groupCode}${suffix}`, code: groupCode, icon };
   return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
 
@@ -62,10 +58,18 @@ export const groupCards = (
       case 'faction':
       case 'pack':
       case 'type':
-        return standardGroup(sections, card, categories[sort], sort);
+        return standardGroup({ sections, card, groups: categories[sort], sortProp: sort });
+      case 'cost':
+        return customGroup({ sections, card, sortProp: sort, icon: 'credit' });
+      case 'subroutines':
+        return customGroup({ sections, card, sortProp: sort, icon: 'subroutine' });
+      case 'agenda':
+        return customGroup({ sections, card, sortProp: sort, unknown: "card-based", suffix: ' agenda points' });
+      case 'strength':
+        return customGroup({ sections, card, sortProp: sort, suffix: ' strength' });
       case 'illustrator':
-        return customGroup(sections, card, sort);
+        return customGroup({ sections, card, sortProp: sort });
       default:
-        return defaultGroup(sections, card);
+        return defaultGroup({ sections, card });
     }
   }, {});

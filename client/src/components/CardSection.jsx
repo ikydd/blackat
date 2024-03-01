@@ -19,7 +19,7 @@ const CardSection = ({ section: { info, cards, show } }) => {
       id={info ? `${info.code}-section` : 'default-section'}
       hidden={show === false ? 'hidden' : false}
     >
-      {info ? <Divider name={info.name} code={info.code}></Divider> : ''}
+      {info ? <Divider name={info.name} code={info.icon || info.code}></Divider> : ''}
       {cards.map((card, index) => {
         lastCard = versionControl(lastCard, card);
         return <Card key={index} data={card} />;

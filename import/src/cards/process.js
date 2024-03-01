@@ -10,7 +10,7 @@ const countSubroutines = (text) => {
     return 0;
   }
   const subs = text.match(/(\n|^)\[subroutine\]/g);
-  return subs ? subs.length : 9999;
+  return subs ? subs.length : "X";
 };
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) =>
@@ -42,8 +42,8 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) =>
         type: type_code,
         pack: pack_code,
         keywords,
-        cost: cost === null ? 9999 : cost,
-        strength: strength === null ? 9999 : strength,
+        cost: cost === null ? "X" : cost,
+        strength: strength === null ? "X" : strength,
         agenda: agenda_points,
         advancement: advancement_cost,
         illustrator,
