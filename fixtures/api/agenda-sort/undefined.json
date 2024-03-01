@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Bar",
+    "code": "01075",
+    "faction": "jinteki",
+    "side": "corp",
+    "agenda": 2,
+    "advancement": 4
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Foo",
+    "side": "corp"
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Zoo",
+    "side": "corp",
+    "agenda": 3,
+    "advancement": 4
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Zeta",
+    "side": "corp"
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Null",
+    "side": "corp",
+    "agenda": 1,
+    "advancement": 4
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Paw",
+    "side": "corp"
+  },
+  {
+    "code": "25050",
+    "faction": "jinteki",
+    "title": "Tail",
+    "side": "corp",
+    "agenda": 0,
+    "advancement": 4
+  }
+]

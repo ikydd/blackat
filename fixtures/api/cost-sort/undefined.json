@@ -1,0 +1,55 @@
+[
+  {
+    "title": "Bar",
+    "code": "01075",
+    "faction": "shaper",
+    "type": "hardware",
+    "side": "runner",
+    "cost": 4
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Foo",
+    "side": "runner",
+    "type": "hardware"
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Alpha",
+    "side": "runner",
+    "type": "hardware",
+    "cost": 1
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Beta",
+    "side": "runner",
+    "type": "hardware"
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Infinity",
+    "side": "runner",
+    "type": "hardware",
+    "cost": 3
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Null",
+    "side": "runner",
+    "type": "hardware"
+  },
+  {
+    "code": "25050",
+    "faction": "shaper",
+    "title": "Zeta",
+    "side": "runner",
+    "type": "hardware",
+    "cost": 2
+  }
+]
