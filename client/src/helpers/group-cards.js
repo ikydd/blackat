@@ -1,4 +1,17 @@
-/* eslint-disable no-param-reassign */
+const compare = ({ a, b, order = 'asc', numbersOnly = false }) => {
+  if (a === b) {
+    return 0;
+  }
+  if(numbersOnly && typeof a !== 'number'){
+    return 1;
+  }
+  if(numbersOnly && typeof b !== 'number') {
+    return -1;
+  }
+  const result = a > b ? 1 : -1;
+  return order === 'asc' ? result : result * -1;
+};
+
 const ensureSection = (sections, groupInfo, groupCode = 'default') => {
   return (
     sections[groupCode] || {
@@ -48,12 +61,31 @@ export const prepareGroupingData = ({ types, packs, factions }) => ({
   faction: factions
 });
 
+const sortSections = (sections, sort) => {
+  const list = Object.values(sections);
+  switch (sort) {
+    case 'faction':
+    case 'pack':
+    case 'type':
+      return list;
+    case 'subroutines':
+    case 'strength':
+    case 'agenda':
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, order: 'desc', numbersOnly: true }));
+    case 'cost':
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, numbersOnly: true }));
+      case 'illustrator':
+    default:
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code }));
+  }
+}
+
 export const groupCards = (
   cards = [],
   categories = { type: [], pack: [], faction: [] },
   sort = 'factions'
-) =>
-  cards.reduce((sections, card) => {
+) => {
+  const groupedCards = cards.reduce((sections, card) => {
     switch (sort) {
       case 'faction':
       case 'pack':
@@ -64,7 +96,7 @@ export const groupCards = (
       case 'subroutines':
         return customGroup({ sections, card, sortProp: sort, icon: 'subroutine' });
       case 'agenda':
-        return customGroup({ sections, card, sortProp: sort, unknown: "card-based", suffix: ' agenda points' });
+        return customGroup({ sections, card, sortProp: sort, unknown: "conditional", suffix: ' agenda points' });
       case 'strength':
         return customGroup({ sections, card, sortProp: sort, suffix: ' strength' });
       case 'illustrator':
@@ -73,3 +105,6 @@ export const groupCards = (
         return defaultGroup({ sections, card });
     }
   }, {});
+  return sortSections(groupedCards, sort);
+}
+ 
