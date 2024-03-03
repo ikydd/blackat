@@ -1,14 +1,22 @@
-const compare = (a, b) => {
+const compare = (a, b, order = 'asc') => {
   if (a === b) {
     return 0;
   }
-  if(typeof a === 'undefined'){
-    return -1;
+  const lastPosition = order === 'asc' ? Infinity : -1;
+  if (a === 'X') {
+    return compare(lastPosition, b, order);
   }
-  if(typeof b === 'undefined') {
+  if (b === 'X') {
+    return compare(a, lastPosition, order);
+  }
+  if(typeof a === 'undefined'){
     return 1;
   }
-  return a > b ? 1 : -1;
+  if(typeof b === 'undefined') {
+    return -1;
+  }
+  const result = a > b ? 1 : -1;
+  return order === 'asc' ? result : result * -1;
 };
 
 const getPositionOfCardUsingCategory = (prop, categories, item) =>
@@ -20,7 +28,7 @@ const compareUsingCategory = (prop, categories, a, b) =>
     getPositionOfCardUsingCategory(prop, categories, b)
   );
 
-const compareProperty = (prop, a, b) => compare(a[prop], b[prop]);
+const compareProperty = (prop, a, b, order = 'asc') => compare(a[prop], b[prop], order);
 
 const compareByProp = (prop, categories, a, b, result = 0) => {
   if (result !== 0) {
@@ -29,14 +37,15 @@ const compareByProp = (prop, categories, a, b, result = 0) => {
   switch (prop) {
     case 'title':
     case 'illustrator':
+    case 'code':
+      return compareProperty(prop, a, b);
     case 'cost':
     case 'advancement':
-    case 'code':
       return compareProperty(prop, a, b);
     case 'agenda':
     case 'strength':
     case 'subroutines':
-      return compareProperty(prop, b, a);
+      return compareProperty(prop, a, b, 'desc');
     case 'faction':
     case 'type':
     case 'pack':
@@ -54,7 +63,7 @@ const multiComparisonLists = {
   illustrator: ['illustrator', 'title'],
   type: ['type', 'faction', 'title'],
   cost: ['cost', 'type', 'faction', 'title'],
-  agenda: ['agenda', 'advancement', 'type', 'faction', 'title'],
+  agenda: ['agenda', 'faction', 'advancement', 'type', 'title'],
   strength: ['strength', 'subroutines', 'cost', 'faction', 'title'],
   subroutines: ['subroutines', 'strength', 'cost', 'faction', 'title'],
   faction: ['faction', 'type', 'title'],

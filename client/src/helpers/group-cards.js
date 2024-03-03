@@ -30,8 +30,8 @@ const addCard = (section, card) => {
   };
 };
 
-const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') => {
-  const section = ensureSection(sections, groupInfo, groupCode);
+const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default', max = Infinity) => {
+  const section = ensureSection(sections, groupInfo, groupCode, max);
   const updatedSection = addCard(section, card);
   return {
     ...sections,
@@ -49,10 +49,11 @@ const defaultGroup = ({ sections, card }) => {
   return safelyAddCardToGroup(sections, card);
 };
 
-const customGroup = ({ sections, card, sortProp, icon, unknown = "ignored", suffix = '' }) => {
+const customGroup = ({ sections, card, sortProp, icon, unknown = "ignored", suffix = '', max = Infinity }) => {
   const groupCode = typeof card[sortProp] === 'undefined' ? unknown : card[sortProp];
-  const groupInfo = { name: `${groupCode}${suffix}`, code: groupCode, icon };
-  return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
+  const name = typeof groupCode === 'number' && groupCode >= max ? `${max}+` : groupCode;
+  const groupInfo = { name: `${name}${suffix}`, code: groupCode, icon };
+  return safelyAddCardToGroup(sections, card, groupInfo, name);
 };
 
 export const prepareGroupingData = ({ types, packs, factions }) => ({
@@ -92,13 +93,13 @@ export const groupCards = (
       case 'type':
         return standardGroup({ sections, card, groups: categories[sort], sortProp: sort });
       case 'cost':
-        return customGroup({ sections, card, sortProp: sort, icon: 'credit' });
+        return customGroup({ sections, card, sortProp: sort, icon: 'credit', max: 9 });
       case 'subroutines':
-        return customGroup({ sections, card, sortProp: sort, icon: 'subroutine' });
+        return customGroup({ sections, card, sortProp: sort, icon: 'subroutine', max: 4 });
       case 'agenda':
-        return customGroup({ sections, card, sortProp: sort, unknown: "conditional", suffix: ' agenda points' });
+        return customGroup({ sections, card, sortProp: sort, unknown: 'conditional', suffix: ' agenda points',  max: 4 });
       case 'strength':
-        return customGroup({ sections, card, sortProp: sort, suffix: ' strength' });
+        return customGroup({ sections, card, sortProp: sort, suffix: ' strength', max: 6 });
       case 'illustrator':
         return customGroup({ sections, card, sortProp: sort });
       default:
