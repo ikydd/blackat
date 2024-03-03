@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Bar",
+    "code": "01075",
+    "side": "corp",
+    "type": "ice",
+    "strength": 5,
+    "subroutines": 4
+  },
+  {
+    "code": "25050",
+    "title": "Hadrian",
+    "side": "corp",
+    "type": "ice",
+    "subroutines": 4
+  },
+  {
+    "code": "25050",
+    "title": "Eli",
+    "side": "corp",
+    "type": "ice",
+    "strength": "X",
+    "subroutines": 4
+  },
+  {
+    "code": "25050",
+    "title": "Ichi",
+    "side": "corp",
+    "type": "ice",
+    "strength": 7,
+    "subroutines": 4
+  },
+  {
+    "code": "25050",
+    "title": "Zed",
+    "side": "corp",
+    "type": "ice",
+    "strength": 1,
+    "subroutines": 4
+  },
+  {
+    "code": "25050",
+    "title": "Fire",
+    "side": "corp",
+    "type": "ice",
+    "strength": 3,
+    "subroutines": 4
+  }
+]

@@ -28,8 +28,7 @@ const CardList = (props) => {
 
   const filteredCards = filterCards(cards, props);
   const sortedCards = sortCards(filteredCards, sortingData, props.sort);
-  const groupedCards = groupCards(sortedCards, groupingData, props.sort);
-  const sections = Object.values(groupedCards);
+  const sections = groupCards(sortedCards, groupingData, props.sort);
 
   const empty = !sections.some(({ show }) => show);
 

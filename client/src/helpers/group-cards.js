@@ -1,4 +1,17 @@
-/* eslint-disable no-param-reassign */
+const compare = ({ a, b, order = 'asc', numbersOnly = false }) => {
+  if (a === b) {
+    return 0;
+  }
+  if(numbersOnly && typeof a !== 'number'){
+    return 1;
+  }
+  if(numbersOnly && typeof b !== 'number') {
+    return -1;
+  }
+  const result = a > b ? 1 : -1;
+  return order === 'asc' ? result : result * -1;
+};
+
 const ensureSection = (sections, groupInfo, groupCode = 'default') => {
   return (
     sections[groupCode] || {
@@ -17,33 +30,30 @@ const addCard = (section, card) => {
   };
 };
 
-const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default') => {
-  const section = ensureSection(sections, groupInfo, groupCode);
-  const updatedSecton = addCard(section, card);
+const safelyAddCardToGroup = (sections, card, groupInfo, groupCode = 'default', max = Infinity) => {
+  const section = ensureSection(sections, groupInfo, groupCode, max);
+  const updatedSection = addCard(section, card);
   return {
     ...sections,
-    [groupCode]: updatedSecton
+    [groupCode]: updatedSection
   };
 };
 
-const standardGroup = (sections, card, groups, sortProp) => {
+const standardGroup = ({ sections, card, groups, sortProp }) => {
   const groupCode = card[sortProp];
   const groupInfo = groups.find(({ code }) => code === groupCode);
   return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
 };
 
-const defaultGroup = (sections, card) => {
+const defaultGroup = ({ sections, card }) => {
   return safelyAddCardToGroup(sections, card);
 };
 
-const customGroup = (sections, card, sortProp) => {
-  const ignoreCard = card[sortProp] === undefined;
-  if (ignoreCard) {
-    return sections;
-  }
-  const groupCode = card[sortProp];
-  const groupInfo = { name: groupCode, code: groupCode };
-  return safelyAddCardToGroup(sections, card, groupInfo, groupCode);
+const customGroup = ({ sections, card, sortProp, icon, unknown = "ignored", suffix = '', max = Infinity }) => {
+  const groupCode = typeof card[sortProp] === 'undefined' ? unknown : card[sortProp];
+  const name = typeof groupCode === 'number' && groupCode >= max ? `${max}+` : groupCode;
+  const groupInfo = { name: `${name}${suffix}`, code: groupCode, icon };
+  return safelyAddCardToGroup(sections, card, groupInfo, name);
 };
 
 export const prepareGroupingData = ({ types, packs, factions }) => ({
@@ -52,20 +62,50 @@ export const prepareGroupingData = ({ types, packs, factions }) => ({
   faction: factions
 });
 
+const sortSections = (sections, sort) => {
+  const list = Object.values(sections);
+  switch (sort) {
+    case 'faction':
+    case 'pack':
+    case 'type':
+      return list;
+    case 'subroutines':
+    case 'strength':
+    case 'agenda':
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, order: 'desc', numbersOnly: true }));
+    case 'cost':
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, numbersOnly: true }));
+      case 'illustrator':
+    default:
+      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code }));
+  }
+}
+
 export const groupCards = (
   cards = [],
   categories = { type: [], pack: [], faction: [] },
   sort = 'factions'
-) =>
-  cards.reduce((sections, card) => {
+) => {
+  const groupedCards = cards.reduce((sections, card) => {
     switch (sort) {
       case 'faction':
       case 'pack':
       case 'type':
-        return standardGroup(sections, card, categories[sort], sort);
+        return standardGroup({ sections, card, groups: categories[sort], sortProp: sort });
+      case 'cost':
+        return customGroup({ sections, card, sortProp: sort, icon: 'credit', max: 9 });
+      case 'subroutines':
+        return customGroup({ sections, card, sortProp: sort, icon: 'subroutine', max: 4 });
+      case 'agenda':
+        return customGroup({ sections, card, sortProp: sort, unknown: 'conditional', suffix: ' agenda points',  max: 4 });
+      case 'strength':
+        return customGroup({ sections, card, sortProp: sort, suffix: ' strength', max: 6 });
       case 'illustrator':
-        return customGroup(sections, card, sort);
+        return customGroup({ sections, card, sortProp: sort });
       default:
-        return defaultGroup(sections, card);
+        return defaultGroup({ sections, card });
     }
   }, {});
+  return sortSections(groupedCards, sort);
+}
+ 
