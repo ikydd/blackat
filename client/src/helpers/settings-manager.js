@@ -37,6 +37,7 @@ export const loadSettings = () => {
     }
     return { ...initialSettings, ...previousSession };
   } catch (e) {
+    localStorage.removeItem('settings');
     return false;
   }
 };
