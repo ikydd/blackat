@@ -66,7 +66,7 @@ describe('saving state', () => {
     expect(cards).toHaveLength(1);
   });
 
-  it('reject malformed JSON', async () => {
+  it('rejects malformed JSON', async () => {
     localStorage.setItem('settings', '}does not parse[');
 
     const { getByTestId, getByText } = render(<App saveState={true} />);
@@ -77,6 +77,18 @@ describe('saving state', () => {
     const runnerTypes = types.filter(({ side }) => side === 'runner' || side === null).length;
 
     expect(checkboxes).toHaveLength(runnerTypes);
+  });
+
+  it('rejects old JSON', async () => {
+    localStorage.setItem('settings', '{ "foo": "bar" }');
+
+    const { findAllByRole, getByText } = render(<App saveState={true} />);
+    fireEvent.click(getByText('Corp'));
+    await findAllByRole('img');
+
+    const storage = JSON.parse(localStorage.getItem('settings'));
+
+    expect(storage.foo).toBeUndefined();
   });
 
   it('clears state when you click the reset button', async () => {
