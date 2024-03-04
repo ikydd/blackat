@@ -1,5 +1,5 @@
 .card-tile.show {
-  display: block;
+  display: none;
 }
 
 .card-tile {
@@ -14,6 +14,7 @@
   position: relative;
   height: 279.3px;
   width: 200px;
+  border-radius: 11px;
 }
 
 .card-tile img:hover {
@@ -22,4 +23,5 @@
   left: -50px;
   top: -69.8px;
   z-index: 9999;
+  border-radius: 18px;
 }
