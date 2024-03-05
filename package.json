@@ -18,7 +18,7 @@
     "dev": "parcel client/public/index.html --open --dist-dir client/build"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.28.0",
     "fs-extra": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
