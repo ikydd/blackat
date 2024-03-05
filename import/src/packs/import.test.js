@@ -86,4 +86,10 @@ describe('main', () => {
 
     expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
   });
+
+  it('returns the processed data', async () => {
+    const result = await packs();
+
+    expect(result).toEqual(mockProcessedData);
+  });
 });

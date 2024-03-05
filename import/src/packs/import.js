@@ -9,6 +9,7 @@ const importPacks = async () => {
   const cyclesData = await request(getApiUrl('/cycles'));
   const processedPacksData = processPacks(packsData, cyclesData);
   await saveData(processedPacksData, getLocalSavePath('packs.json'));
+  return processedPacksData;
 };
 
 module.exports = importPacks;
