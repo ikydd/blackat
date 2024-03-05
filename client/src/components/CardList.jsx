@@ -8,7 +8,7 @@ import { prepareGroupingData, groupCards } from '../helpers/group-cards';
 import { prepareSortingData, sortCards } from '../helpers/sort-cards';
 import './CardList.css';
 
-const CardList = (props) => {
+const CardList = ({ art, ...props }) => {
   const [loaded, setLoaded] = useState(false);
   const [cards, setCards] = useState([]);
   const [sortingData, setSortingData] = useState();
@@ -36,7 +36,7 @@ const CardList = (props) => {
     <div id="cards">
       {loaded ? '' : <Loader />}
       {sections.map((section, index) => (
-        <CardSection key={index} section={section}></CardSection>
+        <CardSection key={index} section={section} art={art}></CardSection>
       ))}
       {loaded && empty ? <Empty /> : ''}
     </div>

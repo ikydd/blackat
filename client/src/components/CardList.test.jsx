@@ -518,13 +518,26 @@ describe('CardList', () => {
   });
 
   describe('Card Updates', () => {
-    it('only shows the most recent version when versions are consecutive', async () => {
-      api.setData('cards', loadFile('../../../fixtures/api/versions.json'));
+    it('only shows the oldest version when versions are consecutive', async () => {
+      const cardData = loadFile('../../../fixtures/api/versions.json');
+      api.setData('cards', cardData);
       const { findAllByRole } = render(<CardList sort="title" />);
       const images = await findAllByRole('img');
       const cards = images.map(({ alt }) => alt);
 
       expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
+      expect(images[0].src).toEqual(cardData[0].imagesrc);
+    });
+
+    it('only shows the most recent version when versions are consecutive', async () => {
+      const cardData = loadFile('../../../fixtures/api/versions.json');
+      api.setData('cards', cardData);
+      const { findAllByRole } = render(<CardList sort="title" art="updated" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
+      expect(images[0].src).toEqual(cardData[2].imagesrc);
     });
 
     it('shows all versions when not consecutive', async () => {
