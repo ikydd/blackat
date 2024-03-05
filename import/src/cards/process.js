@@ -1,9 +1,4 @@
 /* eslint-disable camelcase */
-const includedCards = (cycles) => {
-  const packs = cycles.reduce((list, { items }) => list.concat(items), []);
-  return ({ pack_code }) => packs.find(({ code }) => code === pack_code);
-};
-
 const countSubroutines = (text) => {
   const hasSubs = text.match(/\[subroutine\]/g);
   if (!hasSubs) {
@@ -13,9 +8,12 @@ const countSubroutines = (text) => {
   return subs ? subs.length : "X";
 };
 
-const process = ({ imageUrlTemplate, data: cards }, cycles) =>
-  cards
-    .filter(includedCards(cycles))
+const process = ({ imageUrlTemplate, data: cards }, cycles) => {
+  const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);
+  const keepCardsFromIncludedPacks = ({ pack_code }) => includedPacks.some(({ code }) => code === pack_code)
+
+  return cards
+    .filter(keepCardsFromIncludedPacks)
     .map(
       ({
         title,
@@ -50,5 +48,5 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) =>
         subroutines: type_code === 'ice' ? countSubroutines(text) : undefined
       })
     );
-
+    };
 module.exports = process;
