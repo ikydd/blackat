@@ -3,7 +3,7 @@ import Divider from './Divider';
 import Card from './Card';
 import './CardSection.css';
 
-const versionControl = (last, current, art = 'original') => {
+const versionControl = (last, current, art = 'updated') => {
   const showing = current.show !== false;
   const duplicate = showing && last && last.show !== false && last.title === current.title;
   if (duplicate) {

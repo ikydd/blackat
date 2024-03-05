@@ -4,7 +4,7 @@ import './Reset.css';
 const Reset = ({ onClick }) => (
   <div id="reset">
     <h5 role="button" onClick={onClick}>
-      Reset Filters
+      Reset Settings
     </h5>
   </div>
 );

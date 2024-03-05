@@ -6,7 +6,8 @@ export const initSettings = ({ side } = {}) => ({
   factions: [],
   types: [],
   subtypes: [],
-  packs: []
+  packs: [],
+  preferences: []
 });
 
 export const saveSettings = (data) => {

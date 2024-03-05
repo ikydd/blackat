@@ -44,6 +44,8 @@ const addOrRemoveSelections = (currentSettings, codes, selected) => {
   return [...dedupedSettings];
 };
 
+const preferences = [{ name: 'Prefer Original Art', code: 'original' }];
+
 const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const initialSettings = initSettings({ side: sideProp });
   const [settings, setSettings] = useState(initialSettings);
@@ -92,6 +94,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const currentTypes = setupFilterForCurrentSide(types, settings.types);
   const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes);
   const currentPacks = setupFilterForCurrentSide(packs, settings.packs);
+  const currentPreferences = setupFilterForCurrentSide(preferences, settings.preferences);
 
   const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
     const appearsInCurrentOptions = (selection) =>
@@ -177,6 +180,13 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           clearAll={clearListFilter('packs')}
           onChange={onSelectionHandler('packs')}
         />
+        <FilterList
+          title="Preferences"
+          closed={true}
+          options={currentPreferences}
+          clearAll={clearListFilter('preferences')}
+          onChange={onSelectionHandler('preferences')}
+        />
 
         <Reset onClick={resetAllFilters} />
         <SmallPrint />
@@ -190,6 +200,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
         subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
         packs={settings.packs}
+        art={settings.preferences[0]}
       />
     </div>
   );

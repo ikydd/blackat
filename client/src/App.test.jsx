@@ -101,7 +101,7 @@ describe('saving state', () => {
     );
 
     const { getByText } = render(<App saveState={true} />);
-    fireEvent.click(getByText('Reset Filters'));
+    fireEvent.click(getByText('Reset Settings'));
 
     await waitFor(() => {
       expect(JSON.parse(localStorage.getItem('settings'))).toEqual(
