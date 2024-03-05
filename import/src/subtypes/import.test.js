@@ -1,11 +1,11 @@
-const save = require('../helpers/save');
-const localPath = require('../helpers/local-path');
+const save = require('../helpers/save-file');
+const localPath = require('../helpers/get-local-path');
 const process = require('./process');
 const subtypes = require('./import');
 
-jest.mock('../helpers/save');
+jest.mock('../helpers/save-file');
 jest.mock('./process');
-jest.mock('../helpers/local-path');
+jest.mock('../helpers/get-local-path');
 
 const mockPath = './test/foo/bar/file.json';
 

@@ -1,14 +1,14 @@
 const request = require('../helpers/request');
-const localPath = require('../helpers/local-path');
-const apiUrlFor = require('../helpers/api-url');
-const process = require('./process');
-const save = require('../helpers/save');
+const getLocalSavePath = require('../helpers/get-local-path');
+const getApiUrl = require('../helpers/get-api-url');
+const processPacks = require('./process');
+const saveData = require('../helpers/save-file');
 
-const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
-
-const importPacks = async () =>
-  Promise.all([request(apiUrlFor('/packs')), request(apiUrlFor('/cycles'))])
-    .then(([packs, cycles]) => process(packs, cycles))
-    .then(saveTo(localPath('packs.json')));
+const importPacks = async () => {
+  const packsData = await request(getApiUrl('/packs'));
+  const cyclesData = await request(getApiUrl('/cycles'));
+  const processedPacksData = processPacks(packsData, cyclesData);
+  await saveData(processedPacksData, getLocalSavePath('packs.json'));
+};
 
 module.exports = importPacks;

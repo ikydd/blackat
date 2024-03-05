@@ -1,6 +1,18 @@
 /* eslint-disable camelcase */
-const neutralLast = (faction) => (faction.name.search('Neutral') !== -1 ? 'zzzzzzz' : faction.name);
-const byName = (a, b) => (neutralLast(a) > neutralLast(b) ? 1 : -1);
+const isNeutralFaction = (faction) => faction.name.includes('Neutral');
+
+const sortByName = (a, b) => {
+  if (a.name === b.name) {
+    return 0;
+  }
+  if (isNeutralFaction(a)) {
+    return 1;
+  }
+  if (isNeutralFaction(b)) {
+    return -1;
+  }
+  return a.name > b.name ? 1 : -1;
+};
 
 const process = ({ data: factions }) =>
   factions
@@ -9,6 +21,6 @@ const process = ({ data: factions }) =>
       name,
       side: side_code
     }))
-    .sort(byName);
+    .sort(sortByName);
 
 module.exports = process;

@@ -1,54 +1,43 @@
 const hasKeywords = ({ keywords }) => keywords;
 
-const alreadyPresent =
-  (list) =>
-  ({ name, side }) => {
-    const subtype = list.get(name);
-    if (!subtype) {
-      return true;
-    }
-    return subtype.side !== side && subtype.side !== null;
+const sortByName = (a, b) => {
+  if (a.name === b.name) {
+    return 0;
+  }
+  return a.name > b.name ? 1 : -1;
+};
+
+const getSubtypeSide = ({ subtype, corp, runner }) => {
+  if (!runner.has(subtype)) {
+    return 'corp';
+  }
+  return corp.has(subtype) ? null : 'runner';
+};
+
+const buildSubtypeObjects = ({ corp, runner }) =>
+  [...corp, ...runner].map((subtype) => ({
+    side: getSubtypeSide({ subtype, corp, runner }),
+    code: subtype,
+    name: subtype
+  }));
+
+const addSubtypesToSides = (sets, { side, keywords }) => {
+  const subtypes = keywords.split(' - ');
+  subtypes.forEach((subtype) => {
+    sets[side].add(subtype);
+  });
+  return sets;
+};
+
+const process = (cards) => {
+  const cardsWithKeywords = cards.filter(hasKeywords);
+  const sets = {
+    runner: new Set(),
+    corp: new Set()
   };
+  const { runner, corp } = cardsWithKeywords.reduce(addSubtypesToSides, sets);
 
-const addSubtype =
-  (list) =>
-  ({ name, side, code }) => {
-    const subtype = list.get(name);
-    const item = {
-      name,
-      side: subtype ? null : side,
-      code
-    };
-
-    list.set(name, item);
-    return subtype;
-  };
-
-const buildSubtype = (side) => (name) => ({
-  side,
-  name,
-  code: name
-});
-
-const toAccumulator = (list) => list;
-
-const byName = (a, b) => (a.name > b.name ? 1 : -1);
-
-const process = (cards) =>
-  [
-    ...cards
-      .filter(hasKeywords)
-      .reduce(
-        (list, { side, keywords }) =>
-          keywords
-            .split(' - ')
-            .map(buildSubtype(side))
-            .filter(alreadyPresent(list))
-            .map(addSubtype(list))
-            .reduce(toAccumulator, list),
-        new Map()
-      )
-      .values()
-  ].sort(byName);
+  return buildSubtypeObjects({ runner, corp }).sort(sortByName);
+};
 
 module.exports = process;

@@ -1,37 +1,31 @@
 /* eslint-disable camelcase */
-const additionalFields = (cycle) => ({ ...cycle, items: [] });
+const doesPackBelongToCycle = ({ cycle }, { code }) => code === cycle;
 
-const correctCycleFor =
-  ({ cycle }) =>
-  ({ code }) =>
-    code === cycle;
-
-const packsIntoCycles = (cycles, pack) => {
-  cycles.find(correctCycleFor(pack)).items.push(pack);
+const addPacksIntoCycles = (cycles, pack) => {
+  const matchingCycle = cycles.find((cycle) => doesPackBelongToCycle(pack, cycle));
+  matchingCycle.items.push(pack);
   return cycles;
 };
 
-const officialPacks = ({ date_release }) => date_release < '2018-09-07';
+const officialPacksOnly = ({ date_release }) => date_release < '2018-09-07';
 
-const nonCampaignPacks = ({ code }) => code !== 'tdc';
+const removeCampaignPacks = ({ code }) => code !== 'tdc';
 
-const includedCycles = ({ items }) => items.length;
+const removeCyclesWithNoPacks = ({ items }) => items.length;
 
-const process = ({ data: packs }, { data: cycles }) =>
-  packs
-    .filter(officialPacks)
-    .filter(nonCampaignPacks)
+const process = ({ data: packs }, { data: cycles }) => {
+  const packsData = packs
+    .filter(officialPacksOnly)
+    .filter(removeCampaignPacks)
     .map(({ name, code, cycle_code }) => ({
       code,
       name,
       cycle: cycle_code
-    }))
-    .reduce(packsIntoCycles, cycles.map(additionalFields))
-    .filter(includedCycles)
-    .map(({ name, code, items }) => ({
-      name,
-      code,
-      items
     }));
+
+  const emptyCycles = cycles.map(({ name, code }) => ({ name, code, items: [] }));
+
+  return packsData.reduce(addPacksIntoCycles, emptyCycles).filter(removeCyclesWithNoPacks);
+};
 
 module.exports = process;

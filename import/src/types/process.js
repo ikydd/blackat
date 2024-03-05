@@ -12,16 +12,23 @@ const typeList = [
   'operation'
 ];
 
-const byType = (a, b) => (typeList.indexOf(a.code) > typeList.indexOf(b.code) ? 1 : -1);
+const sortByType = (a, b) => {
+  if (a.code === b.code) {
+    return 0;
+  }
+  return typeList.indexOf(a.code) > typeList.indexOf(b.code) ? 1 : -1;
+};
+
+const ignoreSubtypes = ({ is_subtype }) => !is_subtype;
 
 const process = ({ data: types }) =>
   types
-    .filter(({ is_subtype }) => !is_subtype)
+    .filter(ignoreSubtypes)
     .map(({ name, code, side_code }) => ({
       code,
       name,
       side: side_code
     }))
-    .sort(byType);
+    .sort(sortByType);
 
 module.exports = process;

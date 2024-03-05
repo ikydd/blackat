@@ -1,15 +1,15 @@
 const request = require('../helpers/request');
-const save = require('../helpers/save');
-const apiUrl = require('../helpers/api-url');
-const localPath = require('../helpers/local-path');
+const save = require('../helpers/save-file');
+const apiUrl = require('../helpers/get-api-url');
+const localPath = require('../helpers/get-local-path');
 const process = require('./process');
 const packs = require('./import');
 
 jest.mock('../helpers/request');
-jest.mock('../helpers/save');
+jest.mock('../helpers/save-file');
 jest.mock('./process');
-jest.mock('../helpers/api-url');
-jest.mock('../helpers/local-path');
+jest.mock('../helpers/get-api-url');
+jest.mock('../helpers/get-local-path');
 
 const mockPacksUrl = 'https://foo.co.uk/packs';
 const mockCyclesUrl = 'https://foo.co.uk/cycles';

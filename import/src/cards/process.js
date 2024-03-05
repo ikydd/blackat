@@ -5,12 +5,13 @@ const countSubroutines = (text) => {
     return 0;
   }
   const subs = text.match(/(\n|^)\[subroutine\]/g);
-  return subs ? subs.length : "X";
+  return subs ? subs.length : 'X';
 };
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) => {
   const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);
-  const keepCardsFromIncludedPacks = ({ pack_code }) => includedPacks.some(({ code }) => code === pack_code)
+  const keepCardsFromIncludedPacks = ({ pack_code }) =>
+    includedPacks.some(({ code }) => code === pack_code);
 
   return cards
     .filter(keepCardsFromIncludedPacks)
@@ -40,13 +41,13 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => {
         type: type_code,
         pack: pack_code,
         keywords,
-        cost: cost === null ? "X" : cost,
-        strength: strength === null ? "X" : strength,
+        cost: cost === null ? 'X' : cost,
+        strength: strength === null ? 'X' : strength,
         agenda: agenda_points,
         advancement: advancement_cost,
         illustrator,
         subroutines: type_code === 'ice' ? countSubroutines(text) : undefined
       })
     );
-    };
+};
 module.exports = process;

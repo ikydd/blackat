@@ -24,7 +24,7 @@ const validateSettings = (candidate) => {
     }
     const candidateType = typeof candidate[key];
     if (candidateType !== initKey) {
-      throw new Error(`Invalid key type in settings: ${key} was type ${candidateType}`)
+      throw new Error(`Invalid key type in settings: ${key} was type ${candidateType}`);
     }
   });
 };
@@ -33,7 +33,7 @@ export const loadSettings = () => {
   try {
     const initialSettings = initSettings();
     const previousSession = JSON.parse(localStorage.getItem('settings'));
-    if (previousSession){
+    if (previousSession) {
       validateSettings(previousSession);
     }
     return { ...initialSettings, ...previousSession };

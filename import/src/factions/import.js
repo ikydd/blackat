@@ -1,14 +1,13 @@
 const request = require('../helpers/request');
-const localPath = require('../helpers/local-path');
-const apiUrlFor = require('../helpers/api-url');
-const process = require('./process');
-const save = require('../helpers/save');
+const getLocalSavePath = require('../helpers/get-local-path');
+const getApiUrl = require('../helpers/get-api-url');
+const processFactions = require('./process');
+const saveData = require('../helpers/save-file');
 
-const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
-
-const importFactions = async () =>
-  request(apiUrlFor('/factions'))
-    .then(process)
-    .then(saveTo(localPath('factions.json')));
+const importFactions = async () => {
+  const factionApiData = await request(getApiUrl('/factions'));
+  const processedFactionData = processFactions(factionApiData);
+  await saveData(processedFactionData, getLocalSavePath('factions.json'));
+};
 
 module.exports = importFactions;

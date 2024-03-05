@@ -9,10 +9,10 @@ const compare = (a, b, order = 'asc') => {
   if (b === 'X') {
     return compare(a, lastPosition, order);
   }
-  if(typeof a === 'undefined'){
+  if (typeof a === 'undefined') {
     return 1;
   }
-  if(typeof b === 'undefined') {
+  if (typeof b === 'undefined') {
     return -1;
   }
   const result = a > b ? 1 : -1;

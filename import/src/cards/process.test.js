@@ -138,7 +138,7 @@ describe('process cards', () => {
     expect(output[0].strength).toEqual(2);
     expect(output[1].strength).toEqual(undefined);
     expect(output[2].strength).toEqual(5);
-    expect(output[3].strength).toEqual("X");
+    expect(output[3].strength).toEqual('X');
   });
 
   it('outputs the cost', () => {
@@ -147,7 +147,7 @@ describe('process cards', () => {
     expect(output[0].cost).toEqual(mockCardsData.data[0].cost);
     expect(output[1].cost).toEqual(mockCardsData.data[1].cost);
     expect(output[2].cost).toEqual(mockCardsData.data[2].cost);
-    expect(output[3].cost).toEqual("X");
+    expect(output[3].cost).toEqual('X');
   });
 
   it('outputs the illustrator', () => {
@@ -166,7 +166,7 @@ describe('process cards', () => {
     expect(output[1].subroutines).toEqual(3);
     expect(output[2].subroutines).toEqual(3);
     expect(output[3].subroutines).toEqual(2);
-    expect(output[4].subroutines).toEqual("X");
+    expect(output[4].subroutines).toEqual('X');
     expect(output[5].subroutines).toEqual(0);
     expect(output[6].subroutines).toEqual(1);
   });

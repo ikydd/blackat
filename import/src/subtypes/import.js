@@ -1,12 +1,10 @@
-const localPath = require('../helpers/local-path');
-const process = require('./process');
-const save = require('../helpers/save');
+const processSubtypes = require('./process');
+const getLocalSavePath = require('../helpers/get-local-path');
+const saveData = require('../helpers/save-file');
 
-const saveTo = (filepath) => (data) => save(data, filepath).then(() => data);
-
-const importSubtypes = async (cards) =>
-  Promise.resolve(cards)
-    .then(process)
-    .then(saveTo(localPath('subtypes.json')));
+const importSubtypes = async (cards) => {
+  const processedSubtypeData = processSubtypes(cards);
+  await saveData(processedSubtypeData, getLocalSavePath('subtypes.json'));
+};
 
 module.exports = importSubtypes;

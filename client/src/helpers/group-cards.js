@@ -2,10 +2,10 @@ const compare = ({ a, b, order = 'asc', numbersOnly = false }) => {
   if (a === b) {
     return 0;
   }
-  if(numbersOnly && typeof a !== 'number'){
+  if (numbersOnly && typeof a !== 'number') {
     return 1;
   }
-  if(numbersOnly && typeof b !== 'number') {
+  if (numbersOnly && typeof b !== 'number') {
     return -1;
   }
   const result = a > b ? 1 : -1;
@@ -49,7 +49,15 @@ const defaultGroup = ({ sections, card }) => {
   return safelyAddCardToGroup(sections, card);
 };
 
-const customGroup = ({ sections, card, sortProp, icon, unknown = "ignored", suffix = '', max = Infinity }) => {
+const customGroup = ({
+  sections,
+  card,
+  sortProp,
+  icon,
+  unknown = 'ignored',
+  suffix = '',
+  max = Infinity
+}) => {
   const groupCode = typeof card[sortProp] === 'undefined' ? unknown : card[sortProp];
   const name = typeof groupCode === 'number' && groupCode >= max ? `${max}+` : groupCode;
   const groupInfo = { name: `${name}${suffix}`, code: groupCode, icon };
@@ -72,14 +80,16 @@ const sortSections = (sections, sort) => {
     case 'subroutines':
     case 'strength':
     case 'agenda':
-      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, order: 'desc', numbersOnly: true }));
+      return list.sort((a, b) =>
+        compare({ a: a.info.code, b: b.info.code, order: 'desc', numbersOnly: true })
+      );
     case 'cost':
       return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, numbersOnly: true }));
-      case 'illustrator':
+    case 'illustrator':
     default:
       return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code }));
   }
-}
+};
 
 export const groupCards = (
   cards = [],
@@ -97,7 +107,14 @@ export const groupCards = (
       case 'subroutines':
         return customGroup({ sections, card, sortProp: sort, icon: 'subroutine', max: 4 });
       case 'agenda':
-        return customGroup({ sections, card, sortProp: sort, unknown: 'conditional', suffix: ' agenda points',  max: 4 });
+        return customGroup({
+          sections,
+          card,
+          sortProp: sort,
+          unknown: 'conditional',
+          suffix: ' agenda points',
+          max: 4
+        });
       case 'strength':
         return customGroup({ sections, card, sortProp: sort, suffix: ' strength', max: 6 });
       case 'illustrator':
@@ -107,5 +124,4 @@ export const groupCards = (
     }
   }, {});
   return sortSections(groupedCards, sort);
-}
- 
+};

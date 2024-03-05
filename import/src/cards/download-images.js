@@ -5,24 +5,19 @@ const path = require('path');
 
 const getImageSavePath = (card, folder) => path.join(folder, `${card.code}.png`);
 
-const imageAlreadyDownloaded = (card, imgFolder) => {
-  const imgPath = getImageSavePath(card, imgFolder);
-  return !fs.existsSync(imgPath) || fs.statSync(imgPath).size < 30000;
-};
-
 const downloadImage = async (filepath, url) => {
-    const response = await axios({
-      url,
-      method: 'GET',
-      responseType: 'stream'
-    });
-    return new Promise((resolve, reject) => {
-      response.data
+  const response = await axios({
+    url,
+    method: 'GET',
+    responseType: 'stream'
+  });
+  return new Promise((resolve, reject) => {
+    response.data
       .pipe(fs.createWriteStream(filepath))
       .on('close', () => resolve())
       .on('error', (error) => reject(error));
   });
-}
+};
 
 const downloadCardImageToFolder = async (card, imgFolder) => {
   try {
@@ -31,20 +26,24 @@ const downloadCardImageToFolder = async (card, imgFolder) => {
   } catch (e) {
     console.error(e);
   }
-}
+};
 
+const imageAlreadyDownloaded = (card, imgFolder) => {
+  const imgPath = getImageSavePath(card, imgFolder);
+  return !fs.existsSync(imgPath) || fs.statSync(imgPath).size < 30000;
+};
 
 const downloadImages = (data, imgFolder) => {
   const cardsMissingImages = data.filter((card) => imageAlreadyDownloaded(card, imgFolder));
   return Promise.all(cardsMissingImages.map((card) => downloadCardImageToFolder(card, imgFolder)));
-}
-    
+};
+
 const getWebFolderPath = (serverFolder) => {
   const segments = serverFolder.split('/');
   const publicFolderIndex = segments.indexOf('public');
   const webSegments = segments.slice(publicFolderIndex + 1);
   return `/${webSegments.join('/')}/`;
-}
+};
 
 const addImagePathToCards = (data, imgFolder) => {
   const webFolder = getWebFolderPath(imgFolder);
