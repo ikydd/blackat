@@ -1,0 +1,31 @@
+[
+
+    {
+        "code": "01043",
+        "title": "Gordian Blade",
+        "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
+        "imagesrc": "/img/cards/01043.png",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core",
+        "keywords": "Icebreaker - Decoder",
+        "cost": 4,
+        "strength": 2,
+        "illustrator": "Mike Nesbitt"
+    },
+    {
+        "code": "20049",
+        "title": "Gordian Blade",
+        "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
+        "imagesrc": "/img/cards/20049.png",
+        "side": "runner",
+        "faction": "shaper",
+        "type": "program",
+        "pack": "core2",
+        "keywords": "Icebreaker - Decoder",
+        "cost": 4,
+        "strength": 2,
+        "illustrator": "Adam S. Doyle"
+    }
+]

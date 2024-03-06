@@ -7,20 +7,22 @@ const addPacksIntoCycles = (cycles, pack) => {
   return cycles;
 };
 
-const officialPacksOnly = ({ date_release }) => date_release < '2018-09-07';
+const OFFICIAL_NETRUNNER_END_DATE = '2018-09-07';
+const isOfficalPack = date => date <= OFFICIAL_NETRUNNER_END_DATE;
 
-const removeCampaignPacks = ({ code }) => code !== 'tdc';
+const unusedPacks = ['tdc', 'draft', 'napd'];
+const removeUnusedPacks = ({ code }) => !unusedPacks.includes(code);
 
 const removeCyclesWithNoPacks = ({ items }) => items.length;
 
 const process = ({ data: packs }, { data: cycles }) => {
   const packsData = packs
-    .filter(officialPacksOnly)
-    .filter(removeCampaignPacks)
-    .map(({ name, code, cycle_code }) => ({
+    .filter(removeUnusedPacks)
+    .map(({ name, code, cycle_code, date_release }) => ({
       code,
       name,
-      cycle: cycle_code
+      cycle: cycle_code,
+      official: isOfficalPack(date_release)
     }));
 
   const emptyCycles = cycles.map(({ name, code }) => ({ name, code, items: [] }));

@@ -7,7 +7,7 @@ describe('process factions', () => {
   it('outputs the correct number of cycles', () => {
     const output = process(mockPacks, mockCycles);
 
-    expect(output.length).toEqual(6);
+    expect(output.length).toEqual(8);
   });
 
   it('outputs the correct number of packs', () => {
@@ -54,11 +54,13 @@ describe('process factions', () => {
     expect(output[1].items[2].code).toEqual(mockPacks.data[3].code);
   });
 
-  it('does not output fan-made packs', () => {
+  it('marks fan-made packs and ffg packs', () => {
     const output = process(mockPacks, mockCycles);
-    const cycle = output.find(({ code }) => code === 'magnum-opus');
+    const magnumOpus = output.find(({ code }) => code === 'magnum-opus');
+    const systemCore = output.find(({ code }) => code === 'sc19');
 
-    expect(cycle).toBeFalsy();
+    expect(magnumOpus.items[0].official).toBeTruthy();
+    expect(systemCore.items[0].official).toBeFalsy();
   });
 
   it('does not output draft packs', () => {
@@ -68,7 +70,21 @@ describe('process factions', () => {
     expect(cycle).toBeFalsy();
   });
 
-  it('does not output campaign card from terminal directive', () => {
+  it('does not output packs from draft', () => {
+    const output = process(mockPacks, mockCycles);
+    const draft = output.find(({ code }) => code === 'draft');
+
+    expect(draft).toBeFalsy();
+  });
+
+  it('does not output NAPD multiple pack', () => {
+    const output = process(mockPacks, mockCycles);
+    const napd = output.find(({ code }) => code === 'napd');
+
+    expect(napd).toBeFalsy();
+  });
+
+  it('does not output campaign pack from terminal directive', () => {
     const output = process(mockPacks, mockCycles);
     const terminalDirective = output.find(({ code }) => code === 'terminal-directive');
 
