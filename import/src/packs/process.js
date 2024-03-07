@@ -8,7 +8,7 @@ const addPacksIntoCycles = (cycles, pack) => {
 };
 
 const OFFICIAL_NETRUNNER_END_DATE = '2018-09-07';
-const isOfficalPack = date => date <= OFFICIAL_NETRUNNER_END_DATE;
+const isOfficalPack = (date) => date < OFFICIAL_NETRUNNER_END_DATE;
 
 const unusedPacks = ['tdc', 'draft', 'napd'];
 const removeUnusedPacks = ({ code }) => !unusedPacks.includes(code);

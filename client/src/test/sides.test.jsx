@@ -53,7 +53,7 @@ describe('Side selection', () => {
     const { findAllByRole, getByText } = render(<App />);
     let cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(4);
 
     fireEvent.click(getByText('Corp'));
     cards = await findAllByRole('img');

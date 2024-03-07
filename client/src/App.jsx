@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import getData from './helpers/api';
 import { initSettings, loadSettings, saveSettings } from './helpers/settings-manager';
 import sortOptions from './helpers/sort-options';
+import preferencesOptions from './helpers/preferences-options';
 import CardList from './components/CardList';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
@@ -43,8 +44,6 @@ const addOrRemoveSelections = (currentSettings, codes, selected) => {
   });
   return [...dedupedSettings];
 };
-
-const preferences = [{ name: 'Prefer Original Art', code: 'original' }];
 
 const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const initialSettings = initSettings({ side: sideProp });
@@ -94,7 +93,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const currentTypes = setupFilterForCurrentSide(types, settings.types);
   const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes);
   const currentPacks = setupFilterForCurrentSide(packs, settings.packs);
-  const currentPreferences = setupFilterForCurrentSide(preferences, settings.preferences);
+  const currentPreferences = setupFilterForCurrentSide(preferencesOptions, settings.preferences);
 
   const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
     const appearsInCurrentOptions = (selection) =>
@@ -118,6 +117,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const resetAllFilters = () => {
     updateSettings(initSettings());
   };
+
+  const originalArt = settings.preferences.find((pref) => pref === 'original');
+  const officialOnly = settings.preferences.find((pref) => pref === 'official');
 
   return (
     <div className="App">
@@ -200,7 +202,8 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
         subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
         packs={settings.packs}
-        art={settings.preferences[0]}
+        art={originalArt}
+        official={officialOnly}
       />
     </div>
   );

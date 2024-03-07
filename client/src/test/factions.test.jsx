@@ -94,7 +94,7 @@ describe('Faction filters', () => {
     const unchecked = await within(filterBlock).findByLabelText('Anarch');
     const all = await findAllByRole('img');
 
-    expect(all).toHaveLength(3);
+    expect(all).toHaveLength(4);
 
     fireEvent.click(unchecked);
     const filtered = await findByRole('img');

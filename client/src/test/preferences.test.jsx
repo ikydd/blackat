@@ -27,7 +27,7 @@ describe('Preferences filters', () => {
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
-      expect(checkboxes).toHaveLength(1);
+      expect(checkboxes).toHaveLength(2);
     });
   });
 
@@ -48,19 +48,43 @@ describe('Preferences filters', () => {
     });
   });
 
-  it('affects cards correctly', async () => {
-    const mockData = loadFile('../../../fixtures/api/updated.json');
-    api.setData('cards', mockData);
-    const { findByRole, getByText, getByDisplayValue } = render(<App />);
-    fireEvent.click(getByText('Preferences'));
-    const pref = getByDisplayValue('original');
-    const reprint = await findByRole('img');
+  describe('Prefer Original Art', () => {
+    it('affects cards correctly', async () => {
+      const mockData = loadFile('../../../fixtures/api/updated.json');
+      api.setData('cards', mockData);
+      const { findByRole, getByText, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('original');
+      const reprint = await findByRole('img');
 
-    expect(reprint.src).toBe(`http://localhost${mockData[1].imagesrc}`);
+      await waitFor(() => {
+        expect(reprint.src).toBe(`http://localhost${mockData[1].imagesrc}`);
+      });
 
-    fireEvent.click(pref);
-    const original = await findByRole('img');
+      fireEvent.click(pref);
+      const original = await findByRole('img');
+      await waitFor(() => {
+        expect(original.src).toBe(`http://localhost${mockData[0].imagesrc}`);
+      });
+    });
+  });
+  describe('Official Packs Only', () => {
+    it('filters cards correctly', async () => {
+      const mockData = loadFile('../../../fixtures/api/official.json');
+      api.setData('cards', mockData);
+      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('official');
+      const images = await findAllByRole('img');
+      await waitFor(() => {
+        expect(images).toHaveLength(2);
+      });
 
-    expect(original.src).toBe(`http://localhost${mockData[0].imagesrc}`);
+      fireEvent.click(pref);
+      const filtered = await findAllByRole('img');
+      await waitFor(() => {
+        expect(filtered).toHaveLength(1);
+      });
+    });
   });
 });

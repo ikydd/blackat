@@ -9,6 +9,6 @@ describe('Initial page', () => {
     const { findAllByRole } = render(<App />);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(4);
   });
 });

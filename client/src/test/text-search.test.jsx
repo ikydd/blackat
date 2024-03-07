@@ -15,7 +15,7 @@ describe('Text Search', () => {
   });
 
   it('only shows relevant cards given a text search', async () => {
-    const search = 'remainder';
+    const search = 'strength for the remainder';
     const { getByPlaceholderText, findByRole } = render(<App />);
     const input = getByPlaceholderText(`search text`);
     fireEvent.input(input, { target: { value: search } });

@@ -35,6 +35,8 @@ const isRelevantToSortMethod = (card, sort) => {
   }
 };
 
+const isMatchingOfficiality = (card, official) => !official || card.official;
+
 const setCardVisibilityFromSettings = (
   card,
   {
@@ -45,7 +47,8 @@ const setCardVisibilityFromSettings = (
     factions = [],
     types = [],
     subtypes = [],
-    packs = []
+    packs = [],
+    official = false
   }
 ) => {
   const show =
@@ -56,6 +59,7 @@ const setCardVisibilityFromSettings = (
     hasMatchingFactions(card, factions) &&
     hasMatchingType(card, types) &&
     isInMatchingPack(card, packs) &&
+    isMatchingOfficiality(card, official) &&
     hasMatchingSubtypes(card, subtypes);
 
   return { ...card, show };

@@ -6,17 +6,18 @@ const testCardsData = require('../../../fixtures/nrdb/cards-agendas.json');
 const advancementCostTestCardsData = require('../../../fixtures/nrdb/cards-agendas.json');
 const strengthTestCardsData = require('../../../fixtures/nrdb/cards-strength.json');
 const subroutinesTestCardsData = require('../../../fixtures/nrdb/cards-subroutines.json');
+const officialCardsData = require('../../../fixtures/nrdb/cards-official.json');
 
 describe('process cards', () => {
   it('outputs the correct number of cards', () => {
     const output = process(mockCardsData, mockPackData);
 
-    expect(output.length).toEqual(5);
+    expect(output.length).toEqual(6);
   });
 
   it('does not output cards for not included packs', () => {
     const output = process(mockCardsData, mockPackData);
-    const cards = output.find((card) => card.title === 'Border Control');
+    const cards = output.find((card) => card.title === 'The Shadow: Pulling the Strings');
 
     expect(cards).toBeFalsy();
   });
@@ -169,5 +170,12 @@ describe('process cards', () => {
     expect(output[4].subroutines).toEqual('X');
     expect(output[5].subroutines).toEqual(0);
     expect(output[6].subroutines).toEqual(1);
+  });
+
+  it('outputs the officialness', () => {
+    const output = process(officialCardsData, mockPackData);
+
+    expect(output[0].official).toBeTruthy();
+    expect(output[1].official).toBeFalsy();
   });
 });

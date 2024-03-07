@@ -82,7 +82,7 @@ describe('Packs filters', () => {
     const all = await findAllByRole('img');
 
     await waitFor(() => {
-      expect(all).toHaveLength(3);
+      expect(all).toHaveLength(4);
     });
 
     fireEvent.click(unchecked);

@@ -94,7 +94,7 @@ describe('Types filters', () => {
     const unchecked = await within(filterBlock).findByLabelText('Hardware');
     const all = await findAllByRole('img');
 
-    expect(all).toHaveLength(3);
+    expect(all).toHaveLength(4);
 
     fireEvent.click(unchecked);
     const filtered = await findByRole('img');

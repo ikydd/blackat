@@ -8,6 +8,8 @@ const countSubroutines = (text) => {
   return subs ? subs.length : 'X';
 };
 
+const isOfficialCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).official;
+
 const process = ({ imageUrlTemplate, data: cards }, cycles) => {
   const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);
   const keepCardsFromIncludedPacks = ({ pack_code }) =>
@@ -31,23 +33,26 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => {
         agenda_points,
         advancement_cost,
         illustrator
-      }) => ({
-        code,
-        title,
-        text: text || '',
-        imagesrc: image_url || imageUrlTemplate.replace('{code}', code),
-        side: side_code,
-        faction: faction_code,
-        type: type_code,
-        pack: pack_code,
-        keywords,
-        cost: cost === null ? 'X' : cost,
-        strength: strength === null ? 'X' : strength,
-        agenda: agenda_points,
-        advancement: advancement_cost,
-        illustrator,
-        subroutines: type_code === 'ice' ? countSubroutines(text) : undefined
-      })
+      }) => {
+        return {
+          code,
+          title,
+          text: text || '',
+          imagesrc: image_url || imageUrlTemplate.replace('{code}', code),
+          side: side_code,
+          faction: faction_code,
+          type: type_code,
+          pack: pack_code,
+          keywords,
+          cost: cost === null ? 'X' : cost,
+          strength: strength === null ? 'X' : strength,
+          agenda: agenda_points,
+          advancement: advancement_cost,
+          illustrator,
+          subroutines: type_code === 'ice' ? countSubroutines(text) : undefined,
+          official: isOfficialCard(pack_code, includedPacks)
+        };
+      }
     );
 };
 module.exports = process;

@@ -31,7 +31,7 @@ describe('CardList', () => {
     const { findAllByRole } = render(<CardList />);
     const cards = await findAllByRole('img');
 
-    expect(cards).toHaveLength(7);
+    expect(cards).toHaveLength(8);
   });
 
   describe('Filter', () => {
@@ -39,7 +39,7 @@ describe('CardList', () => {
       const { findAllByRole } = render(<CardList side="runner" />);
       const cards = await findAllByRole('img');
 
-      expect(cards).toHaveLength(3);
+      expect(cards).toHaveLength(4);
     });
 
     it('only shows cards from the correct factions', async () => {
@@ -72,6 +72,13 @@ describe('CardList', () => {
       const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(2);
+    });
+
+    it('only shows official cards', async () => {
+      const { findAllByRole } = render(<CardList official={'official'} />);
+      const cards = await findAllByRole('img');
+
+      expect(cards).toHaveLength(7);
     });
   });
 
@@ -518,6 +525,50 @@ describe('CardList', () => {
   });
 
   describe('Card Updates', () => {
+    it('only shows the oldest version when versions are consecutive', async () => {
+      const cardData = loadFile('../../../fixtures/api/versions.json');
+      api.setData('cards', cardData);
+      const { findAllByRole } = render(<CardList sort="title" art="original" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
+      expect(images[0].src).toEqual(cardData[0].imagesrc);
+    });
+
+    it('only shows the most recent version when versions are consecutive', async () => {
+      const cardData = loadFile('../../../fixtures/api/versions.json');
+      api.setData('cards', cardData);
+      const { findAllByRole } = render(<CardList sort="title" art="updated" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
+      expect(images[0].src).toEqual(cardData[2].imagesrc);
+    });
+
+    it('only shows the most recent version when versions by default', async () => {
+      const cardData = loadFile('../../../fixtures/api/versions.json');
+      api.setData('cards', cardData);
+      const { findAllByRole } = render(<CardList sort="title" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus']);
+      expect(images[0].src).toEqual(cardData[2].imagesrc);
+    });
+
+    it('shows all versions when not consecutive', async () => {
+      api.setData('cards', loadFile('../../../fixtures/api/versions.json'));
+      const { findAllByRole } = render(<CardList sort="pack" />);
+      const images = await findAllByRole('img');
+      const cards = images.map(({ alt }) => alt);
+
+      expect(cards).toEqual(['Gordian Blade', 'Magnum Opus', 'Gordian Blade']);
+    });
+  });
+
+  describe('Official Cards', () => {
     it('only shows the oldest version when versions are consecutive', async () => {
       const cardData = loadFile('../../../fixtures/api/versions.json');
       api.setData('cards', cardData);

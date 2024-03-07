@@ -29,7 +29,7 @@ it('loads the runner cards by default', async () => {
   const { findAllByRole } = render(<App />);
   const cards = await findAllByRole('img');
 
-  expect(cards).toHaveLength(3);
+  expect(cards).toHaveLength(4);
 });
 
 it('loads the corp cards with a prop', async () => {
