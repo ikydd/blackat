@@ -54,12 +54,14 @@ describe('process factions', () => {
     expect(output[1].items[2].code).toEqual(mockPacks.data[3].code);
   });
 
-  it('marks fan-made packs and ffg packs', () => {
+  it('marks official ffg retail packs', () => {
     const output = process(mockPacks, mockCycles);
+    const honorProfit = output.find(({ code }) => code === 'honor-and-profit');
     const magnumOpus = output.find(({ code }) => code === 'magnum-opus');
     const systemCore = output.find(({ code }) => code === 'sc19');
 
-    expect(magnumOpus.items[0].official).toBeTruthy();
+    expect(honorProfit.items[0].official).toBeTruthy();
+    expect(magnumOpus.items[0].official).toBeFalsy();
     expect(systemCore.items[0].official).toBeFalsy();
   });
 
