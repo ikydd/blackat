@@ -86,5 +86,17 @@ describe('Preferences filters', () => {
         expect(filtered).toHaveLength(1);
       });
     });
+    it('filters options correctly', async () => {
+      const { getByText, getByTestId, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('official');
+      fireEvent.click(pref);
+
+      const filterBlock = getByTestId('packs-filters');
+      fireEvent.click(getByText('Packs'));
+      const filtered = await within(filterBlock).findAllByRole('checkbox');
+
+      expect(filtered).toHaveLength(64);
+    });
   });
 });

@@ -32,6 +32,19 @@ const setOptionToMatchSettings = (option, settings) => {
   };
 };
 
+const setupFilter = (options, filterSettings) =>
+  options.map((option) => setOptionToMatchSettings(option, filterSettings));
+
+const setupFilterForCurrentSide = (options, filterSettings, currentSide) =>
+  options
+    .filter(({ side }) => !side || side === currentSide)
+    .map((option) => setOptionToMatchSettings(option, filterSettings));
+
+const setupFilterForOfficial = (options, filterSettings, officialOnly = false) =>
+  options
+    .filter(({ official }) => !officialOnly || official)
+    .map((option) => setOptionToMatchSettings(option, filterSettings));
+
 const addOrRemoveSelections = (currentSettings, codes, selected) => {
   const listOfCodes = Array.isArray(codes) ? codes : [codes];
   const dedupedSettings = new Set(currentSettings);
@@ -84,16 +97,14 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const setupFilterForCurrentSide = (options, filterSettings) =>
-    options
-      .filter(({ side }) => !side || side === settings.side)
-      .map((option) => setOptionToMatchSettings(option, filterSettings));
+  const originalArt = settings.preferences.find((pref) => pref === 'original');
+  const officialOnly = settings.preferences.find((pref) => pref === 'official');
 
-  const currentFactions = setupFilterForCurrentSide(factions, settings.factions);
-  const currentTypes = setupFilterForCurrentSide(types, settings.types);
-  const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes);
-  const currentPacks = setupFilterForCurrentSide(packs, settings.packs);
-  const currentPreferences = setupFilterForCurrentSide(preferencesOptions, settings.preferences);
+  const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
+  const currentTypes = setupFilterForCurrentSide(types, settings.types, settings.side);
+  const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes, settings.side);
+  const currentPacks = setupFilterForOfficial(packs, settings.packs, officialOnly);
+  const currentPreferences = setupFilter(preferencesOptions, settings.preferences);
 
   const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
     const appearsInCurrentOptions = (selection) =>
@@ -117,9 +128,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const resetAllFilters = () => {
     updateSettings(initSettings());
   };
-
-  const originalArt = settings.preferences.find((pref) => pref === 'original');
-  const officialOnly = settings.preferences.find((pref) => pref === 'official');
 
   return (
     <div className="App">

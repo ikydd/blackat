@@ -15,6 +15,11 @@ const removeUnusedPacks = ({ code }) => !unusedPacks.includes(code);
 
 const removeCyclesWithNoPacks = ({ items }) => items.length;
 
+const markCyclesAsOfficial = (cycle) => ({
+  ...cycle,
+  official: cycle.items.some(({ official }) => official)
+});
+
 const process = ({ data: packs }, { data: cycles }) => {
   const packsData = packs
     .filter(removeUnusedPacks)
@@ -27,7 +32,7 @@ const process = ({ data: packs }, { data: cycles }) => {
 
   const emptyCycles = cycles.map(({ name, code }) => ({ name, code, items: [] }));
 
-  return packsData.reduce(addPacksIntoCycles, emptyCycles).filter(removeCyclesWithNoPacks);
+  return packsData.reduce(addPacksIntoCycles, emptyCycles).filter(removeCyclesWithNoPacks).map(markCyclesAsOfficial);
 };
 
 module.exports = process;
