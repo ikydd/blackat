@@ -32,7 +32,10 @@ const process = ({ data: packs }, { data: cycles }) => {
 
   const emptyCycles = cycles.map(({ name, code }) => ({ name, code, items: [] }));
 
-  return packsData.reduce(addPacksIntoCycles, emptyCycles).filter(removeCyclesWithNoPacks).map(markCyclesAsOfficial);
+  return packsData
+    .reduce(addPacksIntoCycles, emptyCycles)
+    .filter(removeCyclesWithNoPacks)
+    .map(markCyclesAsOfficial);
 };
 
 module.exports = process;

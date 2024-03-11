@@ -1,597 +1,597 @@
 [
   {
-      "name": "Core Set",
-      "code": "core",
-      "items": [
-          {
-              "code": "core",
-              "name": "Core Set",
-              "cycle": "core",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Core Set",
+    "code": "core",
+    "items": [
+      {
+        "code": "core",
+        "name": "Core Set",
+        "cycle": "core",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Genesis",
-      "code": "genesis",
-      "items": [
-          {
-              "code": "wla",
-              "name": "What Lies Ahead",
-              "cycle": "genesis",
-              "official": true
-          },
-          {
-              "code": "ta",
-              "name": "Trace Amount",
-              "cycle": "genesis",
-              "official": true
-          },
-          {
-              "code": "ce",
-              "name": "Cyber Exodus",
-              "cycle": "genesis",
-              "official": true
-          },
-          {
-              "code": "asis",
-              "name": "A Study in Static",
-              "cycle": "genesis",
-              "official": true
-          },
-          {
-              "code": "hs",
-              "name": "Humanity's Shadow",
-              "cycle": "genesis",
-              "official": true
-          },
-          {
-              "code": "fp",
-              "name": "Future Proof",
-              "cycle": "genesis",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Genesis",
+    "code": "genesis",
+    "items": [
+      {
+        "code": "wla",
+        "name": "What Lies Ahead",
+        "cycle": "genesis",
+        "official": true
+      },
+      {
+        "code": "ta",
+        "name": "Trace Amount",
+        "cycle": "genesis",
+        "official": true
+      },
+      {
+        "code": "ce",
+        "name": "Cyber Exodus",
+        "cycle": "genesis",
+        "official": true
+      },
+      {
+        "code": "asis",
+        "name": "A Study in Static",
+        "cycle": "genesis",
+        "official": true
+      },
+      {
+        "code": "hs",
+        "name": "Humanity's Shadow",
+        "cycle": "genesis",
+        "official": true
+      },
+      {
+        "code": "fp",
+        "name": "Future Proof",
+        "cycle": "genesis",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Creation and Control",
-      "code": "creation-and-control",
-      "items": [
-          {
-              "code": "cac",
-              "name": "Creation and Control",
-              "cycle": "creation-and-control",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Creation and Control",
+    "code": "creation-and-control",
+    "items": [
+      {
+        "code": "cac",
+        "name": "Creation and Control",
+        "cycle": "creation-and-control",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Spin",
-      "code": "spin",
-      "items": [
-          {
-              "code": "om",
-              "name": "Opening Moves",
-              "cycle": "spin",
-              "official": true
-          },
-          {
-              "code": "st",
-              "name": "Second Thoughts",
-              "cycle": "spin",
-              "official": true
-          },
-          {
-              "code": "mt",
-              "name": "Mala Tempora",
-              "cycle": "spin",
-              "official": true
-          },
-          {
-              "code": "tc",
-              "name": "True Colors",
-              "cycle": "spin",
-              "official": true
-          },
-          {
-              "code": "dt",
-              "name": "Double Time",
-              "cycle": "spin",
-              "official": true
-          },
-          {
-              "code": "fal",
-              "name": "Fear and Loathing",
-              "cycle": "spin",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Spin",
+    "code": "spin",
+    "items": [
+      {
+        "code": "om",
+        "name": "Opening Moves",
+        "cycle": "spin",
+        "official": true
+      },
+      {
+        "code": "st",
+        "name": "Second Thoughts",
+        "cycle": "spin",
+        "official": true
+      },
+      {
+        "code": "mt",
+        "name": "Mala Tempora",
+        "cycle": "spin",
+        "official": true
+      },
+      {
+        "code": "tc",
+        "name": "True Colors",
+        "cycle": "spin",
+        "official": true
+      },
+      {
+        "code": "dt",
+        "name": "Double Time",
+        "cycle": "spin",
+        "official": true
+      },
+      {
+        "code": "fal",
+        "name": "Fear and Loathing",
+        "cycle": "spin",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Honor and Profit",
-      "code": "honor-and-profit",
-      "items": [
-          {
-              "code": "hap",
-              "name": "Honor and Profit",
-              "cycle": "honor-and-profit",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Honor and Profit",
+    "code": "honor-and-profit",
+    "items": [
+      {
+        "code": "hap",
+        "name": "Honor and Profit",
+        "cycle": "honor-and-profit",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Lunar",
-      "code": "lunar",
-      "items": [
-          {
-              "code": "up",
-              "name": "Upstalk",
-              "cycle": "lunar",
-              "official": true
-          },
-          {
-              "code": "tsb",
-              "name": "The Spaces Between",
-              "cycle": "lunar",
-              "official": true
-          },
-          {
-              "code": "fc",
-              "name": "First Contact",
-              "cycle": "lunar",
-              "official": true
-          },
-          {
-              "code": "uao",
-              "name": "Up and Over",
-              "cycle": "lunar",
-              "official": true
-          },
-          {
-              "code": "atr",
-              "name": "All That Remains",
-              "cycle": "lunar",
-              "official": true
-          },
-          {
-              "code": "ts",
-              "name": "The Source",
-              "cycle": "lunar",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Lunar",
+    "code": "lunar",
+    "items": [
+      {
+        "code": "up",
+        "name": "Upstalk",
+        "cycle": "lunar",
+        "official": true
+      },
+      {
+        "code": "tsb",
+        "name": "The Spaces Between",
+        "cycle": "lunar",
+        "official": true
+      },
+      {
+        "code": "fc",
+        "name": "First Contact",
+        "cycle": "lunar",
+        "official": true
+      },
+      {
+        "code": "uao",
+        "name": "Up and Over",
+        "cycle": "lunar",
+        "official": true
+      },
+      {
+        "code": "atr",
+        "name": "All That Remains",
+        "cycle": "lunar",
+        "official": true
+      },
+      {
+        "code": "ts",
+        "name": "The Source",
+        "cycle": "lunar",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Order and Chaos",
-      "code": "order-and-chaos",
-      "items": [
-          {
-              "code": "oac",
-              "name": "Order and Chaos",
-              "cycle": "order-and-chaos",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Order and Chaos",
+    "code": "order-and-chaos",
+    "items": [
+      {
+        "code": "oac",
+        "name": "Order and Chaos",
+        "cycle": "order-and-chaos",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "SanSan",
-      "code": "sansan",
-      "items": [
-          {
-              "code": "val",
-              "name": "The Valley",
-              "cycle": "sansan",
-              "official": true
-          },
-          {
-              "code": "bb",
-              "name": "Breaker Bay",
-              "cycle": "sansan",
-              "official": true
-          },
-          {
-              "code": "cc",
-              "name": "Chrome City",
-              "cycle": "sansan",
-              "official": true
-          },
-          {
-              "code": "uw",
-              "name": "The Underway",
-              "cycle": "sansan",
-              "official": true
-          },
-          {
-              "code": "oh",
-              "name": "Old Hollywood",
-              "cycle": "sansan",
-              "official": true
-          },
-          {
-              "code": "uot",
-              "name": "The Universe of Tomorrow",
-              "cycle": "sansan",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "SanSan",
+    "code": "sansan",
+    "items": [
+      {
+        "code": "val",
+        "name": "The Valley",
+        "cycle": "sansan",
+        "official": true
+      },
+      {
+        "code": "bb",
+        "name": "Breaker Bay",
+        "cycle": "sansan",
+        "official": true
+      },
+      {
+        "code": "cc",
+        "name": "Chrome City",
+        "cycle": "sansan",
+        "official": true
+      },
+      {
+        "code": "uw",
+        "name": "The Underway",
+        "cycle": "sansan",
+        "official": true
+      },
+      {
+        "code": "oh",
+        "name": "Old Hollywood",
+        "cycle": "sansan",
+        "official": true
+      },
+      {
+        "code": "uot",
+        "name": "The Universe of Tomorrow",
+        "cycle": "sansan",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Data and Destiny",
-      "code": "data-and-destiny",
-      "items": [
-          {
-              "code": "dad",
-              "name": "Data and Destiny",
-              "cycle": "data-and-destiny",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Data and Destiny",
+    "code": "data-and-destiny",
+    "items": [
+      {
+        "code": "dad",
+        "name": "Data and Destiny",
+        "cycle": "data-and-destiny",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Mumbad",
-      "code": "mumbad",
-      "items": [
-          {
-              "code": "kg",
-              "name": "Kala Ghoda",
-              "cycle": "mumbad",
-              "official": true
-          },
-          {
-              "code": "bf",
-              "name": "Business First",
-              "cycle": "mumbad",
-              "official": true
-          },
-          {
-              "code": "dag",
-              "name": "Democracy and Dogma",
-              "cycle": "mumbad",
-              "official": true
-          },
-          {
-              "code": "si",
-              "name": "Salsette Island",
-              "cycle": "mumbad",
-              "official": true
-          },
-          {
-              "code": "tlm",
-              "name": "The Liberated Mind",
-              "cycle": "mumbad",
-              "official": true
-          },
-          {
-              "code": "ftm",
-              "name": "Fear the Masses",
-              "cycle": "mumbad",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Mumbad",
+    "code": "mumbad",
+    "items": [
+      {
+        "code": "kg",
+        "name": "Kala Ghoda",
+        "cycle": "mumbad",
+        "official": true
+      },
+      {
+        "code": "bf",
+        "name": "Business First",
+        "cycle": "mumbad",
+        "official": true
+      },
+      {
+        "code": "dag",
+        "name": "Democracy and Dogma",
+        "cycle": "mumbad",
+        "official": true
+      },
+      {
+        "code": "si",
+        "name": "Salsette Island",
+        "cycle": "mumbad",
+        "official": true
+      },
+      {
+        "code": "tlm",
+        "name": "The Liberated Mind",
+        "cycle": "mumbad",
+        "official": true
+      },
+      {
+        "code": "ftm",
+        "name": "Fear the Masses",
+        "cycle": "mumbad",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Flashpoint",
-      "code": "flashpoint",
-      "items": [
-          {
-              "code": "23s",
-              "name": "23 Seconds",
-              "cycle": "flashpoint",
-              "official": true
-          },
-          {
-              "code": "bm",
-              "name": "Blood Money",
-              "cycle": "flashpoint",
-              "official": true
-          },
-          {
-              "code": "es",
-              "name": "Escalation",
-              "cycle": "flashpoint",
-              "official": true
-          },
-          {
-              "code": "in",
-              "name": "Intervention",
-              "cycle": "flashpoint",
-              "official": true
-          },
-          {
-              "code": "ml",
-              "name": "Martial Law",
-              "cycle": "flashpoint",
-              "official": true
-          },
-          {
-              "code": "qu",
-              "name": "Quorum",
-              "cycle": "flashpoint",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Flashpoint",
+    "code": "flashpoint",
+    "items": [
+      {
+        "code": "23s",
+        "name": "23 Seconds",
+        "cycle": "flashpoint",
+        "official": true
+      },
+      {
+        "code": "bm",
+        "name": "Blood Money",
+        "cycle": "flashpoint",
+        "official": true
+      },
+      {
+        "code": "es",
+        "name": "Escalation",
+        "cycle": "flashpoint",
+        "official": true
+      },
+      {
+        "code": "in",
+        "name": "Intervention",
+        "cycle": "flashpoint",
+        "official": true
+      },
+      {
+        "code": "ml",
+        "name": "Martial Law",
+        "cycle": "flashpoint",
+        "official": true
+      },
+      {
+        "code": "qu",
+        "name": "Quorum",
+        "cycle": "flashpoint",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Red Sand",
-      "code": "red-sand",
-      "items": [
-          {
-              "code": "dc",
-              "name": "Daedalus Complex",
-              "cycle": "red-sand",
-              "official": true
-          },
-          {
-              "code": "so",
-              "name": "Station One",
-              "cycle": "red-sand",
-              "official": true
-          },
-          {
-              "code": "eas",
-              "name": "Earth's Scion",
-              "cycle": "red-sand",
-              "official": true
-          },
-          {
-              "code": "baw",
-              "name": "Blood and Water",
-              "cycle": "red-sand",
-              "official": true
-          },
-          {
-              "code": "fm",
-              "name": "Free Mars",
-              "cycle": "red-sand",
-              "official": true
-          },
-          {
-              "code": "cd",
-              "name": "Crimson Dust",
-              "cycle": "red-sand",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Red Sand",
+    "code": "red-sand",
+    "items": [
+      {
+        "code": "dc",
+        "name": "Daedalus Complex",
+        "cycle": "red-sand",
+        "official": true
+      },
+      {
+        "code": "so",
+        "name": "Station One",
+        "cycle": "red-sand",
+        "official": true
+      },
+      {
+        "code": "eas",
+        "name": "Earth's Scion",
+        "cycle": "red-sand",
+        "official": true
+      },
+      {
+        "code": "baw",
+        "name": "Blood and Water",
+        "cycle": "red-sand",
+        "official": true
+      },
+      {
+        "code": "fm",
+        "name": "Free Mars",
+        "cycle": "red-sand",
+        "official": true
+      },
+      {
+        "code": "cd",
+        "name": "Crimson Dust",
+        "cycle": "red-sand",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Terminal Directive",
-      "code": "terminal-directive",
-      "items": [
-          {
-              "code": "td",
-              "name": "Terminal Directive Cards",
-              "cycle": "terminal-directive",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Terminal Directive",
+    "code": "terminal-directive",
+    "items": [
+      {
+        "code": "td",
+        "name": "Terminal Directive Cards",
+        "cycle": "terminal-directive",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Revised Core Set",
-      "code": "core2",
-      "items": [
-          {
-              "code": "core2",
-              "name": "Revised Core Set",
-              "cycle": "core2",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Revised Core Set",
+    "code": "core2",
+    "items": [
+      {
+        "code": "core2",
+        "name": "Revised Core Set",
+        "cycle": "core2",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Kitara",
-      "code": "kitara",
-      "items": [
-          {
-              "code": "ss",
-              "name": "Sovereign Sight",
-              "cycle": "kitara",
-              "official": true
-          },
-          {
-              "code": "dtwn",
-              "name": "Down the White Nile",
-              "cycle": "kitara",
-              "official": true
-          },
-          {
-              "code": "cotc",
-              "name": "Council of the Crest",
-              "cycle": "kitara",
-              "official": true
-          },
-          {
-              "code": "tdatd",
-              "name": "The Devil and the Dragon",
-              "cycle": "kitara",
-              "official": true
-          },
-          {
-              "code": "win",
-              "name": "Whispers in Nalubaale",
-              "cycle": "kitara",
-              "official": true
-          },
-          {
-              "code": "ka",
-              "name": "Kampala Ascendent",
-              "cycle": "kitara",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Kitara",
+    "code": "kitara",
+    "items": [
+      {
+        "code": "ss",
+        "name": "Sovereign Sight",
+        "cycle": "kitara",
+        "official": true
+      },
+      {
+        "code": "dtwn",
+        "name": "Down the White Nile",
+        "cycle": "kitara",
+        "official": true
+      },
+      {
+        "code": "cotc",
+        "name": "Council of the Crest",
+        "cycle": "kitara",
+        "official": true
+      },
+      {
+        "code": "tdatd",
+        "name": "The Devil and the Dragon",
+        "cycle": "kitara",
+        "official": true
+      },
+      {
+        "code": "win",
+        "name": "Whispers in Nalubaale",
+        "cycle": "kitara",
+        "official": true
+      },
+      {
+        "code": "ka",
+        "name": "Kampala Ascendent",
+        "cycle": "kitara",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Reign and Reverie",
-      "code": "reign-and-reverie",
-      "items": [
-          {
-              "code": "rar",
-              "name": "Reign and Reverie",
-              "cycle": "reign-and-reverie",
-              "official": true
-          }
-      ],
-      "official": true
+    "name": "Reign and Reverie",
+    "code": "reign-and-reverie",
+    "items": [
+      {
+        "code": "rar",
+        "name": "Reign and Reverie",
+        "cycle": "reign-and-reverie",
+        "official": true
+      }
+    ],
+    "official": true
   },
   {
-      "name": "Magnum Opus",
-      "code": "magnum-opus",
-      "items": [
-          {
-              "code": "mo",
-              "name": "Magnum Opus",
-              "cycle": "magnum-opus",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Magnum Opus",
+    "code": "magnum-opus",
+    "items": [
+      {
+        "code": "mo",
+        "name": "Magnum Opus",
+        "cycle": "magnum-opus",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "System Core 2019",
-      "code": "sc19",
-      "items": [
-          {
-              "code": "sc19",
-              "name": "System Core 2019",
-              "cycle": "sc19",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "System Core 2019",
+    "code": "sc19",
+    "items": [
+      {
+        "code": "sc19",
+        "name": "System Core 2019",
+        "cycle": "sc19",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "Ashes",
-      "code": "ashes",
-      "items": [
-          {
-              "code": "df",
-              "name": "Downfall",
-              "cycle": "ashes",
-              "official": false
-          },
-          {
-              "code": "ur",
-              "name": "Uprising",
-              "cycle": "ashes",
-              "official": false
-          },
-          {
-              "code": "urbp",
-              "name": "Uprising Booster Pack",
-              "cycle": "ashes",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Ashes",
+    "code": "ashes",
+    "items": [
+      {
+        "code": "df",
+        "name": "Downfall",
+        "cycle": "ashes",
+        "official": false
+      },
+      {
+        "code": "ur",
+        "name": "Uprising",
+        "cycle": "ashes",
+        "official": false
+      },
+      {
+        "code": "urbp",
+        "name": "Uprising Booster Pack",
+        "cycle": "ashes",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "Magnum Opus Reprint",
-      "code": "magnum-opus-reprint",
-      "items": [
-          {
-              "code": "mor",
-              "name": "Magnum Opus Reprint",
-              "cycle": "magnum-opus-reprint",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Magnum Opus Reprint",
+    "code": "magnum-opus-reprint",
+    "items": [
+      {
+        "code": "mor",
+        "name": "Magnum Opus Reprint",
+        "cycle": "magnum-opus-reprint",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "Salvaged Memories",
-      "code": "salvaged-memories",
-      "items": [
-          {
-              "code": "sm",
-              "name": "Salvaged Memories",
-              "cycle": "salvaged-memories",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Salvaged Memories",
+    "code": "salvaged-memories",
+    "items": [
+      {
+        "code": "sm",
+        "name": "Salvaged Memories",
+        "cycle": "salvaged-memories",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "System Gateway",
-      "code": "system-gateway",
-      "items": [
-          {
-              "code": "sg",
-              "name": "System Gateway",
-              "cycle": "system-gateway",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "System Gateway",
+    "code": "system-gateway",
+    "items": [
+      {
+        "code": "sg",
+        "name": "System Gateway",
+        "cycle": "system-gateway",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "System Update 2021",
-      "code": "system-update-2021",
-      "items": [
-          {
-              "code": "su21",
-              "name": "System Update 2021",
-              "cycle": "system-update-2021",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "System Update 2021",
+    "code": "system-update-2021",
+    "items": [
+      {
+        "code": "su21",
+        "name": "System Update 2021",
+        "cycle": "system-update-2021",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "Borealis",
-      "code": "borealis",
-      "items": [
-          {
-              "code": "msbp",
-              "name": "Midnight Sun Booster Pack",
-              "cycle": "borealis",
-              "official": false
-          },
-          {
-              "code": "ms",
-              "name": "Midnight Sun",
-              "cycle": "borealis",
-              "official": false
-          },
-          {
-              "code": "ph",
-              "name": "Parhelion",
-              "cycle": "borealis",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Borealis",
+    "code": "borealis",
+    "items": [
+      {
+        "code": "msbp",
+        "name": "Midnight Sun Booster Pack",
+        "cycle": "borealis",
+        "official": false
+      },
+      {
+        "code": "ms",
+        "name": "Midnight Sun",
+        "cycle": "borealis",
+        "official": false
+      },
+      {
+        "code": "ph",
+        "name": "Parhelion",
+        "cycle": "borealis",
+        "official": false
+      }
+    ],
+    "official": false
   },
   {
-      "name": "Liberation",
-      "code": "liberation",
-      "items": [
-          {
-              "code": "tai",
-              "name": "The Automata Initiative",
-              "cycle": "liberation",
-              "official": false
-          },
-          {
-              "code": "rwr",
-              "name": "Rebellion Without Rehearsal",
-              "cycle": "liberation",
-              "official": false
-          }
-      ],
-      "official": false
+    "name": "Liberation",
+    "code": "liberation",
+    "items": [
+      {
+        "code": "tai",
+        "name": "The Automata Initiative",
+        "cycle": "liberation",
+        "official": false
+      },
+      {
+        "code": "rwr",
+        "name": "Rebellion Without Rehearsal",
+        "cycle": "liberation",
+        "official": false
+      }
+    ],
+    "official": false
   }
 ]
