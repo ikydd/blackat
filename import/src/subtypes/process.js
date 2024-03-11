@@ -7,44 +7,37 @@ const sortByName = (a, b) => {
   return a.name > b.name ? 1 : -1;
 };
 
-const getSubtypeSide = ({ subtype, corp, runner }) => {
-  if (!runner.has(subtype)) {
-    return 'corp';
+const getSubtypeData = (data, subtype, side) => {
+  if (data && data.side === side) {
+    return data;
   }
-  return corp.has(subtype) ? null : 'runner';
+  if (data && data.side !== side) {
+    return {
+      ...data,
+      side: null
+    };
+  }
+  return {
+    side,
+    code: subtype,
+    name: subtype
+  };
 };
 
-const buildSubtypeObjects = ({ corp, runner }) =>
-  [...corp, ...runner].reduce((list, subtype) => {
-    const subtypeAlreadyExists = list.some((prevSubtype) => prevSubtype.code === subtype);
-    if (subtypeAlreadyExists) {
-      return list;
-    }
-    const subtypeData = {
-      side: getSubtypeSide({ subtype, corp, runner }),
-      code: subtype,
-      name: subtype
-    };
-    return [...list, subtypeData];
-  }, []);
-
-const addSubtypesToSides = (sets, { side, keywords }) => {
+const discoverSubtypes = (list, { side, keywords }) => {
   const subtypes = keywords.split(' - ');
   subtypes.forEach((subtype) => {
-    sets[side].add(subtype);
+    const subtypeData = getSubtypeData(list.get(subtype), subtype, side);
+    list.set(subtype, subtypeData);
   });
-  return sets;
+  return list;
 };
 
 const process = (cards) => {
   const cardsWithKeywords = cards.filter(hasKeywords);
-  const sets = {
-    runner: new Set(),
-    corp: new Set()
-  };
-  const { runner, corp } = cardsWithKeywords.reduce(addSubtypesToSides, sets);
+  const subtypes = cardsWithKeywords.reduce(discoverSubtypes, new Map());
 
-  return buildSubtypeObjects({ runner, corp }).sort(sortByName);
+  return [...subtypes.values()].sort(sortByName);
 };
 
 module.exports = process;
