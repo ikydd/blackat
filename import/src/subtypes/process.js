@@ -15,11 +15,18 @@ const getSubtypeSide = ({ subtype, corp, runner }) => {
 };
 
 const buildSubtypeObjects = ({ corp, runner }) =>
-  [...corp, ...runner].map((subtype) => ({
-    side: getSubtypeSide({ subtype, corp, runner }),
-    code: subtype,
-    name: subtype
-  }));
+  [...corp, ...runner].reduce((list, subtype) => {
+    const subtypeAlreadyExists = list.some((prevSubtype) => prevSubtype.code === subtype);
+    if (subtypeAlreadyExists) {
+      return list;
+    }
+    const subtypeData = {
+      side: getSubtypeSide({ subtype, corp, runner }),
+      code: subtype,
+      name: subtype
+    };
+    return [...list, subtypeData];
+  }, []);
 
 const addSubtypesToSides = (sets, { side, keywords }) => {
   const subtypes = keywords.split(' - ');

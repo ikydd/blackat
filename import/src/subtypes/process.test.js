@@ -33,4 +33,10 @@ describe('process factions', () => {
 
     expect(output[0].side).toBeNull();
   });
+
+  it('does not have duplicates for subtypes that appear on both sides', () => {
+    const output = process(mockDataDualSide);
+
+    expect(output).toHaveLength(2);
+  });
 });
