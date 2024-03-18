@@ -40,9 +40,12 @@ const setupFilterForCurrentSide = (options, filterSettings, currentSide) =>
     .filter(({ side }) => !side || side === currentSide)
     .map((option) => setOptionToMatchSettings(option, filterSettings));
 
-const setupFilterForOfficial = (options, filterSettings, officialOnly = false) =>
+const isOfficial = (card, official) => !official || card.official;
+const isNotRotated = (card, rotated) => !rotated || !card.rotated;
+
+const setupFilterForOfficial = (options, filterSettings, { official = false, rotated = false }) =>
   options
-    .filter(({ official }) => !officialOnly || official)
+    .filter((card) => isOfficial(card, official) && isNotRotated(card, rotated))
     .map((option) => setOptionToMatchSettings(option, filterSettings));
 
 const addOrRemoveSelections = (currentSettings, codes, selected) => {
@@ -98,12 +101,16 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   }, []);
 
   const originalArt = settings.preferences.find((pref) => pref === 'original');
-  const officialOnly = settings.preferences.find((pref) => pref === 'official');
+  const hideRotated = settings.preferences.some((pref) => pref === 'rotated');
+  const officialOnly = settings.preferences.some((pref) => pref === 'official');
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
   const currentTypes = setupFilterForCurrentSide(types, settings.types, settings.side);
   const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes, settings.side);
-  const currentPacks = setupFilterForOfficial(packs, settings.packs, officialOnly);
+  const currentPacks = setupFilterForOfficial(packs, settings.packs, {
+    official: officialOnly,
+    rotated: hideRotated
+  });
   const currentPreferences = setupFilter(preferencesOptions, settings.preferences);
 
   const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
@@ -212,6 +219,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         packs={settings.packs}
         art={originalArt}
         official={officialOnly}
+        rotated={hideRotated}
       />
     </div>
   );

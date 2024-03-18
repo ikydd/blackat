@@ -21,6 +21,10 @@ const hasRelevantProp = (card, prop) => card[prop] !== undefined;
 const confersAgendaPoints = (card) =>
   card.agenda !== undefined || !!(card.text && card.text.search(/as an agenda/) !== -1);
 
+const isMatchingOfficiality = (card, official) => !official || card.official;
+
+const isMatchingRotation = (card, rotated) => !rotated || !card.rotated;
+
 const isRelevantToSortMethod = (card, sort) => {
   switch (sort) {
     case 'illustrator':
@@ -35,8 +39,6 @@ const isRelevantToSortMethod = (card, sort) => {
   }
 };
 
-const isMatchingOfficiality = (card, official) => !official || card.official;
-
 const setCardVisibilityFromSettings = (
   card,
   {
@@ -48,7 +50,8 @@ const setCardVisibilityFromSettings = (
     types = [],
     subtypes = [],
     packs = [],
-    official = false
+    official = false,
+    rotated = false
   }
 ) => {
   const show =
@@ -60,6 +63,7 @@ const setCardVisibilityFromSettings = (
     hasMatchingType(card, types) &&
     isInMatchingPack(card, packs) &&
     isMatchingOfficiality(card, official) &&
+    isMatchingRotation(card, rotated) &&
     hasMatchingSubtypes(card, subtypes);
 
   return { ...card, show };

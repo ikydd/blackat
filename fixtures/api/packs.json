@@ -7,9 +7,11 @@
         "code": "core",
         "name": "Core Set",
         "cycle": "core",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -20,39 +22,46 @@
         "code": "wla",
         "name": "What Lies Ahead",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "ta",
         "name": "Trace Amount",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "ce",
         "name": "Cyber Exodus",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "asis",
         "name": "A Study in Static",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "hs",
         "name": "Humanity's Shadow",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "fp",
         "name": "Future Proof",
         "cycle": "genesis",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -63,9 +72,11 @@
         "code": "cac",
         "name": "Creation and Control",
         "cycle": "creation-and-control",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -76,39 +87,46 @@
         "code": "om",
         "name": "Opening Moves",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "st",
         "name": "Second Thoughts",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "mt",
         "name": "Mala Tempora",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "tc",
         "name": "True Colors",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "dt",
         "name": "Double Time",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "fal",
         "name": "Fear and Loathing",
         "cycle": "spin",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -119,9 +137,11 @@
         "code": "hap",
         "name": "Honor and Profit",
         "cycle": "honor-and-profit",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -132,39 +152,46 @@
         "code": "up",
         "name": "Upstalk",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "tsb",
         "name": "The Spaces Between",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "fc",
         "name": "First Contact",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "uao",
         "name": "Up and Over",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "atr",
         "name": "All That Remains",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "ts",
         "name": "The Source",
         "cycle": "lunar",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -175,9 +202,11 @@
         "code": "oac",
         "name": "Order and Chaos",
         "cycle": "order-and-chaos",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -188,39 +217,46 @@
         "code": "val",
         "name": "The Valley",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "bb",
         "name": "Breaker Bay",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "cc",
         "name": "Chrome City",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "uw",
         "name": "The Underway",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "oh",
         "name": "Old Hollywood",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "uot",
         "name": "The Universe of Tomorrow",
         "cycle": "sansan",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -231,9 +267,11 @@
         "code": "dad",
         "name": "Data and Destiny",
         "cycle": "data-and-destiny",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -244,39 +282,46 @@
         "code": "kg",
         "name": "Kala Ghoda",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "bf",
         "name": "Business First",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "dag",
         "name": "Democracy and Dogma",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "si",
         "name": "Salsette Island",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "tlm",
         "name": "The Liberated Mind",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "ftm",
         "name": "Fear the Masses",
         "cycle": "mumbad",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -287,39 +332,46 @@
         "code": "23s",
         "name": "23 Seconds",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "bm",
         "name": "Blood Money",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "es",
         "name": "Escalation",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "in",
         "name": "Intervention",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "ml",
         "name": "Martial Law",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       },
       {
         "code": "qu",
         "name": "Quorum",
         "cycle": "flashpoint",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -330,39 +382,46 @@
         "code": "dc",
         "name": "Daedalus Complex",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "so",
         "name": "Station One",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "eas",
         "name": "Earth's Scion",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "baw",
         "name": "Blood and Water",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "fm",
         "name": "Free Mars",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "cd",
         "name": "Crimson Dust",
         "cycle": "red-sand",
-        "official": true
+        "official": true,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": true
   },
   {
@@ -373,9 +432,11 @@
         "code": "td",
         "name": "Terminal Directive Cards",
         "cycle": "terminal-directive",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -386,9 +447,11 @@
         "code": "core2",
         "name": "Revised Core Set",
         "cycle": "core2",
-        "official": true
+        "official": true,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": true
   },
   {
@@ -399,39 +462,46 @@
         "code": "ss",
         "name": "Sovereign Sight",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "dtwn",
         "name": "Down the White Nile",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "cotc",
         "name": "Council of the Crest",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "tdatd",
         "name": "The Devil and the Dragon",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "win",
         "name": "Whispers in Nalubaale",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       },
       {
         "code": "ka",
         "name": "Kampala Ascendent",
         "cycle": "kitara",
-        "official": true
+        "official": true,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": true
   },
   {
@@ -442,9 +512,11 @@
         "code": "rar",
         "name": "Reign and Reverie",
         "cycle": "reign-and-reverie",
-        "official": true
+        "official": true,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": true
   },
   {
@@ -455,9 +527,11 @@
         "code": "mo",
         "name": "Magnum Opus",
         "cycle": "magnum-opus",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -468,9 +542,11 @@
         "code": "sc19",
         "name": "System Core 2019",
         "cycle": "sc19",
-        "official": false
+        "official": false,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": false
   },
   {
@@ -481,21 +557,25 @@
         "code": "df",
         "name": "Downfall",
         "cycle": "ashes",
-        "official": false
+        "official": false,
+        "rotated": false
       },
       {
         "code": "ur",
         "name": "Uprising",
         "cycle": "ashes",
-        "official": false
+        "official": false,
+        "rotated": false
       },
       {
         "code": "urbp",
         "name": "Uprising Booster Pack",
         "cycle": "ashes",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -506,9 +586,11 @@
         "code": "mor",
         "name": "Magnum Opus Reprint",
         "cycle": "magnum-opus-reprint",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -519,9 +601,11 @@
         "code": "sm",
         "name": "Salvaged Memories",
         "cycle": "salvaged-memories",
-        "official": false
+        "official": false,
+        "rotated": true
       }
     ],
+    "rotated": true,
     "official": false
   },
   {
@@ -532,9 +616,11 @@
         "code": "sg",
         "name": "System Gateway",
         "cycle": "system-gateway",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -545,9 +631,11 @@
         "code": "su21",
         "name": "System Update 2021",
         "cycle": "system-update-2021",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -558,21 +646,25 @@
         "code": "msbp",
         "name": "Midnight Sun Booster Pack",
         "cycle": "borealis",
-        "official": false
+        "official": false,
+        "rotated": false
       },
       {
         "code": "ms",
         "name": "Midnight Sun",
         "cycle": "borealis",
-        "official": false
+        "official": false,
+        "rotated": false
       },
       {
         "code": "ph",
         "name": "Parhelion",
         "cycle": "borealis",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   },
   {
@@ -583,15 +675,18 @@
         "code": "tai",
         "name": "The Automata Initiative",
         "cycle": "liberation",
-        "official": false
+        "official": false,
+        "rotated": false
       },
       {
         "code": "rwr",
         "name": "Rebellion Without Rehearsal",
         "cycle": "liberation",
-        "official": false
+        "official": false,
+        "rotated": false
       }
     ],
+    "rotated": false,
     "official": false
   }
 ]

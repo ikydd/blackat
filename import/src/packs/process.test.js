@@ -68,6 +68,17 @@ describe('process factions', () => {
     expect(systemCore.items[0].official).toBeFalsy();
   });
 
+  it('marks rotated packs and cycles', () => {
+    const output = process(mockPacks, mockCycles);
+    const core = output.find(({ code }) => code === 'core');
+    const systemCore = output.find(({ code }) => code === 'sc19');
+
+    expect(core.rotated).toBeTruthy();
+    expect(core.items[0].rotated).toBeTruthy();
+    expect(systemCore.rotated).toBeFalsy();
+    expect(systemCore.items[0].rotated).toBeFalsy();
+  });
+
   it('does not output draft packs', () => {
     const output = process(mockPacks, mockCycles);
     const cycle = output.find(({ code }) => code === 'draft');

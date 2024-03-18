@@ -9,6 +9,7 @@ const countSubroutines = (text) => {
 };
 
 const isOfficialCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).official;
+const isRotatedCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).rotated;
 
 const process = ({ imageUrlTemplate, data: cards }, cycles) => {
   const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);
@@ -50,7 +51,8 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => {
           advancement: advancement_cost,
           illustrator,
           subroutines: type_code === 'ice' ? countSubroutines(text) : undefined,
-          official: isOfficialCard(pack_code, includedPacks)
+          official: isOfficialCard(pack_code, includedPacks),
+          rotated: isRotatedCard(pack_code, includedPacks)
         };
       }
     );

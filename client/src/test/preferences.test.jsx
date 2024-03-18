@@ -27,7 +27,7 @@ describe('Preferences filters', () => {
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
-      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes).toHaveLength(3);
     });
   });
 
@@ -97,6 +97,38 @@ describe('Preferences filters', () => {
       const filtered = await within(filterBlock).findAllByRole('checkbox');
 
       expect(filtered).toHaveLength(64);
+    });
+  });
+  describe('Pack Legality', () => {
+    it('filters rotated cards correctly', async () => {
+      const mockData = loadFile('../../../fixtures/api/rotated.json');
+      api.setData('cards', mockData);
+      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('rotated');
+      const images = await findAllByRole('img');
+      await waitFor(() => {
+        expect(images).toHaveLength(2);
+      });
+
+      fireEvent.click(pref);
+      const filtered = await findAllByRole('img');
+      await waitFor(() => {
+        expect(filtered).toHaveLength(1);
+      });
+    });
+
+    it('filters options correctly', async () => {
+      const { getByText, getByTestId, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('rotated');
+      fireEvent.click(pref);
+
+      const filterBlock = getByTestId('packs-filters');
+      fireEvent.click(getByText('Packs'));
+      const filtered = await within(filterBlock).findAllByRole('checkbox');
+
+      expect(filtered).toHaveLength(30);
     });
   });
 });

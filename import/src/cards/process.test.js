@@ -178,4 +178,11 @@ describe('process cards', () => {
     expect(output[0].official).toBeTruthy();
     expect(output[1].official).toBeFalsy();
   });
+
+  it('outputs the rotatedness', () => {
+    const output = process(officialCardsData, mockPackData);
+
+    expect(output[0].rotated).toBeTruthy();
+    expect(output[1].rotated).toBeFalsy();
+  });
 });

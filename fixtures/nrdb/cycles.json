@@ -61,7 +61,7 @@
       "name": "System Core 2019",
       "position": 25,
       "size": 1,
-      "rotated": true
+      "rotated": false
     }
   ],
   "total": 22,

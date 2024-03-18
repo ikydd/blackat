@@ -1,0 +1,33 @@
+[
+  {
+    "code": "01043",
+    "title": "Gordian Blade",
+    "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
+    "imagesrc": "/img/cards/01043.png",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "program",
+    "pack": "core",
+    "keywords": "Icebreaker - Decoder",
+    "cost": 4,
+    "strength": 2,
+    "illustrator": "Mike Nesbitt",
+    "official": true,
+    "rotated": true
+  },
+  {
+    "code": "34030",
+    "title": "Bahia Bands",
+    "text": "Run any server. If successful, resolve 2 of the following in any order:<ul><li>Draw 2 cards.</li><li>Install 1 card from your grip, paying 1[credit] less.</li><li>Remove 1 tag.</li><li>Place 4[credit] on this event. You can spend hosted credits to pay trash costs for the remainder of this run.</li></ul>",
+    "imagesrc": "/img/cards/34030.png",
+    "side": "runner",
+    "faction": "neutral-runner",
+    "type": "event",
+    "pack": "tai",
+    "keywords": "Run",
+    "cost": 2,
+    "illustrator": "Anna Butova",
+    "official": false,
+    "rotated": false
+  }
+]

@@ -3,7 +3,10 @@ const doesPackBelongToCycle = ({ cycle }, { code }) => code === cycle;
 
 const addPacksIntoCycles = (cycles, pack) => {
   const matchingCycle = cycles.find((cycle) => doesPackBelongToCycle(pack, cycle));
-  matchingCycle.items.push(pack);
+  matchingCycle.items.push({
+    ...pack,
+    rotated: matchingCycle.rotated
+  });
   return cycles;
 };
 
@@ -30,7 +33,7 @@ const process = ({ data: packs }, { data: cycles }) => {
       official: isOfficalPack(date_release)
     }));
 
-  const emptyCycles = cycles.map(({ name, code }) => ({ name, code, items: [] }));
+  const emptyCycles = cycles.map(({ name, code, rotated }) => ({ name, code, items: [], rotated }));
 
   return packsData
     .reduce(addPacksIntoCycles, emptyCycles)
