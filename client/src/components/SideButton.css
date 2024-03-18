@@ -1,9 +1,11 @@
 .side-button {
   display: inline-block;
-  cursor: pointer;
   width: 35%;
-  margin: 1em 0;
+  margin: 1rem 0;
   color: #999;
+  background: none;
+  border: none;
+  font-size: 2rem;
 }
 .side-button.selected {
   color: #fff;

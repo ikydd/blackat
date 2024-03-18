@@ -9,7 +9,7 @@ h3,
 h4,
 h5,
 select,
-input {
+input, button {
   font-family: 'Rajdhani', sans-serif;
   font-weight: bold;
 }
