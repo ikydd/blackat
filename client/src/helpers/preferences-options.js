@@ -8,14 +8,12 @@ const preferences = [
     ]
   },
   {
-    name: 'Classic Retail Packs',
-    code: 'official',
-    items: [{ name: 'Classic Retail Packs', code: 'official' }]
-  },
-  {
-    name: 'Prefer Original Art',
-    code: 'original',
-    items: [{ name: 'Prefer Original Art', code: 'original' }]
+    name: 'Legacy',
+    code: 'legacy',
+    items: [
+      { name: 'Classic Retail Packs', code: 'official' },
+      { name: 'Prefer Original Art', code: 'original' }
+    ]
   }
 ];
 
