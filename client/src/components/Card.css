@@ -1,7 +1,3 @@
-.card-tile.show {
-  display: none;
-}
-
 .card-tile {
   float: left;
   margin: 6px;
