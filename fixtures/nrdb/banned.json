@@ -1,0 +1,45 @@
+{
+    "data": [
+        {
+            "id": 26,
+            "date_creation": "2023-09-22T13:33:17+00:00",
+            "date_update": "2023-09-22T13:37:09+00:00",
+            "code": "standard-ban-list-23-09",
+            "name": "Standard Ban List 23.09",
+            "active": true,
+            "date_start": "2023-09-22",
+            "cards": {
+                "01010": {
+                    "deck_limit": 0
+                },
+                "01043": {
+                    "deck_limit": 0
+                },
+                "01090": {
+                    "deck_limit": 0
+                }
+            }
+        },
+        {
+            "id": 27,
+            "date_creation": "2024-01-19T14:20:56+00:00",
+            "date_update": "2024-01-19T14:20:56+00:00",
+            "code": "startup-ban-list-24-01-for-classic-only",
+            "name": "Startup Ban List 24.01 (ignore active date)",
+            "active": false,
+            "date_start": "2023-09-21",
+            "cards": {
+                "06033": {
+                    "deck_limit": 0
+                },
+                "09045": {
+                    "deck_limit": 0
+                }
+            }
+        }
+    ],
+    "total": 26,
+    "success": true,
+    "version_number": "2.0",
+    "last_updated": "2024-03-18T10:16:35+00:00"
+}

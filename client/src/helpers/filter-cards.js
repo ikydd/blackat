@@ -25,6 +25,8 @@ const isMatchingOfficiality = (card, official) => !official || card.official;
 
 const isMatchingRotation = (card, rotated) => !rotated || !card.rotated;
 
+const isMatchingBanned = (card, banned) => !banned || !card.banned;
+
 const isRelevantToSortMethod = (card, sort) => {
   switch (sort) {
     case 'illustrator':
@@ -51,7 +53,8 @@ const setCardVisibilityFromSettings = (
     subtypes = [],
     packs = [],
     official = false,
-    rotated = false
+    rotated = false,
+    banned = false
   }
 ) => {
   const show =
@@ -64,6 +67,7 @@ const setCardVisibilityFromSettings = (
     isInMatchingPack(card, packs) &&
     isMatchingOfficiality(card, official) &&
     isMatchingRotation(card, rotated) &&
+    isMatchingBanned(card, banned) &&
     hasMatchingSubtypes(card, subtypes);
 
   return { ...card, show };

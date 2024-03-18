@@ -10,7 +10,8 @@
     "pack": "core",
     "keywords": "Code Gate",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": false
   },
   {
     "title": "Data Mine",
@@ -23,7 +24,8 @@
     "pack": "core",
     "keywords": "Trap - AP",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": true
   },
   {
     "title": "Neural Katana",
@@ -36,7 +38,8 @@
     "pack": "core",
     "keywords": "Sentry - AP",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": false
   },
   {
     "code": "25050",
@@ -47,7 +50,8 @@
     "title": "R&D Interface",
     "type": "hardware",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": true
   },
   {
     "title": "Gordian Blade",
@@ -60,7 +64,8 @@
     "pack": "core",
     "keywords": "Icebreaker - Decoder",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": false
   },
   {
     "code": "02011",
@@ -72,7 +77,8 @@
     "type": "agenda",
     "keywords": "Initiative",
     "official": true,
-    "rotated": true
+    "rotated": true,
+    "banned": true
   },
   {
     "title": "D4v1d",
@@ -84,7 +90,8 @@
     "type": "program",
     "pack": "wla",
     "official": true,
-    "rotated": false
+    "rotated": false,
+    "banned": false
   },
   {
     "title": "Bahia Bands",
@@ -96,6 +103,7 @@
     "type": "event",
     "pack": "tai",
     "official": false,
-    "rotated": false
+    "rotated": false,
+    "banned": true
   }
 ]

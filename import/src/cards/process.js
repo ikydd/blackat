@@ -10,11 +10,18 @@ const countSubroutines = (text) => {
 
 const isOfficialCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).official;
 const isRotatedCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).rotated;
+const isBannedCard = (code, bannedCards) =>  bannedCards.some((id) => code === id);
 
-const process = ({ imageUrlTemplate, data: cards }, cycles) => {
+const getBannedCards = (mwl) => {
+  const active = mwl.find((banList) => banList.active);
+  return Object.keys(active.cards);
+}
+
+const process = ({ imageUrlTemplate, data: cards }, cycles, { data: mwl }) => {
   const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);
   const keepCardsFromIncludedPacks = ({ pack_code }) =>
     includedPacks.some(({ code }) => code === pack_code);
+  const bannedCards = getBannedCards(mwl);
 
   return cards
     .filter(keepCardsFromIncludedPacks)
@@ -52,7 +59,8 @@ const process = ({ imageUrlTemplate, data: cards }, cycles) => {
           illustrator,
           subroutines: type_code === 'ice' ? countSubroutines(text) : undefined,
           official: isOfficialCard(pack_code, includedPacks),
-          rotated: isRotatedCard(pack_code, includedPacks)
+          rotated: isRotatedCard(pack_code, includedPacks),
+          banned: isBannedCard(code, bannedCards)
         };
       }
     );

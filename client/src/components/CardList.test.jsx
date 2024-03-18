@@ -87,6 +87,13 @@ describe('CardList', () => {
 
       expect(cards).toHaveLength(2);
     });
+
+    it('only shows un-banned cards', async () => {
+      const { findAllByRole } = render(<CardList banned={true} />);
+      const cards = await findAllByRole('img');
+
+      expect(cards).toHaveLength(4);
+    });
   });
 
   describe('Title Search', () => {

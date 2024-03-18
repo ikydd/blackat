@@ -39,7 +39,7 @@ describe('main', () => {
     localPath.mockClear();
     download.mockClear();
 
-    apiUrl.mockImplementation(() => mockUrl);
+    apiUrl.mockImplementation((suffix) => `${mockUrl}${suffix}`);
     request.mockImplementation(() => Promise.resolve(mockData));
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
@@ -50,19 +50,19 @@ describe('main', () => {
   it('gets NRDB cards endpoint', async () => {
     await cards(mockPackData);
 
-    expect(apiUrl).toHaveBeenCalledWith('/cards');
+    expect(request).toHaveBeenCalledWith(`${mockUrl}/cards`);
   });
 
-  it('calls the NRDB endpoint', async () => {
+  it('gets NRDB MWL endpoint', async () => {
     await cards(mockPackData);
 
-    expect(request).toHaveBeenCalledWith(mockUrl);
+    expect(request).toHaveBeenCalledWith(`${mockUrl}/mwl`);
   });
 
   it('applies the processor', async () => {
     await cards(mockPackData);
 
-    expect(process).toHaveBeenCalledWith(mockData, mockPackData);
+    expect(process).toHaveBeenCalledWith(mockData, mockPackData, mockData);
   });
 
   it('downloads the images', async () => {

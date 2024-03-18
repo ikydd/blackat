@@ -102,6 +102,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
   const originalArt = settings.preferences.find((pref) => pref === 'original');
   const hideRotated = settings.preferences.some((pref) => pref === 'rotated');
+  const hideBanned = settings.preferences.some((pref) => pref === 'banned');
   const officialOnly = settings.preferences.some((pref) => pref === 'official');
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
@@ -220,6 +221,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         art={originalArt}
         official={officialOnly}
         rotated={hideRotated}
+        banned={hideBanned}
       />
     </div>
   );

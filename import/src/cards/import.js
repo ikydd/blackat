@@ -10,7 +10,8 @@ const imgFolder = path.join(__dirname, '..', '..', '..', 'client', 'public', 'im
 
 const importCards = async (packs) => {
   const cardApiData = await request(getApiUrl('/cards'));
-  const processedCardData = processCards(cardApiData, packs);
+  const mwlApiData = await request(getApiUrl('/mwl'));
+  const processedCardData = processCards(cardApiData, packs, mwlApiData);
   const cardsWithImages = await downloadImages(imgFolder, processedCardData);
   await saveData(cardsWithImages, getLocalSavePath('cards.json'));
   return cardsWithImages;

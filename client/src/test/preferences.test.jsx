@@ -27,7 +27,7 @@ describe('Preferences filters', () => {
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
-      expect(checkboxes).toHaveLength(3);
+      expect(checkboxes).toHaveLength(4);
     });
   });
 
@@ -129,6 +129,24 @@ describe('Preferences filters', () => {
       const filtered = await within(filterBlock).findAllByRole('checkbox');
 
       expect(filtered).toHaveLength(30);
+    });
+
+    it('filters banned cards correctly', async () => {
+      const mockData = loadFile('../../../fixtures/api/banned.json');
+      api.setData('cards', mockData);
+      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
+      fireEvent.click(getByText('Preferences'));
+      const pref = getByDisplayValue('banned');
+      const images = await findAllByRole('img');
+      await waitFor(() => {
+        expect(images).toHaveLength(2);
+      });
+
+      fireEvent.click(pref);
+      const filtered = await findAllByRole('img');
+      await waitFor(() => {
+        expect(filtered).toHaveLength(1);
+      });
     });
   });
 });
