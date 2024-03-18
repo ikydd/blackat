@@ -7,8 +7,9 @@ const SmallPrint = () => (
     <p>Version {meta.version}</p>
     <p>
       Images &amp; universe are intellectual property of{' '}
-      <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a> and/or{' '}
-      <a href="http://company.wizards.com/">Wizards of the Coast</a>
+      <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a>,{' '}
+      <a href="https://company.wizards.com/">Wizards of the Coast</a> and/or{' '}
+      <a href="https://nullsignal.games/">Null Signal Games</a>
     </p>
     <p>
       BlacKat image by <a href="http://seageart.com/">Seage</a> who can be found on{' '}
