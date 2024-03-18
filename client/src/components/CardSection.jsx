@@ -27,12 +27,15 @@ const CardSection = ({ section: { info, cards, show }, art }) => {
     <div
       id={info ? `${info.code}-section` : 'default-section'}
       hidden={show === false ? 'hidden' : false}
+      className="card-section"
     >
       {info ? <Divider name={info.name} code={info.icon || info.code}></Divider> : ''}
-      {cards.map((card, index) => {
-        lastCard = versionControl(lastCard, card, art);
-        return <Card key={index} data={card} />;
-      })}
+      <div className="card-section-container">
+        {cards.map((card, index) => {
+          lastCard = versionControl(lastCard, card, art);
+          return <Card key={index} data={card} />;
+        })}
+      </div>
     </div>
   );
 };

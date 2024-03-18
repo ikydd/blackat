@@ -1,6 +1,5 @@
 .card-tile {
-  float: left;
-  margin: 6px;
+  margin: 0.6rem;
   overflow: visible;
   height: 279.3px;
   width: 200px;
