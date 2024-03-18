@@ -82,14 +82,14 @@ describe('CardList', () => {
     });
 
     it('only shows un-rotated cards', async () => {
-      const { findAllByRole } = render(<CardList rotated={true} />);
+      const { findAllByRole } = render(<CardList rotation={true} />);
       const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(2);
     });
 
     it('only shows un-banned cards', async () => {
-      const { findAllByRole } = render(<CardList banned={true} />);
+      const { findAllByRole } = render(<CardList legal={true} />);
       const cards = await findAllByRole('img');
 
       expect(cards).toHaveLength(4);

@@ -12,7 +12,7 @@ import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
-import './App.css';
+import './App.css'; // sdf
 
 const setOptionToMatchSettings = (option, settings) => {
   const isGroup = option.items;
@@ -43,9 +43,9 @@ const setupFilterForCurrentSide = (options, filterSettings, currentSide) =>
 const isOfficial = (card, official) => !official || card.official;
 const isNotRotated = (card, rotated) => !rotated || !card.rotated;
 
-const setupFilterForOfficial = (options, filterSettings, { official = false, rotated = false }) =>
+const setupFilterForOfficial = (options, filterSettings, { official = false, rotation = false }) =>
   options
-    .filter((card) => isOfficial(card, official) && isNotRotated(card, rotated))
+    .filter((card) => isOfficial(card, official) && isNotRotated(card, rotation))
     .map((option) => setOptionToMatchSettings(option, filterSettings));
 
 const addOrRemoveSelections = (currentSettings, codes, selected) => {
@@ -101,16 +101,16 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   }, []);
 
   const originalArt = settings.preferences.find((pref) => pref === 'original');
-  const hideRotated = settings.preferences.some((pref) => pref === 'rotated');
-  const hideBanned = settings.preferences.some((pref) => pref === 'banned');
-  const officialOnly = settings.preferences.some((pref) => pref === 'official');
+  const rotation = settings.preferences.some((pref) => pref === 'rotated');
+  const legal = settings.preferences.some((pref) => pref === 'banned');
+  const official = settings.preferences.some((pref) => pref === 'official');
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
   const currentTypes = setupFilterForCurrentSide(types, settings.types, settings.side);
   const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes, settings.side);
   const currentPacks = setupFilterForOfficial(packs, settings.packs, {
-    official: officialOnly,
-    rotated: hideRotated
+    official,
+    rotation
   });
   const currentPreferences = setupFilter(preferencesOptions, settings.preferences);
 
@@ -198,7 +198,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           clearAll={clearListFilter('packs')}
           onChange={onSelectionHandler('packs')}
         />
-        <FilterList
+        <NestedFilterList
           title="Preferences"
           closed={true}
           options={currentPreferences}
@@ -219,9 +219,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
         packs={settings.packs}
         art={originalArt}
-        official={officialOnly}
-        rotated={hideRotated}
-        banned={hideBanned}
+        official={official}
+        rotation={rotation}
+        legal={legal}
       />
     </div>
   );

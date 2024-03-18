@@ -10,12 +10,12 @@ const countSubroutines = (text) => {
 
 const isOfficialCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).official;
 const isRotatedCard = (pack_code, packs) => packs.find(({ code }) => code === pack_code).rotated;
-const isBannedCard = (code, bannedCards) =>  bannedCards.some((id) => code === id);
+const isBannedCard = (code, bannedCards) => bannedCards.some((id) => code === id);
 
 const getBannedCards = (mwl) => {
   const active = mwl.find((banList) => banList.active);
   return Object.keys(active.cards);
-}
+};
 
 const process = ({ imageUrlTemplate, data: cards }, cycles, { data: mwl }) => {
   const includedPacks = cycles.reduce((list, { items }) => list.concat(items), []);

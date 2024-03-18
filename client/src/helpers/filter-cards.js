@@ -23,9 +23,9 @@ const confersAgendaPoints = (card) =>
 
 const isMatchingOfficiality = (card, official) => !official || card.official;
 
-const isMatchingRotation = (card, rotated) => !rotated || !card.rotated;
+const isMatchingRotation = (card, rotation) => !rotation || !card.rotated;
 
-const isMatchingBanned = (card, banned) => !banned || !card.banned;
+const isMatchingLegality = (card, legal) => !legal || !card.banned;
 
 const isRelevantToSortMethod = (card, sort) => {
   switch (sort) {
@@ -53,8 +53,8 @@ const setCardVisibilityFromSettings = (
     subtypes = [],
     packs = [],
     official = false,
-    rotated = false,
-    banned = false
+    rotation = false,
+    legal = false
   }
 ) => {
   const show =
@@ -66,8 +66,8 @@ const setCardVisibilityFromSettings = (
     hasMatchingType(card, types) &&
     isInMatchingPack(card, packs) &&
     isMatchingOfficiality(card, official) &&
-    isMatchingRotation(card, rotated) &&
-    isMatchingBanned(card, banned) &&
+    isMatchingRotation(card, rotation) &&
+    isMatchingLegality(card, legal) &&
     hasMatchingSubtypes(card, subtypes);
 
   return { ...card, show };

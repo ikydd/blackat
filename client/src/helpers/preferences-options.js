@@ -1,8 +1,22 @@
 const preferences = [
-  { name: 'FFG Retail Packs Only', code: 'official' },
-  { name: 'Hide Rotated Cards', code: 'rotated' },
-  { name: 'Hide Banned Cards', code: 'banned' },
-  { name: 'Prefer Original Art', code: 'original' }
+  {
+    name: 'Legality',
+    code: 'legal',
+    items: [
+      { name: 'Latest Rotation', code: 'rotated' },
+      { name: 'Legal Cards', code: 'banned' }
+    ]
+  },
+  {
+    name: 'FFG Retail Packs Only',
+    code: 'official',
+    items: [{ name: 'FFG Retail Packs Only', code: 'official' }]
+  },
+  {
+    name: 'Prefer Original Art',
+    code: 'original',
+    items: [{ name: 'Prefer Original Art', code: 'original' }]
+  }
 ];
 
 export default preferences;
