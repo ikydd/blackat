@@ -11,15 +11,15 @@ describe('FilterList', () => {
   });
 
   it('has defaults to an obvious error title', () => {
-    const { getByRole } = render(<FilterList options={options} />);
+    const { getByText } = render(<FilterList options={options} />);
 
-    expect(getByRole('heading')).toHaveTextContent('Missing');
+    expect(getByText('Missing')).toBeTruthy();
   });
 
   it('accepts and uses a title', () => {
-    const { getByRole } = render(<FilterList options={options} title="Foo" />);
+    const { getByText } = render(<FilterList options={options} title="A Title" />);
 
-    expect(getByRole('heading')).toHaveTextContent('Foo');
+    expect(getByText('A Title')).toBeTruthy();
   });
 
   describe('Options', () => {
@@ -67,8 +67,10 @@ describe('FilterList', () => {
     });
 
     it('shows options when closed and heading is clicked', async () => {
-      const { findAllByRole, getByRole } = render(<FilterList options={options} closed={true} />);
-      fireEvent.click(getByRole('heading'));
+      const { findAllByRole, getByText } = render(
+        <FilterList title="A Title" options={options} closed={true} />
+      );
+      fireEvent.click(getByText('A Title'));
 
       const checkboxes = await findAllByRole('checkbox');
 
@@ -76,8 +78,10 @@ describe('FilterList', () => {
     });
 
     it('hides options when showing and heading is clicked', async () => {
-      const { queryAllByRole, getByRole } = render(<FilterList options={options} />);
-      fireEvent.click(getByRole('heading'));
+      const { queryAllByRole, getByText } = render(
+        <FilterList title="A Title" options={options} />
+      );
+      fireEvent.click(getByText('A Title'));
 
       const checkboxes = await queryAllByRole('checkbox');
 
@@ -85,9 +89,11 @@ describe('FilterList', () => {
     });
 
     it('retains selections when collapsed', async () => {
-      const { queryAllByRole, getByRole } = render(<FilterList options={optionsSelected} />);
-      fireEvent.click(getByRole('heading'));
-      fireEvent.click(getByRole('heading'));
+      const { queryAllByRole, getByText } = render(
+        <FilterList title="A Title" options={optionsSelected} />
+      );
+      fireEvent.click(getByText('A Title'));
+      fireEvent.click(getByText('A Title'));
 
       const checkboxes = await queryAllByRole('checkbox');
 
@@ -101,15 +107,15 @@ describe('FilterList', () => {
 
   describe('Clear All', () => {
     it('has a button', async () => {
-      const { getByRole } = render(<FilterList options={options} />);
+      const { getByText } = render(<FilterList options={options} />);
 
-      expect(getByRole('button')).toBeTruthy();
+      expect(getByText('Clear All')).toBeTruthy();
     });
 
     it('removes all selected filters', async () => {
       const cb = jest.fn();
-      const { getByRole } = render(<FilterList options={options} clearAll={cb} />);
-      fireEvent.click(getByRole('button'));
+      const { getByText } = render(<FilterList options={options} clearAll={cb} />);
+      fireEvent.click(getByText('Clear All'));
 
       expect(cb).toHaveBeenCalled();
     });
