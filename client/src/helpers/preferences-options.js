@@ -1,16 +1,16 @@
 const preferences = [
   {
     name: 'Legality',
-    code: 'legal',
+    code: 'legality',
     items: [
-      { name: 'Latest Rotation', code: 'rotated' },
-      { name: 'Legal Cards', code: 'banned' }
+      { name: 'Current Rotation', code: 'rotation' },
+      { name: 'Latest Ban List', code: 'legal' }
     ]
   },
   {
-    name: 'FFG Retail Packs Only',
+    name: 'Classic Retail Packs',
     code: 'official',
-    items: [{ name: 'FFG Retail Packs Only', code: 'official' }]
+    items: [{ name: 'Classic Retail Packs', code: 'official' }]
   },
   {
     name: 'Prefer Original Art',

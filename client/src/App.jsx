@@ -101,8 +101,8 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   }, []);
 
   const originalArt = settings.preferences.find((pref) => pref === 'original');
-  const rotation = settings.preferences.some((pref) => pref === 'rotated');
-  const legal = settings.preferences.some((pref) => pref === 'banned');
+  const rotation = settings.preferences.some((pref) => pref === 'rotation');
+  const legal = settings.preferences.some((pref) => pref === 'legal');
   const official = settings.preferences.some((pref) => pref === 'official');
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);

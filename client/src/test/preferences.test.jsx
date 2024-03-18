@@ -105,7 +105,7 @@ describe('Preferences filters', () => {
       api.setData('cards', mockData);
       const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
       fireEvent.click(getByText('Preferences'));
-      const pref = getByDisplayValue('rotated');
+      const pref = getByDisplayValue('rotation');
       const images = await findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
@@ -121,7 +121,7 @@ describe('Preferences filters', () => {
     it('filters options correctly', async () => {
       const { getByText, getByTestId, getByDisplayValue } = render(<App />);
       fireEvent.click(getByText('Preferences'));
-      const pref = getByDisplayValue('rotated');
+      const pref = getByDisplayValue('rotation');
       fireEvent.click(pref);
 
       const filterBlock = getByTestId('packs-filters');
@@ -136,7 +136,7 @@ describe('Preferences filters', () => {
       api.setData('cards', mockData);
       const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
       fireEvent.click(getByText('Preferences'));
-      const pref = getByDisplayValue('banned');
+      const pref = getByDisplayValue('legal');
       const images = await findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
