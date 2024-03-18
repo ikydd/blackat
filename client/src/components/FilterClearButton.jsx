@@ -1,9 +1,10 @@
 import React from 'react';
+import './FilterClearButton.css';
 
 const FilterClearButton = ({ onClick }) => (
-  <h5 role="button" onClick={onClick}>
+  <button className="filter-clear-button" onClick={onClick}>
     Clear All
-  </h5>
+  </button>
 );
 
 export default FilterClearButton;
