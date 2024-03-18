@@ -3,7 +3,7 @@ import './FilterClearButton.css';
 
 const FilterClearButton = ({ onClick }) => (
   <button className="filter-clear-button" onClick={onClick}>
-    Clear All
+    Clear Filters
   </button>
 );
 

@@ -15,9 +15,11 @@ describe('Preferences filters', () => {
   it('has the correct title', async () => {
     const { getByTestId } = render(<App />);
     const filterBlock = getByTestId('preferences-filters');
-    const heading = await within(filterBlock).findByRole('heading');
+    const heading = within(filterBlock).getByText('Preferences');
 
-    expect(heading).toHaveTextContent('Preferences');
+    await waitFor(() => {
+      expect(heading).toBeTruthy();
+    });
   });
 
   it('starts with some checkboxes', async () => {

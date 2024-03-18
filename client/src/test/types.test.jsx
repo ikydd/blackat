@@ -9,9 +9,11 @@ describe('Types filters', () => {
   it('has the correct title', async () => {
     const { getByTestId } = render(<App />);
     const filterBlock = getByTestId('types-filters');
-    const heading = await within(filterBlock).findByRole('heading');
+    const heading = within(filterBlock).getByText(/^Types/i);
 
-    expect(heading).toHaveTextContent(/Types/);
+    await waitFor(() => {
+      expect(heading).toBeTruthy();
+    });
   });
 
   it('starts with no checkboxes', async () => {

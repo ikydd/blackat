@@ -17,7 +17,7 @@ describe('FilterList', () => {
   });
 
   it('accepts and uses a title', () => {
-    const { getByText } = render(<FilterList options={options} title="A Title" />);
+    const { getByText } = render(<FilterList title="A Title" options={options} />);
 
     expect(getByText('A Title')).toBeTruthy();
   });
@@ -92,8 +92,9 @@ describe('FilterList', () => {
       const { queryAllByRole, getByText } = render(
         <FilterList title="A Title" options={optionsSelected} />
       );
-      fireEvent.click(getByText('A Title'));
-      fireEvent.click(getByText('A Title'));
+      const heading = getByText('A Title');
+      fireEvent.click(heading);
+      fireEvent.click(heading);
 
       const checkboxes = await queryAllByRole('checkbox');
 
@@ -105,17 +106,17 @@ describe('FilterList', () => {
     });
   });
 
-  describe('Clear All', () => {
+  describe('Clear Filters', () => {
     it('has a button', async () => {
       const { getByText } = render(<FilterList options={options} />);
 
-      expect(getByText('Clear All')).toBeTruthy();
+      expect(getByText('Clear Filters')).toBeTruthy();
     });
 
     it('removes all selected filters', async () => {
       const cb = jest.fn();
       const { getByText } = render(<FilterList options={options} clearAll={cb} />);
-      fireEvent.click(getByText('Clear All'));
+      fireEvent.click(getByText('Clear Filters'));
 
       expect(cb).toHaveBeenCalled();
     });

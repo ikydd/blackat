@@ -19,15 +19,15 @@ describe('NestedFilterList', () => {
   });
 
   it('has defaults to an obvious error title', () => {
-    const { getByRole } = render(<NestedFilterList options={options} />);
+    const { getByText } = render(<NestedFilterList options={options} />);
 
-    expect(getByRole('heading')).toHaveTextContent('Missing');
+    expect(getByText('Missing')).toBeTruthy();
   });
 
   it('accepts and uses a title', () => {
-    const { getByRole } = render(<NestedFilterList options={options} title="Foo" />);
+    const { getByText } = render(<NestedFilterList title="A Title" options={options} />);
 
-    expect(getByRole('heading')).toHaveTextContent('Foo');
+    expect(getByText('A Title')).toBeTruthy();
   });
 
   describe('Options', () => {
@@ -108,10 +108,10 @@ describe('NestedFilterList', () => {
     });
 
     it('shows options when closed and heading is clicked', async () => {
-      const { findAllByRole, getByRole } = render(
-        <NestedFilterList options={options} closed={true} />
+      const { findAllByRole, getByText } = render(
+        <NestedFilterList title="A Title" options={options} closed={true} />
       );
-      fireEvent.click(getByRole('heading'));
+      fireEvent.click(getByText('A Title'));
       const checkboxes = await findAllByRole('checkbox');
 
       const expectedLength = countCheckboxes(options);
@@ -120,17 +120,22 @@ describe('NestedFilterList', () => {
     });
 
     it('hides options when showing and heading is clicked', async () => {
-      const { queryAllByRole, getByRole } = render(<NestedFilterList options={options} />);
-      fireEvent.click(getByRole('heading'));
+      const { queryAllByRole, getByText } = render(
+        <NestedFilterList title="A Title" options={options} />
+      );
+      fireEvent.click(getByText('A Title'));
       const checkboxes = await queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
     it('retains selections when collapsed', async () => {
-      const { queryAllByRole, getByRole } = render(<NestedFilterList options={optionsSelected} />);
-      fireEvent.click(getByRole('heading'));
-      fireEvent.click(getByRole('heading'));
+      const { queryAllByRole, getByText } = render(
+        <NestedFilterList title="A Title" options={optionsSelected} />
+      );
+      const heading = getByText('A Title');
+      fireEvent.click(heading);
+      fireEvent.click(heading);
 
       const checkboxes = await queryAllByRole('checkbox');
 
@@ -142,17 +147,17 @@ describe('NestedFilterList', () => {
     });
   });
 
-  describe('Clear All', () => {
+  describe('Clear Filters', () => {
     it('has a button', async () => {
-      const { getByRole } = render(<NestedFilterList options={options} />);
+      const { getByText } = render(<NestedFilterList options={options} />);
 
-      expect(getByRole('button')).toBeTruthy();
+      expect(getByText('Clear Filters')).toBeTruthy();
     });
 
     it('removes all selected filters', async () => {
       const cb = jest.fn();
-      const { getByRole } = render(<NestedFilterList options={options} clearAll={cb} />);
-      fireEvent.click(getByRole('button'));
+      const { getByText } = render(<NestedFilterList options={options} clearAll={cb} />);
+      fireEvent.click(getByText('Clear Filters'));
 
       expect(cb).toHaveBeenCalled();
     });

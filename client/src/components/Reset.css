@@ -1,4 +1,9 @@
-#reset h5 {
-  cursor: pointer;
-  display: block;
+#reset {
+  margin-bottom: 0.4rem;
+}
+
+#reset button {
+  background: none;
+  border: none;
+  padding: 0;
 }
