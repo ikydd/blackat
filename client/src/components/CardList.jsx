@@ -34,11 +34,11 @@ const CardList = ({ art, ...props }) => {
 
   return (
     <div id="cards">
-      {loaded ? '' : <Loader />}
+      {loaded || <Loader />}
       {sections.map((section, index) => (
         <CardSection key={index} section={section} art={art}></CardSection>
       ))}
-      {loaded && empty ? <Empty /> : ''}
+      {loaded && empty && <Empty />}
     </div>
   );
 };
