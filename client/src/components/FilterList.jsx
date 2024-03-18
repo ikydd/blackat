@@ -15,12 +15,19 @@ const FilterList = ({ closed = false, title = 'Missing', onChange, options = [],
 
   const inUse = options.some(({ selected }) => selected);
   const keyword = title.toLowerCase();
+  const id = `filter-list-${keyword}`;
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
-      <FilterHeading title={title} inUse={inUse} onClick={toggleClosed} />
+      <FilterHeading
+        title={title}
+        inUse={inUse}
+        onClick={toggleClosed}
+        controls={id}
+        expanded={!isClosed}
+      />
       {isClosed !== true && (
-        <div className="filter-list-items">
+        <div id={id} className="filter-list-items">
           <FilterClearButton onClick={clearAll} />
           {options.map((item) => (
             <FilterItem key={item.code} item={item} keyword={keyword} onChange={handleSelection} />

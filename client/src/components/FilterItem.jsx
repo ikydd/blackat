@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from './Icon';
+import './FilterItem.css';
 
 const FilterItem = ({ item, keyword, onChange }) => (
-  <div className="checkbox">
+  <div className="checkbox filter-item">
     <label htmlFor={`${keyword}-filter-${item.code}`}>
       <input
         type="checkbox"
