@@ -34,6 +34,7 @@ const CardList = ({ art, ...props }) => {
 
   return (
     <div id="cards">
+      <h2 className="sr-only">Card Gallery</h2>
       {loaded || <Loader />}
       {sections.map((section, index) => (
         <CardSection key={index} section={section} art={art}></CardSection>

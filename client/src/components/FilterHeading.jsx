@@ -10,7 +10,9 @@ const FilterHeading = ({ title, inUse, onClick, controls, expanded = false }) =>
     aria-controls={controls}
     aria-label={`Filter by ${title}${inUse ? ' (some controls selected)' : ''}`}
   >
-    {title} {<FilterNotification on={inUse} />}
+    <h3>
+      {title} {<FilterNotification on={inUse} />}
+    </h3>
   </button>
 );
 

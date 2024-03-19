@@ -12,7 +12,8 @@ import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
-import './App.css'; // sdf
+import Header from './components/Header';
+import './App.css';
 
 const setOptionToMatchSettings = (option, settings) => {
   const isGroup = option.items;
@@ -138,91 +139,96 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   };
 
   return (
-    <div className="App">
-      <ControlPanel>
-        <div id="sides" data-testid="sides">
-          <SideButton
-            title="Runner"
-            side="runner"
-            selected={settings.side === 'runner'}
-            onSelect={updateSimpleFilter('side')}
+    <div id="blackat">
+      <header>
+        <Header />
+      </header>
+      <main id="app">
+        <ControlPanel>
+          <div id="sides" data-testid="sides">
+            <SideButton
+              title="Runner"
+              side="runner"
+              selected={settings.side === 'runner'}
+              onSelect={updateSimpleFilter('side')}
+            />
+            <SideButton
+              title="Corp"
+              side="corp"
+              selected={settings.side === 'corp'}
+              onSelect={updateSimpleFilter('side')}
+            />
+          </div>
+          <TextSearch
+            placeholder="search title"
+            value={settings.title}
+            onChange={updateSimpleFilter('title')}
           />
-          <SideButton
-            title="Corp"
-            side="corp"
-            selected={settings.side === 'corp'}
-            onSelect={updateSimpleFilter('side')}
+          <TextSearch
+            placeholder="search text"
+            value={settings.text}
+            onChange={updateSimpleFilter('text')}
           />
-        </div>
-        <TextSearch
-          placeholder="search title"
-          value={settings.title}
-          onChange={updateSimpleFilter('title')}
-        />
-        <TextSearch
-          placeholder="search text"
-          value={settings.text}
-          onChange={updateSimpleFilter('text')}
-        />
-        <SortSelect
-          options={sortOptions}
-          default={settings.sort}
-          onChange={updateSimpleFilter('sort')}
-        />
+          <SortSelect
+            options={sortOptions}
+            default={settings.sort}
+            onChange={updateSimpleFilter('sort')}
+          />
 
-        <FilterList
-          title="Factions"
-          closed={true}
-          options={currentFactions}
-          clearAll={clearListFilter('factions')}
-          onChange={onSelectionHandler('factions')}
-        />
-        <FilterList
-          title="Types"
-          closed={true}
-          options={currentTypes}
-          clearAll={clearListFilter('types')}
-          onChange={onSelectionHandler('types')}
-        />
-        <FilterList
-          title="Subtypes"
-          closed={true}
-          options={currentSubtypes}
-          clearAll={clearListFilter('subtypes')}
-          onChange={onSelectionHandler('subtypes')}
-        />
-        <NestedFilterList
-          title="Packs"
-          closed={true}
-          options={currentPacks}
-          clearAll={clearListFilter('packs')}
-          onChange={onSelectionHandler('packs')}
-        />
-        <NestedFilterList
-          title="Preferences"
-          closed={true}
-          options={currentPreferences}
-          clearAll={clearListFilter('preferences')}
-          onChange={onSelectionHandler('preferences')}
-        />
+          <FilterList
+            title="Factions"
+            closed={true}
+            options={currentFactions}
+            clearAll={clearListFilter('factions')}
+            onChange={onSelectionHandler('factions')}
+          />
+          <FilterList
+            title="Types"
+            closed={true}
+            options={currentTypes}
+            clearAll={clearListFilter('types')}
+            onChange={onSelectionHandler('types')}
+          />
+          <FilterList
+            title="Subtypes"
+            closed={true}
+            options={currentSubtypes}
+            clearAll={clearListFilter('subtypes')}
+            onChange={onSelectionHandler('subtypes')}
+          />
+          <NestedFilterList
+            title="Packs"
+            closed={true}
+            options={currentPacks}
+            clearAll={clearListFilter('packs')}
+            onChange={onSelectionHandler('packs')}
+          />
+          <NestedFilterList
+            title="Preferences"
+            closed={true}
+            options={currentPreferences}
+            clearAll={clearListFilter('preferences')}
+            onChange={onSelectionHandler('preferences')}
+          />
 
-        <Reset onClick={resetAllFilters} />
-        <SmallPrint />
-      </ControlPanel>
-      <CardList
-        side={settings.side}
-        sort={settings.sort}
-        titleSearch={settings.title}
-        textSearch={settings.text}
-        factions={adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
-        types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
-        subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
-        packs={settings.packs}
-        art={originalArt}
-        official={official}
-        rotation={rotation}
-        legal={legal}
-      />
+          <Reset onClick={resetAllFilters} />
+          <SmallPrint />
+        </ControlPanel>
+        <CardList
+          side={settings.side}
+          sort={settings.sort}
+          titleSearch={settings.title}
+          textSearch={settings.text}
+          factions={adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
+          types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
+          subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
+          packs={settings.packs}
+          art={originalArt}
+          official={official}
+          rotation={rotation}
+          legal={legal}
+        />
+      </main>
     </div>
   );
 };

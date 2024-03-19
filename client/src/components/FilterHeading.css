@@ -1,10 +1,9 @@
 .filter-heading {
     background: none;
     border: none;
-    font-size: 1.8rem;
     padding: 0;
 }
-.filter-heading h4 {
-    margin: 0;
-    padding: 0;
+.filter-heading h3 {
+    margin: 0.1em 0;
+    font-size: 1.8rem;
 } 

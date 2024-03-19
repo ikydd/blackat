@@ -13,3 +13,24 @@ input, button {
   font-family: 'Rajdhani', sans-serif;
   font-weight: bold;
 }
+
+header {
+  position: relative;
+  padding-top: 1em;
+  padding-left: 2em;
+  z-index: 10;
+}
+
+main {
+  display: flex;
+}
+
+#sides {
+  display: flex;
+  width: 20rem;
+  padding: 0 3rem;
+}
+
+#sides button {
+  width: 50%;
+}

@@ -1,10 +1,9 @@
 import React from 'react';
-import Header from './Header';
 import './ControlPanel.css';
 
 const ControlPanel = ({ children }) => (
   <div id="control-panel">
-    <Header />
+    <h2 className="sr-only">Card Filter Controls</h2>
     <div id="filters">{children}</div>
   </div>
 );
