@@ -10,6 +10,7 @@ const TextSearch = ({ placeholder = 'search', value = '', onChange }) => {
     <div className="form-group">
       <input
         className="form-control"
+        aria-label={placeholder}
         value={value}
         placeholder={placeholder}
         onInput={handleChange}
