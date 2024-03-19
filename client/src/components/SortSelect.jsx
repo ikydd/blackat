@@ -1,5 +1,4 @@
 import React from 'react';
-import './SortSelect.css';
 
 const SortSelect = ({ default: defaultValue, options = [], onChange }) => {
   const handleChange = (ev) => {

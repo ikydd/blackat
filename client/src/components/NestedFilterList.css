@@ -1,7 +1,6 @@
 .filter-group-items label {
-  padding-left: 3em;
+  padding-left: 2.5em;
 }
 .filter-divider {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 0.5rem 0;
 }

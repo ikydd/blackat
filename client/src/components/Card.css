@@ -1,22 +1,24 @@
 .card-tile {
   margin: 0.6rem;
   overflow: visible;
-  height: 279.3px;
-  width: 200px;
+  height: 28rem;
+  width: 20rem;
 }
 
 .card-tile img {
   position: relative;
-  height: 279.3px;
-  width: 200px;
-  border-radius: 11px;
+  aspect-ratio: 300 / 419;
+  width: 20rem;
+  height: auto;
+  border-radius: 1rem;
 }
 
 .card-tile img:hover {
-  height: 419px;
-  width: 300px;
-  left: -50px;
-  top: -69.8px;
-  z-index: 9999;
-  border-radius: 18px;
+  aspect-ratio: 300 / 419;
+  width: 30rem;
+  height: auto;
+  left: -25%;
+  top: -25%;
+  z-index: 10;
+  border-radius: 1.5rem;
 }

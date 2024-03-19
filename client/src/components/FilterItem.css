@@ -1,7 +1,7 @@
-.filter-item:focus-within {
+.filter-item label:focus-within {
     outline :2px solid rgb(0, 95, 204);
     border-radius: 2px;
 }
-.filter-item:focus-within input {
+.filter-item label:focus-within input {
     outline: none;
 }

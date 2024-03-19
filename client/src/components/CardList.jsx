@@ -6,7 +6,6 @@ import getData from '../helpers/api';
 import filterCards from '../helpers/filter-cards';
 import { prepareGroupingData, groupCards } from '../helpers/group-cards';
 import { prepareSortingData, sortCards } from '../helpers/sort-cards';
-import './CardList.css';
 
 const CardList = ({ art, ...props }) => {
   const [loaded, setLoaded] = useState(false);

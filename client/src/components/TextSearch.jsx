@@ -1,5 +1,4 @@
 import React from 'react';
-import './TextSearch.css';
 
 const TextSearch = ({ placeholder = 'search', value = '', onChange }) => {
   const handleChange = (ev) => {
