@@ -13,7 +13,7 @@ const FilterItem = ({ item, keyword, onChange }) => (
         checked={item.selected}
         onChange={(el) => onChange(item, el.target.checked)}
       />
-      &nbsp; <Icon code={item.code} /> {item.name}
+      &nbsp; <Icon code={item.icon || item.code} /> {item.name}
     </label>
   </div>
 );
