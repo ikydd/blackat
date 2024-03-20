@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 import Icon from './Icon';
 import './ControlPanel.css';
 
+const ControlsToggle = ({ closed, onClick }) => {
+  const text = closed ? 'Show Filters' : 'Hide Filters';
+  const icon = closed ? 'core2' : 'core';
+  return (
+    <div id="controls-toggle" className="mobile-only">
+      <button
+        title={text}
+        aria-label={text}
+        aria-expanded={!closed}
+        aria-controls="filters-wrapper"
+        className={closed ? 'closed' : 'open'}
+        onClick={onClick}
+      >
+        <Icon code={icon} />
+      </button>
+    </div>
+  );
+};
+
 const ControlPanel = ({ children }) => {
-  const [hidden, setHidden] = useState(false);
+  const [closed, setClosed] = useState(false);
   return (
     <div id="control-panel">
       <h2 className="sr-only">Card Filter Controls</h2>
-      <div id="controls-toggle" className="mobile-only">
-        <button
-          aria-expanded={!hidden}
-          aria-controls="filters-wrapper"
-          className={hidden ? 'closed' : 'open'}
-          onClick={() => setHidden(!hidden)}
-        >
-          {hidden ? 'Show' : 'Hide'} Filters <Icon code="click" />
-        </button>
-      </div>
-      <div id="filters-wrapper" className={hidden ? 'closed' : ''}>
+      <ControlsToggle closed={closed} onClick={() => setClosed(!closed)} />
+      <div id="filters-wrapper" className={closed && 'closed'}>
         <div id="filters">{children}</div>
         <div id="addendum">
           <p>
