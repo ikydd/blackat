@@ -1,6 +1,5 @@
 import React from 'react';
 import Icon from './Icon';
-import './FilterItem.css';
 
 const FilterItem = ({ item, keyword, onChange }) => (
   <div className="checkbox filter-item">
