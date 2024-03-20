@@ -1,20 +1,16 @@
 #control-panel {
-  /* background-image: url('../../public/img/blackat-trim-flip.png'); */
-  /* background-size: 260px; */
-  /* background-repeat: no-repeat; */
-  /* padding-top: 100px; */
   padding-right: 3em;
-  /* margin-bottom: -100px; */
-  /* position: relative; */
-  /* top: -100px; */
   z-index: 0;
-  /* min-height: 310px; */
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   #control-panel {
     padding-right: 0;
   }
+}
+
+#filters {
+  margin-bottom: 1em;
 }
 
 #addendum {
@@ -26,9 +22,8 @@
   border: none;
   padding: 0;
   font-size: 2.4rem;
-  margin-left: 2em;
 }
 #control-display-toggle.closed {
-  margin: 0.5em 3em 4em 2em;
+  margin: 0.5rem 3rem 7rem 0;
   color: #bbb;
 }

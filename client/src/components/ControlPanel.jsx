@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Icon from './Icon';
-import meta from '../../../package.json';
 import './ControlPanel.css';
 
 const ControlPanel = ({ children }) => {
@@ -12,9 +11,8 @@ const ControlPanel = ({ children }) => {
         {children}
       </div>
       <div id="addendum" hidden={hidden}>
-        <p id="version">Version {meta.version}</p>
         <p>
-          <a href="#small-print">Copyright notice</a>
+          <a href="#small-print">Small print</a>
         </p>
       </div>
       <div className="mobile-only">
@@ -25,7 +23,7 @@ const ControlPanel = ({ children }) => {
           className={hidden ? 'closed' : 'open'}
           onClick={() => setHidden(!hidden)}
         >
-          <Icon code="click" /> {hidden ? 'Controls' : 'Hide'}
+          <Icon code="click" /> {hidden ? 'Show' : 'Hide'} Controls
         </button>
       </div>
     </div>

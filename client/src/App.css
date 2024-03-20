@@ -29,7 +29,6 @@ main {
   background-size: 260px;
   background-repeat: no-repeat;
   padding-top: 100px;
-  /* padding-right: 3em; */
   margin-bottom: -100px;
   position: relative;
   top: -100px;
@@ -39,7 +38,7 @@ main {
   display:none;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   main {
     display: block;
   }
