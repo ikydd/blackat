@@ -21,7 +21,12 @@ const versionControl = (last, current, art = 'updated') => {
   return showing ? current : last;
 };
 
-const CardSection = ({ section: { info, cards, show }, art }) => {
+const CardSection = ({
+  section: { info, cards, show },
+  art,
+  focusHandler = () => {},
+  currentFocus
+}) => {
   let lastCard;
   return (
     <div
@@ -33,7 +38,14 @@ const CardSection = ({ section: { info, cards, show }, art }) => {
       <div className="card-section-container">
         {cards.map((card, index) => {
           lastCard = versionControl(lastCard, card, art);
-          return <Card key={index} data={card} />;
+          return (
+            <Card
+              key={index}
+              data={card}
+              focusHandler={focusHandler}
+              focus={currentFocus === card.code}
+            />
+          );
         })}
       </div>
     </div>

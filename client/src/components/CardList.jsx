@@ -12,6 +12,7 @@ const CardList = ({ art, ...props }) => {
   const [cards, setCards] = useState([]);
   const [sortingData, setSortingData] = useState();
   const [groupingData, setGroupingData] = useState();
+  const [currentFocus, setCurrentFocus] = useState();
 
   useEffect(() => {
     Promise.all([getData('cards'), getData('factions'), getData('types'), getData('packs')])
@@ -36,7 +37,13 @@ const CardList = ({ art, ...props }) => {
       <h2 className="sr-only">Card Gallery</h2>
       {loaded || <Loader />}
       {sections.map((section, index) => (
-        <CardSection key={index} section={section} art={art}></CardSection>
+        <CardSection
+          key={index}
+          section={section}
+          art={art}
+          currentFocus={currentFocus}
+          focusHandler={setCurrentFocus}
+        ></CardSection>
       ))}
       {loaded && empty && <Empty />}
     </div>

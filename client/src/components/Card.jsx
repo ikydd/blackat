@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Card.css';
 
 const hideCard = (show) => (show === false ? 'hidden' : false);
 
-const Card = ({ data: { title, imagesrc, show } }) => {
-  const [focus, setFocus] = useState(false);
+const Card = ({ data: { title, imagesrc, show, code }, focusHandler, focus }) => {
+  let aboutToFocus;
   return (
     <div
       className={`card-tile${show ? ' visible-card' : ''}${focus ? ' focused-card' : ''}`}
@@ -16,13 +16,15 @@ const Card = ({ data: { title, imagesrc, show } }) => {
         alt={title}
         loading="lazy"
         onTouchStart={() => {
-          setFocus(true);
+          aboutToFocus = true;
+        }}
+        onTouchMove={() => {
+          aboutToFocus = false;
         }}
         onTouchEnd={() => {
-          setFocus(false);
-        }}
-        onContextMenu={(e) => {
-          e.preventDefault();
+          if (aboutToFocus) {
+            focusHandler(focus ? 0 : code);
+          }
         }}
       />
     </div>
