@@ -43,7 +43,7 @@ const CardList = ({ art, ...props }) => {
           art={art}
           currentFocus={currentFocus}
           focusHandler={setCurrentFocus}
-        ></CardSection>
+        />
       ))}
       {loaded && empty && <Empty />}
     </div>
