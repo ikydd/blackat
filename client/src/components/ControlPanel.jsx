@@ -37,7 +37,7 @@ const ControlPanel = ({ children }) => {
         <div id="filters">{children}</div>
         <div id="addendum">
           <p>
-            <a href="#small-print">Small print</a>
+            <Icon code="subroutine" /> <a href="#small-print">Small print</a>
           </p>
         </div>
       </div>

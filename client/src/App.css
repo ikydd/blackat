@@ -15,6 +15,9 @@ input, button {
   font-family: 'Rajdhani', sans-serif;
   font-weight: bold;
 }
+a {
+  color: #ff6e00;
+}
 
 header {
   position: relative;
@@ -45,10 +48,15 @@ main {
 
 footer {
   margin: 2rem;
+  display: flex;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
 }
 
 #back-to-top {
   font-size: 2rem;
+  text-align: center;
 }
 
 .mobile-only {

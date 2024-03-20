@@ -13,6 +13,7 @@ import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
 import Header from './components/Header';
+import Icon from './components/Icon';
 import './App.css';
 
 const setOptionToMatchSettings = (option, settings) => {
@@ -229,10 +230,12 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         />
       </main>
       <footer>
-        <SmallPrint />
-        <a id="back-to-top" href="#top">
-          Back to top
-        </a>
+        <div>
+          <SmallPrint />
+          <div id="back-to-top">
+            <Icon code="subroutine" /> <a href="#top">Reboot</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
