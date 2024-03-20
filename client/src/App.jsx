@@ -230,6 +230,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       </main>
       <footer>
         <SmallPrint />
+        <a id="back-to-top" href="#top">
+          Back to top
+        </a>
       </footer>
     </div>
   );

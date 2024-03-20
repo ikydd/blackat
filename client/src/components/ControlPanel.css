@@ -2,19 +2,22 @@
   padding-right: 3em;
   z-index: 0;
 }
-
-@media (max-width: 700px) {
-  #control-panel {
-    padding-right: 0;
-  }
-}
-
 #filters {
   margin-bottom: 1em;
 }
 
 #addendum {
   font-size: 1.1rem;
+}
+
+@media (max-width: 700px) {
+  #control-panel {
+    padding-right: 0;
+  }
+
+  #filters.closed, #addendum.close {
+    display: none;
+  }
 }
 
 #control-display-toggle {

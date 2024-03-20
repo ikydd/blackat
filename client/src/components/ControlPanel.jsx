@@ -7,10 +7,10 @@ const ControlPanel = ({ children }) => {
   return (
     <div id="control-panel">
       <h2 className="sr-only">Card Filter Controls</h2>
-      <div id="filters" hidden={hidden}>
+      <div id="filters" className={hidden ? 'closed' : ''}>
         {children}
       </div>
-      <div id="addendum" hidden={hidden}>
+      <div id="addendum" className={hidden ? 'closed' : ''}>
         <p>
           <a href="#small-print">Small print</a>
         </p>
