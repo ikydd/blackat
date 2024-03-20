@@ -16,7 +16,13 @@ const Card = ({ data: { title, imagesrc, show } }) => {
         alt={title}
         loading="lazy"
         onTouchStart={() => {
-          setFocus(!focus);
+          setFocus(true);
+        }}
+        onTouchEnd={() => {
+          setFocus(false);
+        }}
+        onContextMenu={(e) => {
+          e.preventDefault();
         }}
       />
     </div>
