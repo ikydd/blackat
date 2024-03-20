@@ -22,7 +22,12 @@ header {
 }
 
 main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20em auto;
+}
+
+footer {
+  margin: 2rem;
 }
 
 #sides {

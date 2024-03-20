@@ -1,3 +1,8 @@
 #small-print {
+  display: flex;
   font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
 }
+
+

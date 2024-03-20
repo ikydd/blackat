@@ -143,7 +143,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       <header>
         <Header />
       </header>
-      <main id="app">
+      <main>
         <ControlPanel>
           <div id="sides" data-testid="sides">
             <SideButton
@@ -212,7 +212,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           />
 
           <Reset onClick={resetAllFilters} />
-          <SmallPrint />
         </ControlPanel>
         <CardList
           side={settings.side}
@@ -229,6 +228,9 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
           legal={legal}
         />
       </main>
+      <footer>
+        <SmallPrint />
+      </footer>
     </div>
   );
 };

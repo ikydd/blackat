@@ -1,22 +1,17 @@
 import React from 'react';
 import './SmallPrint.css';
-import meta from '../../../package.json';
 
 const SmallPrint = () => (
   <div id="small-print">
-    <p>Version {meta.version}</p>
     <p>
-      Images &amp; universe are intellectual property of{' '}
+      BlacKat is a fan-made website and is not run for profit. Images &amp; universe are
+      intellectual property &copy; of{' '}
       <a href="https://www.fantasyflightgames.com">Fantasy Flight Games</a>,{' '}
       <a href="https://company.wizards.com/">Wizards of the Coast</a> and/or{' '}
-      <a href="https://nullsignal.games/">Null Signal Games</a>
-    </p>
-    <p>
-      BlacKat image by <a href="http://seageart.com/">Seage</a> who can be found on{' '}
-      <a href="http://youtube.com/seagespeaks">YouTube</a>
-    </p>
-    <p>
-      Data &amp; icons graciously provided by <a href="http://netrunnerdb.com/">NetrunnerDB</a>
+      <a href="https://nullsignal.games/">Null Signal Games</a>. The BlacKat image is by{' '}
+      <a href="https://seageart.com/">Seage</a> who can be found on{' '}
+      <a href="https://youtube.com/seagespeaks">YouTube</a>. Data &amp; icons graciously provided by{' '}
+      <a href="https://netrunnerdb.com/">NetrunnerDB</a>.
     </p>
   </div>
 );
