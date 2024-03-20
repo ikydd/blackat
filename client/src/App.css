@@ -25,10 +25,25 @@ main {
   display: grid;
   grid-template-columns: 18em auto;
   margin: 0 2em;
+  background-image: url('../public/img/blackat-trim-flip.png');
+  background-size: 260px;
+  background-repeat: no-repeat;
+  padding-top: 100px;
+  /* padding-right: 3em; */
+  margin-bottom: -100px;
+  position: relative;
+  top: -100px;
+}
+
+.mobile-only {
+  display:none;
 }
 
 @media (max-width: 500px) {
   main {
+    display: block;
+  }
+  .mobile-only {
     display: block;
   }
 }
