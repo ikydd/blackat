@@ -177,10 +177,14 @@ describe('CardList', () => {
       it('has named separators', async () => {
         api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-corp.json'));
         const { findAllByRole } = render(<CardList sort="faction" />);
-        const hrs = await findAllByRole('separator');
+        await findAllByRole('img');
+
+        const hrs = await findAllByRole('heading');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(['Haas-Bioroid', 'Jinteki']);
+        await waitFor(() => {
+          expect(titles).toEqual([expect.any(String), 'Haas-Bioroid', 'Jinteki']);
+        });
       });
     });
 
@@ -215,10 +219,11 @@ describe('CardList', () => {
       it('has named separators', async () => {
         api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="type" />);
-        const hrs = await findAllByRole('separator');
+        await findAllByRole('img');
+        const hrs = await findAllByRole('heading');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(['Hardware', 'Resource']);
+        expect(titles).toEqual([expect.any(String), 'Hardware', 'Resource']);
       });
     });
 
@@ -235,10 +240,12 @@ describe('CardList', () => {
       it('has named separators', async () => {
         api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
         const { findAllByRole } = render(<CardList sort="pack" />);
-        const hrs = await findAllByRole('separator');
+        await findAllByRole('img');
+
+        const hrs = await findAllByRole('heading');
         const titles = hrs.map(({ textContent }) => textContent.trim());
 
-        expect(titles).toEqual(['Core Set', 'Future Proof']);
+        expect(titles).toEqual([expect.any(String), 'Core Set', 'Future Proof']);
       });
     });
 
@@ -256,9 +263,9 @@ describe('CardList', () => {
         api.setData('cards', loadFile('../../../fixtures/api/cards-name.json'));
         const { findAllByRole, queryAllByRole } = render(<CardList sort="title" />);
         await findAllByRole('img');
-        const hrs = queryAllByRole('separator');
+        const hrs = queryAllByRole('heading');
 
-        expect(hrs).toHaveLength(0);
+        expect(hrs).toHaveLength(1);
       });
     });
   });
@@ -286,10 +293,11 @@ describe('CardList', () => {
       api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/illustrator.json'));
       const { findAllByRole } = render(<CardList sort="illustrator" />);
       await findAllByRole('img');
-      const hrs = await findAllByRole('separator');
+
+      const hrs = await findAllByRole('heading');
       const titles = hrs.map(({ textContent }) => textContent.trim());
 
-      expect(titles).toEqual(['Liiga Smilshkalne', 'Mauricio Herrera']);
+      expect(titles).toEqual([expect.any(String), 'Liiga Smilshkalne', 'Mauricio Herrera']);
     });
 
     it('sorts by title after illustrator', async () => {
