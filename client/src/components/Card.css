@@ -1,37 +1,65 @@
 .card-tile {
-  margin: 0.6rem;
+  margin: 0.5rem;
   overflow: visible;
-  height: 28rem;
-  width: 20rem;
 }
 
 .card-tile img {
-  position: relative;
   aspect-ratio: 300 / 419;
   width: 20rem;
   height: auto;
-  border-radius: 1rem;
-}
-
-.card-tile img:hover {
-  aspect-ratio: 300 / 419;
-  width: 30rem;
-  height: auto;
-  left: -25%;
-  top: -25%;
-  z-index: 10;
-  border-radius: 1.5rem;
+  border-radius: 5%;
 }
 
 @media (max-width: 700px) {
-  .card-tile {
-    width: 100%;
-    height: 100%;
-  }
   .card-tile img {
-    width: 90%;
+    width: 100%;
   }
+}
+@media (hover: hover) {
   .card-tile img:hover {
-    /* width: 30rem; */
+    transform: scale(1.5, 1.5);
+    z-index: 10;
+  }
+
+  @media (max-width: 700px) {
+    :nth-child(3n+1 of .visible-card) img:hover {
+      transform: scale(1.5, 1.5) translateX(16%);
+    }
+    :nth-child(3n of .visible-card) img:hover {
+      transform: scale(1.5, 1.5) translateX(-16%);
+    }
+  }
+  
+  @media (max-width: 500px) {
+    :nth-child(odd of .visible-card) img:hover {
+      transform: scale(1.5, 1.5) translateX(16%);
+    }
+    :nth-child(even of .visible-card) img:hover {
+      transform: scale(1.5, 1.5) translateX(-16%);
+    }
+  }
+}
+
+@media (hover: none) {
+  .card-tile img:active {
+    transform: scale(1.5, 1.5);
+    z-index: 10;
+  }
+  @media (max-width: 700px) {
+    :nth-child(3n+1 of .visible-card) img:active {
+      transform: scale(1.5, 1.5) translateX(16%);
+    }
+    :nth-child(3n of .visible-card) img:active {
+      transform: scale(1.5, 1.5) translateX(-16%);
+    }
+  }
+  
+  @media (max-width: 500px) {
+    :nth-child(odd of .visible-card) img:active {
+      transform: scale(1.5, 1.5) translateX(16%);
+    }
+    :nth-child(even of .visible-card) img:active {
+      transform: scale(1.5, 1.5) translateX(-16%);
+    }
   }
 }

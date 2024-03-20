@@ -33,7 +33,7 @@ const ControlPanel = ({ children }) => {
     <div id="control-panel">
       <h2 className="sr-only">Card Filter Controls</h2>
       <ControlsToggle closed={closed} onClick={() => setClosed(!closed)} />
-      <div id="filters-wrapper" className={closed && 'closed'}>
+      <div id="filters-wrapper" className={closed ? 'closed' : ''}>
         <div id="filters">{children}</div>
         <div id="addendum">
           <p>
