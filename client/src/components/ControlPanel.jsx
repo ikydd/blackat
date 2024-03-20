@@ -9,7 +9,7 @@ const ControlPanel = ({ children }) => (
     <div id="addendum">
       <p id="version">Version {meta.version}</p>
       <p>
-        <a href="#small-print">Small print</a>
+        <a href="#small-print">Copyright notice</a>
       </p>
     </div>
   </div>

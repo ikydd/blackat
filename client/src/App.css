@@ -23,7 +23,8 @@ header {
 
 main {
   display: grid;
-  grid-template-columns: 20em auto;
+  grid-template-columns: 18em auto;
+  margin-left: 2em;
 }
 
 footer {
@@ -32,7 +33,6 @@ footer {
 
 #sides {
   display: flex;
-  width: 20rem;
   padding: 0 3rem;
 }
 
