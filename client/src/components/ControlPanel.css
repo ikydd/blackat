@@ -34,7 +34,7 @@
   margin-bottom: 9rem;
 }
 #controls-toggle button:active {
-  color: #FE9913;
+  color: #999;
 }
 
 #controls-toggle button div.action {
