@@ -19,6 +19,7 @@
   .card-tile img:hover {
     transform: scale(2, 2);
     z-index: 10;
+    box-shadow: 0 0 6px #000;
   }
 
   @media (max-width: 700px) {
@@ -44,6 +45,7 @@
   .card-tile.focused-card img {
     transform: scale(2, 2);
     z-index: 10;
+    box-shadow: 0 0 6px #000;
   }
   @media (max-width: 700px) {
     :nth-child(3n+1 of .visible-card).focused-card img {
