@@ -6,24 +6,24 @@ const ControlPanel = ({ children }) => {
   const [hidden, setHidden] = useState(false);
   return (
     <div id="control-panel">
+      <h2 className="sr-only">Card Filter Controls</h2>
       <div id="controls-toggle" className="mobile-only">
         <button
           aria-expanded={!hidden}
-          aria-controls="filters"
+          aria-controls="filters-wrapper"
           className={hidden ? 'closed' : 'open'}
           onClick={() => setHidden(!hidden)}
         >
-          {hidden ? 'Show' : 'Hide'} Controls <Icon code="click" />
+          {hidden ? 'Show' : 'Hide'} Filters <Icon code="click" />
         </button>
       </div>
-      <h2 className="sr-only">Card Filter Controls</h2>
-      <div id="filters" className={hidden ? 'closed' : ''}>
-        {children}
-      </div>
-      <div id="addendum" className={hidden ? 'closed' : ''}>
-        <p>
-          <a href="#small-print">Small print</a>
-        </p>
+      <div id="filters-wrapper" className={hidden ? 'closed' : ''}>
+        <div id="filters">{children}</div>
+        <div id="addendum">
+          <p>
+            <a href="#small-print">Small print</a>
+          </p>
+        </div>
       </div>
     </div>
   );

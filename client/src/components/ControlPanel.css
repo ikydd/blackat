@@ -11,7 +11,7 @@
     margin-top: -5rem;
   }
 
-  #filters.closed, #addendum.closed {
+  #filters-wrapper.closed {
     display: none;
   }
 }
