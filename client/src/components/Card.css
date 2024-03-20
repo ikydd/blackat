@@ -17,26 +17,26 @@
 }
 @media (hover: hover) {
   .card-tile img:hover {
-    transform: scale(2, 2);
+    transform: scale(1.5, 1.5);
     z-index: 10;
     box-shadow: 0 0 6px #000;
   }
 
   @media (max-width: 700px) {
     :nth-child(3n+1 of .visible-card) img:hover {
-      transform: scale(2, 2) translateX(25%);
+      transform: scale(1.5, 1.5) translateX(16%);
     }
     :nth-child(3n of .visible-card) img:hover {
-      transform: scale(2, 2) translateX(-25%);
+      transform: scale(1.5, 1.5) translateX(-16%);
     }
   }
   
   @media (max-width: 500px) {
     :nth-child(odd of .visible-card) img:hover {
-      transform: scale(2, 2) translateX(25%);
+      transform: scale(1.5, 1.5) translateX(16%);
     }
     :nth-child(even of .visible-card) img:hover {
-      transform: scale(2, 2) translateX(-25%);
+      transform: scale(1.5, 1.5) translateX(-16%);
     }
   }
 }
