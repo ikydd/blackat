@@ -17,49 +17,49 @@
 }
 @media (hover: hover) {
   .card-tile img:hover {
-    transform: scale(1.5, 1.5);
+    transform: scale(2, 2);
     z-index: 10;
   }
 
   @media (max-width: 700px) {
     :nth-child(3n+1 of .visible-card) img:hover {
-      transform: scale(1.5, 1.5) translateX(16%);
+      transform: scale(2, 2) translateX(25%);
     }
     :nth-child(3n of .visible-card) img:hover {
-      transform: scale(1.5, 1.5) translateX(-16%);
+      transform: scale(2, 2) translateX(-25%);
     }
   }
   
   @media (max-width: 500px) {
     :nth-child(odd of .visible-card) img:hover {
-      transform: scale(1.5, 1.5) translateX(16%);
+      transform: scale(2, 2) translateX(25%);
     }
     :nth-child(even of .visible-card) img:hover {
-      transform: scale(1.5, 1.5) translateX(-16%);
+      transform: scale(2, 2) translateX(-25%);
     }
   }
 }
 
 @media (hover: none) {
-  .card-tile img:active {
-    transform: scale(1.5, 1.5);
+  .card-tile.focused-card img {
+    transform: scale(2, 2);
     z-index: 10;
   }
   @media (max-width: 700px) {
-    :nth-child(3n+1 of .visible-card) img:active {
-      transform: scale(1.5, 1.5) translateX(16%);
+    :nth-child(3n+1 of .visible-card).focused-card img {
+      transform: scale(2, 2) translateX(25%);
     }
-    :nth-child(3n of .visible-card) img:active {
-      transform: scale(1.5, 1.5) translateX(-16%);
+    :nth-child(3n of .visible-card).focused-card img {
+      transform: scale(2, 2) translateX(-25%);
     }
   }
   
   @media (max-width: 500px) {
-    :nth-child(odd of .visible-card) img:active {
-      transform: scale(1.5, 1.5) translateX(16%);
+    :nth-child(odd of .visible-card).focused-card img {
+      transform: scale(2, 2) translateX(25%);
     }
-    :nth-child(even of .visible-card) img:active {
-      transform: scale(1.5, 1.5) translateX(-16%);
+    :nth-child(even of .visible-card).focused-card img {
+      transform: scale(2, 2) translateX(-25%);
     }
   }
 }
