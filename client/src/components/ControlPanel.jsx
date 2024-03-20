@@ -3,8 +3,9 @@ import Icon from './Icon';
 import './ControlPanel.css';
 
 const ControlsToggle = ({ closed, onClick }) => {
-  const text = closed ? 'Show Filters' : 'Hide Filters';
-  const icon = closed ? 'core2' : 'core';
+  const action = closed ? 'Show' : 'Hide';
+  const text = `${action} Filters`;
+  const icon = closed ? 'core' : 'core';
   return (
     <div id="controls-toggle" className="mobile-only">
       <button
@@ -15,7 +16,12 @@ const ControlsToggle = ({ closed, onClick }) => {
         className={closed ? 'closed' : 'open'}
         onClick={onClick}
       >
-        <Icon code={icon} />
+        <div className="icon">
+          <Icon code={icon} />
+        </div>
+        <div className="action">
+          <span>{action}</span>
+        </div>
       </button>
     </div>
   );
