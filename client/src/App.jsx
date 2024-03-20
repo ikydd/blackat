@@ -233,7 +233,10 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         <div>
           <SmallPrint />
           <div id="back-to-top">
-            <Icon code="subroutine" /> <a href="#top">Reboot</a>
+            <Icon code="subroutine" />{' '}
+            <a title="Back to top" href="#top">
+              Reboot
+            </a>
           </div>
         </div>
       </footer>
