@@ -2,3 +2,10 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+@media (max-width: 500px) {
+    .card-section-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

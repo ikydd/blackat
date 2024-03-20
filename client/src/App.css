@@ -24,8 +24,13 @@ header {
 main {
   display: grid;
   grid-template-columns: 18em auto;
-  margin-right: 1em;
-  margin-left: 2em;
+  margin: 0 2em;
+}
+
+@media (max-width: 500px) {
+  main {
+    display: block;
+  }
 }
 
 footer {
@@ -33,6 +38,7 @@ footer {
 }
 
 #sides {
+  width: 15em;
   display: flex;
   padding: 0 3rem;
 }
