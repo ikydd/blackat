@@ -31,14 +31,14 @@
     }
   }
   
-  @media (max-width: 500px) {
+  /* @media (max-width: 500px) {
     :nth-child(odd of .visible-card) img:hover {
       transform: scale(1.5, 1.5) translateX(16%);
     }
     :nth-child(even of .visible-card) img:hover {
       transform: scale(1.5, 1.5) translateX(-16%);
     }
-  }
+  } */
 }
 
 @media (hover: none) {
@@ -56,12 +56,12 @@
     }
   }
   
-  @media (max-width: 500px) {
+  /* @media (max-width: 500px) {
     :nth-child(odd of .visible-card).focused-card img {
       transform: scale(2, 2) translateX(25%);
     }
     :nth-child(even of .visible-card).focused-card img {
       transform: scale(2, 2) translateX(-25%);
     }
-  }
+  } */
 }
