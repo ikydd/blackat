@@ -36,6 +36,12 @@ main {
   top: -100px;
 }
 
+main.loading {
+  display: flex;
+  justify-content: center;
+}
+
+
 #sides {
   width: 15em;
   display: flex;
@@ -58,7 +64,6 @@ footer {
   font-size: 1.6rem;
   text-align: center;
 }
-
 .mobile-only {
   display: none;
 }
