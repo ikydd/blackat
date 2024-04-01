@@ -14,7 +14,7 @@ jest.mock('../helpers/api');
 describe('Preferences filters', () => {
   it('has the correct title', async () => {
     const { findByTestId } = render(<App />);
-    const filterBlock = findByTestId('preferences-filters');
+    const filterBlock = await findByTestId('preferences-filters');
     const heading = within(filterBlock).getByText('Preferences');
 
     await waitFor(() => {

@@ -6,8 +6,8 @@ jest.mock('../helpers/api');
 
 describe('Title Search', () => {
   it(`has a title search as the first textbox`, async () => {
-    const { getAllByRole } = render(<App />);
-    const textboxes = getAllByRole('textbox');
+    const { findAllByRole } = render(<App />);
+    const textboxes = await findAllByRole('textbox');
     await waitFor(() => {
       expect(textboxes[0]).toHaveAttribute('placeholder', 'search title');
     });
@@ -15,8 +15,8 @@ describe('Title Search', () => {
 
   it('only shows relevant cards given a title search', async () => {
     const search = 'Blade';
-    const { getByPlaceholderText, findByRole } = render(<App />);
-    const input = getByPlaceholderText(`search title`);
+    const { findByPlaceholderText, findByRole } = render(<App />);
+    const input = await findByPlaceholderText(`search title`);
     fireEvent.input(input, { target: { value: search } });
     const card = await findByRole('img');
 
@@ -25,8 +25,8 @@ describe('Title Search', () => {
 
   it('sets the default value given a title search', async () => {
     const search = 'Blade';
-    const { getByPlaceholderText } = render(<App />);
-    const input = getByPlaceholderText(`search title`);
+    const { findByPlaceholderText } = render(<App />);
+    const input = await findByPlaceholderText(`search title`);
     fireEvent.input(input, { target: { value: search } });
 
     await waitFor(() => {

@@ -41,8 +41,9 @@ it('loads the corp cards with a prop', async () => {
 
 describe('saving state', () => {
   it('set state into localStorage', async () => {
-    const { findAllByRole, getByText } = render(<App saveState={true} />);
-    fireEvent.click(getByText('Corp'));
+    const { findAllByRole, findByText } = render(<App saveState={true} />);
+    const corp = await findByText('Corp');
+    fireEvent.click(corp);
     await findAllByRole('img');
 
     expect(JSON.parse(localStorage.getItem('settings'))).toEqual(
@@ -69,8 +70,9 @@ describe('saving state', () => {
   it('rejects malformed JSON', async () => {
     localStorage.setItem('settings', '}does not parse[');
 
-    const { getByTestId, getByText } = render(<App saveState={true} />);
-    fireEvent.click(getByText(/Types/));
+    const { getByTestId, findByText } = render(<App saveState={true} />);
+    const typesButton = await findByText(/Types/);
+    fireEvent.click(typesButton);
     const filterBlock = getByTestId('types-filters');
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -82,8 +84,9 @@ describe('saving state', () => {
   it('rejects old JSON', async () => {
     localStorage.setItem('settings', '{ "foo": "bar" }');
 
-    const { findAllByRole, getByText } = render(<App saveState={true} />);
-    fireEvent.click(getByText('Corp'));
+    const { findAllByRole, findByText } = render(<App saveState={true} />);
+    const corp = await findByText('Corp');
+    fireEvent.click(corp);
     await findAllByRole('img');
 
     const storage = JSON.parse(localStorage.getItem('settings'));
@@ -100,8 +103,9 @@ describe('saving state', () => {
       })
     );
 
-    const { getByText } = render(<App saveState={true} />);
-    fireEvent.click(getByText('Reset Settings'));
+    const { findByText } = render(<App saveState={true} />);
+    const reset = await findByText('Reset Settings');
+    fireEvent.click(reset);
 
     await waitFor(() => {
       expect(JSON.parse(localStorage.getItem('settings'))).toEqual(

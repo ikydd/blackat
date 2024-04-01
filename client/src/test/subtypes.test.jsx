@@ -7,8 +7,8 @@ jest.mock('../helpers/api');
 
 describe('Subtypes filters', () => {
   it('has the correct title', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     const heading = within(filterBlock).getByText('Subtypes');
 
     await waitFor(() => {
@@ -17,8 +17,8 @@ describe('Subtypes filters', () => {
   });
 
   it('starts with no checkboxes', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
@@ -27,8 +27,8 @@ describe('Subtypes filters', () => {
   });
 
   it('loads some checkboxes for runner', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -38,8 +38,8 @@ describe('Subtypes filters', () => {
   });
 
   it('starts with empty checkboxes for runner', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -49,8 +49,8 @@ describe('Subtypes filters', () => {
   });
 
   it('loads some checkboxes for corp', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -61,8 +61,8 @@ describe('Subtypes filters', () => {
   });
 
   it('starts with empty checkboxes for corp', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -73,8 +73,8 @@ describe('Subtypes filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     const unchecked = await within(filterBlock).findAllByRole('checkbox');
 
@@ -90,8 +90,8 @@ describe('Subtypes filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, findAllByRole, findByRole, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
     const unchecked = await within(filterBlock).findByLabelText('Icebreaker');
     const all = await findAllByRole('img');
@@ -105,8 +105,8 @@ describe('Subtypes filters', () => {
   });
 
   it('retains filters from each side', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
 
     let icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
@@ -123,8 +123,8 @@ describe('Subtypes filters', () => {
   });
 
   it('does not apply filters to the wrong side', async () => {
-    const { getByTestId, getByText, findAllByRole } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText, findAllByRole } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
 
     const icebreaker = await within(filterBlock).findByLabelText('Icebreaker');
@@ -137,8 +137,8 @@ describe('Subtypes filters', () => {
   });
 
   it('includes filters appropriate to both sides', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('subtypes-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('subtypes-filters');
     fireEvent.click(getByText('Subtypes'));
 
     let bioroid = await within(filterBlock).findByLabelText('Bioroid');

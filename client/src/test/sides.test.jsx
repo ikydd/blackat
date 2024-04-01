@@ -7,8 +7,9 @@ jest.mock('../helpers/api');
 describe('Side selection', () => {
   describe('buttons', () => {
     it('contains both sides', async () => {
-      const { getByTestId } = render(<App />);
-      const sides = within(getByTestId('sides')).getAllByRole('button');
+      const { findByTestId } = render(<App />);
+      const sidesBlock = await findByTestId('sides');
+      const sides = within(sidesBlock).getAllByRole('button');
 
       await waitFor(() => {
         expect(sides[0]).toHaveTextContent('Runner');
@@ -17,34 +18,40 @@ describe('Side selection', () => {
     });
 
     it('starts on the runner side', async () => {
-      const { getByText } = render(<App />);
+      const { findByText } = render(<App />);
+      const corp = await findByText('Corp');
+      const runner = await findByText('Runner');
 
       await waitFor(() => {
-        expect(getByText('Runner')).toHaveClass('selected');
-        expect(getByText('Corp')).not.toHaveClass('selected');
+        expect(runner).toHaveClass('selected');
+        expect(corp).not.toHaveClass('selected');
       });
     });
 
     it('selects the correct SideButtons when corp is selected', async () => {
-      const { getByText } = render(<App />);
+      const { findByText } = render(<App />);
+      const corp = await findByText('Corp');
+      const runner = await findByText('Runner');
 
-      fireEvent.click(getByText('Corp'));
+      fireEvent.click(corp);
 
       await waitFor(() => {
-        expect(getByText('Runner')).not.toHaveClass('selected');
-        expect(getByText('Corp')).toHaveClass('selected');
+        expect(runner).not.toHaveClass('selected');
+        expect(corp).toHaveClass('selected');
       });
     });
 
     it('selects the correct SideButtons when runner is selected', async () => {
-      const { getByText } = render(<App />);
+      const { findByText } = render(<App />);
+      const corp = await findByText('Corp');
+      const runner = await findByText('Runner');
 
-      fireEvent.click(getByText('Corp'));
-      fireEvent.click(getByText('Runner'));
+      fireEvent.click(corp);
+      fireEvent.click(runner);
 
       await waitFor(() => {
-        expect(getByText('Runner')).toHaveClass('selected');
-        expect(getByText('Corp')).not.toHaveClass('selected');
+        expect(runner).toHaveClass('selected');
+        expect(corp).not.toHaveClass('selected');
       });
     });
   });
