@@ -7,8 +7,8 @@ jest.mock('../helpers/api');
 
 describe('Types filters', () => {
   it('has the correct title', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     const heading = within(filterBlock).getByText(/^Types/i);
 
     await waitFor(() => {
@@ -17,8 +17,8 @@ describe('Types filters', () => {
   });
 
   it('starts with no checkboxes', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     const checkboxes = await within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
@@ -27,8 +27,8 @@ describe('Types filters', () => {
   });
 
   it('loads some checkboxes for runner', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -38,8 +38,8 @@ describe('Types filters', () => {
   });
 
   it('starts with empty checkboxes for runner', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -49,8 +49,8 @@ describe('Types filters', () => {
   });
 
   it('loads some checkboxes for corp', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -61,8 +61,8 @@ describe('Types filters', () => {
   });
 
   it('starts with empty checkboxes for corp', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     fireEvent.click(getByText('Corp'));
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -73,8 +73,8 @@ describe('Types filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     const unchecked = await within(filterBlock).findAllByRole('checkbox');
 
@@ -90,8 +90,8 @@ describe('Types filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, findAllByRole, findByRole, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
     const unchecked = await within(filterBlock).findByLabelText('Hardware');
     const all = await findAllByRole('img');
@@ -105,8 +105,8 @@ describe('Types filters', () => {
   });
 
   it('retains filters from each side', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
 
     let hardware = await within(filterBlock).findByLabelText('Hardware');
@@ -123,8 +123,8 @@ describe('Types filters', () => {
   });
 
   it('does not apply filters to the wrong side', async () => {
-    const { getByTestId, getByText, findAllByRole } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText, findAllByRole } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
 
     const hardware = await within(filterBlock).findByLabelText('Hardware');
@@ -137,8 +137,8 @@ describe('Types filters', () => {
   });
 
   it('includes filters appropriate to both sides', async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const filterBlock = getByTestId('types-filters');
+    const { findByTestId, getByText } = render(<App />);
+    const filterBlock = await findByTestId('types-filters');
     fireEvent.click(getByText(/Types/));
 
     const hardware = await within(filterBlock).findByLabelText('Identity');

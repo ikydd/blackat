@@ -3,7 +3,7 @@ import getData from './helpers/api';
 import { initSettings, loadSettings, saveSettings } from './helpers/settings-manager';
 import sortOptions from './helpers/sort-options';
 import preferencesOptions from './helpers/preferences-options';
-import CardList from './components/CardList';
+import CardGallery from './components/CardGallery';
 import ControlPanel from './components/ControlPanel';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
@@ -12,8 +12,12 @@ import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
+import Loader from './components/Loader';
 import Header from './components/Header';
 import Icon from './components/Icon';
+import filterCards from './helpers/filter-cards';
+import { prepareGroupingData, groupCards } from './helpers/group-cards';
+import { prepareSortingData, sortCards } from './helpers/sort-cards';
 import './App.css';
 
 const setOptionToMatchSettings = (option, settings) => {
@@ -65,11 +69,15 @@ const addOrRemoveSelections = (currentSettings, codes, selected) => {
 
 const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const initialSettings = initSettings({ side: sideProp });
+  const [loaded, setLoaded] = useState(false);
   const [settings, setSettings] = useState(initialSettings);
   const [factions, setFactions] = useState([]);
   const [types, setTypes] = useState([]);
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [sortingData, setSortingData] = useState();
+  const [groupingData, setGroupingData] = useState();
 
   const loadPreviousSession = () => {
     const previousSession = saveState && loadSettings();
@@ -91,21 +99,35 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   }, [saveState]);
 
   useEffect(() => {
-    Promise.all([getData('factions'), getData('types'), getData('packs'), getData('subtypes')])
-      .then(([loadedfactions, loadedTypes, loadedPacks, loadedSubtypes]) => {
+    Promise.all([
+      getData('cards'),
+      getData('factions'),
+      getData('types'),
+      getData('packs'),
+      getData('subtypes')
+    ])
+      .then(([loadedCards, loadedfactions, loadedTypes, loadedPacks, loadedSubtypes]) => {
         setFactions(loadedfactions);
         setTypes(loadedTypes);
         setSubtypes(loadedSubtypes);
         setPacks(loadedPacks);
+        setSortingData(
+          prepareSortingData({ factions: loadedfactions, types: loadedTypes, packs: loadedPacks })
+        );
+        setGroupingData(
+          prepareGroupingData({ factions: loadedfactions, types: loadedTypes, packs: loadedPacks })
+        );
+        setCards(loadedCards);
+        setLoaded(true);
       })
       /* eslint-disable-next-line no-console */
       .catch((err) => console.log(err));
   }, []);
 
   const originalArt = settings.preferences.find((pref) => pref === 'original');
-  const rotation = settings.preferences.some((pref) => pref === 'rotation');
-  const legal = settings.preferences.some((pref) => pref === 'legal');
-  const official = settings.preferences.some((pref) => pref === 'official');
+  const rotation = settings.preferences.includes('rotation');
+  const legal = settings.preferences.includes('legal');
+  const official = settings.preferences.includes('official');
 
   const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
   const currentTypes = setupFilterForCurrentSide(types, settings.types, settings.side);
@@ -121,6 +143,20 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       filterOptions.some(({ code }) => code === selection);
     return selected.filter((selection) => appearsInCurrentOptions(selection));
   };
+
+  const filteredCards = filterCards(cards, {
+    ...settings,
+    legal,
+    rotation,
+    official,
+    textSearch: settings.text,
+    titleSearch: settings.title,
+    factions: adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions),
+    types: adjustSettingsToMatchCurrentOptions(settings.types, currentTypes),
+    subtypes: adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)
+  });
+  const sortedCards = sortCards(filteredCards, sortingData, settings.sort);
+  const sections = groupCards(sortedCards, groupingData, settings.sort);
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
@@ -144,90 +180,83 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       <header>
         <Header />
       </header>
-      <main>
-        <ControlPanel>
-          <div id="sides" data-testid="sides">
-            <SideButton
-              title="Runner"
-              side="runner"
-              selected={settings.side === 'runner'}
-              onSelect={updateSimpleFilter('side')}
-            />
-            <SideButton
-              title="Corp"
-              side="corp"
-              selected={settings.side === 'corp'}
-              onSelect={updateSimpleFilter('side')}
-            />
-          </div>
-          <TextSearch
-            placeholder="search title"
-            value={settings.title}
-            onChange={updateSimpleFilter('title')}
-          />
-          <TextSearch
-            placeholder="search text"
-            value={settings.text}
-            onChange={updateSimpleFilter('text')}
-          />
-          <SortSelect
-            options={sortOptions}
-            default={settings.sort}
-            onChange={updateSimpleFilter('sort')}
-          />
+      <main className={loaded ? '' : 'loading'}>
+        {loaded ? (
+          <>
+            <ControlPanel>
+              <div id="sides" data-testid="sides">
+                <SideButton
+                  title="Runner"
+                  side="runner"
+                  selected={settings.side === 'runner'}
+                  onSelect={updateSimpleFilter('side')}
+                />
+                <SideButton
+                  title="Corp"
+                  side="corp"
+                  selected={settings.side === 'corp'}
+                  onSelect={updateSimpleFilter('side')}
+                />
+              </div>
+              <TextSearch
+                placeholder="search title"
+                value={settings.title}
+                onChange={updateSimpleFilter('title')}
+              />
+              <TextSearch
+                placeholder="search text"
+                value={settings.text}
+                onChange={updateSimpleFilter('text')}
+              />
+              <SortSelect
+                options={sortOptions}
+                default={settings.sort}
+                onChange={updateSimpleFilter('sort')}
+              />
 
-          <FilterList
-            title="Factions"
-            closed={true}
-            options={currentFactions}
-            clearAll={clearListFilter('factions')}
-            onChange={onSelectionHandler('factions')}
-          />
-          <FilterList
-            title="Types"
-            closed={true}
-            options={currentTypes}
-            clearAll={clearListFilter('types')}
-            onChange={onSelectionHandler('types')}
-          />
-          <FilterList
-            title="Subtypes"
-            closed={true}
-            options={currentSubtypes}
-            clearAll={clearListFilter('subtypes')}
-            onChange={onSelectionHandler('subtypes')}
-          />
-          <NestedFilterList
-            title="Packs"
-            closed={true}
-            options={currentPacks}
-            clearAll={clearListFilter('packs')}
-            onChange={onSelectionHandler('packs')}
-          />
-          <NestedFilterList
-            title="Preferences"
-            closed={true}
-            options={currentPreferences}
-            clearAll={clearListFilter('preferences')}
-            onChange={onSelectionHandler('preferences')}
-          />
+              <FilterList
+                title="Factions"
+                closed={true}
+                options={currentFactions}
+                clearAll={clearListFilter('factions')}
+                onChange={onSelectionHandler('factions')}
+              />
+              <FilterList
+                title="Types"
+                closed={true}
+                options={currentTypes}
+                clearAll={clearListFilter('types')}
+                onChange={onSelectionHandler('types')}
+              />
+              <FilterList
+                title="Subtypes"
+                closed={true}
+                options={currentSubtypes}
+                clearAll={clearListFilter('subtypes')}
+                onChange={onSelectionHandler('subtypes')}
+              />
+              <NestedFilterList
+                title="Packs"
+                closed={true}
+                options={currentPacks}
+                clearAll={clearListFilter('packs')}
+                onChange={onSelectionHandler('packs')}
+              />
+              <NestedFilterList
+                title="Preferences"
+                closed={true}
+                options={currentPreferences}
+                clearAll={clearListFilter('preferences')}
+                onChange={onSelectionHandler('preferences')}
+              />
 
-          <Reset onClick={resetAllFilters} />
-        </ControlPanel>
-        <CardList
-          side={settings.side}
-          sort={settings.sort}
-          titleSearch={settings.title}
-          textSearch={settings.text}
-          factions={adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions)}
-          types={adjustSettingsToMatchCurrentOptions(settings.types, currentTypes)}
-          subtypes={adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)}
-          packs={settings.packs}
-          art={originalArt}
-          official={official}
-          rotation={rotation}
-          legal={legal}
-        />
+              <Reset onClick={resetAllFilters} />
+            </ControlPanel>
+            <CardGallery sections={sections} art={originalArt} />
+          </>
+        ) : (
+          <Loader />
+        )}
       </main>
       <footer>
         <div>

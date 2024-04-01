@@ -16,6 +16,7 @@ describe('Sort', () => {
 
   it('has the correct options', async () => {
     const { findAllByRole } = render(<App />);
+    await findAllByRole('img');
     const options = await findAllByRole('option');
 
     expect(options).toEqual([
@@ -60,18 +61,20 @@ describe('Sort', () => {
 
   it('sorts by faction by default', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
-    const { findAllByRole, getByRole } = render(<App />);
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
 
     expect(cards).toEqual(['D4v1d', 'Gordian Blade']);
-    expect(getByRole('combobox')).toHaveValue('faction');
+    expect(sort).toHaveValue('faction');
   });
 
   it('sorts by faction', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'faction' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'faction' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -81,8 +84,9 @@ describe('Sort', () => {
 
   it('sorts by type', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'type' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'type' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -92,8 +96,9 @@ describe('Sort', () => {
 
   it('sorts by pack', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'pack' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'pack' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -102,8 +107,9 @@ describe('Sort', () => {
   });
 
   it('sorts by title', async () => {
-    const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'title' } });
+    const { findAllByRole, findByRole, getByText } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'title' } });
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');
@@ -114,8 +120,9 @@ describe('Sort', () => {
 
   it('sorts by illustrator', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/corp.json'));
-    const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), {
+    const { findAllByRole, findByRole, getByText } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, {
       target: { value: 'illustrator' }
     });
     fireEvent.click(getByText('Corp'));
@@ -128,8 +135,9 @@ describe('Sort', () => {
 
   it('sorts by cost', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'cost' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'cost' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -139,8 +147,9 @@ describe('Sort', () => {
 
   it('sorts by agenda points', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda.json'));
-    const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'agenda' } });
+    const { findAllByRole, findByRole, getByText } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'agenda' } });
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');
@@ -151,8 +160,9 @@ describe('Sort', () => {
 
   it('sorts by strength', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/strength-sort/strength.json'));
-    const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'strength' } });
+    const { findAllByRole, findByRole, getByText } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'strength' } });
     fireEvent.click(getByText('Corp'));
 
     const images = await findAllByRole('img');
@@ -163,8 +173,9 @@ describe('Sort', () => {
 
   it('sorts by subroutines', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/subroutines.json'));
-    const { findAllByRole, getByRole, getByText } = render(<App />);
-    fireEvent.change(getByRole('combobox'), {
+    const { findAllByRole, findByRole, getByText } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, {
       target: { value: 'subroutines' }
     });
     fireEvent.click(getByText('Corp'));
@@ -177,8 +188,9 @@ describe('Sort', () => {
 
   it('sorts asc correctly with undefined', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/cost-sort/undefined.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'cost' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'cost' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -188,8 +200,9 @@ describe('Sort', () => {
 
   it('sorts desc correctly with undefined', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/undefined.json'));
-    const { findAllByRole, getByRole } = render(<App side="corp" />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'agenda' } });
+    const { findAllByRole, findByRole } = render(<App side="corp" />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'agenda' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -199,8 +212,9 @@ describe('Sort', () => {
 
   it('sorts X to the end when asc', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/cost-sort/x.json'));
-    const { findAllByRole, getByRole } = render(<App />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'cost' } });
+    const { findAllByRole, findByRole } = render(<App />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'cost' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);
@@ -210,8 +224,9 @@ describe('Sort', () => {
 
   it('sorts X to the end when desc', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/strength-sort/x.json'));
-    const { findAllByRole, getByRole } = render(<App side="corp" />);
-    fireEvent.change(getByRole('combobox'), { target: { value: 'strength' } });
+    const { findAllByRole, findByRole } = render(<App side="corp" />);
+    const sort = await findByRole('combobox');
+    fireEvent.change(sort, { target: { value: 'strength' } });
 
     const images = await findAllByRole('img');
     const cards = images.map(({ alt }) => alt);

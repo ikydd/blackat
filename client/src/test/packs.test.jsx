@@ -7,8 +7,8 @@ jest.mock('../helpers/api');
 
 describe('Packs filters', () => {
   it('has the correct title', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('packs-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('packs-filters');
     const heading = within(filterBlock).getByText('Packs');
 
     await waitFor(() => {
@@ -17,8 +17,8 @@ describe('Packs filters', () => {
   });
 
   it('starts with no checkboxes', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('packs-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('packs-filters');
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
@@ -27,18 +27,20 @@ describe('Packs filters', () => {
   });
 
   it('shows some checkboxes', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, findByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
     expect(checkboxes.length).toBeGreaterThan(0);
   });
 
   it('starts with empty checkboxes', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, findByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
 
     checkboxes.forEach((box) => {
@@ -47,9 +49,10 @@ describe('Packs filters', () => {
   });
 
   it('shows the same checkboxes when corp is selected', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, findByText, getByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
 
     const runnerBoxes = await within(filterBlock).findAllByRole('checkbox');
 
@@ -60,9 +63,10 @@ describe('Packs filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, findByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
     const unchecked = await within(filterBlock).findAllByRole('checkbox');
 
     fireEvent.click(unchecked[0]);
@@ -77,9 +81,10 @@ describe('Packs filters', () => {
   });
 
   it('filters cards correctly', async () => {
-    const { getByTestId, findAllByRole, findByRole, getByText } = render(<App />);
+    const { getByTestId, findAllByRole, findByRole, findByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
     const unchecked = await within(filterBlock).findByLabelText('What Lies Ahead');
     const all = await findAllByRole('img');
 
@@ -96,9 +101,10 @@ describe('Packs filters', () => {
   });
 
   it('retains filters for both sides', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, getByText, findByText } = render(<App />);
+    const packsButton = await findByText('Packs');
     const filterBlock = getByTestId('packs-filters');
-    fireEvent.click(getByText('Packs'));
+    fireEvent.click(packsButton);
 
     let wla = await within(filterBlock).findByLabelText('What Lies Ahead');
     fireEvent.click(wla);
@@ -111,9 +117,10 @@ describe('Packs filters', () => {
 
   describe('Cycle Checkbox', () => {
     it('does not select the cycle when a subitem is checked', async () => {
-      const { getByTestId, getByText, findByLabelText } = render(<App />);
+      const { getByTestId, findByText, findByLabelText } = render(<App />);
+      const packsButton = await findByText('Packs');
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
+      fireEvent.click(packsButton);
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
@@ -125,9 +132,10 @@ describe('Packs filters', () => {
     });
 
     it('selects all in a cycle when clicked regardless of their current state', async () => {
-      const { getByTestId, getByText, findByLabelText } = render(<App />);
+      const { getByTestId, findByText, findByLabelText } = render(<App />);
+      const packsButton = await findByText('Packs');
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
+      fireEvent.click(packsButton);
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
@@ -149,9 +157,10 @@ describe('Packs filters', () => {
     });
 
     it('deselects all in a cycle when deselected', async () => {
-      const { getByTestId, getByText, findByLabelText } = render(<App />);
+      const { getByTestId, findByText, findByLabelText } = render(<App />);
+      const packsButton = await findByText('Packs');
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
+      fireEvent.click(packsButton);
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 
@@ -172,9 +181,10 @@ describe('Packs filters', () => {
     });
 
     it('deselects cycle when not all subitems are checked', async () => {
-      const { getByTestId, getByText, findByLabelText } = render(<App />);
+      const { getByTestId, findByText, findByLabelText } = render(<App />);
+      const packsButton = await findByText('Packs');
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
+      fireEvent.click(packsButton);
 
       const genesis = packs.find(({ code }) => code === 'genesis');
 

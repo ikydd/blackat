@@ -13,8 +13,8 @@ jest.mock('../helpers/api');
 
 describe('Preferences filters', () => {
   it('has the correct title', async () => {
-    const { getByTestId } = render(<App />);
-    const filterBlock = getByTestId('preferences-filters');
+    const { findByTestId } = render(<App />);
+    const filterBlock = await findByTestId('preferences-filters');
     const heading = within(filterBlock).getByText('Preferences');
 
     await waitFor(() => {
@@ -23,9 +23,10 @@ describe('Preferences filters', () => {
   });
 
   it('starts with some checkboxes', async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, findByText } = render(<App />);
+    const prefsButton = await findByText('Preferences');
     const filterBlock = getByTestId('preferences-filters');
-    fireEvent.click(getByText('Preferences'));
+    fireEvent.click(prefsButton);
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
@@ -34,9 +35,10 @@ describe('Preferences filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId, getByText, getByDisplayValue } = render(<App />);
+    const { getByTestId, findByText, getByDisplayValue } = render(<App />);
+    const prefsButton = await findByText('Preferences');
     const filterBlock = getByTestId('preferences-filters');
-    fireEvent.click(getByText('Preferences'));
+    fireEvent.click(prefsButton);
     const checkbox = getByDisplayValue('original');
 
     fireEvent.click(checkbox);
@@ -54,8 +56,9 @@ describe('Preferences filters', () => {
     it('affects cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
       api.setData('cards', mockData);
-      const { findByRole, getByText, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findByRole, findByText, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('original');
       const reprint = await findByRole('img');
 
@@ -74,8 +77,9 @@ describe('Preferences filters', () => {
     it('filters cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/official.json');
       api.setData('cards', mockData);
-      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('official');
       const images = await findAllByRole('img');
       await waitFor(() => {
@@ -89,8 +93,9 @@ describe('Preferences filters', () => {
       });
     });
     it('filters options correctly', async () => {
-      const { getByText, getByTestId, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findByText, getByText, getByTestId, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('official');
       fireEvent.click(pref);
 
@@ -105,8 +110,9 @@ describe('Preferences filters', () => {
     it('filters rotated cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/rotated.json');
       api.setData('cards', mockData);
-      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('rotation');
       const images = await findAllByRole('img');
       await waitFor(() => {
@@ -121,8 +127,9 @@ describe('Preferences filters', () => {
     });
 
     it('filters options correctly', async () => {
-      const { getByText, getByTestId, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findByText, getByText, getByTestId, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('rotation');
       fireEvent.click(pref);
 
@@ -136,8 +143,9 @@ describe('Preferences filters', () => {
     it('filters banned cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/banned.json');
       api.setData('cards', mockData);
-      const { findAllByRole, getByText, getByDisplayValue } = render(<App />);
-      fireEvent.click(getByText('Preferences'));
+      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
       const pref = getByDisplayValue('legal');
       const images = await findAllByRole('img');
       await waitFor(() => {
