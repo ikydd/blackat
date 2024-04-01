@@ -57,6 +57,9 @@
     {
       "staticPath": "client/public/img/cards",
       "staticOutPath": "img/cards"
+    },
+    {
+      "staticPath": "client/public/favicon.ico"
     }
   ],
   "jest": {
