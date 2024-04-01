@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import SideButton from './SideButton';
 
-describe('CardList', () => {
+describe('SideButton', () => {
   it('renders without crashing', () => {
     expect(() => render(<SideButton />)).not.toThrow();
   });

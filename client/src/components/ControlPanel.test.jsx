@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ControlPanel from './ControlPanel';
 
-describe('CardList', () => {
+describe('ControlPanel', () => {
   it('renders without crashing', () => {
     expect(() => render(<ControlPanel />)).not.toThrow();
   });
