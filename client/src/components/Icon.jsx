@@ -31,6 +31,8 @@ const allowedIcons = [
   'sunny-lebeau',
   'adam',
   'apex',
+  'neutral-runner',
+  'neutral-corp',
   'mumbad',
   'abr',
   'flashpoint',
