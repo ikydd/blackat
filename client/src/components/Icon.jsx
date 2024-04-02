@@ -1,6 +1,60 @@
 import React from 'react';
 import './Icon.css';
 
-const Icon = ({ code }) => <span className={`icon icon-${code}`}></span>;
+const allowedIcons = [
+  'subroutine',
+  'mu3',
+  'mu2',
+  'mu1',
+  'mu',
+  'trash',
+  'link',
+  'click',
+  'recurring-credit',
+  'credit',
+  'spin',
+  'sansan',
+  'order-and-chaos',
+  'lunar',
+  'honor-and-profit',
+  'genesis',
+  'data-and-destiny',
+  'creation-and-control',
+  'core',
+  'nbn',
+  'jinteki',
+  'weyland-consortium',
+  'haas-bioroid',
+  'criminal',
+  'anarch',
+  'shaper',
+  'sunny-lebeau',
+  'adam',
+  'apex',
+  'mumbad',
+  'abr',
+  'flashpoint',
+  'red-sand',
+  'terminal-directive',
+  'core2',
+  'kitara',
+  'reign-and-reverie',
+  'magnum-opus',
+  'sc-19',
+  'ashes',
+  'magnum-opus-reprint',
+  'interrupt',
+  'salvaged-memories',
+  'system-gateway',
+  'system-update-2021',
+  'nisei',
+  'agenda-points',
+  'borealis',
+  'roseville',
+  'liberation'
+];
+
+const Icon = ({ code }) =>
+  allowedIcons.includes(code) ? <span className={`icon icon-${code}`}></span> : <></>;
 
 export default Icon;
