@@ -35,11 +35,6 @@ const ControlPanel = ({ children }) => {
       <ControlsToggle closed={closed} onClick={() => setClosed(!closed)} />
       <div id="filters-wrapper" className={closed ? 'closed' : ''}>
         <div id="filters">{children}</div>
-        <div id="addendum">
-          <p>
-            <Icon code="subroutine" /> <a href="#small-print">Small print</a>
-          </p>
-        </div>
       </div>
     </div>
   );
