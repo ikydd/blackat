@@ -12,9 +12,9 @@ const Card = ({ data: { title, imagesrc, show, code }, focusHandler, focus }) =>
       hidden={hideCard(show)}
     >
       <img
+        loading="lazy"
         src={imagesrc}
         alt={title}
-        loading="lazy"
         onTouchStart={() => {
           aboutToFocus = true;
         }}
