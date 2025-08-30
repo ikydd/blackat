@@ -5,7 +5,6 @@ import './ControlPanel.css';
 const ControlsToggle = ({ closed, onClick }) => {
   const action = closed ? 'Show' : 'Hide';
   const text = `${action} Filters`;
-  const icon = closed ? 'core' : 'core';
   return (
     <div id="controls-toggle" className="mobile-only">
       <button
@@ -17,7 +16,7 @@ const ControlsToggle = ({ closed, onClick }) => {
         onClick={onClick}
       >
         <div className="icon">
-          <Icon code={icon} />
+          <Icon code="core" />
         </div>
         <div className="action">
           <span>{action}</span>

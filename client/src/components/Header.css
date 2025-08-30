@@ -1,9 +1,6 @@
-#title {
+#title h1 {
   color: #fff;
   text-shadow: #000 0 0 2px;
-}
-
-#title h1 {
   margin-bottom: 0;
 }
 
@@ -12,4 +9,6 @@
   top: -0.5rem;
   font-weight: normal;
   font-size: 1.1rem;
+  color: #fff;
+  text-shadow: #000 0 0 2px;
 }

@@ -1,9 +1,26 @@
+:root {
+  --text-colour: #555;
+  --background-colour: #fff;
+  --border-colour: #ccc;
+  --placeholder-colour: #999;
+}
+
+:root.dark {
+  --text-colour: #999;
+  --background-colour: #161616;
+  --border-colour: #555;
+  --placeholder-colour: #777;
+}
+
 body {
-  background-image: url('../public/img/blackat-trim-flip.png'), url('../public/img/blackat-background-thin.png');
+  background-image: url('../public/img/blackat-trim-flip.png'),
+    url('../public/img/blackat-background-thin.png');
   background-repeat: no-repeat;
   background-size: 260px, auto;
   background-position: 2em 0, top left;
+  background-color: var(--background-colour);
   font-size: 1.4rem;
+  color: var(--text-colour);
 }
 h1,
 h2,
@@ -11,9 +28,21 @@ h3,
 h4,
 h5,
 select,
-input, button {
+input,
+button {
+  color: var(--text-colour);
   font-family: 'Rajdhani', sans-serif;
 }
+.form-control {
+  background-color: var(--background-colour);
+  color: var(--text-colour);
+  border-color: var(--border-colour);
+}
+
+.form-control::placeholder {
+  color: var(--placeholder-colour);
+}
+
 a {
   color: #ff6e00;
 }
@@ -39,7 +68,6 @@ main.loading {
   display: flex;
   justify-content: center;
 }
-
 
 #sides {
   width: 15em;

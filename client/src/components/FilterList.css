@@ -1,4 +1,15 @@
 .filter-list {
-  color: #555;
   margin: 0.5rem 0;
+}
+
+:root {
+  --divider-colour: #eee;
+}
+
+:root.dark {
+  --divider-colour: #333;
+}
+
+hr.filter-divider {
+  border-color: var(--divider-colour);
 }

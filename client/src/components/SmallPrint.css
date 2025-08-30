@@ -1,6 +1,5 @@
 #small-print {
   font-size: 1.1rem;
   max-width: 75rem;
+  color: var(--text-colour);
 }
-
-

@@ -5,6 +5,7 @@ import sortOptions from './helpers/sort-options';
 import preferencesOptions from './helpers/preferences-options';
 import CardGallery from './components/CardGallery';
 import ControlPanel from './components/ControlPanel';
+import ThemeSelector from './components/ThemeSelector';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
 import NestedFilterList from './components/NestedFilterList';
@@ -251,6 +252,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
               />
 
               <Reset onClick={resetAllFilters} />
+              <ThemeSelector />
             </ControlPanel>
             <CardGallery sections={sections} art={originalArt} />
           </>

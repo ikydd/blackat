@@ -11,6 +11,14 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+:root {
+  --spinner-colour: #333;
+}
+
+:root.dark {
+  --spinner-colour: #555;
+}
+
 .spinner {
   margin: 140px auto 0;
   text-align: center;
@@ -19,7 +27,7 @@ copies or substantial portions of the Software.
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
+  background-color: var(--spinner-colour);
   margin: 15px;
 
   border-radius: 100%;

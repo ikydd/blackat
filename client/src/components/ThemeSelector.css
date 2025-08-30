@@ -1,0 +1,17 @@
+#theme-selector {
+  margin: 0;
+  padding: 0;
+}
+#theme-selector button {
+  display: flex;
+  background: none;
+  border: none;
+  line-height: 2rem;
+  padding: 0;
+  align-items: center;
+}
+
+#theme-selector svg {
+  height: 1.4rem;
+  padding-right: 0.5rem;
+}
