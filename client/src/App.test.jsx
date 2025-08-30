@@ -104,7 +104,7 @@ describe('saving state', () => {
     );
 
     const { findByText } = render(<App saveState={true} />);
-    const reset = await findByText('Reset Settings');
+    const reset = await findByText('Reset Filters');
     fireEvent.click(reset);
 
     await waitFor(() => {
