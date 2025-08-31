@@ -3,7 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import NestedFilterList from './NestedFilterList';
 
 import options from '../../../fixtures/api/foo-nested.json';
-import optionsSelected from '../../../fixtures/api/foo-nested-selected.json';
 import singleOptions from '../../../fixtures/api/foo-nested-single.json';
 import groupOptions from '../../../fixtures/api/foo-nested-group.json';
 
@@ -50,7 +49,9 @@ describe('NestedFilterList', () => {
     });
 
     it('shows correct filters as selected', async () => {
-      const { findAllByRole } = render(<NestedFilterList options={optionsSelected} />);
+      const { findAllByRole } = render(
+        <NestedFilterList options={options} settings={['alpha', 'beta', 'gamma']} />
+      );
       const checkboxes = await findAllByRole('checkbox');
 
       const selected = checkboxes
@@ -72,7 +73,11 @@ describe('NestedFilterList', () => {
     it('calls the callback when the group is unchecked', async () => {
       const groupCb = jest.fn();
       const { findByLabelText } = render(
-        <NestedFilterList options={optionsSelected} onChange={groupCb} />
+        <NestedFilterList
+          options={options}
+          settings={['alpha', 'beta', 'gamma']}
+          onChange={groupCb}
+        />
       );
       const group = await findByLabelText('Bar');
       fireEvent.click(group);
@@ -131,7 +136,7 @@ describe('NestedFilterList', () => {
 
     it('retains selections when collapsed', async () => {
       const { queryAllByRole, getByText } = render(
-        <NestedFilterList title="A Title" options={optionsSelected} />
+        <NestedFilterList title="A Title" options={options} settings={['alpha', 'beta', 'gamma']} />
       );
       const heading = getByText('A Title');
       fireEvent.click(heading);
@@ -174,7 +179,9 @@ describe('NestedFilterList', () => {
     });
 
     it('has a visual mark when one or more filters are selected', async () => {
-      const { findByRole } = render(<NestedFilterList options={optionsSelected} />);
+      const { findByRole } = render(
+        <NestedFilterList options={options} settings={['alpha', 'beta', 'gamma']} />
+      );
       const alert = await findByRole('alert');
 
       expect(alert).toBeTruthy();

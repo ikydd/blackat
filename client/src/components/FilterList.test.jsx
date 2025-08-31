@@ -3,7 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import FilterList from './FilterList';
 
 import options from '../../../fixtures/api/foo.json';
-import optionsSelected from '../../../fixtures/api/foo-selected.json';
 
 describe('FilterList', () => {
   it('renders without crashing', () => {
@@ -31,7 +30,9 @@ describe('FilterList', () => {
     });
 
     it('shows correct filters as selected', async () => {
-      const { findAllByRole } = render(<FilterList options={optionsSelected} />);
+      const { findAllByRole } = render(
+        <FilterList options={options} settings={['anarch', 'shaper']} />
+      );
       const checkboxes = await findAllByRole('checkbox');
 
       const selected = checkboxes
@@ -90,7 +91,7 @@ describe('FilterList', () => {
 
     it('retains selections when collapsed', async () => {
       const { queryAllByRole, getByText } = render(
-        <FilterList title="A Title" options={optionsSelected} />
+        <FilterList title="A Title" options={options} settings={['anarch', 'shaper']} />
       );
       const heading = getByText('A Title');
       fireEvent.click(heading);
@@ -133,7 +134,9 @@ describe('FilterList', () => {
     });
 
     it('has a visual mark when one or more filters are selected', async () => {
-      const { findByRole } = render(<FilterList options={optionsSelected} />);
+      const { findByRole } = render(
+        <FilterList options={options} settings={['anarch', 'shaper']} />
+      );
       const alert = await findByRole('alert');
 
       expect(alert).toBeTruthy();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import getData from './helpers/api';
 import { initSettings, loadSettings, saveSettings } from './helpers/settings-manager';
 import sortOptions from './helpers/sort-options';
@@ -17,44 +17,27 @@ import Loader from './components/Loader';
 import Header from './components/Header';
 import Icon from './components/Icon';
 import filterCards from './helpers/filter-cards';
-import filterPreferredArt from './helpers/filter-card-art';
+import filterPacks from './helpers/filter-packs';
 import { prepareGroupingData, groupCards } from './helpers/group-cards';
 import { prepareSortingData, sortCards } from './helpers/sort-cards';
 import './App.css';
 
-const setOptionToMatchSettings = (option, settings) => {
-  const isGroup = option.items;
-  if (isGroup) {
-    const items = option.items.map((subOption) => setOptionToMatchSettings(subOption, settings));
-    const allItemsInGroupSelected =
-      items.filter(({ selected }) => selected).length === items.length;
-    return {
-      ...option,
-      selected: allItemsInGroupSelected,
-      items
-    };
-  }
+const filterOptionsBySide = (options, currentSide) =>
+  options.filter(({ side }) => !side || side === currentSide);
+
+const filterAllOptionsBySide = ({ factions, types, subtypes }, side) => {
   return {
-    ...option,
-    selected: settings.includes(option.code)
+    factions: filterOptionsBySide(factions, side),
+    types: filterOptionsBySide(types, side),
+    subtypes: filterOptionsBySide(subtypes, side)
   };
 };
 
-const setupFilter = (options, filterSettings) =>
-  options.map((option) => setOptionToMatchSettings(option, filterSettings));
-
-const setupFilterForCurrentSide = (options, filterSettings, currentSide) =>
-  options
-    .filter(({ side }) => !side || side === currentSide)
-    .map((option) => setOptionToMatchSettings(option, filterSettings));
-
-const isOfficial = (card, official) => !official || card.official;
-const isNotRotated = (card, rotated) => !rotated || !card.rotated;
-
-const setupFilterForOfficial = (options, filterSettings, { official = false, rotation = false }) =>
-  options
-    .filter((card) => isOfficial(card, official) && isNotRotated(card, rotation))
-    .map((option) => setOptionToMatchSettings(option, filterSettings));
+const filterSettingsToMatchCurrentOptions = (selected, filterOptions) => {
+  const appearsInCurrentOptions = (selection) =>
+    filterOptions.some(({ code }) => code === selection);
+  return selected.filter((selection) => appearsInCurrentOptions(selection));
+};
 
 const addOrRemoveSelections = (currentSettings, codes, selected) => {
   const listOfCodes = Array.isArray(codes) ? codes : [codes];
@@ -131,22 +114,47 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const legal = settings.preferences.includes('legal');
   const official = settings.preferences.includes('official');
 
-  const currentFactions = setupFilterForCurrentSide(factions, settings.factions, settings.side);
-  const currentTypes = setupFilterForCurrentSide(types, settings.types, settings.side);
-  const currentSubtypes = setupFilterForCurrentSide(subtypes, settings.subtypes, settings.side);
-  const currentPacks = setupFilterForOfficial(packs, settings.packs, {
-    official,
-    rotation
-  });
-  const currentPreferences = setupFilter(preferencesOptions, settings.preferences);
+  const filters = useMemo(
+    () => ({
+      runner: filterAllOptionsBySide({ factions, types, subtypes }, 'runner'),
+      corp: filterAllOptionsBySide({ factions, types, subtypes }, 'corp')
+    }),
+    [factions, types, subtypes]
+  );
 
-  const adjustSettingsToMatchCurrentOptions = (selected, filterOptions) => {
-    const appearsInCurrentOptions = (selection) =>
-      filterOptions.some(({ code }) => code === selection);
-    return selected.filter((selection) => appearsInCurrentOptions(selection));
-  };
+  const currentFactions = filters[settings.side].factions;
+  const currentTypes = filters[settings.side].types;
+  const currentSubtypes = filters[settings.side].subtypes;
+  const currentPacks = useMemo(
+    () =>
+      filterPacks(packs, {
+        official,
+        rotation
+      }),
+    [packs, official, rotation]
+  );
 
-  const filteredCards = filterCards(cards, {
+  const factionSettings = useMemo(
+    () => filterSettingsToMatchCurrentOptions(settings.factions, currentFactions),
+    [settings.factions, currentFactions]
+  );
+
+  const typeSettings = useMemo(
+    () => filterSettingsToMatchCurrentOptions(settings.types, currentTypes),
+    [settings.types, currentTypes]
+  );
+
+  const subtypeSettings = useMemo(
+    () => filterSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes),
+    [settings.subtypes, currentSubtypes]
+  );
+
+  const sortedCards = useMemo(
+    () => sortCards(cards, sortingData, settings.sort),
+    [cards, sortingData, settings.sort]
+  );
+
+  const filteredCards = filterCards(sortedCards, {
     ...settings,
     legal,
     rotation,
@@ -154,13 +162,12 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     originalArt,
     textSearch: settings.text,
     titleSearch: settings.title,
-    factions: adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions),
-    types: adjustSettingsToMatchCurrentOptions(settings.types, currentTypes),
-    subtypes: adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)
+    factions: factionSettings,
+    types: typeSettings,
+    subtypes: subtypeSettings
   });
-  const sortedCards = sortCards(filteredCards, sortingData, settings.sort);
-  const preferredArtCards = filterPreferredArt(sortedCards, { originalArt });
-  const sections = groupCards(preferredArtCards, groupingData, settings.sort);
+
+  const sections = groupCards(filteredCards, groupingData, settings.sort);
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
@@ -222,6 +229,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
                 title="Factions"
                 closed={true}
                 options={currentFactions}
+                settings={settings.factions}
                 clearAll={clearListFilter('factions')}
                 onChange={onSelectionHandler('factions')}
               />
@@ -229,6 +237,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
                 title="Types"
                 closed={true}
                 options={currentTypes}
+                settings={settings.types}
                 clearAll={clearListFilter('types')}
                 onChange={onSelectionHandler('types')}
               />
@@ -236,6 +245,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
                 title="Subtypes"
                 closed={true}
                 options={currentSubtypes}
+                settings={settings.subtypes}
                 clearAll={clearListFilter('subtypes')}
                 onChange={onSelectionHandler('subtypes')}
               />
@@ -243,13 +253,15 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
                 title="Packs"
                 closed={true}
                 options={currentPacks}
+                settings={settings.packs}
                 clearAll={clearListFilter('packs')}
                 onChange={onSelectionHandler('packs')}
               />
               <NestedFilterList
                 title="Preferences"
                 closed={true}
-                options={currentPreferences}
+                options={preferencesOptions}
+                settings={settings.preferences}
                 clearAll={clearListFilter('preferences')}
                 onChange={onSelectionHandler('preferences')}
               />

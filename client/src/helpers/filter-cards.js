@@ -41,6 +41,26 @@ const isRelevantToSortMethod = (card, sort) => {
   }
 };
 
+const isPreferredArt = (card, originalArt, index, list) => {
+  const previous = list[index - 1];
+  const next = list[index + 1];
+
+  const hasOriginalArt = previous && previous.title === card.title;
+  const hasUpdatedArt = next && next.title === card.title;
+
+  if (hasOriginalArt && hasUpdatedArt) {
+    return false;
+  }
+  if (originalArt && hasOriginalArt) {
+    return false;
+  }
+  if (hasUpdatedArt) {
+    return originalArt;
+  }
+
+  return true;
+};
+
 const setCardVisibilityFromSettings = (
   card,
   {
@@ -52,10 +72,13 @@ const setCardVisibilityFromSettings = (
     types = [],
     subtypes = [],
     packs = [],
+    originalArt = false,
     official = false,
     rotation = false,
     legal = false
-  }
+  },
+  index,
+  all
 ) => {
   return (
     isRelevantToSortMethod(card, sort) &&
@@ -68,11 +91,12 @@ const setCardVisibilityFromSettings = (
     isMatchingOfficiality(card, official) &&
     isMatchingRotation(card, rotation) &&
     isMatchingLegality(card, legal) &&
-    hasMatchingSubtypes(card, subtypes)
+    hasMatchingSubtypes(card, subtypes) &&
+    isPreferredArt(card, originalArt, index, all)
   );
 };
 
 const filterCardsByAllSettings = (cards, filters) =>
-  cards.filter((card) => setCardVisibilityFromSettings(card, filters));
+  cards.filter((card, index, all) => setCardVisibilityFromSettings(card, filters, index, all));
 
 export default filterCardsByAllSettings;

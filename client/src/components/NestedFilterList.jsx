@@ -10,7 +10,8 @@ const NestedFilterList = ({
   closed = false,
   clearAll,
   onChange,
-  options = []
+  options = [],
+  settings = []
 }) => {
   const [isClosed, setClosed] = useState(closed);
 
@@ -23,11 +24,25 @@ const NestedFilterList = ({
     onChange(item.code, checked);
   };
 
+  const groups = options.map((option) => {
+    const items = option.items.map((suboption) => ({
+      ...suboption,
+      selected: settings.includes(suboption.code)
+    }));
+    const allItemsInGroupSelected =
+      items.filter(({ selected }) => selected).length === items.length;
+    return {
+      ...option,
+      selected: allItemsInGroupSelected,
+      items
+    };
+  });
+
   const toggleClosed = () => {
     setClosed(!isClosed);
   };
 
-  const inUse = options
+  const inUse = groups
     .reduce((list, group) => list.concat(group.items), [])
     .find(({ selected }) => selected);
 
@@ -61,7 +76,7 @@ const NestedFilterList = ({
       {isClosed !== true && (
         <div className="filter-list-items">
           <FilterClearButton onClick={clearAll} />
-          {generateFilters(options)}
+          {generateFilters(groups)}
         </div>
       )}
     </div>

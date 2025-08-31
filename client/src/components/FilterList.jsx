@@ -4,16 +4,28 @@ import FilterHeading from './FilterHeading';
 import FilterClearButton from './FilterClearButton';
 import './FilterList.css';
 
-const FilterList = ({ closed = false, title = 'Missing', onChange, options = [], clearAll }) => {
+const FilterList = ({
+  closed = false,
+  title = 'Missing',
+  onChange,
+  options = [],
+  settings = [],
+  clearAll
+}) => {
   const [isClosed, setClosed] = useState(closed);
 
   const handleSelection = (item, checked) => onChange(item.code, checked);
+
+  const items = options.map((option) => ({
+    ...option,
+    selected: settings.includes(option.code)
+  }));
 
   const toggleClosed = () => {
     setClosed(!isClosed);
   };
 
-  const inUse = options.some(({ selected }) => selected);
+  const inUse = items.some(({ selected }) => selected);
   const keyword = title.toLowerCase();
   const id = `filter-list-${keyword}`;
 
@@ -29,7 +41,7 @@ const FilterList = ({ closed = false, title = 'Missing', onChange, options = [],
       {isClosed !== true && (
         <div id={id} className="filter-list-items">
           <FilterClearButton onClick={clearAll} />
-          {options.map((item) => (
+          {items.map((item) => (
             <FilterItem key={item.code} item={item} keyword={keyword} onChange={handleSelection} />
           ))}
         </div>

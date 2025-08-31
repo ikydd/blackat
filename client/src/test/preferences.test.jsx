@@ -55,7 +55,8 @@ describe('Preferences filters', () => {
   describe('Prefer Original Art', () => {
     it('affects cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
-      api.setData('cards', mockData);
+      // the cards get sorted which affect the array. Spread it so it's a different array
+      api.setData('cards', [...mockData]);
       const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
 
       const getGordianBlades = (imgs) =>
