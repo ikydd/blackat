@@ -23,19 +23,19 @@
   }
 
   @media (max-width: 700px) {
-    :nth-child(3n+1 of .visible-card) img:hover {
+    :nth-child(3n + 1 of .card-tile) img:hover {
       transform: scale(1.5, 1.5) translateX(16%);
     }
-    :nth-child(3n of .visible-card) img:hover {
+    :nth-child(3n of .card-tile) img:hover {
       transform: scale(1.5, 1.5) translateX(-16%);
     }
   }
-  
+
   @media (max-width: 500px) {
-    :nth-child(odd of .visible-card) img:hover {
+    :nth-child(odd of .card-tile) img:hover {
       transform: scale(1.5, 1.5) translateX(16%);
     }
-    :nth-child(even of .visible-card) img:hover {
+    :nth-child(even of .card-tile) img:hover {
       transform: scale(1.5, 1.5) translateX(-16%);
     }
   }
@@ -48,19 +48,19 @@
     box-shadow: 0 0 6px #000;
   }
   @media (max-width: 700px) {
-    :nth-child(3n+1 of .visible-card).focused-card img {
+    :nth-child(3n + 1 of .card-tile).focused-card img {
       transform: scale(2, 2) translateX(25%);
     }
-    :nth-child(3n of .visible-card).focused-card img {
+    :nth-child(3n of .card-tile).focused-card img {
       transform: scale(2, 2) translateX(-25%);
     }
   }
-  
+
   @media (max-width: 500px) {
-    :nth-child(odd of .visible-card).focused-card img {
+    :nth-child(odd of .card-tile).focused-card img {
       transform: scale(2, 2) translateX(25%);
     }
-    :nth-child(even of .visible-card).focused-card img {
+    :nth-child(even of .card-tile).focused-card img {
       transform: scale(2, 2) translateX(-25%);
     }
   }

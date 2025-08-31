@@ -15,7 +15,6 @@ const compare = ({ a, b, order = 'asc', numbersOnly = false }) => {
 const ensureSection = (sections, groupInfo, groupCode = 'default') => {
   return (
     sections[groupCode] || {
-      show: false,
       info: groupInfo,
       cards: []
     }
@@ -25,8 +24,7 @@ const ensureSection = (sections, groupInfo, groupCode = 'default') => {
 const addCard = (section, card) => {
   return {
     ...section,
-    cards: section.cards.concat(card),
-    show: card.show || section.show
+    cards: section.cards.concat(card)
   };
 };
 
@@ -71,23 +69,24 @@ export const prepareGroupingData = ({ types, packs, factions }) => ({
 });
 
 const sortSections = (sections, sort) => {
-  const list = Object.values(sections);
   switch (sort) {
     case 'faction':
     case 'pack':
     case 'type':
-      return list;
+      return sections;
     case 'subroutines':
     case 'strength':
     case 'agenda':
-      return list.sort((a, b) =>
+      return sections.sort((a, b) =>
         compare({ a: a.info.code, b: b.info.code, order: 'desc', numbersOnly: true })
       );
     case 'cost':
-      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code, numbersOnly: true }));
+      return sections.sort((a, b) =>
+        compare({ a: a.info.code, b: b.info.code, numbersOnly: true })
+      );
     case 'illustrator':
     default:
-      return list.sort((a, b) => compare({ a: a.info.code, b: b.info.code }));
+      return sections.sort((a, b) => compare({ a: a.info.code, b: b.info.code }));
   }
 };
 
@@ -123,5 +122,5 @@ export const groupCards = (
         return defaultGroup({ sections, card });
     }
   }, {});
-  return sortSections(groupedCards, sort);
+  return sortSections(Object.values(groupedCards), sort);
 };

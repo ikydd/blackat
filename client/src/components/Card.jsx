@@ -1,16 +1,10 @@
 import React from 'react';
 import './Card.css';
 
-const hideCard = (show) => (show === false ? 'hidden' : false);
-
-const Card = ({ data: { title, imagesrc, show, code }, focusHandler, focus }) => {
+const Card = ({ data: { title, imagesrc, code }, focusHandler, focus }) => {
   let aboutToFocus;
   return (
-    <div
-      className={`card-tile${show ? ' visible-card' : ''}${focus ? ' focused-card' : ''}`}
-      title={title}
-      hidden={hideCard(show)}
-    >
+    <div className={`card-tile${focus ? ' focused-card' : ''}`} title={title}>
       <img
         loading="lazy"
         src={imagesrc}

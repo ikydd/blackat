@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import CardSection from './CardSection';
 import Empty from './Empty';
 
-const CardGallery = ({ art, sections }) => {
+const CardGallery = ({ sections }) => {
   const [currentFocus, setCurrentFocus] = useState();
 
-  const empty = !sections.some(({ show }) => show);
+  const empty = sections.length === 0;
 
   return (
     <div id="cards">
@@ -14,7 +14,6 @@ const CardGallery = ({ art, sections }) => {
         <CardSection
           key={index}
           section={section}
-          art={art}
           currentFocus={currentFocus}
           focusHandler={setCurrentFocus}
         />

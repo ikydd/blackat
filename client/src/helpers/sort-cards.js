@@ -38,7 +38,6 @@ const compareByProp = (prop, categories, a, b, result = 0) => {
     case 'title':
     case 'illustrator':
     case 'code':
-      return compareProperty(prop, a, b);
     case 'cost':
     case 'advancement':
       return compareProperty(prop, a, b);

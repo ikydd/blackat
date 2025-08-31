@@ -56,20 +56,42 @@ describe('Preferences filters', () => {
     it('affects cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
       api.setData('cards', mockData);
-      const { findByRole, findByText, getByDisplayValue } = render(<App />);
+      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
+
+      const getGordianBlades = (imgs) =>
+        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+      const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
       fireEvent.click(prefsButton);
       const pref = getByDisplayValue('original');
-      const reprint = await findByRole('img');
+
+      fireEvent.change(sort, { target: { value: 'pack' } });
+      const sortedByPack = await findAllByRole('img');
 
       await waitFor(() => {
-        expect(reprint.src).toBe(`http://localhost${mockData[1].imagesrc}`);
+        expect(getGordianBlades(sortedByPack)).toEqual([
+          `http://localhost${mockData[0].imagesrc}`,
+          `http://localhost${mockData[2].imagesrc}`,
+          `http://localhost${mockData[4].imagesrc}`
+        ]);
+      });
+
+      fireEvent.change(sort, { target: { value: 'title' } });
+      const sortedByTitle = await findAllByRole('img');
+
+      await waitFor(() => {
+        expect(getGordianBlades(sortedByTitle)).toEqual([
+          `http://localhost${mockData[4].imagesrc}`
+        ]);
       });
 
       fireEvent.click(pref);
-      const original = await findByRole('img');
+      const preferOriginal = await findAllByRole('img');
+
       await waitFor(() => {
-        expect(original.src).toBe(`http://localhost${mockData[0].imagesrc}`);
+        expect(getGordianBlades(preferOriginal)).toEqual([
+          `http://localhost${mockData[0].imagesrc}`
+        ]);
       });
     });
   });

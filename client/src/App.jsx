@@ -17,6 +17,7 @@ import Loader from './components/Loader';
 import Header from './components/Header';
 import Icon from './components/Icon';
 import filterCards from './helpers/filter-cards';
+import filterPreferredArt from './helpers/filter-card-art';
 import { prepareGroupingData, groupCards } from './helpers/group-cards';
 import { prepareSortingData, sortCards } from './helpers/sort-cards';
 import './App.css';
@@ -125,7 +126,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const originalArt = settings.preferences.find((pref) => pref === 'original');
+  const originalArt = settings.preferences.includes('original');
   const rotation = settings.preferences.includes('rotation');
   const legal = settings.preferences.includes('legal');
   const official = settings.preferences.includes('official');
@@ -150,6 +151,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     legal,
     rotation,
     official,
+    originalArt,
     textSearch: settings.text,
     titleSearch: settings.title,
     factions: adjustSettingsToMatchCurrentOptions(settings.factions, currentFactions),
@@ -157,7 +159,8 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     subtypes: adjustSettingsToMatchCurrentOptions(settings.subtypes, currentSubtypes)
   });
   const sortedCards = sortCards(filteredCards, sortingData, settings.sort);
-  const sections = groupCards(sortedCards, groupingData, settings.sort);
+  const preferredArtCards = filterPreferredArt(sortedCards, { originalArt });
+  const sections = groupCards(preferredArtCards, groupingData, settings.sort);
 
   const updateSimpleFilter = (type) => (value) => {
     updateSettings({ [type]: value });
@@ -254,7 +257,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
               <Reset onClick={resetAllFilters} />
               <ThemeSelector />
             </ControlPanel>
-            <CardGallery sections={sections} art={originalArt} />
+            <CardGallery sections={sections} />
           </>
         ) : (
           <Loader />

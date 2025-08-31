@@ -1,9 +1,9 @@
 [
   {
-    "code": "01043",
+    "code": "10001",
     "title": "Gordian Blade",
     "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
-    "imagesrc": "/img/cards/01043.png",
+    "imagesrc": "/img/cards/10001.png",
     "side": "runner",
     "faction": "shaper",
     "type": "program",
@@ -14,17 +14,55 @@
     "illustrator": "Mike Nesbitt"
   },
   {
-    "code": "20049",
+    "code": "20001",
+    "faction": "shaper",
+    "pack": "wla",
+    "side": "runner",
+    "text": "Whenever you access cards from R&D, access 1 additional card from R&D.",
+    "imagesrc": "/img/cards/20001.png",
+    "title": "R&D Interface",
+    "type": "hardware",
+    "cost": 4,
+    "illustrator": "Reza Ilyasa"
+  },
+  {
+    "code": "21001",
     "title": "Gordian Blade",
     "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
-    "imagesrc": "/img/cards/20049.png",
+    "imagesrc": "/img/cards/21001.png",
     "side": "runner",
     "faction": "shaper",
     "type": "program",
-    "pack": "core2",
+    "pack": "ta",
     "keywords": "Icebreaker - Decoder",
     "cost": 4,
     "strength": 2,
     "illustrator": "Adam S. Doyle"
+  },
+  {
+    "code": "27001",
+    "faction": "criminal",
+    "pack": "ce",
+    "side": "runner",
+    "text": "Whenever you access cards from HQ, access 1 additional card from R&D.",
+    "imagesrc": "/img/cards/27001.png",
+    "title": "HQ Interface",
+    "type": "hardware",
+    "cost": 4,
+    "illustrator": "Reza Ilyasa"
+  },
+  {
+    "code": "28001",
+    "title": "Gordian Blade",
+    "text": "Interface → <strong>1[credit]:</strong> Break 1 <strong>code gate</strong> subroutine.\n<strong>1[credit]:</strong> +1 strength for the remainder of this run.",
+    "imagesrc": "/img/cards/28001.png",
+    "side": "runner",
+    "faction": "shaper",
+    "type": "program",
+    "pack": "asis",
+    "keywords": "Icebreaker - Decoder",
+    "cost": 4,
+    "strength": 2,
+    "illustrator": "Someone else"
   }
 ]

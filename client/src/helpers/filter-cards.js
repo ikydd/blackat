@@ -57,7 +57,7 @@ const setCardVisibilityFromSettings = (
     legal = false
   }
 ) => {
-  const show =
+  return (
     isRelevantToSortMethod(card, sort) &&
     isFromCorrectSide(card, side) &&
     hasMatchingTitle(card, titleSearch) &&
@@ -68,12 +68,11 @@ const setCardVisibilityFromSettings = (
     isMatchingOfficiality(card, official) &&
     isMatchingRotation(card, rotation) &&
     isMatchingLegality(card, legal) &&
-    hasMatchingSubtypes(card, subtypes);
-
-  return { ...card, show };
+    hasMatchingSubtypes(card, subtypes)
+  );
 };
 
 const filterCardsByAllSettings = (cards, filters) =>
-  cards.map((card) => setCardVisibilityFromSettings(card, filters));
+  cards.filter((card) => setCardVisibilityFromSettings(card, filters));
 
 export default filterCardsByAllSettings;
