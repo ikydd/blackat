@@ -65,7 +65,7 @@ const setCardVisibilityFromSettings = (
   card,
   {
     sort = 'default',
-    side = '',
+    // side = '',
     titleSearch = '',
     textSearch = '',
     factions = [],
@@ -79,7 +79,7 @@ const setCardVisibilityFromSettings = (
 ) => {
   return (
     isRelevantToSortMethod(card, sort) &&
-    isFromCorrectSide(card, side) &&
+    // isFromCorrectSide(card, side) &&
     hasMatchingTitle(card, titleSearch) &&
     hasMatchingText(card, textSearch) &&
     hasMatchingFactions(card, factions) &&
@@ -92,9 +92,9 @@ const setCardVisibilityFromSettings = (
   );
 };
 
-const filterCardsByAllSettings = (cards, filters) =>
+export const filterCards = (cards, filters) =>
   cards
     .filter((card) => setCardVisibilityFromSettings(card, filters))
     .filter((card, index, all) => isPreferredArt(card, filters.originalArt, index, all));
 
-export default filterCardsByAllSettings;
+export const filterBySide = (cards, side) => cards.filter((card) => isFromCorrectSide(card, side));

@@ -16,22 +16,12 @@ import SmallPrint from './components/SmallPrint';
 import Loader from './components/Loader';
 import Header from './components/Header';
 import Icon from './components/Icon';
-import filterCards from './helpers/filter-cards';
+import { filterCards, filterBySide } from './helpers/filter-cards';
 import filterPacks from './helpers/filter-packs';
-import { prepareGroupingData, groupCards } from './helpers/group-cards';
-import { prepareSortingData, sortCards } from './helpers/sort-cards';
+import { preloadFilters, preloadGroupingData, preloadSortingData } from './helpers/preload';
+import groupCards from './helpers/group-cards';
+import sortCards from './helpers/sort-cards';
 import './App.css';
-
-const filterOptionsBySide = (options, currentSide) =>
-  options.filter(({ side }) => !side || side === currentSide);
-
-const filterAllOptionsBySide = ({ factions, types, subtypes }, side) => {
-  return {
-    factions: filterOptionsBySide(factions, side),
-    types: filterOptionsBySide(types, side),
-    subtypes: filterOptionsBySide(subtypes, side)
-  };
-};
 
 const filterSettingsToMatchCurrentOptions = (selected, filterOptions) => {
   const appearsInCurrentOptions = (selection) =>
@@ -61,8 +51,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
   const [cards, setCards] = useState([]);
-  const [sortingData, setSortingData] = useState();
-  const [groupingData, setGroupingData] = useState();
 
   const loadPreviousSession = () => {
     const previousSession = saveState && loadSettings();
@@ -96,12 +84,6 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
         setTypes(loadedTypes);
         setSubtypes(loadedSubtypes);
         setPacks(loadedPacks);
-        setSortingData(
-          prepareSortingData({ factions: loadedfactions, types: loadedTypes, packs: loadedPacks })
-        );
-        setGroupingData(
-          prepareGroupingData({ factions: loadedfactions, types: loadedTypes, packs: loadedPacks })
-        );
         setCards(loadedCards);
         setLoaded(true);
       })
@@ -114,11 +96,16 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const legal = settings.preferences.includes('legal');
   const official = settings.preferences.includes('official');
 
+  const sortingData = useMemo(
+    () => preloadSortingData({ factions, types, packs }),
+    [factions, types, packs]
+  );
+  const groupingData = useMemo(
+    () => preloadGroupingData({ factions, types, packs }),
+    [factions, types, packs]
+  );
   const filters = useMemo(
-    () => ({
-      runner: filterAllOptionsBySide({ factions, types, subtypes }, 'runner'),
-      corp: filterAllOptionsBySide({ factions, types, subtypes }, 'corp')
-    }),
+    () => preloadFilters({ factions, types, subtypes }),
     [factions, types, subtypes]
   );
 
@@ -154,7 +141,12 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     [cards, sortingData, settings.sort]
   );
 
-  const filteredCards = filterCards(sortedCards, {
+  const sidedSortedCards = useMemo(
+    () => filterBySide(sortedCards, settings.side),
+    [sortedCards, settings.side]
+  );
+
+  const filteredCards = filterCards(sidedSortedCards, {
     ...settings,
     legal,
     rotation,

@@ -61,13 +61,6 @@ const customGroup = ({
   const groupInfo = { name: `${name}${suffix}`, code: groupCode, icon };
   return safelyAddCardToGroup(sections, card, groupInfo, name);
 };
-
-export const prepareGroupingData = ({ types, packs, factions }) => ({
-  type: types,
-  pack: packs.reduce((list, { items }) => list.concat(items), []),
-  faction: factions
-});
-
 const sortSections = (sections, sort) => {
   switch (sort) {
     case 'faction':
@@ -90,7 +83,7 @@ const sortSections = (sections, sort) => {
   }
 };
 
-export const groupCards = (
+const groupCards = (
   cards = [],
   categories = { type: [], pack: [], faction: [] },
   sort = 'factions'
@@ -124,3 +117,5 @@ export const groupCards = (
   }, {});
   return sortSections(Object.values(groupedCards), sort);
 };
+
+export default groupCards;

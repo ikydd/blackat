@@ -56,8 +56,6 @@ const compareByProp = (prop, categories, a, b, result = 0) => {
 const compareByMultipleProps = (list, categories, a, b) =>
   list.reduce((comparison, property) => compareByProp(property, categories, a, b, comparison), 0);
 
-const toCodes = ({ code }) => code;
-
 const multiComparisonLists = {
   illustrator: ['illustrator', 'title'],
   type: ['type', 'faction', 'title'],
@@ -69,19 +67,16 @@ const multiComparisonLists = {
   pack: ['pack', 'code']
 };
 
-export const prepareSortingData = ({ types, packs, factions }) => ({
-  type: types.map(toCodes),
-  pack: packs.reduce((list, group) => list.concat(group.items), []).map(toCodes),
-  faction: factions.map(toCodes)
-});
-
-export const sortCards = (
+const sortCards = (
   cards = [],
   categories = { type: [], pack: [], faction: [] },
   sortMethod = 'faction'
 ) => {
   const multipleSortMethods = multiComparisonLists[sortMethod];
-  return multipleSortMethods
+  const sortedCards = multipleSortMethods
     ? cards.sort((a, b) => compareByMultipleProps(multipleSortMethods, categories, a, b))
     : cards.sort((a, b) => compareByProp(sortMethod, categories, a, b));
+  return [...sortedCards];
 };
+
+export default sortCards;
