@@ -72,13 +72,10 @@ const setCardVisibilityFromSettings = (
     types = [],
     subtypes = [],
     packs = [],
-    originalArt = false,
     official = false,
     rotation = false,
     legal = false
-  },
-  index,
-  all
+  }
 ) => {
   return (
     isRelevantToSortMethod(card, sort) &&
@@ -91,12 +88,13 @@ const setCardVisibilityFromSettings = (
     isMatchingOfficiality(card, official) &&
     isMatchingRotation(card, rotation) &&
     isMatchingLegality(card, legal) &&
-    hasMatchingSubtypes(card, subtypes) &&
-    isPreferredArt(card, originalArt, index, all)
+    hasMatchingSubtypes(card, subtypes)
   );
 };
 
 const filterCardsByAllSettings = (cards, filters) =>
-  cards.filter((card, index, all) => setCardVisibilityFromSettings(card, filters, index, all));
+  cards
+    .filter((card) => setCardVisibilityFromSettings(card, filters))
+    .filter((card, index, all) => isPreferredArt(card, filters.originalArt, index, all));
 
 export default filterCardsByAllSettings;

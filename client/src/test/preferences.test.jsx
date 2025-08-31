@@ -53,49 +53,117 @@ describe('Preferences filters', () => {
   });
 
   describe('Prefer Original Art', () => {
-    it('affects cards correctly', async () => {
+    it('does not filter any out when they are not adjacent', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
+      const [{ imagesrc: blade1 }, , { imagesrc: blade2 }, , { imagesrc: blade3 }] = mockData;
       // the cards get sorted which affect the array. Spread it so it's a different array
       api.setData('cards', [...mockData]);
-      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      const { findByRole, findAllByRole, findByText } = render(<App />);
 
       const getGordianBlades = (imgs) =>
         imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+
       const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
       fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('original');
 
       fireEvent.change(sort, { target: { value: 'pack' } });
       const sortedByPack = await findAllByRole('img');
 
       await waitFor(() => {
         expect(getGordianBlades(sortedByPack)).toEqual([
-          `http://localhost${mockData[0].imagesrc}`,
-          `http://localhost${mockData[2].imagesrc}`,
-          `http://localhost${mockData[4].imagesrc}`
+          expect.stringContaining(blade1),
+          expect.stringContaining(blade2),
+          expect.stringContaining(blade3)
         ]);
       });
+    });
 
+    it('selects most up-to-date card when unchecked', async () => {
+      const mockData = loadFile('../../../fixtures/api/updated.json');
+      const [, , , , { imagesrc: blade3 }] = mockData;
+      // the cards get sorted which affect the array. Spread it so it's a different array
+      api.setData('cards', [...mockData]);
+      const { findByRole, findAllByRole, findByText } = render(<App />);
+
+      const getGordianBlades = (imgs) =>
+        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+
+      const sort = await findByRole('combobox');
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
+
+      fireEvent.change(sort, { target: { value: 'pack' } });
       fireEvent.change(sort, { target: { value: 'title' } });
       const sortedByTitle = await findAllByRole('img');
 
       await waitFor(() => {
-        expect(getGordianBlades(sortedByTitle)).toEqual([
-          `http://localhost${mockData[4].imagesrc}`
-        ]);
+        expect(getGordianBlades(sortedByTitle)).toEqual([expect.stringContaining(blade3)]);
       });
+    });
 
+    it('selects most oldest card when checked', async () => {
+      const mockData = loadFile('../../../fixtures/api/updated.json');
+      const [{ imagesrc: blade1 }] = mockData;
+      // the cards get sorted which affect the array. Spread it so it's a different array
+      api.setData('cards', [...mockData]);
+      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
+
+      const getGordianBlades = (imgs) =>
+        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+
+      const sort = await findByRole('combobox');
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
+      const pref = getByDisplayValue('original');
+
+      fireEvent.change(sort, { target: { value: 'pack' } });
+      fireEvent.change(sort, { target: { value: 'title' } });
       fireEvent.click(pref);
       const preferOriginal = await findAllByRole('img');
 
       await waitFor(() => {
-        expect(getGordianBlades(preferOriginal)).toEqual([
-          `http://localhost${mockData[0].imagesrc}`
-        ]);
+        expect(getGordianBlades(preferOriginal)).toEqual([expect.stringContaining(blade1)]);
+      });
+    });
+
+    it('selects cards correctly when some are filtered out', async () => {
+      const mockData = loadFile('../../../fixtures/api/updated.json');
+      const [, , { imagesrc: blade2 }] = mockData;
+      // the cards get sorted which affect the array. Spread it so it's a different array
+      api.setData('cards', [...mockData]);
+      const { findByRole, findAllByRole, findByText, getByDisplayValue, getByTestId } = render(
+        <App />
+      );
+
+      const getGordianBlades = (imgs) =>
+        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+
+      const sort = await findByRole('combobox');
+      const prefsButton = await findByText('Preferences');
+      fireEvent.click(prefsButton);
+
+      const pref = getByDisplayValue('original');
+      fireEvent.change(sort, { target: { value: 'title' } });
+      fireEvent.click(pref);
+
+      const packsButton = await findByText('Packs');
+      const filterBlock = getByTestId('packs-filters');
+      fireEvent.click(packsButton);
+
+      const trace = await within(filterBlock).findByLabelText('Trace Amount');
+      const study = await within(filterBlock).findByLabelText('A Study in Static');
+      fireEvent.click(trace);
+      fireEvent.click(study);
+
+      const filteredPacks = await findAllByRole('img');
+
+      await waitFor(() => {
+        expect(getGordianBlades(filteredPacks)).toEqual([expect.stringContaining(blade2)]);
       });
     });
   });
+
   describe('Official Packs Only', () => {
     it('filters cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/official.json');
