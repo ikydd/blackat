@@ -9,6 +9,14 @@ jest.mock('../helpers/api');
 
 const loadFile = (path) => JSON.parse(readFileSync(join(__dirname, path), 'utf-8'));
 
+const getGordianBlades = (imgs) =>
+  imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+
+const getMockBlades = (mockData) => {
+  const [{ imagesrc: blade1 }, , { imagesrc: blade2 }, , { imagesrc: blade3 }] = mockData;
+  return [blade1, blade2, blade3];
+};
+
 jest.mock('../helpers/api');
 
 describe('Preferences filters', () => {
@@ -55,13 +63,10 @@ describe('Preferences filters', () => {
   describe('Prefer Original Art', () => {
     it('does not filter any out when they are not adjacent', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
-      const [{ imagesrc: blade1 }, , { imagesrc: blade2 }, , { imagesrc: blade3 }] = mockData;
-      // the cards get sorted which affect the array. Spread it so it's a different array
-      api.setData('cards', [...mockData]);
-      const { findByRole, findAllByRole, findByText } = render(<App />);
+      const [blade1, blade2, blade3] = getMockBlades(mockData);
 
-      const getGordianBlades = (imgs) =>
-        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+      api.setData('cards', mockData);
+      const { findByRole, findAllByRole, findByText } = render(<App />);
 
       const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
@@ -81,13 +86,10 @@ describe('Preferences filters', () => {
 
     it('selects most up-to-date card when unchecked', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
-      const [, , , , { imagesrc: blade3 }] = mockData;
-      // the cards get sorted which affect the array. Spread it so it's a different array
-      api.setData('cards', [...mockData]);
-      const { findByRole, findAllByRole, findByText } = render(<App />);
+      const [, , blade3] = getMockBlades(mockData);
 
-      const getGordianBlades = (imgs) =>
-        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+      api.setData('cards', mockData);
+      const { findByRole, findAllByRole, findByText } = render(<App />);
 
       const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
@@ -104,13 +106,10 @@ describe('Preferences filters', () => {
 
     it('selects most oldest card when checked', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
-      const [{ imagesrc: blade1 }] = mockData;
-      // the cards get sorted which affect the array. Spread it so it's a different array
-      api.setData('cards', [...mockData]);
-      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      const [blade1] = getMockBlades(mockData);
 
-      const getGordianBlades = (imgs) =>
-        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+      api.setData('cards', mockData);
+      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
 
       const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
@@ -129,15 +128,12 @@ describe('Preferences filters', () => {
 
     it('selects cards correctly when some are filtered out', async () => {
       const mockData = loadFile('../../../fixtures/api/updated.json');
-      const [, , { imagesrc: blade2 }] = mockData;
-      // the cards get sorted which affect the array. Spread it so it's a different array
-      api.setData('cards', [...mockData]);
+      const [, blade2] = getMockBlades(mockData);
+
+      api.setData('cards', mockData);
       const { findByRole, findAllByRole, findByText, getByDisplayValue, getByTestId } = render(
         <App />
       );
-
-      const getGordianBlades = (imgs) =>
-        imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
 
       const sort = await findByRole('combobox');
       const prefsButton = await findByText('Preferences');
