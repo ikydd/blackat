@@ -1,16 +1,16 @@
 import React from 'react';
-import { join } from 'path';
-import { readFileSync } from 'fs';
-import { render, within, fireEvent, waitFor } from '@testing-library/react';
+import { render, within, waitFor, screen } from '@testing-library/react';
 import App from '../App';
 import * as api from '../helpers/api';
+import loadFile from './helpers/load-file';
+import { setFilter, sortBy, openFilter } from './helpers/operations';
 
 jest.mock('../helpers/api');
 
-const loadFile = (path) => JSON.parse(readFileSync(join(__dirname, path), 'utf-8'));
-
-const getGordianBlades = (imgs) =>
-  imgs.filter(({ alt }) => alt === 'Gordian Blade').map(({ src }) => src);
+const getGordianBlades = async () =>
+  (await screen.findAllByRole('img'))
+    .filter(({ alt }) => alt === 'Gordian Blade')
+    .map(({ src }) => src);
 
 const getMockBlades = (mockData) => {
   const [{ imagesrc: blade1 }, , { imagesrc: blade2 }, , { imagesrc: blade3 }] = mockData;
@@ -31,10 +31,10 @@ describe('Preferences filters', () => {
   });
 
   it('starts with some checkboxes', async () => {
-    const { getByTestId, findByText } = render(<App />);
-    const prefsButton = await findByText('Preferences');
+    const { getByTestId } = render(<App />);
+    await openFilter('Preferences');
+
     const filterBlock = getByTestId('preferences-filters');
-    fireEvent.click(prefsButton);
     const checkboxes = within(filterBlock).queryAllByRole('checkbox');
 
     await waitFor(() => {
@@ -43,14 +43,10 @@ describe('Preferences filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId, findByText, getByDisplayValue } = render(<App />);
-    const prefsButton = await findByText('Preferences');
+    const { getByTestId } = render(<App />);
+    const [checkbox] = await setFilter('Preferences', 'Prefer Original Art');
+
     const filterBlock = getByTestId('preferences-filters');
-    fireEvent.click(prefsButton);
-    const checkbox = getByDisplayValue('original');
-
-    fireEvent.click(checkbox);
-
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
     const unchecked = checkboxes.filter(({ value }) => value !== 'original');
 
@@ -66,17 +62,14 @@ describe('Preferences filters', () => {
       const [blade1, blade2, blade3] = getMockBlades(mockData);
 
       api.setData('cards', mockData);
-      const { findByRole, findAllByRole, findByText } = render(<App />);
+      render(<App />);
 
-      const sort = await findByRole('combobox');
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
+      await sortBy('pack');
 
-      fireEvent.change(sort, { target: { value: 'pack' } });
-      const sortedByPack = await findAllByRole('img');
+      const images = await getGordianBlades();
 
       await waitFor(() => {
-        expect(getGordianBlades(sortedByPack)).toEqual([
+        expect(images).toEqual([
           expect.stringContaining(blade1),
           expect.stringContaining(blade2),
           expect.stringContaining(blade3)
@@ -89,18 +82,13 @@ describe('Preferences filters', () => {
       const [, , blade3] = getMockBlades(mockData);
 
       api.setData('cards', mockData);
-      const { findByRole, findAllByRole, findByText } = render(<App />);
+      render(<App />);
 
-      const sort = await findByRole('combobox');
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-
-      fireEvent.change(sort, { target: { value: 'pack' } });
-      fireEvent.change(sort, { target: { value: 'title' } });
-      const sortedByTitle = await findAllByRole('img');
+      await sortBy('title');
+      const images = await getGordianBlades();
 
       await waitFor(() => {
-        expect(getGordianBlades(sortedByTitle)).toEqual([expect.stringContaining(blade3)]);
+        expect(images).toEqual([expect.stringContaining(blade3)]);
       });
     });
 
@@ -109,20 +97,15 @@ describe('Preferences filters', () => {
       const [blade1] = getMockBlades(mockData);
 
       api.setData('cards', mockData);
-      const { findByRole, findAllByRole, findByText, getByDisplayValue } = render(<App />);
+      render(<App />);
 
-      const sort = await findByRole('combobox');
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('original');
+      await sortBy('title');
+      await setFilter('Preferences', 'Prefer Original Art');
 
-      fireEvent.change(sort, { target: { value: 'pack' } });
-      fireEvent.change(sort, { target: { value: 'title' } });
-      fireEvent.click(pref);
-      const preferOriginal = await findAllByRole('img');
+      const images = await getGordianBlades();
 
       await waitFor(() => {
-        expect(getGordianBlades(preferOriginal)).toEqual([expect.stringContaining(blade1)]);
+        expect(images).toEqual([expect.stringContaining(blade1)]);
       });
     });
 
@@ -131,31 +114,16 @@ describe('Preferences filters', () => {
       const [, blade2] = getMockBlades(mockData);
 
       api.setData('cards', mockData);
-      const { findByRole, findAllByRole, findByText, getByDisplayValue, getByTestId } = render(
-        <App />
-      );
+      render(<App />);
 
-      const sort = await findByRole('combobox');
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
+      await sortBy('title');
+      await setFilter('Preferences', 'Prefer Original Art');
+      await setFilter('Packs', 'Trace Amount', 'A Study in Static');
 
-      const pref = getByDisplayValue('original');
-      fireEvent.change(sort, { target: { value: 'title' } });
-      fireEvent.click(pref);
-
-      const packsButton = await findByText('Packs');
-      const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(packsButton);
-
-      const trace = await within(filterBlock).findByLabelText('Trace Amount');
-      const study = await within(filterBlock).findByLabelText('A Study in Static');
-      fireEvent.click(trace);
-      fireEvent.click(study);
-
-      const filteredPacks = await findAllByRole('img');
+      const images = await getGordianBlades();
 
       await waitFor(() => {
-        expect(getGordianBlades(filteredPacks)).toEqual([expect.stringContaining(blade2)]);
+        expect(images).toEqual([expect.stringContaining(blade2)]);
       });
     });
   });
@@ -164,30 +132,27 @@ describe('Preferences filters', () => {
     it('filters cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/official.json');
       api.setData('cards', mockData);
-      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('official');
+      const { findAllByRole } = render(<App />);
+
       const images = await findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
-      fireEvent.click(pref);
+      await setFilter('Preferences', 'Classic Retail Packs');
+
       const filtered = await findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
       });
     });
+
     it('filters options correctly', async () => {
-      const { findByText, getByText, getByTestId, getByDisplayValue } = render(<App />);
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('official');
-      fireEvent.click(pref);
+      const { getByTestId } = render(<App />);
+      await setFilter('Preferences', 'Classic Retail Packs');
+      await openFilter('Packs');
 
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
       const filtered = await within(filterBlock).findAllByRole('checkbox');
 
       expect(filtered).toHaveLength(64);
@@ -197,16 +162,15 @@ describe('Preferences filters', () => {
     it('filters rotated cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/rotated.json');
       api.setData('cards', mockData);
-      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('rotation');
+      const { findAllByRole } = render(<App />);
+
       const images = await findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
-      fireEvent.click(pref);
+      await setFilter('Preferences', 'Current Rotation');
+
       const filtered = await findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
@@ -214,14 +178,11 @@ describe('Preferences filters', () => {
     });
 
     it('filters options correctly', async () => {
-      const { findByText, getByText, getByTestId, getByDisplayValue } = render(<App />);
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('rotation');
-      fireEvent.click(pref);
+      const { getByTestId } = render(<App />);
+      await setFilter('Preferences', 'Current Rotation');
+      await openFilter('Packs');
 
       const filterBlock = getByTestId('packs-filters');
-      fireEvent.click(getByText('Packs'));
       const filtered = await within(filterBlock).findAllByRole('checkbox');
 
       expect(filtered).toHaveLength(30);
@@ -230,16 +191,15 @@ describe('Preferences filters', () => {
     it('filters banned cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/banned.json');
       api.setData('cards', mockData);
-      const { findAllByRole, findByText, getByDisplayValue } = render(<App />);
-      const prefsButton = await findByText('Preferences');
-      fireEvent.click(prefsButton);
-      const pref = getByDisplayValue('legal');
+      const { findAllByRole } = render(<App />);
+
       const images = await findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
-      fireEvent.click(pref);
+      await setFilter('Preferences', 'Latest Ban List');
+
       const filtered = await findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
