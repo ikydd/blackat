@@ -56,7 +56,6 @@ describe('Sort', () => {
       })
     ]);
   });
-
   it('sorts by faction by default', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
     render(<App />);
@@ -68,183 +67,92 @@ describe('Sort', () => {
     expect(sort).toHaveValue('faction');
   });
 
-  it('sorts by faction', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
-    render(<App />);
-    await sortBy('faction');
+  const sortMethods = [
+    {
+      code: 'faction',
+      file: 'faction-sort/faction-runner.json',
+      matches: ['D4v1d', 'Gordian Blade'],
+      headers: ['Anarch', 'Shaper']
+    },
+    {
+      code: 'type',
+      file: 'type-sort/runner.json',
+      matches: ['R&D Interface', 'All-nighter'],
+      headers: ['Hardware', 'Resource']
+    },
+    {
+      code: 'pack',
+      file: 'pack-sort/runner.json',
+      matches: ['Gordian Blade', 'R&D Interface'],
+      headers: ['Core Set', 'Future Proof']
+    },
+    {
+      code: 'title',
+      side: 'corp',
+      file: 'cards.json',
+      matches: ['Chum', 'Data Mine', 'Mandatory Upgrades', 'Neural Katana'],
+      headers: []
+    },
+    {
+      code: 'illustrator',
+      side: 'corp',
+      file: 'illustrator-sort/corp.json',
+      matches: ['SanSan City Grid', 'Mandatory Upgrades'],
+      headers: ['Ed Mattinian', 'Mauricio Herrera']
+    },
+    {
+      code: 'cost',
+      file: 'cost-sort/cost.json',
+      matches: ['Foo', 'Bar'],
+      headers: ['1', '4']
+    },
+    {
+      code: 'agenda',
+      side: 'corp',
+      file: 'agenda-sort/agenda.json',
+      matches: ['Foo', 'Bar'],
+      headers: ['3 agenda points', '2 agenda points']
+    },
+    {
+      code: 'strength',
+      side: 'corp',
+      file: 'strength-sort/strength.json',
+      matches: ['Foo', 'Bar'],
+      headers: ['2 strength', '1 strength']
+    },
+    {
+      code: 'subroutines',
+      side: 'corp',
+      file: 'subroutines-sort/subroutines.json',
+      matches: ['Foo', 'Bar'],
+      headers: ['4+', '3']
+    }
+  ];
 
-    const cards = await findImageTitles();
+  describe.each(sortMethods)(
+    'sort by $code',
+    ({ code, side = 'runner', file, matches, headers }) => {
+      it('sorts correctly', async () => {
+        api.setData('cards', loadFile(`../../../fixtures/api/${file}`));
+        render(<App side={side} />);
+        await sortBy(code);
 
-    expect(cards).toEqual(['D4v1d', 'Gordian Blade']);
-  });
+        const cards = await findImageTitles();
 
-  it('has the right headers when sorting by faction', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
-    render(<App />);
-    await sortBy('faction');
+        expect(cards).toEqual(matches);
+      });
 
-    const sections = await findSectionHeadings();
+      it('has the right headers', async () => {
+        api.setData('cards', loadFile(`../../../fixtures/api/${file}`));
+        render(<App side={side} />);
+        await sortBy(code);
 
-    expect(sections).toEqual(['Anarch', 'Shaper']);
-  });
+        const sections = await findSectionHeadings();
 
-  it('sorts by type', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
-    render(<App />);
-    await sortBy('type');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['R&D Interface', 'All-nighter']);
-  });
-
-  it('has the right headers when sorting by types', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/type-sort/runner.json'));
-    render(<App />);
-    await sortBy('type');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['Hardware', 'Resource']);
-  });
-
-  it('sorts by pack', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
-    render(<App />);
-    await sortBy('pack');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Gordian Blade', 'R&D Interface']);
-  });
-
-  it('has the right headers when sorting by pack', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/pack-sort/runner.json'));
-    render(<App />);
-    await sortBy('pack');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['Core Set', 'Future Proof']);
-  });
-
-  it('sorts by title', async () => {
-    render(<App side="corp" />);
-    await sortBy('title');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Chum', 'Data Mine', 'Mandatory Upgrades', 'Neural Katana']);
-  });
-
-  it('has no headers when sorting by title', async () => {
-    render(<App side="corp" />);
-    await sortBy('title');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toHaveLength(0);
-  });
-
-  it('sorts by illustrator', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/corp.json'));
-    render(<App side="corp" />);
-    await sortBy('illustrator');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['SanSan City Grid', 'Mandatory Upgrades']);
-  });
-
-  it('has the right headers when sorting by illustrator', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/illustrator-sort/corp.json'));
-    render(<App side="corp" />);
-    await sortBy('illustrator');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['Ed Mattinian', 'Mauricio Herrera']);
-  });
-
-  it('sorts by cost', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost.json'));
-    render(<App />);
-    await sortBy('cost');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Foo', 'Bar']);
-  });
-
-  it('has the right headers when sorting by cost', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/cost-sort/cost.json'));
-    render(<App />);
-    await sortBy('cost');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['1', '4']);
-  });
-
-  it('sorts by agenda points', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda.json'));
-    render(<App side="corp" />);
-    await sortBy('agenda');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Foo', 'Bar']);
-  });
-
-  it('has the right headers when sorting by agenda points', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/agenda-sort/agenda.json'));
-    render(<App side="corp" />);
-    await sortBy('agenda');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['3 agenda points', '2 agenda points']);
-  });
-
-  it('sorts by strength', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/strength-sort/strength.json'));
-    render(<App side="corp" />);
-    await sortBy('strength');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Foo', 'Bar']);
-  });
-
-  it('has the right headers when sorting by strength', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/strength-sort/strength.json'));
-    render(<App side="corp" />);
-    await sortBy('strength');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['2 strength', '1 strength']);
-  });
-
-  it('sorts by subroutines', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/subroutines.json'));
-    render(<App side="corp" />);
-    await sortBy('subroutines');
-
-    const cards = await findImageTitles();
-
-    expect(cards).toEqual(['Foo', 'Bar']);
-  });
-
-  it('has the right headers when sorting by subroutines', async () => {
-    api.setData('cards', loadFile('../../../fixtures/api/subroutines-sort/subroutines.json'));
-    render(<App side="corp" />);
-    await sortBy('subroutines');
-
-    const sections = await findSectionHeadings();
-
-    expect(sections).toEqual(['4+', '3']);
-  });
+        expect(sections).toEqual(headers);
+      });
+    }
+  );
 
   it('sorts asc correctly with undefined', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/cost-sort/undefined.json'));
