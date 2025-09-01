@@ -9,18 +9,20 @@ export const sortBy = async (value) => {
 export const setSide = async (side) => fireEvent.click(screen.getByText(side));
 
 export const openFilter = async (section) => {
-  const prefsButton = await screen.findByText(section);
-  fireEvent.click(prefsButton);
+  const button = await screen.findByRole('button', {
+    name: new RegExp(`Filter by ${section}`)
+  });
+  fireEvent.click(button);
 };
 
-export const setFilter = async (section, ...filters) => {
+export const clickOption = async (name) => {
+  const checkbox = await screen.findByRole('checkbox', { name });
+  fireEvent.click(checkbox);
+  return checkbox;
+};
+
+export const filterBy = async (section, ...filters) => {
   await openFilter(section);
 
-  return Promise.all(
-    filters.map(async (text) => {
-      const checkbox = await screen.findByLabelText(text);
-      fireEvent.click(checkbox);
-      return checkbox;
-    })
-  );
+  return Promise.all(filters.map(clickOption));
 };

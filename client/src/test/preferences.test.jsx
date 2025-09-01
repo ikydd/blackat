@@ -3,7 +3,7 @@ import { render, within, waitFor, screen } from '@testing-library/react';
 import App from '../App';
 import * as api from '../helpers/api';
 import loadFile from './helpers/load-file';
-import { setFilter, sortBy, openFilter } from './helpers/operations';
+import { filterBy, sortBy, openFilter } from './helpers/operations';
 
 jest.mock('../helpers/api');
 
@@ -44,7 +44,7 @@ describe('Preferences filters', () => {
 
   it('selects checkboxes correctly', async () => {
     const { getByTestId } = render(<App />);
-    const [checkbox] = await setFilter('Preferences', 'Prefer Original Art');
+    const [checkbox] = await filterBy('Preferences', 'Prefer Original Art');
 
     const filterBlock = getByTestId('preferences-filters');
     const checkboxes = await within(filterBlock).findAllByRole('checkbox');
@@ -100,7 +100,7 @@ describe('Preferences filters', () => {
       render(<App />);
 
       await sortBy('title');
-      await setFilter('Preferences', 'Prefer Original Art');
+      await filterBy('Preferences', 'Prefer Original Art');
 
       const images = await getGordianBlades();
 
@@ -117,8 +117,8 @@ describe('Preferences filters', () => {
       render(<App />);
 
       await sortBy('title');
-      await setFilter('Preferences', 'Prefer Original Art');
-      await setFilter('Packs', 'Trace Amount', 'A Study in Static');
+      await filterBy('Preferences', 'Prefer Original Art');
+      await filterBy('Packs', 'Trace Amount', 'A Study in Static');
 
       const images = await getGordianBlades();
 
@@ -139,7 +139,7 @@ describe('Preferences filters', () => {
         expect(images).toHaveLength(2);
       });
 
-      await setFilter('Preferences', 'Classic Retail Packs');
+      await filterBy('Preferences', 'Classic Retail Packs');
 
       const filtered = await findAllByRole('img');
       await waitFor(() => {
@@ -149,7 +149,7 @@ describe('Preferences filters', () => {
 
     it('filters options correctly', async () => {
       const { getByTestId } = render(<App />);
-      await setFilter('Preferences', 'Classic Retail Packs');
+      await filterBy('Preferences', 'Classic Retail Packs');
       await openFilter('Packs');
 
       const filterBlock = getByTestId('packs-filters');
@@ -169,7 +169,7 @@ describe('Preferences filters', () => {
         expect(images).toHaveLength(2);
       });
 
-      await setFilter('Preferences', 'Current Rotation');
+      await filterBy('Preferences', 'Current Rotation');
 
       const filtered = await findAllByRole('img');
       await waitFor(() => {
@@ -179,7 +179,7 @@ describe('Preferences filters', () => {
 
     it('filters options correctly', async () => {
       const { getByTestId } = render(<App />);
-      await setFilter('Preferences', 'Current Rotation');
+      await filterBy('Preferences', 'Current Rotation');
       await openFilter('Packs');
 
       const filterBlock = getByTestId('packs-filters');
@@ -198,7 +198,7 @@ describe('Preferences filters', () => {
         expect(images).toHaveLength(2);
       });
 
-      await setFilter('Preferences', 'Latest Ban List');
+      await filterBy('Preferences', 'Latest Ban List');
 
       const filtered = await findAllByRole('img');
       await waitFor(() => {

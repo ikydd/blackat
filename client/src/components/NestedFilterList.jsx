@@ -47,6 +47,7 @@ const NestedFilterList = ({
     .find(({ selected }) => selected);
 
   const keyword = title.toLowerCase();
+  const id = `filter-list-${keyword}`;
 
   const generateFilters = (filterOptions) =>
     filterOptions.map((group) => {
@@ -72,9 +73,15 @@ const NestedFilterList = ({
 
   return (
     <div className="filter-list" data-testid={`${keyword}-filters`}>
-      <FilterHeading title={title} inUse={inUse} onClick={toggleClosed} />
+      <FilterHeading
+        title={title}
+        inUse={inUse}
+        onClick={toggleClosed}
+        controls={id}
+        expanded={!isClosed}
+      />
       {isClosed !== true && (
-        <div className="filter-list-items">
+        <div id={id} className="filter-list-items">
           <FilterClearButton onClick={clearAll} />
           {generateFilters(groups)}
         </div>

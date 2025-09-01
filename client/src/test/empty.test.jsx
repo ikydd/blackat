@@ -1,21 +1,25 @@
 import React from 'react';
-import { render, within, fireEvent, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import { filterBy } from './helpers/operations';
 import App from '../App';
 
 jest.mock('../helpers/api');
 
 describe('Empty behaviour', () => {
   it('shows the empty message', async () => {
-    const { queryAllByRole, getByText, findByTestId } = render(<App />);
-    const filterBlock = await findByTestId('types-filters');
-    fireEvent.click(getByText(/Types/));
+    const { findAllByRole, getByText } = render(<App />);
 
-    const asset = await within(filterBlock).findByLabelText('Resource');
-    fireEvent.click(asset);
+    const some = await findAllByRole('img');
+    await waitFor(() => {
+      expect(some).toHaveLength(4);
+    });
 
-    const all = await queryAllByRole('img');
+    await filterBy('Types', 'Resource');
 
-    expect(all).toHaveLength(0);
+    const none = await findAllByRole('img');
+    await waitFor(() => {
+      expect(none).toHaveLength(0);
+    });
 
     const empty = getByText(/meow/);
 
