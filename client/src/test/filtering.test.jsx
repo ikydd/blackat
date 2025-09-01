@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
-import { openFilter, setSide, clickOption, filterBy } from './helpers/operations';
+import { clickFilter, setSide, clickOption, filterBy } from './helpers/operations';
 import { findBlock, findCheckboxes, findImageTitles, findCheckbox } from './helpers/finders';
 import factions from '../../../fixtures/api/factions.json';
 import types from '../../../fixtures/api/types.json';
@@ -69,7 +69,7 @@ describe.each(info)(
       });
     });
 
-    it('starts with no checkboxes', async () => {
+    it('starts closed', async () => {
       render(<App />);
       const checkboxes = await findCheckboxes(code);
 
@@ -78,9 +78,9 @@ describe.each(info)(
       });
     });
 
-    it('has some checkboxes for runner when clicked', async () => {
+    it('opens when clicked', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
       const checkboxes = await findCheckboxes(code);
 
       const runnerOptions = data.filter(({ side }) => !side || side === 'runner').length;
@@ -88,9 +88,18 @@ describe.each(info)(
       expect(checkboxes).toHaveLength(runnerOptions);
     });
 
-    it('starts with empty checkboxes for runner', async () => {
+    it('closes when clicked again', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
+      await clickFilter(title);
+      const checkboxes = await findCheckboxes(code);
+
+      expect(checkboxes).toHaveLength(0);
+    });
+
+    it('begins unchecked checkboxes for runner', async () => {
+      render(<App />);
+      await clickFilter(title);
       const checkboxes = await findCheckboxes(code);
 
       checkboxes.forEach((box) => {
@@ -98,9 +107,9 @@ describe.each(info)(
       });
     });
 
-    it('loads some checkboxes for corp', async () => {
+    it('remains open when switching sides', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
       await setSide('Corp');
 
       const checkboxes = await findCheckboxes(code);
@@ -110,9 +119,9 @@ describe.each(info)(
       expect(checkboxes).toHaveLength(corpFactions);
     });
 
-    it('starts with empty checkboxes for corp', async () => {
+    it('begins with empty checkboxes for corp', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
       await setSide('Corp');
 
       const checkboxes = await findCheckboxes(code);
@@ -122,9 +131,9 @@ describe.each(info)(
       });
     });
 
-    it('selects checkboxes correctly', async () => {
+    it('selects checkboxes when clicked', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
 
       const unchecked = await findCheckboxes(code);
 
@@ -141,7 +150,7 @@ describe.each(info)(
 
     it('filters cards correctly', async () => {
       render(<App />);
-      await openFilter(title);
+      await clickFilter(title);
       const all = await findImageTitles('img');
 
       expect(all).toHaveLength(4);
@@ -152,7 +161,7 @@ describe.each(info)(
       expect(filtered).toEqual(cards);
     });
 
-    it('retains filters from each side', async () => {
+    it('retains filters when switching sides', async () => {
       if (option2) {
         render(<App />);
         await filterBy(title, option);
@@ -166,7 +175,7 @@ describe.each(info)(
       }
     });
 
-    it('does not apply filters to the wrong side', async () => {
+    it('does not apply filters to the other side', async () => {
       render(<App />);
       await filterBy(title, option);
       await setSide('Corp');
@@ -186,6 +195,21 @@ describe.each(info)(
 
         expect(checkbox).toBeChecked();
       }
+    });
+
+    it('clears filters when clicked', async () => {
+      render(<App />);
+      await filterBy(title, option);
+
+      const checkboxes = await findCheckboxes(code);
+
+      const filter = await findBlock(code);
+      const clear = await within(filter).findByRole('button', { name: 'Clear Filters' });
+      fireEvent.click(clear);
+
+      checkboxes.forEach((box) => {
+        expect(box).not.toBeChecked();
+      });
     });
   }
 );

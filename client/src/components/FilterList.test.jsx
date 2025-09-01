@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import FilterList from './FilterList';
 
 import options from '../../../fixtures/api/foo.json';
@@ -10,30 +10,28 @@ describe('FilterList', () => {
   });
 
   it('has defaults to an obvious error title', () => {
-    const { getByText } = render(<FilterList options={options} />);
+    render(<FilterList options={options} />);
 
-    expect(getByText('Missing')).toBeTruthy();
+    expect(screen.getByText('Missing')).toBeTruthy();
   });
 
   it('accepts and uses a title', () => {
-    const { getByText } = render(<FilterList title="A Title" options={options} />);
+    render(<FilterList title="A Title" options={options} />);
 
-    expect(getByText('A Title')).toBeTruthy();
+    expect(screen.getByText('A Title')).toBeTruthy();
   });
 
   describe('Options', () => {
     it('shows provided options', async () => {
-      const { findAllByRole } = render(<FilterList options={options} />);
-      const checkboxes = await findAllByRole('checkbox');
+      render(<FilterList options={options} />);
+      const checkboxes = await screen.findAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(options.length);
     });
 
     it('shows correct filters as selected', async () => {
-      const { findAllByRole } = render(
-        <FilterList options={options} settings={['anarch', 'shaper']} />
-      );
-      const checkboxes = await findAllByRole('checkbox');
+      render(<FilterList options={options} settings={['anarch', 'shaper']} />);
+      const checkboxes = await screen.findAllByRole('checkbox');
 
       const selected = checkboxes
         .filter(({ checked }) => checked)
@@ -44,8 +42,8 @@ describe('FilterList', () => {
 
     it('calls the callback when an item is checked', async () => {
       const cb = jest.fn();
-      const { findByLabelText } = render(<FilterList options={options} onChange={cb} />);
-      const group = await findByLabelText('Anarch');
+      render(<FilterList options={options} onChange={cb} />);
+      const group = await screen.findByLabelText('Anarch');
       fireEvent.click(group);
 
       expect(cb).toHaveBeenCalled();
@@ -54,50 +52,44 @@ describe('FilterList', () => {
 
   describe('Visibility Toggle', () => {
     it('shows options by default', async () => {
-      const { findAllByRole } = render(<FilterList options={options} />);
-      const checkboxes = await findAllByRole('checkbox');
+      render(<FilterList options={options} />);
+      const checkboxes = await screen.findAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(options.length);
     });
 
     it('can be configured to hide filters via a prop', async () => {
-      const { queryAllByRole } = render(<FilterList options={options} closed={true} />);
-      const checkboxes = await queryAllByRole('checkbox');
+      render(<FilterList options={options} closed={true} />);
+      const checkboxes = await screen.queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
     it('shows options when closed and heading is clicked', async () => {
-      const { findAllByRole, getByText } = render(
-        <FilterList title="A Title" options={options} closed={true} />
-      );
-      fireEvent.click(getByText('A Title'));
+      render(<FilterList title="A Title" options={options} closed={true} />);
+      fireEvent.click(screen.getByText('A Title'));
 
-      const checkboxes = await findAllByRole('checkbox');
+      const checkboxes = await screen.findAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(options.length);
     });
 
     it('hides options when showing and heading is clicked', async () => {
-      const { queryAllByRole, getByText } = render(
-        <FilterList title="A Title" options={options} />
-      );
-      fireEvent.click(getByText('A Title'));
+      render(<FilterList title="A Title" options={options} />);
+      fireEvent.click(screen.getByText('A Title'));
 
-      const checkboxes = await queryAllByRole('checkbox');
+      const checkboxes = await screen.queryAllByRole('checkbox');
 
       expect(checkboxes).toHaveLength(0);
     });
 
     it('retains selections when collapsed', async () => {
-      const { queryAllByRole, getByText } = render(
-        <FilterList title="A Title" options={options} settings={['anarch', 'shaper']} />
-      );
-      const heading = getByText('A Title');
+      render(<FilterList title="A Title" options={options} settings={['anarch', 'shaper']} />);
+      const heading = screen.getByText('A Title');
       fireEvent.click(heading);
       fireEvent.click(heading);
 
-      const checkboxes = await queryAllByRole('checkbox');
+      const checkboxes = await screen.queryAllByRole('checkbox');
 
       const selected = checkboxes
         .filter(({ checked }) => checked)
@@ -109,15 +101,15 @@ describe('FilterList', () => {
 
   describe('Clear Filters', () => {
     it('has a button', async () => {
-      const { getByText } = render(<FilterList options={options} />);
+      render(<FilterList options={options} />);
 
-      expect(getByText('Clear Filters')).toBeTruthy();
+      expect(screen.getByText('Clear Filters')).toBeTruthy();
     });
 
     it('removes all selected filters', async () => {
       const cb = jest.fn();
-      const { getByText } = render(<FilterList options={options} clearAll={cb} />);
-      fireEvent.click(getByText('Clear Filters'));
+      render(<FilterList options={options} clearAll={cb} />);
+      fireEvent.click(screen.getByText('Clear Filters'));
 
       expect(cb).toHaveBeenCalled();
     });
@@ -125,19 +117,17 @@ describe('FilterList', () => {
 
   describe('Active Notifier', () => {
     it('has no visual mark when no filters are selected', async () => {
-      const { queryByRole, findAllByRole } = render(<FilterList options={options} />);
-      await findAllByRole('checkbox');
+      render(<FilterList options={options} />);
+      await screen.findAllByRole('checkbox');
 
-      const alert = queryByRole('alert');
+      const alert = screen.queryByRole('alert');
 
       expect(alert).toBeFalsy();
     });
 
     it('has a visual mark when one or more filters are selected', async () => {
-      const { findByRole } = render(
-        <FilterList options={options} settings={['anarch', 'shaper']} />
-      );
-      const alert = await findByRole('alert');
+      render(<FilterList options={options} settings={['anarch', 'shaper']} />);
+      const alert = await screen.findByRole('alert');
 
       expect(alert).toBeTruthy();
     });

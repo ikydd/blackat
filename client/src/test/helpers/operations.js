@@ -8,7 +8,7 @@ export const sortBy = async (value) => {
 
 export const setSide = async (side) => fireEvent.click(screen.getByText(side));
 
-export const openFilter = async (section) => {
+export const clickFilter = async (section) => {
   const button = await screen.findByRole('button', {
     name: new RegExp(`Filter by ${section}`)
   });
@@ -22,7 +22,7 @@ export const clickOption = async (name) => {
 };
 
 export const filterBy = async (section, ...filters) => {
-  await openFilter(section);
+  await clickFilter(section);
 
   return Promise.all(filters.map(clickOption));
 };

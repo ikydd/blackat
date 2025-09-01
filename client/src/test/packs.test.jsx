@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { filterBy, openFilter, setSide, clickOption } from './helpers/operations';
+import { filterBy, clickFilter, setSide, clickOption } from './helpers/operations';
 import { findCheckboxes } from './helpers/finders';
 import packs from '../../../fixtures/api/packs.json';
 
@@ -10,7 +10,7 @@ jest.mock('../helpers/api');
 describe('Packs filters', () => {
   it('shows the same checkboxes when corp is selected', async () => {
     render(<App />);
-    await openFilter('Packs');
+    await clickFilter('Packs');
 
     const runnerBoxes = await findCheckboxes('packs');
 

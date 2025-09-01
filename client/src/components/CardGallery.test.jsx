@@ -4,7 +4,6 @@ import CardGallery from './CardGallery';
 
 describe('CardGallery', () => {
   it('renders', async () => {
-    render(<CardGallery sections={[]} />);
-    expect(true).toBeTruthy();
+    expect(() => render(<CardGallery sections={[]} />)).not.toThrow();
   });
 });

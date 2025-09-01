@@ -3,7 +3,7 @@ import { render, within, waitFor, screen } from '@testing-library/react';
 import App from '../App';
 import * as api from '../helpers/api';
 import loadFile from './helpers/load-file';
-import { filterBy, sortBy, openFilter } from './helpers/operations';
+import { filterBy, sortBy, clickFilter } from './helpers/operations';
 import { findBlock, findCheckboxes } from './helpers/finders';
 
 jest.mock('../helpers/api');
@@ -33,7 +33,7 @@ describe('Preferences filters', () => {
 
   it('starts with some checkboxes', async () => {
     render(<App />);
-    await openFilter('Preferences');
+    await clickFilter('Preferences');
 
     const checkboxes = await findCheckboxes('preferences');
 
@@ -149,7 +149,7 @@ describe('Preferences filters', () => {
     it('filters options correctly', async () => {
       render(<App />);
       await filterBy('Preferences', 'Classic Retail Packs');
-      await openFilter('Packs');
+      await clickFilter('Packs');
 
       const filtered = await findCheckboxes('packs');
 
@@ -178,7 +178,7 @@ describe('Preferences filters', () => {
     it('filters options correctly', async () => {
       render(<App />);
       await filterBy('Preferences', 'Current Rotation');
-      await openFilter('Packs');
+      await clickFilter('Packs');
 
       const filtered = await findCheckboxes('packs');
 
