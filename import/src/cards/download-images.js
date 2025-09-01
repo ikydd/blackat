@@ -21,6 +21,7 @@ const downloadImage = async (filepath, url) => {
 
 const downloadCardImageToFolder = async (card, imgFolder) => {
   try {
+    console.log(`Downloading ${card.imagesrc}`);
     const locationToSaveImage = getImageSavePath(card, imgFolder);
     await downloadImage(locationToSaveImage, card.imagesrc);
   } catch (e) {

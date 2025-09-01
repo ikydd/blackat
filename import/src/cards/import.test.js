@@ -5,6 +5,8 @@ const apiUrl = require('../helpers/get-api-url');
 const localPath = require('../helpers/get-local-path');
 const process = require('./process');
 const download = require('./download-images');
+const cardsSchema = require('../../schema/cards');
+const mwlSchema = require('../../schema/mwl');
 const cards = require('./import');
 const mockPackData = require('../../../fixtures/api/packs.json');
 
@@ -12,14 +14,20 @@ jest.mock('../helpers/request');
 jest.mock('../helpers/save-file');
 jest.mock('./process');
 jest.mock('./download-images');
+jest.mock('../../schema/cards');
+jest.mock('../../schema/mwl');
 jest.mock('../helpers/get-api-url');
 jest.mock('../helpers/get-local-path');
 
 const mockUrl = 'https://foo.co.uk/bar';
 const mockPath = './test/foo/bar/file.json';
 
-const mockData = {
+const mockCardsData = {
   foo: 'bar'
+};
+
+const mockMwlData = {
+  alpha: 'beta'
 };
 
 const mockProcessedData = {
@@ -40,11 +48,26 @@ describe('main', () => {
     download.mockClear();
 
     apiUrl.mockImplementation((suffix) => `${mockUrl}${suffix}`);
-    request.mockImplementation(() => Promise.resolve(mockData));
+    request.mockImplementation((url) => {
+      const data = url === `${mockUrl}/cards` ? mockCardsData : mockMwlData;
+      return Promise.resolve(data);
+    });
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
     download.mockImplementation(() => Promise.resolve(mockFurtherProcessedData));
+    cardsSchema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['foo'],
+      properties: { foo: { type: 'string' } }
+    }));
+    mwlSchema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['alpha'],
+      properties: { alpha: { type: 'string' } }
+    }));
   });
 
   it('gets NRDB cards endpoint', async () => {
@@ -62,7 +85,7 @@ describe('main', () => {
   it('applies the processor', async () => {
     await cards(mockPackData);
 
-    expect(process).toHaveBeenCalledWith(mockData, mockPackData, mockData);
+    expect(process).toHaveBeenCalledWith(mockCardsData, mockPackData, mockMwlData);
   });
 
   it('downloads the images', async () => {
@@ -89,5 +112,29 @@ describe('main', () => {
     const output = await cards(mockPackData);
 
     expect(output).toEqual(mockFurtherProcessedData);
+  });
+
+  it('errors when cards data does not match schema', async () => {
+    const badData = {
+      xxx: 'bar'
+    };
+
+    request.mockImplementation((url) => {
+      const data = url === `${mockUrl}/cards` ? badData : mockMwlData;
+      return Promise.resolve(data);
+    });
+    await expect(() => cards(mockPackData)).rejects.toThrow();
+  });
+
+  it('errors when mwl data does not match schema', async () => {
+    const badData = {
+      xxx: 'bar'
+    };
+
+    request.mockImplementation((url) => {
+      const data = url === `${mockUrl}/cards` ? mockCardsData : badData;
+      return Promise.resolve(data);
+    });
+    await expect(() => cards(mockPackData)).rejects.toThrow();
   });
 });

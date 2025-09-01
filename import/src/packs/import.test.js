@@ -3,13 +3,17 @@ const save = require('../helpers/save-file');
 const apiUrl = require('../helpers/get-api-url');
 const localPath = require('../helpers/get-local-path');
 const process = require('./process');
+const packsSchema = require('../../schema/packs');
+const cyclesSchema = require('../../schema/cycles');
 const packs = require('./import');
 
 jest.mock('../helpers/request');
 jest.mock('../helpers/save-file');
-jest.mock('./process');
 jest.mock('../helpers/get-api-url');
 jest.mock('../helpers/get-local-path');
+jest.mock('./process');
+jest.mock('../../schema/packs');
+jest.mock('../../schema/cycles');
 
 const mockPacksUrl = 'https://foo.co.uk/packs';
 const mockCyclesUrl = 'https://foo.co.uk/cycles';
@@ -43,6 +47,18 @@ describe('main', () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
+    packsSchema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['foo'],
+      properties: { foo: { type: 'string' } }
+    }));
+    cyclesSchema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['alpha'],
+      properties: { alpha: { type: 'string' } }
+    }));
   });
 
   it('gets the NRDB packs endpoint', async () => {
@@ -91,5 +107,27 @@ describe('main', () => {
     const result = await packs();
 
     expect(result).toEqual(mockProcessedData);
+  });
+
+  it('errors when packs data does not match schema', async () => {
+    const badPacksData = {
+      xxx: 'bar'
+    };
+    request.mockImplementation((url) => {
+      const data = url === mockPacksUrl ? badPacksData : mockCyclesData;
+      return Promise.resolve(data);
+    });
+    await expect(() => packs()).rejects.toThrow();
+  });
+
+  it('errors when cycles data does not match schema', async () => {
+    const badCyclesData = {
+      yyy: 'bar'
+    };
+    request.mockImplementation((url) => {
+      const data = url === mockPacksUrl ? mockPacksData : badCyclesData;
+      return Promise.resolve(data);
+    });
+    await expect(() => packs()).rejects.toThrow();
   });
 });

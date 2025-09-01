@@ -4,9 +4,11 @@ const apiUrl = require('../helpers/get-api-url');
 const localPath = require('../helpers/get-local-path');
 const process = require('./process');
 const types = require('./import');
+const schema = require('../../schema/types');
 
 jest.mock('../helpers/request');
 jest.mock('../helpers/save-file');
+jest.mock('../../schema/types');
 jest.mock('./process');
 jest.mock('../helpers/get-api-url');
 jest.mock('../helpers/get-local-path');
@@ -35,6 +37,12 @@ describe('main', () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
+    schema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['foo'],
+      properties: { foo: { type: 'string' } }
+    }));
   });
 
   it('gets the NRDB types endpoint', async () => {
@@ -65,5 +73,14 @@ describe('main', () => {
     await types();
 
     expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
+  });
+
+  it('errors when types data does not match schema', async () => {
+    const badData = {
+      xxx: 'bar'
+    };
+
+    request.mockImplementation(() => Promise.resolve(badData));
+    await expect(() => types()).rejects.toThrow();
   });
 });

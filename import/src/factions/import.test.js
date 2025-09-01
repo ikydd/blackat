@@ -3,11 +3,14 @@ const save = require('../helpers/save-file');
 const apiUrl = require('../helpers/get-api-url');
 const localPath = require('../helpers/get-local-path');
 const process = require('./process');
+const schema = require('../../schema/factions');
 const factions = require('./import');
 
 jest.mock('../helpers/request');
 jest.mock('../helpers/save-file');
 jest.mock('./process');
+jest.mock('./process');
+jest.mock('../../schema/factions');
 jest.mock('../helpers/get-api-url');
 jest.mock('../helpers/get-local-path');
 
@@ -35,6 +38,12 @@ describe('main', () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
+    schema.mockImplementation(() => ({
+      $schema: 'http://json-schema.org/draft-07/schema',
+      type: 'object',
+      required: ['foo'],
+      properties: { foo: { type: 'string' } }
+    }));
   });
 
   it('gets the NRDB factions endpoint', async () => {
@@ -65,5 +74,14 @@ describe('main', () => {
     await factions();
 
     expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
+  });
+
+  it('errors when factions data does not match schema', async () => {
+    const badData = {
+      xxx: 'bar'
+    };
+
+    request.mockImplementation(() => Promise.resolve(badData));
+    await expect(() => factions()).rejects.toThrow();
   });
 });
