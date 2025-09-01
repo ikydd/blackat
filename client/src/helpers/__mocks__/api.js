@@ -3,13 +3,15 @@ import factions from '../../../../fixtures/api/factions.json';
 import types from '../../../../fixtures/api/types.json';
 import packs from '../../../../fixtures/api/packs.json';
 import subtypes from '../../../../fixtures/api/subtypes.json';
+import timestamp from '../../../../fixtures/api/timestamp.json';
 
 const data = {
   cards,
   factions,
   types,
   subtypes,
-  packs
+  packs,
+  timestamp
 };
 
 let user = {};
