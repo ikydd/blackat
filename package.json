@@ -1,6 +1,6 @@
 {
   "name": "blackat",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "author": "Iain Kydd <iain.kydd@gmail.com>",
   "scripts": {
     "build": "npm run build:data && npm run build:client",
