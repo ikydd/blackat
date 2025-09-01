@@ -13,3 +13,16 @@ export const findSectionHeadings = async () => {
     .slice(1)
     .map(({ textContent }) => textContent.trim());
 };
+
+export const findBlock = async (section) => {
+  return screen.findByTestId(`${section}-filters`);
+};
+
+export const findCheckboxes = async (section) => {
+  const filterBlock = await findBlock(section);
+  return within(filterBlock).queryAllByRole('checkbox');
+};
+export const findCheckbox = async (section, option) => {
+  const filterBlock = await findBlock(section);
+  return within(filterBlock).findByLabelText(option);
+};

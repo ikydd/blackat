@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from '../App';
 import * as api from '../helpers/api';
 import loadFile from './helpers/load-file';
@@ -14,9 +14,8 @@ describe('Sort', () => {
   });
 
   it('has the correct options', async () => {
-    const { findAllByRole } = render(<App />);
-    await findAllByRole('img');
-    const options = await findAllByRole('option');
+    render(<App />);
+    const options = await screen.findAllByRole('option');
 
     expect(options).toEqual([
       expect.objectContaining({
@@ -60,8 +59,8 @@ describe('Sort', () => {
 
   it('sorts by faction by default', async () => {
     api.setData('cards', loadFile('../../../fixtures/api/faction-sort/faction-runner.json'));
-    const { findByRole } = render(<App />);
-    const sort = await findByRole('combobox');
+    render(<App />);
+    const sort = await screen.findByRole('combobox');
 
     const cards = await findImageTitles();
 

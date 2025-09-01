@@ -4,6 +4,7 @@ import App from '../App';
 import * as api from '../helpers/api';
 import loadFile from './helpers/load-file';
 import { filterBy, sortBy, openFilter } from './helpers/operations';
+import { findBlock, findCheckboxes } from './helpers/finders';
 
 jest.mock('../helpers/api');
 
@@ -21,8 +22,8 @@ jest.mock('../helpers/api');
 
 describe('Preferences filters', () => {
   it('has the correct title', async () => {
-    const { findByTestId } = render(<App />);
-    const filterBlock = await findByTestId('preferences-filters');
+    render(<App />);
+    const filterBlock = await findBlock('preferences');
     const heading = within(filterBlock).getByText('Preferences');
 
     await waitFor(() => {
@@ -31,11 +32,10 @@ describe('Preferences filters', () => {
   });
 
   it('starts with some checkboxes', async () => {
-    const { getByTestId } = render(<App />);
+    render(<App />);
     await openFilter('Preferences');
 
-    const filterBlock = getByTestId('preferences-filters');
-    const checkboxes = within(filterBlock).queryAllByRole('checkbox');
+    const checkboxes = await findCheckboxes('preferences');
 
     await waitFor(() => {
       expect(checkboxes.length).toBeGreaterThan(0);
@@ -43,11 +43,10 @@ describe('Preferences filters', () => {
   });
 
   it('selects checkboxes correctly', async () => {
-    const { getByTestId } = render(<App />);
+    render(<App />);
     const [checkbox] = await filterBy('Preferences', 'Prefer Original Art');
 
-    const filterBlock = getByTestId('preferences-filters');
-    const checkboxes = await within(filterBlock).findAllByRole('checkbox');
+    const checkboxes = await findCheckboxes('preferences');
     const unchecked = checkboxes.filter(({ value }) => value !== 'original');
 
     expect(checkbox).toBeChecked();
@@ -132,28 +131,27 @@ describe('Preferences filters', () => {
     it('filters cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/official.json');
       api.setData('cards', mockData);
-      const { findAllByRole } = render(<App />);
+      render(<App />);
 
-      const images = await findAllByRole('img');
+      const images = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
       await filterBy('Preferences', 'Classic Retail Packs');
 
-      const filtered = await findAllByRole('img');
+      const filtered = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
       });
     });
 
     it('filters options correctly', async () => {
-      const { getByTestId } = render(<App />);
+      render(<App />);
       await filterBy('Preferences', 'Classic Retail Packs');
       await openFilter('Packs');
 
-      const filterBlock = getByTestId('packs-filters');
-      const filtered = await within(filterBlock).findAllByRole('checkbox');
+      const filtered = await findCheckboxes('packs');
 
       expect(filtered).toHaveLength(64);
     });
@@ -162,28 +160,27 @@ describe('Preferences filters', () => {
     it('filters rotated cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/rotated.json');
       api.setData('cards', mockData);
-      const { findAllByRole } = render(<App />);
+      render(<App />);
 
-      const images = await findAllByRole('img');
+      const images = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
       await filterBy('Preferences', 'Current Rotation');
 
-      const filtered = await findAllByRole('img');
+      const filtered = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
       });
     });
 
     it('filters options correctly', async () => {
-      const { getByTestId } = render(<App />);
+      render(<App />);
       await filterBy('Preferences', 'Current Rotation');
       await openFilter('Packs');
 
-      const filterBlock = getByTestId('packs-filters');
-      const filtered = await within(filterBlock).findAllByRole('checkbox');
+      const filtered = await findCheckboxes('packs');
 
       expect(filtered).toHaveLength(30);
     });
@@ -191,16 +188,16 @@ describe('Preferences filters', () => {
     it('filters banned cards correctly', async () => {
       const mockData = loadFile('../../../fixtures/api/banned.json');
       api.setData('cards', mockData);
-      const { findAllByRole } = render(<App />);
+      render(<App />);
 
-      const images = await findAllByRole('img');
+      const images = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(images).toHaveLength(2);
       });
 
       await filterBy('Preferences', 'Latest Ban List');
 
-      const filtered = await findAllByRole('img');
+      const filtered = await screen.findAllByRole('img');
       await waitFor(() => {
         expect(filtered).toHaveLength(1);
       });

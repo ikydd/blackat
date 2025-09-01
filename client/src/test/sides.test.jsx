@@ -1,14 +1,17 @@
 import React from 'react';
-import { render, within, fireEvent, waitFor } from '@testing-library/react';
+import { render, within, waitFor, screen } from '@testing-library/react';
+import { setSide } from './helpers/operations';
 import App from '../App';
+import { findImageTitles } from './helpers/finders';
+import cards from '../../../fixtures/api/cards.json';
 
 jest.mock('../helpers/api');
 
 describe('Side selection', () => {
   describe('buttons', () => {
     it('contains both sides', async () => {
-      const { findByTestId } = render(<App />);
-      const sidesBlock = await findByTestId('sides');
+      render(<App />);
+      const sidesBlock = await screen.findByTestId('sides');
       const sides = within(sidesBlock).getAllByRole('button');
 
       await waitFor(() => {
@@ -18,9 +21,9 @@ describe('Side selection', () => {
     });
 
     it('starts on the runner side', async () => {
-      const { findByText } = render(<App />);
-      const corp = await findByText('Corp');
-      const runner = await findByText('Runner');
+      render(<App />);
+      const corp = await screen.findByText('Corp');
+      const runner = await screen.findByText('Runner');
 
       await waitFor(() => {
         expect(runner).toHaveClass('selected');
@@ -29,11 +32,11 @@ describe('Side selection', () => {
     });
 
     it('selects the correct SideButtons when corp is selected', async () => {
-      const { findByText } = render(<App />);
-      const corp = await findByText('Corp');
-      const runner = await findByText('Runner');
+      render(<App />);
+      const corp = await screen.findByText('Corp');
+      const runner = await screen.findByText('Runner');
 
-      fireEvent.click(corp);
+      await setSide('Corp');
 
       await waitFor(() => {
         expect(runner).not.toHaveClass('selected');
@@ -42,12 +45,12 @@ describe('Side selection', () => {
     });
 
     it('selects the correct SideButtons when runner is selected', async () => {
-      const { findByText } = render(<App />);
-      const corp = await findByText('Corp');
-      const runner = await findByText('Runner');
+      render(<App />);
+      const corp = await screen.findByText('Corp');
+      const runner = await screen.findByText('Runner');
 
-      fireEvent.click(corp);
-      fireEvent.click(runner);
+      await setSide('Corp');
+      await setSide('Runner');
 
       await waitFor(() => {
         expect(runner).toHaveClass('selected');
@@ -56,15 +59,20 @@ describe('Side selection', () => {
     });
   });
 
-  it('only shows cards from the correct side', async () => {
-    const { findAllByRole, getByText } = render(<App />);
-    let cards = await findAllByRole('img');
+  describe('cards filtering', () => {
+    it('only shows cards from the correct side', async () => {
+      render(<App />);
+      const runner = await findImageTitles('img');
 
-    expect(cards).toHaveLength(4);
+      const getCardsFromSide = (requestedSide) =>
+        cards.filter(({ side }) => side === requestedSide).map(({ title }) => title);
 
-    fireEvent.click(getByText('Corp'));
-    cards = await findAllByRole('img');
+      expect(runner).toEqual(getCardsFromSide('runner'));
 
-    expect(cards).toHaveLength(4);
+      await setSide('Corp');
+      const corp = await findImageTitles('img');
+
+      expect(corp).toEqual(getCardsFromSide('corp'));
+    });
   });
 });
