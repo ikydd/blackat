@@ -13,6 +13,7 @@ import TextSearch from './components/TextSearch';
 import SortSelect from './components/SortSelect';
 import Reset from './components/Reset';
 import SmallPrint from './components/SmallPrint';
+import Timestamp from './components/Timestamp';
 import Loader from './components/Loader';
 import Header from './components/Header';
 import Icon from './components/Icon';
@@ -51,6 +52,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const [subtypes, setSubtypes] = useState([]);
   const [packs, setPacks] = useState([]);
   const [cards, setCards] = useState([]);
+  const [timestamp, setTimestamp] = useState();
 
   const loadPreviousSession = () => {
     const previousSession = saveState && loadSettings();
@@ -77,16 +79,27 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       getData('factions'),
       getData('types'),
       getData('packs'),
-      getData('subtypes')
+      getData('subtypes'),
+      getData('timestamp')
     ])
-      .then(([loadedCards, loadedfactions, loadedTypes, loadedPacks, loadedSubtypes]) => {
-        setFactions(loadedfactions);
-        setTypes(loadedTypes);
-        setSubtypes(loadedSubtypes);
-        setPacks(loadedPacks);
-        setCards(loadedCards);
-        setLoaded(true);
-      })
+      .then(
+        ([
+          loadedCards,
+          loadedfactions,
+          loadedTypes,
+          loadedPacks,
+          loadedSubtypes,
+          loadedTimestamp
+        ]) => {
+          setFactions(loadedfactions);
+          setTypes(loadedTypes);
+          setSubtypes(loadedSubtypes);
+          setPacks(loadedPacks);
+          setCards(loadedCards);
+          setTimestamp(loadedTimestamp);
+          setLoaded(true);
+        }
+      )
       /* eslint-disable-next-line no-console */
       .catch((err) => console.log(err));
   }, []);
@@ -260,6 +273,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
               <Reset onClick={resetAllFilters} />
               <ThemeSelector />
+              <Timestamp time={timestamp.timestamp} />
             </ControlPanel>
             <CardGallery sections={sections} />
           </>

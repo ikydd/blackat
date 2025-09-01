@@ -33,6 +33,9 @@ button {
   color: var(--text-colour);
   font-family: 'Rajdhani', sans-serif;
 }
+p {
+  color: var(--text-colour);
+}
 .form-control {
   background-color: var(--background-colour);
   color: var(--text-colour);
