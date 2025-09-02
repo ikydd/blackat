@@ -94,7 +94,7 @@ footer {
   font-size: 1.6rem;
   text-align: center;
 }
-.mobile-only {
+.compact-only {
   display: none;
 }
 
@@ -102,7 +102,7 @@ footer {
   main {
     display: block;
   }
-  .mobile-only {
+  .compact-only {
     display: block;
   }
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './ThemeSelector.css';
 
 const Sun = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -43,7 +42,7 @@ const DarKModeControl = () => {
   };
 
   return (
-    <div id="theme-selector">
+    <div id="theme-selector" className="filter-addendum">
       <button title={`Switch to ${newTheme} theme`} onClick={() => updateTheme(newTheme)}>
         {currentTheme === 'dark' ? <Sun /> : <Moon />} Change Theme
       </button>

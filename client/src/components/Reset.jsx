@@ -1,9 +1,8 @@
 import React from 'react';
 import Icon from './Icon';
-import './Reset.css';
 
 const Reset = ({ onClick }) => (
-  <div id="reset">
+  <div id="reset" className="filter-addendum">
     <button onClick={onClick}>
       <Icon code="core" />
       Reset Settings

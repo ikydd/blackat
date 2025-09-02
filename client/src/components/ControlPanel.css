@@ -2,10 +2,6 @@
   margin-bottom: 1em;
 }
 
-#addendum {
-  font-size: 1.1rem;
-}
-
 @media (max-width: 700px) {
   #control-panel {
     margin-top: -7rem;
@@ -14,6 +10,27 @@
   #filters-wrapper.closed {
     display: none;
   }
+}
+
+#control-panel .filter-addendum {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+#control-panel .filter-addendum svg,
+#control-panel .filter-addendum .icon {
+  height: 1.4rem;
+  padding-right: 0.5rem;
+}
+
+#control-panel .filter-addendum button {
+  display: flex;
+  background: none;
+  border: none;
+  line-height: 2rem;
+  padding: 0;
+  align-items: center;
 }
 
 #controls-toggle {

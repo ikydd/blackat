@@ -6,7 +6,7 @@ const ControlsToggle = ({ closed, onClick }) => {
   const action = closed ? 'Show' : 'Hide';
   const text = `${action} Filters`;
   return (
-    <div id="controls-toggle" className="mobile-only">
+    <div id="controls-toggle" className="compact-only">
       <button
         title={text}
         aria-label={text}

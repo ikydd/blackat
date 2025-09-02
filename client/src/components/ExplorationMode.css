@@ -1,17 +1,5 @@
-#keyboard-selector {
-  margin: 0;
-  padding: 0;
-}
-#keyboard-selector button {
-  display: flex;
-  background: none;
-  border: none;
-  line-height: 2rem;
-  padding: 0;
-  align-items: center;
-}
-
-#keyboard-selector .icon {
-  height: 1.4rem;
-  padding-right: 0.5rem;
+@media (hover: none) {
+  #exploration-selector {
+    display: none;
+  }
 }

@@ -10,7 +10,7 @@ const ExplorationMode = ({ mode = '', onChange }) => {
   const newMode = getOtherMode(mode);
 
   return (
-    <div id="keyboard-selector">
+    <div id="exploration-selector" className="filter-addendum">
       <button title={`Switch to ${newMode} navigation`} onClick={() => onChange(newMode)}>
         {mode === 'keyboard' ? <Icon code="click" /> : <Icon code="link" />} {capitalise(newMode)}{' '}
         Exploration

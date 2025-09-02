@@ -4,7 +4,7 @@ import './Timestamp.css';
 const Timestamp = ({ time }) => {
   return (
     time && (
-      <div id="timestamp">
+      <div id="timestamp" className="filter-addendum">
         <p>Data updated: {time.toLocaleDateString()}</p>
       </div>
     )
