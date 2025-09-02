@@ -5,7 +5,7 @@ const Timestamp = ({ time }) => {
   const date = new Date(time);
   return (
     <div id="timestamp">
-      <p>Last updated: {date.toLocaleDateString()}</p>
+      <p>Data updated: {date.toLocaleDateString()}</p>
     </div>
   );
 };
