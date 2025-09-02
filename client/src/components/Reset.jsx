@@ -6,7 +6,7 @@ const Reset = ({ onClick }) => (
   <div id="reset">
     <button onClick={onClick}>
       <Icon code="core" />
-      Reset Filters
+      Reset Settings
     </button>
   </div>
 );

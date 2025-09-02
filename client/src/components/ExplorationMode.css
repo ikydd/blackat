@@ -1,9 +1,8 @@
-#theme-selector {
+#keyboard-selector {
   margin: 0;
   padding: 0;
-  margin-bottom: 0.5rem;
 }
-#theme-selector button {
+#keyboard-selector button {
   display: flex;
   background: none;
   border: none;
@@ -12,7 +11,7 @@
   align-items: center;
 }
 
-#theme-selector svg {
+#keyboard-selector .icon {
   height: 1.4rem;
   padding-right: 0.5rem;
 }

@@ -6,6 +6,7 @@ import preferencesOptions from './helpers/preferences-options';
 import CardGallery from './components/CardGallery';
 import ControlPanel from './components/ControlPanel';
 import ThemeSelector from './components/ThemeSelector';
+import ExplorationMode from './components/ExplorationMode';
 import SideButton from './components/SideButton';
 import FilterList from './components/FilterList';
 import NestedFilterList from './components/NestedFilterList';
@@ -53,12 +54,14 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
   const [packs, setPacks] = useState([]);
   const [cards, setCards] = useState([]);
   const [timestamp, setTimestamp] = useState();
+  const [exploration, setExploration] = useState();
 
   const loadPreviousSession = () => {
     const previousSession = saveState && loadSettings();
     if (previousSession) {
       setSettings(previousSession);
     }
+    setExploration(localStorage.getItem('exploration'));
   };
 
   const updateSettings = (updates) => {
@@ -67,6 +70,15 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
       saveSettings(updatedSettings);
     }
     setSettings(updatedSettings);
+  };
+
+  const updateExploration = (mode) => {
+    setExploration(mode);
+    if (mode !== 'keyboard') {
+      localStorage.removeItem('exploration');
+    } else {
+      localStorage.setItem('exploration', 'keyboard');
+    }
   };
 
   useEffect(() => {
@@ -191,12 +203,16 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
     updateSettings(initSettings());
   };
 
+  const mainClass = [exploration === 'keyboard' && 'keyboard', !loaded && 'loading'].filter(
+    (cls) => cls
+  );
+
   return (
     <div id="blackat">
       <header>
         <Header />
       </header>
-      <main className={loaded ? '' : 'loading'}>
+      <main className={mainClass.join(' ')}>
         {loaded ? (
           <>
             <ControlPanel>
@@ -273,6 +289,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
               <Reset onClick={resetAllFilters} />
               <ThemeSelector />
+              <ExplorationMode mode={exploration} onChange={updateExploration} />
               <Timestamp time={new Date(timestamp.timestamp)} />
             </ControlPanel>
             <CardGallery sections={sections} />
