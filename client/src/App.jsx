@@ -273,7 +273,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
 
               <Reset onClick={resetAllFilters} />
               <ThemeSelector />
-              <Timestamp time={timestamp.timestamp} />
+              <Timestamp time={new Date(timestamp.timestamp)} />
             </ControlPanel>
             <CardGallery sections={sections} />
           </>

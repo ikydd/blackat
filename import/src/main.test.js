@@ -3,6 +3,7 @@ const factions = require('./factions/import');
 const types = require('./types/import');
 const packs = require('./packs/import');
 const subtypes = require('./subtypes/import');
+const timestamp = require('./timestamp/process');
 const mockPackData = require('../../fixtures/api/packs.json');
 const mockCardData = require('../../fixtures/api/cards.json');
 
@@ -13,6 +14,7 @@ jest.mock('./factions/import');
 jest.mock('./types/import');
 jest.mock('./packs/import');
 jest.mock('./subtypes/import');
+jest.mock('./timestamp/process');
 
 describe('main', () => {
   beforeEach(() => {
@@ -48,5 +50,11 @@ describe('main', () => {
     await main.run();
 
     expect(subtypes).toHaveBeenCalledWith(mockCardData);
+  });
+
+  it('calls timestamp', async () => {
+    await main.run();
+
+    expect(timestamp).toHaveBeenCalled();
   });
 });
