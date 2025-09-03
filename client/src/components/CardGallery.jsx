@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardSection from './CardSection';
 import Empty from './Empty';
 
 const CardGallery = ({ sections }) => {
   const empty = sections.length === 0;
+
+  useEffect(() => {
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        document.activeElement.blur();
+      }
+    });
+  });
 
   return (
     <div id="cards" data-testid="cards">
