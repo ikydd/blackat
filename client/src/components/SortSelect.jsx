@@ -11,6 +11,7 @@ const SortSelect = ({ default: defaultValue, options = [], onChange }) => {
       <select
         className="form-control"
         aria-label="Sort cards"
+        title="Sort cards"
         value={defaultValue}
         onChange={handleChange}
       >

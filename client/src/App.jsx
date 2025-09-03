@@ -231,12 +231,12 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
                 />
               </div>
               <TextSearch
-                placeholder="search title"
+                placeholder="Search title"
                 value={settings.title}
                 onChange={updateSimpleFilter('title')}
               />
               <TextSearch
-                placeholder="search text"
+                placeholder="Search text"
                 value={settings.text}
                 onChange={updateSimpleFilter('text')}
               />

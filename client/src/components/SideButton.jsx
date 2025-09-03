@@ -8,8 +8,15 @@ const SideButton = ({ title, selected, side, onSelect }) => {
     }
   };
 
+  const label = `${title}${selected ? ' (selected)' : ''}`;
+
   return (
-    <button className={`side-button${selected ? ' selected' : ''}`} onClick={select}>
+    <button
+      aria-label={label}
+      title={label}
+      className={`side-button${selected ? ' selected' : ''}`}
+      onClick={select}
+    >
       {title}
     </button>
   );

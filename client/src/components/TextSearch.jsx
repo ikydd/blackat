@@ -10,9 +10,10 @@ const TextSearch = ({ placeholder = 'search', value = '', onChange }) => {
     <div className="form-group">
       <input
         className="form-control"
-        aria-label={placeholder}
+        aria-label={placeholder.toLowerCase()}
+        title={placeholder}
         value={value}
-        placeholder={placeholder}
+        placeholder={placeholder.toLowerCase()}
         onInput={handleChange}
       />
     </div>
