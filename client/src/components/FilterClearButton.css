@@ -1,6 +1,10 @@
 .filter-clear-button {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    padding: 0;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  padding: 0;
+}
+
+.filter-clear-button:hover {
+  color: var(--highlight-colour);
 }

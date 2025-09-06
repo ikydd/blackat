@@ -29,6 +29,8 @@ const setPageTheme = (theme) => {
   }
 };
 
+const capitalise = (mode) => mode.slice(0, 1).toUpperCase() + mode.slice(1);
+
 const getOtherTheme = (theme) => (theme === 'dark' ? 'light' : 'dark');
 
 const DarKModeControl = () => {
@@ -43,7 +45,7 @@ const DarKModeControl = () => {
 
   return (
     <div id="theme-selector" className="filter-addendum">
-      <button title={`Switch to ${newTheme} theme`} onClick={() => updateTheme(newTheme)}>
+      <button title={`${capitalise(newTheme)} theme`} onClick={() => updateTheme(newTheme)}>
         {currentTheme === 'dark' ? <Sun /> : <Moon />} Change Theme
       </button>
     </div>

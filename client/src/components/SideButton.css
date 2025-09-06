@@ -10,3 +10,6 @@
 .side-button.selected {
   color: #fff;
 }
+.side-button:not(.selected):hover {
+  color: var(--highlight-colour);
+}

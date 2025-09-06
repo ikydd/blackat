@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+#control-panel .filter-addendum button:hover {
+  color: var(--highlight-colour);
+}
+
 #controls-toggle {
   text-align: right;
   font-size: 4rem;

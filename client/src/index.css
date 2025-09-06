@@ -3,6 +3,7 @@
   --background-colour: #fff;
   --border-colour: #ccc;
   --placeholder-colour: #999;
+  --highlight-colour: #dd4e00;
 }
 
 :root.dark {
@@ -10,6 +11,7 @@
   --background-colour: #161616;
   --border-colour: #555;
   --placeholder-colour: #777;
+  --highlight-colour: #ff6e00;
 }
 
 body {
@@ -47,7 +49,7 @@ p {
 }
 
 a {
-  color: #ff6e00;
+  color: var(--highlight-colour);
 }
 
 header {
