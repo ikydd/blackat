@@ -7,8 +7,10 @@
   margin: 0.2rem 0;
   font-size: 1.8rem;
 }
-.filter-heading:hover h3 {
-  color: var(--highlight-colour);
+@media (hover: hover) {
+  .filter-heading:hover h3 {
+    color: var(--highlight-colour);
+  }
 }
 .filter-heading h3 > svg {
   fill: currentColor;

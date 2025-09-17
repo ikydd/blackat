@@ -4,7 +4,8 @@
   font-size: 1.4rem;
   padding: 0;
 }
-
-.filter-clear-button:hover {
-  color: var(--highlight-colour);
+@media (hover: hover) {
+  .filter-clear-button:hover {
+    color: var(--highlight-colour);
+  }
 }

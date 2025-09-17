@@ -32,9 +32,10 @@
   padding: 0;
   align-items: center;
 }
-
-#control-panel .filter-addendum button:hover {
-  color: var(--highlight-colour);
+@media (hover: hover) {
+  #control-panel .filter-addendum button:hover {
+    color: var(--highlight-colour);
+  }
 }
 
 #controls-toggle {
