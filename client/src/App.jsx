@@ -292,7 +292,7 @@ const App = ({ saveState = false, side: sideProp = 'runner' }) => {
               <ExplorationMode mode={exploration} onChange={updateExploration} />
               <Timestamp time={new Date(timestamp.timestamp)} />
             </ControlPanel>
-            <CardGallery sections={sections} />
+            <CardGallery sections={sections} tabbable={exploration === 'keyboard'} />
           </>
         ) : (
           <Loader />

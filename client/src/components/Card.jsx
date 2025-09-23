@@ -1,10 +1,10 @@
 import React from 'react';
 import './Card.css';
 
-const Card = ({ data: { title, imagesrc } }) => {
+const Card = ({ data: { title, imagesrc }, tabbable }) => {
   let aboutToFocus;
   return (
-    <div className="card-tile" tabIndex="0" title={title}>
+    <div className="card-tile" tabIndex={tabbable ? 0 : null} title={title}>
       <img
         loading="lazy"
         src={imagesrc}
