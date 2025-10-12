@@ -3,6 +3,16 @@ const nock = require('nock');
 const fs = require('fs-extra');
 const download = require('./download-images');
 
+const previousLog = console.log;
+
+beforeEach(() => {
+  console.log = jest.fn();
+});
+
+afterEach(() => {
+  console.log = previousLog;
+});
+
 describe('download images', () => {
   const chum = {
     imagesrc: 'https://netrunnerdb.com/card_image/01075.png',

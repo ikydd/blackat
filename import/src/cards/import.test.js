@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const request = require('../helpers/request');
 const save = require('../helpers/save-file');
 const apiUrl = require('../helpers/get-api-url');
@@ -89,11 +90,12 @@ describe('main', () => {
   });
 
   it('downloads the images', async () => {
-    const path = fs.realpathSync(`${__dirname}/../../../client/public/img/cards`);
+    const publicFolder = fs.realpathSync(`${__dirname}/../../../client/public`);
+    const imgFolder = path.join(publicFolder, 'img', 'cards');
 
     await cards(mockPackData);
 
-    expect(download).toHaveBeenCalledWith(path, mockProcessedData);
+    expect(download).toHaveBeenCalledWith(imgFolder, mockProcessedData);
   });
 
   it('gets the local save path', async () => {
