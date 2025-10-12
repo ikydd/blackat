@@ -8,12 +8,13 @@ describe('TextSearch', () => {
   });
 
   it('shows the time', async () => {
-    const time = new Date(1756838018676);
+    const time = new Date(1756810800000);
+
     render(<Timestamp time={time} />);
 
     const stamp = await screen.findByText(/Data updated/);
 
-    expect(stamp).toHaveTextContent('Data updated: 9/2/2025');
+    expect(stamp).toHaveTextContent('Data updated: 2 September 2025');
   });
 
   it('fails silently if no time given', async () => {
