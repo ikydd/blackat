@@ -5,7 +5,14 @@ const Timestamp = ({ time }) => {
   return (
     time && (
       <div id="timestamp" className="filter-addendum">
-        <p>Data updated: {time.toLocaleDateString()}</p>
+        <p>
+          Data updated:{' '}
+          {time.toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </p>
       </div>
     )
   );

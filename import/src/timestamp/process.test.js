@@ -15,9 +15,6 @@ describe('process timestamp', () => {
   });
 
   it('saves the time data', async () => {
-    Object.defineProperty(global, 'performance', {
-      writable: true
-    });
     jest.useFakeTimers().setSystemTime(new Date(1756838018676));
 
     await process();

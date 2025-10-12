@@ -6,11 +6,10 @@ jest.mock('../helpers/api');
 
 describe('Timestamp', () => {
   it('has the last time updated', async () => {
-    jest.useFakeTimers().setSystemTime(new Date(1756838018676));
     render(<App />);
 
     const stamp = await screen.findByText(/Data updated/);
 
-    expect(stamp).toHaveTextContent('Data updated: 9/2/2025');
+    expect(stamp).toHaveTextContent('Data updated: 2 September 2025');
   });
 });
