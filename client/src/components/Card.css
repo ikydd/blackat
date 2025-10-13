@@ -8,6 +8,7 @@
   width: 20rem;
   height: auto;
   border-radius: 5%;
+  transition: transform 0.05s;
 }
 
 @media (max-width: 700px) {
