@@ -11,3 +11,7 @@ node_modules
 .DS_Store
 npm-debug.log*
 .parcel-cache
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
