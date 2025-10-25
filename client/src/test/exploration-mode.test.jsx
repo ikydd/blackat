@@ -4,6 +4,15 @@ import App from '../App';
 
 jest.mock('../helpers/api');
 
+beforeEach(() => {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn(() => ({
+      matches: true
+    }))
+  });
+});
+
 it('applies a class correctly for keyboard', async () => {
   render(<App />);
 
