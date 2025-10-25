@@ -23,7 +23,6 @@ import filterPacks from './helpers/filter-packs';
 import { preloadFilters, preloadGroupingData, preloadSortingData } from './helpers/preload';
 import groupCards from './helpers/group-cards';
 import sortCards from './helpers/sort-cards';
-import './App.css';
 
 const filterSettingsToMatchCurrentOptions = (selected, filterOptions) => {
   const appearsInCurrentOptions = (selection) =>
