@@ -1,0 +1,29 @@
+name: Test
+on: [pull_request]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use node 16
+        uses: actions/setup-node@v5
+        with:
+          node-version: '16.20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+
+  infrastructure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use node 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.16'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run cdk -- synth
