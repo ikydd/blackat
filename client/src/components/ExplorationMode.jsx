@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Icon from './Icon';
 import './ExplorationMode.css';
 
@@ -8,6 +8,19 @@ const capitalise = (mode) => mode.slice(0, 1).toUpperCase() + mode.slice(1);
 
 const ExplorationMode = ({ mode = '', onChange }) => {
   const newMode = getOtherMode(mode);
+
+  useEffect(() => {
+    const checkHover = () => {
+      const hoverCapable = window.matchMedia('(hover: hover)').matches;
+      const setMode = hoverCapable ? mode : 'keyboard';
+      onChange(setMode);
+    };
+    checkHover();
+    window.addEventListener('resize', checkHover);
+    return () => {
+      window.removeEventListener('resize', checkHover);
+    };
+  }, []);
 
   return (
     <div id="exploration-selector" className="filter-addendum">
