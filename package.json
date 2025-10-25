@@ -1,9 +1,12 @@
 {
   "name": "blackat",
-  "version": "1.14.0",
+  "version": "2.0.0-alpha",
   "author": "Iain Kydd <iain.kydd@gmail.com>",
   "bin": {
     "infrastructure": "infrastructure/bin/infrastructure.js"
+  },
+  "engines": {
+    "node": ">=22.16"
   },
   "scripts": {
     "build": "npm run build:data && npm run build:client",

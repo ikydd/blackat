@@ -16,7 +16,7 @@ import {
 } from 'aws-cdk-lib/aws-cloudfront';
 import { S3StaticWebsiteOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 
-const hostname = 'statics.blackat.co.uk';
+const hostname = 'static.blackat.co.uk';
 
 export class StaticAssetsStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
