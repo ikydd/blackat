@@ -6,7 +6,7 @@
     "build": "npm run build:data && npm run build:client",
     "build:client": "parcel build client/public/index.html --dist-dir client/build",
     "build:data": "node import/index.js",
-    "move:data": "mkdir client/build/data && cp client/public/data/* client/build/data",
+    "move:data": "mkdir -p client/build/data && cp client/public/data/* client/build/data",
     "update:data": "npm run build:data && npm run move:data",
     "test": "jest",
     "watch": "jest --watch",
