@@ -1,0 +1,50 @@
+{
+  "imageUrlTemplate": "https://netrunnerdb.com/card_image/{code}.png",
+  "data": [
+    {
+      "code": "01003",
+      "cost": 2,
+      "deck_limit": 3,
+      "faction_code": "anarch",
+      "faction_cost": 2,
+      "flavor": "You ever set something on fire just to watch it burn?",
+      "illustrator": "Anna Ignatieva",
+      "keywords": "Run - Sabotage",
+      "pack_code": "core",
+      "position": 3,
+      "quantity": 3,
+      "side_code": "runner",
+      "stripped_text": "Run HQ or R&D. Access -> 0 credits: Trash the card you are accessing.",
+      "stripped_title": "Demolition Run",
+      "text": "Run HQ or R&D.\nAccess → <strong>0[credit]:</strong> Trash the card you are accessing.",
+      "title": "Demolition Run",
+      "type_code": "event",
+      "uniqueness": false
+    },
+    {
+      "code": "34054",
+      "cost": 2,
+      "deck_limit": 3,
+      "faction_code": "nbn",
+      "faction_cost": 2,
+      "flavor": "\"No one has ever told me to get lost so politely.\"\n—Arissana Rocha Nahu",
+      "illustrator": "Bruno Balixa",
+      "keywords": "Code Gate - Observer",
+      "pack_code": "tai",
+      "position": 54,
+      "quantity": 3,
+      "side_code": "corp",
+      "strength": 2,
+      "stripped_text": "Whenever the Runner passes this ice after encountering it, if they did not break its printed subroutine with a decoder during that encounter, give them 1 tag. Subroutine The Runner loses 1 credit.",
+      "stripped_title": "Virtual Service Agent",
+      "text": "Whenever the Runner passes this ice after encountering it, if they did not break its printed subroutine with a <strong>decoder</strong> during that encounter, give them 1 tag.\n[subroutine] The Runner loses 1[credit].",
+      "title": "Virtual Service Agent",
+      "type_code": "ice",
+      "uniqueness": false
+    }
+  ],
+  "total": 1842,
+  "success": true,
+  "version_number": "2.0",
+  "last_updated": "2020-01-14T15:42:28+00:00"
+}
