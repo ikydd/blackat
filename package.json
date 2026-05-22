@@ -2,74 +2,24 @@
   "name": "blackat",
   "version": "1.14.0",
   "author": "Iain Kydd <iain.kydd@gmail.com>",
+  "workspaces": [
+    "packages/**/*",
+    "apps/**/*"
+  ],
+  "packageManager": "npm@8.19.4",
   "scripts": {
-    "build": "npm run build:data && npm run build:client",
-    "build:client": "parcel build client/public/index.html --dist-dir client/build",
-    "build:data": "node import/index.js",
+    "build": "turbo run build",
     "move:data": "mkdir -p client/build/data && cp client/public/data/* client/build/data",
     "update:data": "npm run build:data && npm run move:data",
-    "test": "jest",
+    "test": "turbo run test",
     "watch": "jest --watch",
     "test:client": "jest client",
     "test:import": "jest import",
     "watch:import": "jest import/**/*.test.js --watch",
     "unit:import": "jest import/**/*.test.js",
-    "lint": "npm run prettier && npm run eslint",
-    "eslint": "eslint client/src import --ext .js,.jsx",
-    "prettier": "prettier client/src import fixtures --write",
-    "dev": "parcel client/public/index.html --open --dist-dir client/build"
+    "lint": "turbo run lint"
   },
   "dependencies": {
-    "ajv": "^8.17.1",
-    "axios": "^0.19.2",
-    "eslint-plugin-jest-dom": "^5.5.0",
-    "fs-extra": "^9.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.23.9",
-    "@babel/preset-react": "^7.23.3",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.1",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.20.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.33.2",
-    "jest": "^28.1.3",
-    "jest-environment-jsdom": "^29.7.0",
-    "nock": "^12.0.3",
-    "parcel": "^2.11.0",
-    "parcel-reporter-static-files-copy": "^1.5.3",
-    "prettier": "^2.0.5",
-    "process": "^0.11.10"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "staticFiles": [
-    {
-      "staticPath": "client/public/data",
-      "staticOutPath": "data"
-    },
-    {
-      "staticPath": "client/public/img/cards",
-      "staticOutPath": "img/cards"
-    },
-    {
-      "staticPath": "client/public/favicon.ico"
-    }
-  ],
-  "jest": {
-    "projects": [
-      "client/jest.config.js",
-      "import/jest.config.js"
-    ]
+    "turbo": "^2.9.14"
   }
 }
