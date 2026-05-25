@@ -1,0 +1,45 @@
+const config = {
+  env: {
+    browser: true,
+    node: true,
+    jest: true,
+    es6: true,
+    amd: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "plugin:import/react",
+    "airbnb-base",
+    "prettier",
+  ],
+  plugins: ["jest", "import", "promise", "react"],
+
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  rules: {
+    "react/prop-types": 0,
+    "no-underscore-dangle": 0,
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx"],
+      },
+    },
+  },
+  globals: {
+    global: "readonly",
+  },
+};
+
+module.exports = config;

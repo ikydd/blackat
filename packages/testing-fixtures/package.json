@@ -1,0 +1,12 @@
+{
+  "name": "@repo/testing-fixtures",
+  "private": true,
+  "scripts": {
+    "lint": "npm run prettier",
+    "prettier": "prettier . --write"
+  },
+  "devDependencies": {
+    "@repo/prettier-config": "*",
+    "prettier": "^2.0.5"
+  }
+}

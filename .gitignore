@@ -1,13 +1,9 @@
 # dependencies
 node_modules
-
-# production
-/client/build
-/client/public/img/cards
-/client/public/data
-/client/.parcel-cache
+.turbo
 
 # misc
 .DS_Store
 npm-debug.log*
+
 .parcel-cache

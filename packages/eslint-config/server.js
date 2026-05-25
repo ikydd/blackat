@@ -1,0 +1,17 @@
+const config = {
+  env: {
+    node: true,
+    jest: true,
+    es6: true,
+    amd: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "airbnb-base",
+    "prettier",
+  ],
+  plugins: ["jest", "import", "promise"],
+};
+
+module.exports = config;

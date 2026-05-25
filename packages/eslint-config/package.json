@@ -1,0 +1,21 @@
+{
+  "name": "@repo/eslint-config",
+  "private": true,
+  "exports": {
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-turbo": "^2.9.14",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.33.2"
+  },
+  "peerDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
