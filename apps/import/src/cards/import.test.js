@@ -90,8 +90,8 @@ describe("main", () => {
   });
 
   it("downloads the images", async () => {
-    const publicFolder = fs.realpathSync(`${__dirname}/../../output`);
-    const imgFolder = path.join(publicFolder, "cards");
+    const packageFolder = fs.realpathSync(`${__dirname}/../..`);
+    const imgFolder = path.join(packageFolder, "output", "cards");
 
     await cards(mockPackData);
 
