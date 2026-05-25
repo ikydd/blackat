@@ -10,7 +10,7 @@
   "scripts": {
     "build": "turbo run build",
     "move:data": "mkdir -p apps/client/build/data && cp apps/import/output/data/* apps/client/build/data",
-    "update:data": "npm -w @repo/import run build && npm run move:data",
+    "update:data": "npm -w @repo/import start && npm run move:data",
     "test": "turbo run test",
     "watch": "turbo watch test",
     "lint": "turbo run lint"
