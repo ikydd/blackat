@@ -9,11 +9,10 @@
   "packageManager": "npm@8.19.4",
   "scripts": {
     "build": "turbo run build",
-    "move:data": "mkdir -p apps/client/build/data && cp apps/import/output/data/* apps/client/build/data",
-    "update:data": "npm -w @repo/import start && npm run move:data",
+    "lint": "turbo run lint",
     "test": "turbo run test",
-    "watch": "turbo watch test",
-    "lint": "turbo run lint"
+    "update:data": "turbo run update",
+    "watch": "turbo watch test"
   },
   "dependencies": {
     "turbo": "^2.9.14"

@@ -1,15 +1,10 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
-    "@repo/import#start": {
-      "outputs": ["output/*"]
-    },
-    "@repo/client#build": {
-      "dependsOn": ["@repo/import#start"],
-      "outputs": ["build/*"]
-    },
+    "build": {},
+    "lint": {},
     "test": {},
-    "lint": {}
+    "update": {}
   },
   "ui": "tui"
 }
