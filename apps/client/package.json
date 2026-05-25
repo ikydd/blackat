@@ -7,8 +7,11 @@
     "build": "parcel build public/index.html --dist-dir build",
     "eslint": "eslint src --ext .js,.jsx,.json",
     "lint": "npm run prettier && npm run eslint",
+    "copy:cards": "mkdir -p build/img/cards && cp ../import/output/cards/* build/img/cards",
+    "copy:data": "mkdir -p build/data && cp ../import/output/data/* build/data",
     "prettier": "prettier src --write",
-    "test": "jest"
+    "test": "jest",
+    "update": "npm run copy:data && npm run copy:cards"
   },
   "dependencies": {
     "react": "^18.2.0",

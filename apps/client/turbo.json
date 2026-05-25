@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["@repo/import#start"],
+      "outputs": ["build/**/*"]
+    },
+    "update": {
+      "dependsOn": ["@repo/import#start"],
+      "outputs": ["build/data/*, build/img/cards/*"]
+    }
+  }
+}
