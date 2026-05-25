@@ -1,11 +1,11 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
-    "@repo/import#build": {
+    "@repo/import#start": {
       "outputs": ["output/*"]
     },
     "@repo/client#build": {
-      "dependsOn": ["@repo/import#build"],
+      "dependsOn": ["@repo/import#start"],
       "outputs": ["build/*"]
     },
     "test": {},

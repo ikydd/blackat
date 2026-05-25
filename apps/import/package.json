@@ -2,7 +2,7 @@
   "name": "@repo/import",
   "private": true,
   "scripts": {
-    "build": "node index.js",
+    "start": "node index.js",
     "eslint": "eslint . --ext .js",
     "lint": "npm run prettier && npm run eslint",
     "prettier": "prettier . --write",
