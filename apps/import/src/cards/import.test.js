@@ -36,10 +36,6 @@ const mockProcessedData = {
   bar: "foo",
 };
 
-const mockFurtherProcessedData = {
-  bar: "far",
-};
-
 describe("main", () => {
   beforeEach(() => {
     request.mockClear();
@@ -57,9 +53,6 @@ describe("main", () => {
     localPath.mockImplementation(() => mockPath);
     process.mockImplementation(() => mockProcessedData);
     save.mockImplementation(() => Promise.resolve());
-    download.mockImplementation(() =>
-      Promise.resolve(mockFurtherProcessedData)
-    );
     cardsSchema.mockImplementation(() => ({
       $schema: "http://json-schema.org/draft-07/schema",
       type: "object",
@@ -114,13 +107,13 @@ describe("main", () => {
   it("saves the processed data", async () => {
     await cards(mockPackData);
 
-    expect(save).toHaveBeenCalledWith(mockFurtherProcessedData, mockPath);
+    expect(save).toHaveBeenCalledWith(mockProcessedData, mockPath);
   });
 
   it("returns the list of cards", async () => {
     const output = await cards(mockPackData);
 
-    expect(output).toEqual(mockFurtherProcessedData);
+    expect(output).toEqual(mockProcessedData);
   });
 
   it("errors when cards data does not match schema", async () => {

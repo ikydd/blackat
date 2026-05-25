@@ -31,7 +31,6 @@ describe("download images", () => {
 
   const testDir = `${__dirname}/public`;
   const dir = `${__dirname}/public/tmp`;
-  const webDir = `/tmp`;
   const fixtures = `${__dirname}/fixtures`;
   const originalLog = console.error;
 
@@ -102,31 +101,5 @@ describe("download images", () => {
     await download(dir, [chum]);
 
     expect(console.error).toHaveBeenCalled();
-  });
-
-  it("returns the card data after downloading", async () => {
-    nock.load(`${fixtures}/chum.json`);
-    nock.load(`${fixtures}/dirty-laundry.json`);
-
-    const expectations = [chum, dirtyLaundry].map(({ code }) =>
-      expect.objectContaining({ code })
-    );
-
-    const cards = await download(dir, [chum, dirtyLaundry]);
-
-    expect(cards).toEqual(expectations);
-  });
-
-  it("fixes the imagesrc", async () => {
-    nock.load(`${fixtures}/chum.json`);
-    nock.load(`${fixtures}/dirty-laundry.json`);
-
-    const expectations = ["01075.png", "25060.png"].map((file) =>
-      expect.objectContaining({ imagesrc: `${webDir}/${file}` })
-    );
-
-    const cards = await download(dir, [chum, dirtyLaundry]);
-
-    expect(cards).toEqual(expectations);
   });
 });

@@ -26,9 +26,9 @@ const importCards = async (packs) => {
     );
   }
   const processedCardData = processCards(cardApiData, packs, mwlApiData);
-  const cardsWithImages = await downloadImages(imgFolder, processedCardData);
-  await saveData(cardsWithImages, getLocalSavePath("cards.json"));
-  return cardsWithImages;
+  await downloadImages(imgFolder, processedCardData);
+  await saveData(processedCardData, getLocalSavePath("cards.json"));
+  return processedCardData;
 };
 
 module.exports = importCards;

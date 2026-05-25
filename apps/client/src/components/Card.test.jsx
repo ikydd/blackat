@@ -14,7 +14,7 @@ describe("Card", () => {
     const { getByRole } = render(<Card data={data} />);
     const img = getByRole("img");
 
-    expect(img).toHaveAttribute("src", data.imagesrc);
+    expect(img).toHaveAttribute("src", `/img/cards/${data.code}.png`);
   });
 
   it("has a title", () => {

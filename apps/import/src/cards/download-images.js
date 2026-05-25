@@ -48,24 +48,9 @@ const downloadImages = async (data, imgFolder) => {
   await fin;
 };
 
-const getWebFolderPath = (serverFolder) => {
-  const segments = serverFolder.split("/");
-  const publicFolderIndex = segments.indexOf("public");
-  const webSegments = segments.slice(publicFolderIndex + 1);
-  return `/${webSegments.join("/")}/`;
-};
-
-const addImagePathToCards = (data, imgFolder) => {
-  const webFolder = getWebFolderPath(imgFolder);
-  return data.map((card) => ({
-    ...card,
-    imagesrc: getImageSavePath(card, webFolder),
-  }));
-};
 const download = async (imgFolder, data) => {
   await fs.ensureDir(imgFolder);
   await downloadImages(data, imgFolder);
-  return addImagePathToCards(data, imgFolder);
 };
 
 module.exports = download;

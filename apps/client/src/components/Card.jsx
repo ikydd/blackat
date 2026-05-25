@@ -1,13 +1,13 @@
 import React from "react";
 import "./Card.css";
 
-const Card = ({ data: { title, imagesrc }, tabbable }) => {
+const Card = ({ data: { title, code }, tabbable }) => {
   let aboutToFocus;
   return (
     <div className="card-tile" tabIndex={tabbable ? 0 : null} title={title}>
       <img
         loading="lazy"
-        src={imagesrc}
+        src={`/img/cards/${code}.png`}
         alt={title}
         onTouchStart={() => {
           aboutToFocus = true;

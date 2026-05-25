@@ -9,17 +9,16 @@
   "packageManager": "npm@8.19.4",
   "scripts": {
     "build": "turbo run build",
-    "move:data": "mkdir -p client/build/data && cp client/public/data/* client/build/data",
-    "update:data": "npm run build:data && npm run move:data",
+    "move:data": "mkdir -p apps/client/build/data && cp apps/import/output/data/* apps/client/build/data",
+    "update:data": "npm -w @repo/import run build && npm run move:data",
     "test": "turbo run test",
-    "watch": "jest --watch",
-    "test:client": "jest client",
-    "test:import": "jest import",
-    "watch:import": "jest import/**/*.test.js --watch",
-    "unit:import": "jest import/**/*.test.js",
+    "watch": "turbo watch test",
     "lint": "turbo run lint"
   },
   "dependencies": {
     "turbo": "^2.9.14"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
   }
 }
